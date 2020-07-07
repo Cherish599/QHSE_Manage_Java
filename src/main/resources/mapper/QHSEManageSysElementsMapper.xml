@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wlhse.dao.QHSEManageSysElementsDao">
+
+    <select id="querryRuleChild" parameterType="com.wlhse.entity.QHSEManageSysElements"
+            resultType="com.wlhse.entity.QHSEManageSysElements">
+        select * from qhse_managesyselements
+        <where>
+            <if test="code!=null and code!=''">
+                and Code like concat(#{code},"__")
+            </if>
+            <if test="status !=null and status!=''">
+                and Status=#{status}
+            </if>
+        </where>
+    </select>
+    <select id="querryTreeRoot" resultType="com.wlhse.entity.QHSEManageSysElements"
+            parameterType="com.wlhse.entity.QHSEManageSysElements">
+        select * from qhse_managesyselements
+        <where>
+            <if test="code==null or code==''">
+                and Code like "__"
+            </if>
+            <if test="status !=null and status!=''">
+                and Status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="querryLastQHSEChildCode" resultType="java.lang.String">
+        select Code from qhse_managesyselements where Code like concat(#{code},"__") order by Code desc limit 1
+    </select>
+
+    <insert id="addQHSERule" parameterType="com.wlhse.entity.QHSEManageSysElements">
+        insert into qhse_managesyselements
+        (Code,Name,Content,RecordFile,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
+        values
+        (#{code},#{name},#{content},#{recordFile},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
+    </insert>
+
+    <update id="updateRuleStatus" parameterType="com.wlhse.entity.QHSEManageSysElements">
+        update qhse_managesyselements
+        <trim prefix="set" suffixOverrides=",">
+            <if test="status!=null and status!=''">
+                Status=#{status},
+            </if>
+        </trim>
+        where Code=#{code}
+    </update>
+
+
+
+
+
+    <select id="querryQHSEReportElements" resultType="com.wlhse.entity.QHSECompanySysElementsPojo">
+        select * from qhse_managesyselements
+        <where>
+            <if test="status !=null and status!=''">
+                and Status=#{status}
+            </if>
+        </where>
+    </select>
+    <select id="querryQHSEReportElements1" resultType="com.wlhse.entity.QHSECompanySysElementsPojo">
+        select * from qhse_managesyselements
+    </select>
+
+    <select id="querryStatus" resultType="java.lang.String" parameterType="java.lang.String">
+        select Status from qhse_managesyselements where Code = #{code}
+    </select>
+    <select id="querryScore" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select InitialScore from qhse_managesyselements where Code = #{code}
+    </select>
+    <update id="updateRule" parameterType="com.wlhse.entity.QHSEManageSysElements">
+        update qhse_managesyselements
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                Name=#{name},
+            </if>
+            <if test="content!=null and content!=''">
+                Content=#{content},
+            </if>
+            <if test="recordFile!=null and recordFile!=''">
+                RecordFile=#{recordFile},
+            </if>
+            <if test="basis!=null and basis!=''">
+                Basis=#{basis},
+            </if>
+            <if test="auditMode!=null and auditMode!=''">
+                AuditMode=#{auditMode},
+            </if>
+            <if test="initialScore!=null and initialScore!=''">
+                InitialScore=#{initialScore},
+            </if>
+            <if test="formula!=null and formula!=''">
+                Formula=#{formula},
+            </if>
+            <if test="problemDescription!=null and problemDescription!=''">
+                ProblemDescription=#{problemDescription},
+            </if>
+        </trim>
+        where Code=#{code}
+    </update>
+
+    <update id="addTotalCount" >
+        update qhse_managesyselements set TotalCount=TotalCount+#{count} where Code = #{code}
+    </update>
+    <update id="addInitialScore">
+        update qhse_managesyselements set InitialScore=InitialScore+#{score} where Code = #{code}
+    </update>
+
+    <update id="setOff">
+        update qhse_managesyselements set Status=#{status} where Code like concat(#{code},'%')
+    </update>
+    <update id="setOn">
+        update qhse_managesyselements set Status=#{status} where Code=#{code}
+    </update>
+    <select id="getScore" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select InitialScore from qhse_managesyselements where Code = #{code}
+    </select>
+    <update id="subSoreCount">
+        update qhse_managesyselements set InitialScore=InitialScore-#{score} where code = #{code};
+        update qhse_managesyselements set TotalCount=TotalCount-1 where Code=#{code};
+    </update>
+    <select id="sumScore" resultType="java.lang.Integer">
+        select sum(InitialScore) from qhse_managesyselements where Code like concat(#{code},'%') and length(Code)=10
+    </select>
+    <select id="sumCount" resultType="java.lang.Integer">
+        select count(*) from qhse_managesyselements where Code like concat(#{code},'%') and length(Code)=10
+    </select>
+
+    <update id="updateScoreCount">
+        update qhse_managesyselements set InitialScore=InitialScore-#{score},TotalCount=TotalCount-#{count} where code = #{code}
+    </update>
+    <update id="toZero">
+        update qhse_managesyselements set InitialScore=0,TotalCount=0 where Code like concat(#{code},'%') and length(Code)&lt;10;
+    </update>
+    <update id="addScoreCount">
+        update qhse_managesyselements set InitialScore=InitialScore+#{score},TotalCount=TotalCount+1 where Code=#{code};
+    </update>
+
+
+
+</mapper>

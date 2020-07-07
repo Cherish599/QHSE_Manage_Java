@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.CheckRecordDao">
+
+    <insert id="addCheckRecord" parameterType="com.wlhse.dto.CheckRecordDto" useGeneratedKeys="true" keyProperty="checkRecordID">
+        insert into checkrecord
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="name != null and name != ''">
+                Name,
+            </if>
+            <if test="content != null and content != ''">
+                Content,
+            </if>
+            <if test="checkType != null and checkType != ''">
+                CheckType,
+            </if>
+            <if test="checkCategory != null and checkCategory != ''">
+                CheckCategory,
+            </if>
+            <if test="companyName != null and companyName != ''">
+                CompanyName,
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                CompanyCode,
+            </if>
+            <if test="checkDate != null and checkDate != ''">
+                CheckDate,
+            </if>
+            <if test="checkContent != null and checkContent != ''">
+                CheckContent,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="checkType != null and checkType != ''">
+                #{checkType},
+            </if>
+            <if test="checkCategory != null and checkCategory != ''">
+                #{checkCategory},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                #{companyName},
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                #{companyCode},
+            </if>
+            <if test="checkDate != null and checkDate != ''">
+                #{checkDate},
+            </if>
+            <if test="checkContent != null and checkContent != ''">
+                #{checkContent},
+            </if>
+        </trim>
+        )
+    </insert>
+
+
+</mapper>
