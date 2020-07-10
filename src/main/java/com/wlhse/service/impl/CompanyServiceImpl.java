@@ -30,6 +30,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public R listQhseTreeCompany() {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseCompanyTree(companyDao.queryQhseCompany()));
+        return ok;
+    }
+
+    @Override
     public String getCompanyOutDto(String sonName) {
         int max = companyDao.queryMaxLenth();
         List<CompanyOutDto> listCompanyOutSonDto = new ArrayList<>();

@@ -20,6 +20,11 @@
         =(select CompanyCode from employee where EmployeeID=#{id})
     </select>
 
+    <select id="queryQhseCompany" resultMap="companyMap" parameterType="Integer">
+        SELECT * FROM sys_company
+        WHERE Status='启用'
+    </select>
+
     <select id="queryByCompanyName" resultType="java.lang.String">
         select CompanyCode from sys_company
         <where>

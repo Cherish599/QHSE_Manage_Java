@@ -54,13 +54,14 @@
 
 
     <select id="querryQHSEReportElements" resultType="com.wlhse.entity.QHSECompanySysElementsPojo">
-        select * from qhse_managesyselements
+        select * from QHSE_ManagerSysElement
         <where>
             <if test="status !=null and status!=''">
                 and Status=#{status}
             </if>
         </where>
     </select>
+
     <select id="querryQHSEReportElements1" resultType="com.wlhse.entity.QHSECompanySysElementsPojo">
         select * from qhse_managesyselements
     </select>
@@ -139,6 +140,21 @@
         update qhse_managesyselements set InitialScore=InitialScore+#{score},TotalCount=TotalCount+1 where Code=#{code};
     </update>
 
+    <select id="queryQhseElements" resultType="com.wlhse.entity.QhseElementsPojo">
+        select QHSE_ManagerSysElement_ID as qhseManagerSysElementID,
+        Code,
+        Name,
+        Content,
+        Basis,
+        AuditMode,
+        InitialScore,
+        Formula,
+        ProblemDescription,
+        TotalCount,
+        Status
+        from QHSE_ManagerSysElement
+        where Status='启用'
+    </select>
 
 
 </mapper>

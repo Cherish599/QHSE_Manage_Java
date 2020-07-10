@@ -12,6 +12,8 @@ import java.util.List;
 public interface CompanyDao {
     List<CompanyPojo> queryCompany(Integer id);//根据员工id 查询其所在公司及下属公司
 
+    List<CompanyPojo> queryQhseCompany();//查询所有公司
+
     String queryByCompanyName(String companyName);
 
     String queryByCompanyCode(String companyCode);

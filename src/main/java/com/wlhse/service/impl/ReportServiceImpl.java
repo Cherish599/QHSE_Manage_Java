@@ -7,7 +7,6 @@ import com.wlhse.dto.EmployeeManagementDto;
 import com.wlhse.dto.ReportDto;
 import com.wlhse.dto.ReportEmployeeRecordDto;
 import com.wlhse.dto.SampleDto;
-import com.wlhse.dto.outDto.ProblemImportDto;
 import com.wlhse.entity.CompanyPojo;
 import com.wlhse.entity.CountReportsPojo;
 import com.wlhse.entity.ReportList;
