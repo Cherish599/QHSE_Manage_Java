@@ -26,6 +26,12 @@ public class QHSEManageSysElementsController {
         return qhseManageSysElementsService.queryAllElement();
     }
 
+    //th---查询QHSE_ManagerSysElement基本表两级
+    @RequestMapping(value = "/querryQhseChildElement", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQhseManagerSysChildElement(){
+        return qhseManageSysElementsService.queryChildElement();
+    }
+
     @RequestMapping(value = "/addQHSERule", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public String addQHSERule(@RequestBody(required = false) QHSEManageSysElements qhseManageSysElements){
         return qhseManageSysElementsService.addQHSERule(qhseManageSysElements);

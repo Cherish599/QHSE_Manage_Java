@@ -40,5 +40,8 @@ public interface QHSEManageSysElementsDao {
     //th----查询基本数据表
     List<QhseElementsPojo> queryQhseElements();
 
+    //th----查询基本数据表两级
+    List<QhseElementsPojo> queryQhseChildElements();
+
 
 }

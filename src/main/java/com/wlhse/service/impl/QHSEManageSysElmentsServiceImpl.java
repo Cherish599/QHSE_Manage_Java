@@ -236,4 +236,13 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseElements()));
         return ok;
     }
+
+    //th-查询基本数据表两级
+    @Override
+    public R queryChildElement() {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseChildElements()));
+        return ok;
+    }
+
 }

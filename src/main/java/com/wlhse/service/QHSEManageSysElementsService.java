@@ -10,6 +10,9 @@ public interface QHSEManageSysElementsService {
     //th-查询基本数据表
     R queryAllElement();
 
+    //th-查询基本数据表两级
+    R queryChildElement();
+
     String addQHSERule(QHSEManageSysElements rule);
 
     String updateStatus(QHSEManageSysElements rule);
