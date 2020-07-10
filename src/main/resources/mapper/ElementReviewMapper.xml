@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.ElementReviewDao">
+
+    <select id="query" parameterType="com.wlhse.dto.inDto.ElementReviewDto"
+            resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
+        select * from qhse_companyyearmanagersyselement
+        <where>
+            <if test="companyName != null and companyName !=''">
+                AND companyName =#{companyName}
+            </if>
+            <if test="year != null and year !=''">
+                AND year =#{year}
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        update qhse_companyyearmanagersyselement
+        set status=#{status}
+        where qHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </update>
+
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="qHSE_CompanyYearManagerSysElementEvidence_ID != null and qHSE_CompanyYearManagerSysElementEvidence_ID  != ''">
+                qHSE_CompanyYearManagerSysElementEvidence_ID,
+            </if>
+            <if test="qHSE_CompanyYearManagerSysElement_ID != null and qHSE_CompanyYearManagerSysElement_ID  != ''">
+                qHSE_CompanyYearManagerSysElement_ID,
+            </if>
+            <if test="code != null and code  != ''">
+                code,
+            </if>
+            <if test="evidenceDescription != null and evidenceDescription  != ''">
+                evidenceDescription,
+            </if>
+            <if test="checkStaffID != null and checkStaffID  != ''">
+                checkStaffID,
+            </if>
+            <if test="checkStaffName != null and checkStaffName  != ''">
+                checkStaffName,
+            </if>
+            <if test="approverStaffID != null and approverStaffID  != ''">
+                approverStaffID,
+            </if>
+            <if test="approverStaffName != null and approverStaffName  != ''">
+                approverStaffName,
+            </if>
+            <if test="qHSE_CompanyYearManagerSysElementEvidenceAttach_ID != null and qHSE_CompanyYearManagerSysElementEvidenceAttach_ID  != ''">
+                qHSE_CompanyYearManagerSysElementEvidenceAttach_ID,
+            </if>
+            <if test="attachDescrption != null and attachDescrption  != ''">
+                attachDescrption,
+            </if>
+            <if test="attach!=null and attach !='">
+                attach,
+            </if>
+            <if test="uploadTime!=null and uploadTime !=''">
+                uploadTime,
+            </if>
+        </trim>
+    </sql>
+    <select id="queryAll" parameterType="Integer" resultType="com.wlhse.dto.outDto.QhseEvidenceAttatchDto">
+        select *
+         from qhse_companyyearmanagersyselementevidence t1,qhse_companyyearmanagersyselementevidenceattach t2
+        where t1.QHSE_CompanyYearManagerSysElementEvidence_ID=t2.QHSE_CompanyYearManagerSysElementEvidence_ID
+        and t1.QHSE_CompanyYearManagerSysElement_ID=#{id}
+    </select>
+
+</mapper>

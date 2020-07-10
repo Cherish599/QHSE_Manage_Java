@@ -1,7 +1,6 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.inDto.RegulationInDto;
-import com.wlhse.entity.CheckItemStardardPojo;
 import com.wlhse.entity.RegulationPojo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

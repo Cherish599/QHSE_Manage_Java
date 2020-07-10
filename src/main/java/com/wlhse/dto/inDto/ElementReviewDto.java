@@ -1,0 +1,63 @@
+package com.wlhse.dto.inDto;
+
+import org.springframework.stereotype.Repository;
+
+
+public class ElementReviewDto {
+    private Integer qHSE_CompanyYearManagerSysElement_ID;
+    private String code;
+    private String companyName;
+    private String year;
+    private String status;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getqHSE_CompanyYearManagerSysElement_ID() {
+        return qHSE_CompanyYearManagerSysElement_ID;
+    }
+
+    public void setqHSE_CompanyYearManagerSysElement_ID(Integer qHSE_CompanyYearManagerSysElement_ID) {
+        this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
+    }
+
+    @Override
+    public String toString() {
+        return "ElementReviewDto{" +
+                "qHSE_CompanyYearManagerSysElement_ID=" + qHSE_CompanyYearManagerSysElement_ID +
+                ", code='" + code + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", year='" + year + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+}
