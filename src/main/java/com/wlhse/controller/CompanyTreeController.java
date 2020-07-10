@@ -32,6 +32,12 @@ public class CompanyTreeController {
         return companyService.listTreeCompany(Integer.parseInt(id)).toJSONString();
     }
 
+    //qhse新增公司树查询
+    @RequestMapping(value = "/qhse_company/tree", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public String getQhseCompanyTree() {
+        return companyService.listQhseTreeCompany().toJSONString();
+    }
+
     //增加company
     @RequestMapping(value = "/company_tree", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public String addCompany(@RequestBody(required = false) CompanyPojo companyPojo) {
