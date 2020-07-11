@@ -9,6 +9,8 @@ public class ElementReviewDto {
     private String companyName;
     private String year;
     private String status;
+    private Integer checkStaffID;
+    private Integer approverStaffID;
 
     public String getCode() {
         return code;
@@ -50,6 +52,22 @@ public class ElementReviewDto {
         this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
     }
 
+    public Integer getCheckStaffID() {
+        return checkStaffID;
+    }
+
+    public void setCheckStaffID(Integer checkStaffID) {
+        this.checkStaffID = checkStaffID;
+    }
+
+    public Integer getApproverStaffID() {
+        return approverStaffID;
+    }
+
+    public void setApproverStaffID(Integer approverStaffID) {
+        this.approverStaffID = approverStaffID;
+    }
+
     @Override
     public String toString() {
         return "ElementReviewDto{" +
@@ -58,6 +76,8 @@ public class ElementReviewDto {
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
                 ", status='" + status + '\'' +
+                ", checkStaffID='" + checkStaffID + '\'' +
+                ", approverStaffID='" + approverStaffID + '\'' +
                 '}';
     }
 }

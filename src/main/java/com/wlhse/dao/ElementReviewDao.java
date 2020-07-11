@@ -17,4 +17,6 @@ public interface ElementReviewDao {
     int update(ElementReviewDto elementReviewDto);
     //查询证据关联信息根据ID
     QhseEvidenceAttatchDto queryAll(@Param("id") Integer id);
+    //当前登录人查询要素ID
+
 }

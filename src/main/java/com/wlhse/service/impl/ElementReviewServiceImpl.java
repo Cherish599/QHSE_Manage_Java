@@ -25,7 +25,8 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     @Override
     public R query(ElementReviewDto elementReviewDto) {
       List <QHSECompanyYearManagerSysElementDto> qHSECompanyYearManagerSysElementDto=elementReviewDao.query(elementReviewDto);
-        Map<String, Object> map = new HashMap<>();
+        System.out.println(elementReviewDto);
+      Map<String, Object> map = new HashMap<>();
         map.put("data", qHSECompanyYearManagerSysElementDto);
         return R.ok(map);
     }
@@ -34,9 +35,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     public R updateStatus(ElementReviewDto elementReviewDto) {
         if(elementReviewDao.update(elementReviewDto)<=0)
             throw new WLHSException("更新失败");
-        System.out.println(1);
         return R.ok();
-
     }
 
     @Override

@@ -18,10 +18,19 @@ import javax.servlet.http.HttpServletRequest;
 public class ElementReviewController {
     @Resource
     private ElementReviewService elementReviewService;
+    private JedisUtils jedisUtils;
 
-    //查询审核
+    //根据当前登录人查询审核要素
     @RequestMapping(value = "/query_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R elementReviewer(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
+    public R elementReviewer(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+        String token=request.getHeader("Authorization");
+        Jedis jedis=jedisUtils.getJedis();
+        String id=jedis.get(token);
+        int id1=Integer.valueOf(id);
+//        GetCurrentUserIdUtil getCurrentUserIdUtil=new GetCurrentUserIdUtil();
+//        int userid=getCurrentUserIdUtil.getUserId(request);
+        elementReviewDto.setCheckStaffID(id1);
+        System.out.println(elementReviewDto);
         return  elementReviewService.query(elementReviewDto);
     }
     //审核人通过
