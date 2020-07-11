@@ -352,6 +352,7 @@ public class TreeUtil {
         return result;
     }
 
+
     public List<QhseElementsOutDto> getCurrentQhseElementTree(List<QHSECompanyYearManagerSysElementDto> qhseElementsPojos) {
         Map<String, QhseElementsOutDto> map1 = new TreeMap<>();
         List<Integer> code = new ArrayList<>();
@@ -378,5 +379,51 @@ public class TreeUtil {
         return returnCurrentQhseElementList(map1, code);
     }
 
-
+    //年度要素表树
+    public List<QHSECompanyYearManagerSysElementDto> returnCurrentQhseElementList1(Map<String, QHSECompanyYearManagerSysElementDto> map, List<Integer> code) {
+        List<QHSECompanyYearManagerSysElementDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QHSECompanyYearManagerSysElementDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QHSECompanyYearManagerSysElementDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QHSECompanyYearManagerSysElementDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+    public List<QHSECompanyYearManagerSysElementDto> getCurrentQhseElementTree1(List<QHSECompanyYearManagerSysElementDto> qhseElementsPojos) {
+        Map<String, QHSECompanyYearManagerSysElementDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QHSECompanyYearManagerSysElementDto pojo : qhseElementsPojos) {
+            QHSECompanyYearManagerSysElementDto qHSECompanyYearManagerSysElementDto = new QHSECompanyYearManagerSysElementDto();
+            qHSECompanyYearManagerSysElementDto.setqHSE_CompanyYearManagerSysElement_ID(pojo.getqHSE_CompanyYearManagerSysElement_ID());
+            qHSECompanyYearManagerSysElementDto.setqHSE_CompanyYearManagerSysElementTable_ID(pojo.getqHSE_CompanyYearManagerSysElementTable_ID());
+            qHSECompanyYearManagerSysElementDto.setChildNode(pojo.getChildNode());
+            qHSECompanyYearManagerSysElementDto.setCode(pojo.getCode());
+            qHSECompanyYearManagerSysElementDto.setName(pojo.getName());
+            qHSECompanyYearManagerSysElementDto.setContent(pojo.getContent());
+            qHSECompanyYearManagerSysElementDto.setBasis(pojo.getBasis());
+            qHSECompanyYearManagerSysElementDto.setAuditMode(pojo.getAuditMode());
+            qHSECompanyYearManagerSysElementDto.setInitialScore(pojo.getInitialScore());
+            qHSECompanyYearManagerSysElementDto.setFormula(pojo.getFormula());
+            qHSECompanyYearManagerSysElementDto.setProblemDescription(pojo.getProblemDescription());
+            qHSECompanyYearManagerSysElementDto.setTotalCount(pojo.getTotalCount());
+            qHSECompanyYearManagerSysElementDto.setStatus(pojo.getStatus());
+            map1.put(qHSECompanyYearManagerSysElementDto.getCode(), qHSECompanyYearManagerSysElementDto);
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnCurrentQhseElementList1(map1, code);
+    }
 }

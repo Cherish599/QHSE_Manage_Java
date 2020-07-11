@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("ElementReviewDao")
 public interface ElementReviewDao {
 
     //查询审核表
@@ -21,6 +21,5 @@ public interface ElementReviewDao {
     //查询证据关联信息根据ID
     QhseEvidenceAttatchDto queryAll(@Param("id") Integer id);
 
-    //当前登录人查询要素ID
 
 }

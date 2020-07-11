@@ -1,6 +1,8 @@
 package com.wlhse.dto.outDto;
 
 import java.time.Year;
+import java.util.LinkedList;
+import java.util.List;
 
 public class QHSECompanyYearManagerSysElementDto {
     private Integer  qHSE_CompanyYearManagerSysElement_ID;
@@ -18,6 +20,7 @@ public class QHSECompanyYearManagerSysElementDto {
     private String  companyCode;
     private String  companyName;
     private String  year;
+    private List<QHSECompanyYearManagerSysElementDto> childNode = new LinkedList<>();
 
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
         return qHSE_CompanyYearManagerSysElement_ID;
@@ -139,24 +142,11 @@ public class QHSECompanyYearManagerSysElementDto {
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return "QHSECompanyYearManagerSysElementDto{" +
-                "qHSE_CompanyYearManagerSysElement_ID=" + qHSE_CompanyYearManagerSysElement_ID +
-                ", qHSE_CompanyYearManagerSysElementTable_ID=" + qHSE_CompanyYearManagerSysElementTable_ID +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", content='" + content + '\'' +
-                ", basis='" + basis + '\'' +
-                ", auditMode='" + auditMode + '\'' +
-                ", initialScore=" + initialScore +
-                ", formula='" + formula + '\'' +
-                ", problemDescription='" + problemDescription + '\'' +
-                ", totalCount=" + totalCount +
-                ", status='" + status + '\'' +
-                ", companyCode='" + companyCode + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", year='" + year + '\'' +
-                '}';
+    public List<QHSECompanyYearManagerSysElementDto> getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(List<QHSECompanyYearManagerSysElementDto> childNode) {
+        this.childNode = childNode;
     }
 }

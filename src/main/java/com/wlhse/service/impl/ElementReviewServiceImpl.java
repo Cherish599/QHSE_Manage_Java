@@ -27,8 +27,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     @Override
     public R query(ElementReviewDto elementReviewDto) {
         R ok = R.ok();
-//        List<QHSECompanyYearManagerSysElementDto> qHSECompanyYearManagerSysElementDto = elementReviewDao.query(elementReviewDto);
-        ok.put("data", treeUtil.getCurrentQhseElementTree(elementReviewDao.query(elementReviewDto)));
+        ok.put("data", treeUtil.getCurrentQhseElementTree1(elementReviewDao.query(elementReviewDto)));
         return ok;
     }
 

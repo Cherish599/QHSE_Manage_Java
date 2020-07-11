@@ -12,8 +12,9 @@
             <if test="year != null and year !=''">
                 AND year =#{year}
             </if>
-            <if test="qHSE_CompanyYearManagerSysElement_ID != null and qHSE_CompanyYearManagerSysElement_ID !=''">
-                AND qHSE_CompanyYearManagerSysElement_ID =(select qHSE_CompanyYearManagerSysElement_ID
+            <if test="code != null and code !=''">
+                AND code in
+                (select code
                 from qhse_companyyearmanagersyselementevidence where checkStaffID=#{checkStaffID})
             </if>
         </where>
