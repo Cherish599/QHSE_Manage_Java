@@ -7,6 +7,8 @@ public interface CompanyService {
 
     R listTreeCompany(Integer id);
 
+    R listQhseTreeCompany();
+
     String getCompanyOutDto(String sonName);
 
 //    R listContractingCompany(BaseGetDto baseGetDto,String name);

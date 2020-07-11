@@ -5,6 +5,7 @@ import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckListTreeDto;
 import com.wlhse.dto.TreeDto;
 import com.wlhse.dto.outDto.MenuOutDto;
+import com.wlhse.dto.outDto.QhseElementsOutDto;
 import com.wlhse.dto.outDto.RoleModuleOutDto;
 import com.wlhse.entity.*;
 import org.springframework.stereotype.Component;
@@ -76,6 +77,22 @@ public class TreeUtil {
         for (CompanyPojo pojo : companyPojo) {
             TreeDto treeDto = new TreeDto();
             treeDto.setId(pojo.getCompanyCode());
+            treeDto.setLabel(pojo.getName());
+            treeDto.setNodeCode(pojo.getCompanyCode());
+            map1.put(treeDto.getNodeCode(), treeDto);
+
+            if (code.indexOf(pojo.getCompanyCode().length()) == -1)
+                code.add(pojo.getCompanyCode().length());
+        }
+        return returnList(map1, code);
+    }
+
+    public List<TreeDto> getQhseCompanyTree(List<CompanyPojo> companyPojo) {
+        Map<String, TreeDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (CompanyPojo pojo : companyPojo) {
+            TreeDto treeDto = new TreeDto();
+            treeDto.setId(pojo.getSysCompanyID().toString());
             treeDto.setLabel(pojo.getName());
             treeDto.setNodeCode(pojo.getCompanyCode());
             map1.put(treeDto.getNodeCode(), treeDto);
@@ -177,7 +194,7 @@ public class TreeUtil {
         return result;
     }
 
-    //checkListTree
+    //th---checkListTree
     public List<CheckListTreeDto> returnCheckList(Map<String, CheckListTreeDto> map, List<Integer> code) {
         List<CheckListTreeDto> result = new ArrayList<>();
         Collections.sort(code);
@@ -262,6 +279,56 @@ public class TreeUtil {
                 code.add(pojo.getModuleCode().length());
         }
         return returnMenuList(map1, code);
+    }
+
+
+    //th---基础数据表
+    public List<QhseElementsOutDto> returnQhseElementList(Map<String, QhseElementsOutDto> map, List<Integer> code) {
+        List<QhseElementsOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QhseElementsOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QhseElementsOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QhseElementsOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    public List<QhseElementsOutDto> getQhseElementTree(List<QhseElementsPojo> qhseElementsPojos) {
+        Map<String, QhseElementsOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QhseElementsPojo pojo : qhseElementsPojos) {
+            QhseElementsOutDto qhseElementsOutDto = new QhseElementsOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setBasis(pojo.getBasis());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setContent(pojo.getContent());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setProblemDescription(pojo.getProblemDescription());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
+            //System.out.println(pojo.getQhseManagerSysElementID());
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQhseElementList(map1, code);
     }
 
 

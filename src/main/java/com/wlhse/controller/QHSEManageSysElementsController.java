@@ -3,6 +3,7 @@ package com.wlhse.controller;
 
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.service.QHSEManageSysElementsService;
+import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,18 @@ public class QHSEManageSysElementsController {
     @RequestMapping(value = "/querryQHSEChildRules/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public String querryQHSEChildRules(@PathVariable("status") int status){
         return qhseManageSysElementsService.querryAllRules(status);
+    }
+
+    //th---查询QHSE_ManagerSysElement基本表
+    @RequestMapping(value = "/querryQhseElement", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQhseManagerSysElement(){
+        return qhseManageSysElementsService.queryAllElement();
+    }
+
+    //th---查询QHSE_ManagerSysElement基本表两级
+    @RequestMapping(value = "/querryQhseChildElement", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQhseManagerSysChildElement(){
+        return qhseManageSysElementsService.queryChildElement();
     }
 
     @RequestMapping(value = "/addQHSERule", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})

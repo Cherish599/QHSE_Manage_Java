@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wlhse.dao.FileAuditDao">
+    <select id="queryTotal" resultType="java.lang.Integer">
+        select count(*)
+        from qhse_fileaudit
+        <where>
+            <if test="companyName != null and companyName  != ''">
+                AND companyName=#{companyName}
+            </if>
+            <if test="year != null and year  != ''">
+                AND year=#{year}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="fileAuditMap" type="com.wlhse.dto.FileAuditDto">
+        <id property="fileAuditId" column="QHSE_FileAudit_ID"/>
+        <result property="tableId" column="QHSE_CompanyYearManagerSysElementTable_ID"/>
+        <result property="auditName" column="AuditName"/>
+        <result property="auditType" column="AuditType"/>
+        <result property="auditTime" column="AuditTime"/>
+        <result property="additor" column="Additor"/>
+        <result property="companyCode" column="CompanyCode"/>
+        <result property="companyName" column="CompanyName"/>
+        <result property="year" column="Year"/>
+    </resultMap>
+
+    <select id="queryExistFile" resultMap="fileAuditMap">
+        select *
+        from qhse_fileaudit
+        <where>
+            <if test="companyName != null and companyName  != ''">
+                AND companyName=#{companyName}
+            </if>
+            <if test="year != null and year  != ''">
+                AND year=#{year}
+            </if>
+        </where>
+        order by year desc
+    </select>
+
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="fileAuditId != null and fileAuditId  != ''">
+                QHSE_FileAudit_ID,
+            </if>
+            <if test="tableId != null and tableId     != ''">
+                QHSE_CompanyYearManagerSysElementTable_ID,
+            </if>
+            <if test="auditName != null and auditName  != ''">
+                auditName,
+            </if>
+            <if test="auditType != null and auditType  != ''">
+                auditType,
+            </if>
+            <if test="auditTime != null and auditTime  != ''">
+                auditTime,
+            </if>
+            <if test="additor != null and additor  != ''">
+                additor,
+            </if>
+            <if test="companyCode != null and companyCode  != ''">
+            companyCode,companyName,
+            </if>
+            <if test="year != null and year  != ''">
+                year,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="value1">
+        <trim suffixOverrides=",">
+            <if test="fileAuditId != null and fileAuditId  != ''">
+                #{fileAuditId},
+            </if>
+            <if test="tableId != null and tableId  != ''">
+                #{tableId},
+            </if>
+            <if test="auditName != null and auditName  != ''">
+                #{auditName},
+            </if>
+            <if test="auditType != null and auditType  != ''">
+                #{auditType},
+            </if>
+            <if test="auditTime != null and auditTime  != ''">
+                #{auditTime},
+            </if>
+            <if test="additor != null and additor  != ''">
+                #{additor},
+            </if>
+            <if test="companyCode != null and companyCode  != ''">
+                #{companyCode},(select name from sys_company where CompanyCode=#{companyCode}),
+            </if>
+            <if test="year != null and year  != ''">
+                #{year},
+            </if>
+
+        </trim>
+    </sql>
+
+    <insert id="addFileAudit" parameterType="com.wlhse.dto.FileAuditDto">
+        insert into qhse_fileaudit
+        (<include refid="key"/>)
+        values
+        (<include refid="value1"/>)
+    </insert>
+
+    <delete id="deleteFileAudit">
+        delete from qhse_fileaudit
+        where QHSE_FileAudit_ID = #{id}
+    </delete>
+
+
+    <update id="updateStatus" parameterType="com.wlhse.dto.FileAuditRecordDto">
+        update qhse_fileauditrecord
+        <trim prefix="set" suffixOverrides=",">
+            <if test="pass != null and pass != ''">
+                Pass=#{pass},
+            </if>
+        </trim>
+        <where>
+            QHSE_FileAudit_ID=(select QHSE_FileAudit_ID from qhse_fileaudit
+            where year =#{year} and companyName=#{companyName})
+        </where>
+    </update>
+
+</mapper>

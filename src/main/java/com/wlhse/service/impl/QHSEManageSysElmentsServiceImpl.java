@@ -5,6 +5,7 @@ import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QHSEManageSysElementsService;
+import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
 import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
@@ -226,6 +227,22 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         for (int i = 0; i < list.size(); i++) {
             qhseManageSysElementsDao.addScoreCount(list.get(i), score);
         }
+    }
+
+    //th-查询基本数据表
+    @Override
+    public R queryAllElement() {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseElements()));
+        return ok;
+    }
+
+    //th-查询基本数据表两级
+    @Override
+    public R queryChildElement() {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseChildElements()));
+        return ok;
     }
 
 }
