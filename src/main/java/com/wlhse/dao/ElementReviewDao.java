@@ -12,8 +12,11 @@ import java.util.List;
 @Repository("ElementReviewDao")
 public interface ElementReviewDao {
 
-    //查询审核表
+    //查询审核表(审核人）
     List<QHSECompanyYearManagerSysElementDto> query(ElementReviewDto elementReviewDto);
+
+    //查询审核表(批准人）
+    List<QHSECompanyYearManagerSysElementDto> queryS(ElementReviewDto elementReviewDto);
 
     //修改审核人状态
     int update(ElementReviewDto elementReviewDto);

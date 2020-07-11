@@ -4,20 +4,18 @@
 
     <select id="query" parameterType="com.wlhse.dto.inDto.ElementReviewDto"
             resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
-        select * from qhse_companyyearmanagersyselement
-        <where>
-            <if test="companyName != null and companyName !=''">
-                AND companyName =#{companyName}
-            </if>
-            <if test="year != null and year !=''">
-                AND year =#{year}
-            </if>
-            <if test="code != null and code !=''">
-                AND code in
-                (select code
-                from qhse_companyyearmanagersyselementevidence where checkStaffID=#{checkStaffID})
-            </if>
-        </where>
+        select * from qhse_companyyearmanagersyselement where companyName =#{companyName} and year =#{year}
+        and qHSE_CompanyYearManagerSysElementTable_ID in
+        (select qHSE_CompanyYearManagerSysElementTable_ID
+        from qhse_companyyearmanagersyselementtable where checkStaffID=#{checkStaffID})
+    </select>
+
+    <select id="queryS" parameterType="com.wlhse.dto.inDto.ElementReviewDto"
+            resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
+        select * from qhse_companyyearmanagersyselement where companyName =#{companyName} and year =#{year}
+        and qHSE_CompanyYearManagerSysElementTable_ID in
+        (select qHSE_CompanyYearManagerSysElementTable_ID
+        from qhse_companyyearmanagersyselementtable where approverStaffID=#{approverStaffID})
     </select>
 
     <update id="update" parameterType="com.wlhse.dto.inDto.ElementReviewDto">

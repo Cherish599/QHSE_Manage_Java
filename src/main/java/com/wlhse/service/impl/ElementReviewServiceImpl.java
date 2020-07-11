@@ -32,6 +32,13 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     }
 
     @Override
+    public R queryS(ElementReviewDto elementReviewDto) {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getCurrentQhseElementTree1(elementReviewDao.queryS(elementReviewDto)));
+        return ok;
+    }
+
+    @Override
     public R updateStatus(ElementReviewDto elementReviewDto) {
         if (elementReviewDao.update(elementReviewDto) <= 0)
             throw new WLHSException("更新失败");

@@ -12,6 +12,14 @@ public class ElementReviewDto {
     private Integer checkStaffID;
     private Integer approverStaffID;
 
+    public Integer getqHSE_CompanyYearManagerSysElement_ID() {
+        return qHSE_CompanyYearManagerSysElement_ID;
+    }
+
+    public void setqHSE_CompanyYearManagerSysElement_ID(Integer qHSE_CompanyYearManagerSysElement_ID) {
+        this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
+    }
+
     public String getCode() {
         return code;
     }
@@ -42,14 +50,6 @@ public class ElementReviewDto {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Integer getqHSE_CompanyYearManagerSysElement_ID() {
-        return qHSE_CompanyYearManagerSysElement_ID;
-    }
-
-    public void setqHSE_CompanyYearManagerSysElement_ID(Integer qHSE_CompanyYearManagerSysElement_ID) {
-        this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
     }
 
     public Integer getCheckStaffID() {

@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface ElementReviewService {
 
-    //查询审核表
+
     R query(ElementReviewDto elementReviewDto);
+
+    R queryS(ElementReviewDto elementReviewDto);
 
     //修改审核人状态
     R updateStatus(ElementReviewDto elementReviewDto);

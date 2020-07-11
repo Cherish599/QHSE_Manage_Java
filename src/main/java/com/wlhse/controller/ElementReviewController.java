@@ -28,6 +28,12 @@ public class ElementReviewController {
         elementReviewDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
         return  elementReviewService.query(elementReviewDto);
     }
+    //根据当前登录人查询批准要素
+    @RequestMapping(value = "/query_elementReviewers", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R elementReviewers(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+        elementReviewDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
+        return  elementReviewService.queryS(elementReviewDto);
+    }
     //审核人通过
     @RequestMapping(value = "/pass_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R elementReviewer1(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
