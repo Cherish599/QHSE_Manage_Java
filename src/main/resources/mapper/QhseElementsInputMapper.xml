@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.QhseElementsInputDao">
+
+    <select id="queryElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementReviewDto" resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementEvidenceDto">
+        select
+        QHSE_CompanyYearManagerSysElementEvidence_ID as qhseCompanyYearManagerSysElementEvidenceID,
+        QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        Code as code,
+        EvidenceDescription as evidenceDescription
+        from QHSE_CompanyYearManagerSysElementEvidence
+        <where>
+            <if test="code != null and code!= ''">
+                Code = #{code}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        insert into QHSE_CompanyYearManagerSysElementEvidence
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="evidenceDescription != null and evidenceDescription != ''">
+                EvidenceDescription,
+            </if>
+            <if test="checkStaffName != null and checkStaffName != ''">
+                CheckStaffName,
+            </if>
+            <if test="approverStaffName != null and approverStaffName != ''">
+                ApproverStaffName,
+            </if>
+            CheckStaffID,
+            ApproverStaffID,
+            QHSE_CompanyYearManagerSysElement_ID,
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="evidenceDescription != null and evidenceDescription != ''">
+                #{evidenceDescription},
+            </if>
+            <if test="checkStaffName != null and checkStaffName != ''">
+                #{checkStaffName},
+            </if>
+            <if test="approverStaffName != null and approverStaffName != ''">
+                #{approverStaffName},
+            </if>
+            #{checkStaffID},
+            #{approverStaffID},
+            #{qhseCompanyYearManagerSysElementID},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateElementsStatus">
+        update QHSE_CompanyYearManagerSysElement
+        <set>
+            status = '未审核'
+        </set>
+        where QHSE_CompanyYearManagerSysElement_ID=#{id}
+    </update>
+
+    <insert id="addElementsEvidenceAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
+        insert into QHSE_CompanyYearManagerSysElementEvidenceAttach
+        (
+        <trim suffixOverrides=",">
+            <if test="attachDescrption != null and attachDescrption != ''">
+                AttachDescrption,
+            </if>
+            <if test="attach != null and attach != ''">
+                Attach,
+            </if>
+            <if test="uploadTime != null and uploadTime != ''">
+                uploadTime,
+            </if>
+            QHSE_CompanyYearManagerSysElementEvidence_ID,
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="attachDescrption != null and attachDescrption != ''">
+                #{attachDescrption},
+            </if>
+            <if test="attach != null and attach != ''">
+                #{attach},
+            </if>
+            <if test="uploadTime != null and uploadTime != ''">
+                #{uploadTime},
+            </if>
+            #{qhseCompanyYearManagerSysElementEvidenceID},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateElementsEvidenceAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
+        update QHSE_CompanyYearManagerSysElementEvidenceAttach
+        <set>
+            <if test="attachDescrption!=null and attachDescrption!=''">
+                AttachDescrption=#{attachDescrption},
+            </if>
+            <if test="attach!=null and attach!=''">
+                Attach=#{attach},
+            </if>
+            <if test="uploadTime!=null and uploadTime!=''">
+                uploadTime=#{uploadTime},
+            </if>
+        </set>
+        where
+        QHSE_CompanyYearManagerSysElementEvidence_ID=#{qhseCompanyYearManagerSysElementEvidenceID}
+    </update>
+
+    <select id="queryEvidenceAttach" resultType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
+        select
+        QHSE_CompanyYearManagerSysElementEvidenceAttach_ID as id,
+        QHSE_CompanyYearManagerSysElementEvidence_ID as qhseCompanyYearManagerSysElementEvidenceID,
+        AttachDescrption as attachDescrption,
+        Attach as attach,
+        uploadTime
+        from QHSE_CompanyYearManagerSysElementEvidenceAttach
+        where QHSE_CompanyYearManagerSysElementEvidence_ID=#{id}
+    </select>
+
+
+</mapper>
