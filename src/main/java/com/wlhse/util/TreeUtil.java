@@ -4,9 +4,7 @@ import com.wlhse.dao.ModuleDao;
 import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckListTreeDto;
 import com.wlhse.dto.TreeDto;
-import com.wlhse.dto.outDto.MenuOutDto;
-import com.wlhse.dto.outDto.QhseElementsOutDto;
-import com.wlhse.dto.outDto.RoleModuleOutDto;
+import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
 import org.springframework.stereotype.Component;
 
@@ -329,6 +327,55 @@ public class TreeUtil {
                 code.add(pojo.getCode().length());
         }
         return returnQhseElementList(map1, code);
+    }
+
+    //th/lhl---单位年度管理体系要素表根据当前登陆人和年度单位查询
+    public List<QhseElementsOutDto> returnCurrentQhseElementList(Map<String, QhseElementsOutDto> map, List<Integer> code) {
+        List<QhseElementsOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QhseElementsOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QhseElementsOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QhseElementsOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    public List<QhseElementsOutDto> getCurrentQhseElementTree(List<QHSECompanyYearManagerSysElementDto> qhseElementsPojos) {
+        Map<String, QhseElementsOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QHSECompanyYearManagerSysElementDto pojo : qhseElementsPojos) {
+            QhseElementsOutDto qhseElementsOutDto = new QhseElementsOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setBasis(pojo.getBasis());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setContent(pojo.getContent());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setProblemDescription(pojo.getProblemDescription());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setId(pojo.getqHSE_CompanyYearManagerSysElement_ID());
+            //System.out.println(pojo.getQhseManagerSysElementID());
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnCurrentQhseElementList(map1, code);
     }
 
 

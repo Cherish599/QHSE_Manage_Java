@@ -9,9 +9,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ElementReviewService {
+
     //查询审核表
     R query(ElementReviewDto elementReviewDto);
+
     //修改审核人状态
     R updateStatus(ElementReviewDto elementReviewDto);
+
     R queryAll( Integer id);
+
 }

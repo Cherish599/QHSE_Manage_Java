@@ -20,29 +20,30 @@ import java.util.Map;
 public class ElementReviewServiceImpl implements ElementReviewService {
     @Resource
     private ElementReviewDao elementReviewDao;
+
+    @Resource
     private TreeUtil treeUtil;
 
     @Override
     public R query(ElementReviewDto elementReviewDto) {
-      List <QHSECompanyYearManagerSysElementDto> qHSECompanyYearManagerSysElementDto=elementReviewDao.query(elementReviewDto);
-        System.out.println(elementReviewDto);
-      Map<String, Object> map = new HashMap<>();
-        map.put("data", qHSECompanyYearManagerSysElementDto);
-        return R.ok(map);
+        R ok = R.ok();
+//        List<QHSECompanyYearManagerSysElementDto> qHSECompanyYearManagerSysElementDto = elementReviewDao.query(elementReviewDto);
+        ok.put("data", treeUtil.getCurrentQhseElementTree(elementReviewDao.query(elementReviewDto)));
+        return ok;
     }
 
     @Override
     public R updateStatus(ElementReviewDto elementReviewDto) {
-        if(elementReviewDao.update(elementReviewDto)<=0)
+        if (elementReviewDao.update(elementReviewDto) <= 0)
             throw new WLHSException("更新失败");
         return R.ok();
     }
 
     @Override
     public R queryAll(Integer id) {
-        QhseEvidenceAttatchDto qhseEvidenceAttatchDto=elementReviewDao.queryAll(id);
-        Map<String,Object> map=new HashMap<>();
-        map.put("data",qhseEvidenceAttatchDto);
+        QhseEvidenceAttatchDto qhseEvidenceAttatchDto = elementReviewDao.queryAll(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", qhseEvidenceAttatchDto);
         return R.ok(map);
     }
 }

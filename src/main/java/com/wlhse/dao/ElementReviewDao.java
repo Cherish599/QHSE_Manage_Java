@@ -11,12 +11,16 @@ import java.util.List;
 
 @Repository
 public interface ElementReviewDao {
+
     //查询审核表
     List<QHSECompanyYearManagerSysElementDto> query(ElementReviewDto elementReviewDto);
+
     //修改审核人状态
     int update(ElementReviewDto elementReviewDto);
+
     //查询证据关联信息根据ID
     QhseEvidenceAttatchDto queryAll(@Param("id") Integer id);
+
     //当前登录人查询要素ID
 
 }
