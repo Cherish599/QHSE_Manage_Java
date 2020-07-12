@@ -7,7 +7,7 @@
         select * from qhse_companyyearmanagersyselement where companyName =#{companyName} and year =#{year}
         and qHSE_CompanyYearManagerSysElementTable_ID in
         (select qHSE_CompanyYearManagerSysElementTable_ID
-        from qhse_companyyearmanagersyselementtable where checkStaffID=#{checkStaffID})
+        from qhse_companyyearmanagersyselementtable where checkStaffID=#{checkStaffID}) and status="未审核"
     </select>
 
     <select id="queryS" parameterType="com.wlhse.dto.inDto.ElementReviewDto"
@@ -15,7 +15,7 @@
         select * from qhse_companyyearmanagersyselement where companyName =#{companyName} and year =#{year}
         and qHSE_CompanyYearManagerSysElementTable_ID in
         (select qHSE_CompanyYearManagerSysElementTable_ID
-        from qhse_companyyearmanagersyselementtable where approverStaffID=#{approverStaffID})
+        from qhse_companyyearmanagersyselementtable where approverStaffID=#{approverStaffID})and status="未批准"
     </select>
 
     <update id="update" parameterType="com.wlhse.dto.inDto.ElementReviewDto">

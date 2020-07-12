@@ -43,7 +43,6 @@ public class ElementReviewController {
     //审核人批准
     @RequestMapping(value = "/approval_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R elementReviewer2(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
-        System.out.println(elementReviewDto);
         elementReviewDto.setStatus("备案待查");
         return  elementReviewService.updateStatus(elementReviewDto);
     }
@@ -52,5 +51,10 @@ public class ElementReviewController {
     public R show(@PathVariable("id") Integer id) {
         return  elementReviewService.queryAll(id);
     }
-
+    //审核人不批准不通过
+    @RequestMapping(value = "/no_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
+        elementReviewDto.setStatus("不通过");
+        return  elementReviewService.updateStatus(elementReviewDto);
+    }
 }
