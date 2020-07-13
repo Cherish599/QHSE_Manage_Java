@@ -30,7 +30,7 @@ public class ElementReviewController {
     }
     //根据当前登录人查询批准要素
     @RequestMapping(value = "/query_elementReviewers", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R elementReviewers(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+    public R elementReviewers(@ModelAttribute ElementReviewDto elementReviewDto,HttpServletRequest request ) {
         elementReviewDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
         return  elementReviewService.queryS(elementReviewDto);
     }
