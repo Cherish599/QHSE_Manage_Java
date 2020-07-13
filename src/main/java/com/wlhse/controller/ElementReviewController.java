@@ -24,7 +24,7 @@ public class ElementReviewController {
 
     //根据当前登录人查询审核要素
     @RequestMapping(value = "/query_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R elementReviewer(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+    public R elementReviewer(@ModelAttribute ElementReviewDto elementReviewDto,HttpServletRequest request ) {
         elementReviewDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
         return  elementReviewService.query(elementReviewDto);
     }
