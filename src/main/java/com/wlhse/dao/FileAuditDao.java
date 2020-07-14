@@ -22,4 +22,7 @@ public interface FileAuditDao {
 
     //更新文件审核通过与否状态
     int updateStatus(FileAuditRecordDto fileAuditRecordDto);
+
+    //对结点打分
+    int updateScore(FileAuditRecordDto fileAuditRecordDto);
 }

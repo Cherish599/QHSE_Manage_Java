@@ -48,4 +48,11 @@ public class FileAuditServiceImpl implements FileAuditService {
             throw new WLHSException("更新失败");
         return NR.r();
     }
+
+    @Override
+    public String updateScore(FileAuditRecordDto fileAuditRecordDto) {
+        if(fileAuditDao.updateScore(fileAuditRecordDto)<=0)
+            throw new WLHSException("更新失败");
+        return NR.r();
+    }
 }

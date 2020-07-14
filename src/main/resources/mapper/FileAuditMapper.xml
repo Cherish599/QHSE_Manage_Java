@@ -46,9 +46,9 @@
             <if test="fileAuditId != null and fileAuditId  != ''">
                 QHSE_FileAudit_ID,
             </if>
-            <if test="tableId != null and tableId     != ''">
-                QHSE_CompanyYearManagerSysElementTable_ID,
-            </if>
+<!--            <if test="tableId != null and tableId     != ''">-->
+<!--                QHSE_CompanyYearManagerSysElementTable_ID,-->
+<!--            </if>-->
             <if test="auditName != null and auditName  != ''">
                 auditName,
             </if>
@@ -62,7 +62,7 @@
                 additor,
             </if>
             <if test="companyCode != null and companyCode  != ''">
-            companyCode,companyName,
+            companyCode,companyName,QHSE_CompanyYearManagerSysElementTable_ID,
             </if>
             <if test="year != null and year  != ''">
                 year,
@@ -74,9 +74,6 @@
         <trim suffixOverrides=",">
             <if test="fileAuditId != null and fileAuditId  != ''">
                 #{fileAuditId},
-            </if>
-            <if test="tableId != null and tableId  != ''">
-                #{tableId},
             </if>
             <if test="auditName != null and auditName  != ''">
                 #{auditName},
@@ -92,7 +89,12 @@
             </if>
             <if test="companyCode != null and companyCode  != ''">
                 #{companyCode},(select name from sys_company where CompanyCode=#{companyCode}),
+                (select QHSE_CompanyYearManagerSysElementTable_ID  from qhse_companyyearmanagersyselement
+                where CompanyCode=#{companyCode}),
             </if>
+<!--            <if test="tableId != null and tableId  != ''">-->
+<!--                (select QHSE_CompanyYearManagerSysElementTable_ID from qhse_companyyearmanagersyselement where companyCode=#{companyCode})),-->
+<!--            </if>-->
             <if test="year != null and year  != ''">
                 #{year},
             </if>
@@ -100,11 +102,13 @@
         </trim>
     </sql>
 
-    <insert id="addFileAudit" parameterType="com.wlhse.dto.FileAuditDto">
+    <insert id="addFileAudit" parameterType="com.wlhse.dto.FileAuditDto" >
         insert into qhse_fileaudit
         (<include refid="key"/>)
         values
         (<include refid="value1"/>)
+
+
     </insert>
 
     <delete id="deleteFileAudit">
@@ -114,7 +118,7 @@
 
 
     <update id="updateStatus" parameterType="com.wlhse.dto.FileAuditRecordDto">
-        update qhse_fileauditrecord
+    update qhse_fileauditrecord
         <trim prefix="set" suffixOverrides=",">
             <if test="pass != null and pass != ''">
                 Pass=#{pass},
@@ -124,6 +128,16 @@
             QHSE_FileAudit_ID=(select QHSE_FileAudit_ID from qhse_fileaudit
             where year =#{year} and companyName=#{companyName})
         </where>
+    </update>
+
+    <update id="updateScore" parameterType="com.wlhse.dto.FileAuditRecordDto">
+        update qhse_fileauditrecord
+        <trim prefix="set" suffixOverrides=",">
+            <if test="codeScore != null and codeScore != ''">
+                CodeScore=#{codeScore},
+            </if>
+        </trim>
+        where Code=#{code}
     </update>
 
 </mapper>
