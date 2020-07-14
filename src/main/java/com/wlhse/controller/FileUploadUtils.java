@@ -142,4 +142,16 @@ public class FileUploadUtils {
         }
     }
 
+    //要素证据上传
+    @RequestMapping(value = "/evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        }else{
+            String fileName = setFile(file, "resources\\QHSEEvidence\\");
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+        }
+    }
+
 }

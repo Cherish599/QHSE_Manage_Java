@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wlhse.dao.QhseElementsInputDao">
 
-    <select id="queryElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementReviewDto" resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementEvidenceDto">
+    <select id="queryElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto" resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementEvidenceDto">
         select
         QHSE_CompanyYearManagerSysElementEvidence_ID as qhseCompanyYearManagerSysElementEvidenceID,
         QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
@@ -16,7 +16,7 @@
         </where>
     </select>
 
-    <insert id="addElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+    <insert id="addElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto">
         insert into QHSE_CompanyYearManagerSysElementEvidence
         (
         <trim suffixOverrides=",">
@@ -127,6 +127,28 @@
         from QHSE_CompanyYearManagerSysElementEvidenceAttach
         where QHSE_CompanyYearManagerSysElementEvidence_ID=#{id}
     </select>
+
+    <select id="selectElementTableID" resultType="integer">
+        select QHSE_CompanyYearManagerSysElementTable_ID
+        from QHSE_CompanyYearManagerSysElement
+        where QHSE_CompanyYearManagerSysElement_ID=#{id}
+    </select>
+
+    <update id="updateElementTableByID" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto">
+        update QHSE_CompanyYearManagerSysElementTable
+        <set>
+            <if test="checkStaffName != null and checkStaffName != ''">
+                checkStaffName=#{checkStaffName},
+            </if>
+            <if test="approverStaffName != null and approverStaffName != ''">
+                approverStaffName=#{approverStaffName},
+            </if>
+            checkStaffID=#{checkStaffID},
+            approverStaffID=#{approverStaffID},
+        </set>
+        where
+        QHSE_CompanyYearManagerSysElementTable_ID=#{tableID}
+    </update>
 
 
 </mapper>

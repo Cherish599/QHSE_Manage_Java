@@ -15,6 +15,7 @@ import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
 import com.wlhse.util.state_code.NR;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
 
     @Override
     public R querryElementEvidence(ElementEvidenceInDto elementEvidenceInDto) {
+        System.out.println(elementEvidenceInDto.getCode());
         R ok = R.ok();
         ok.put("data", qhseElementsInputDao.queryElementsEvidence(elementEvidenceInDto));
         return ok;
@@ -40,12 +42,22 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Transactional
     @Override
     public R addElementEvidence(ElementEvidenceInDto elementEvidenceInDto) {
-        EmployeeDto employeeDto = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getApproverStaffID());
-        elementEvidenceInDto.setApproverStaffName(employeeDto.getName());
-        elementEvidenceInDto.setCheckStaffName(employeeDto.getName());
+        EmployeeDto empCheck = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getCheckStaffID());
+        EmployeeDto empApprove = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getApproverStaffID());
+        System.out.println(elementEvidenceInDto);
+        System.out.println(empCheck.getName());
+        elementEvidenceInDto.setApproverStaffName(empApprove.getName());
+        elementEvidenceInDto.setCheckStaffName(empCheck.getName());
+        //新增要素证据
         int i = qhseElementsInputDao.addElementsEvidence(elementEvidenceInDto);
+        //修改管理体系要素状态为未审核
         int j = qhseElementsInputDao.updateElementsStatus(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
-        if(i*j<=0)
+        //补充管理体系要素表的审核人和批准人
+        //先在管理体系要素种根据要素id找到要素表id，再补充
+        int id = qhseElementsInputDao.selectElementTableID(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
+        elementEvidenceInDto.setTableID(id);
+        int k = qhseElementsInputDao.updateElementTableByID(elementEvidenceInDto);
+        if(i*j*k<=0)
             throw new WLHSException("新增失败");
         return R.ok();
     }

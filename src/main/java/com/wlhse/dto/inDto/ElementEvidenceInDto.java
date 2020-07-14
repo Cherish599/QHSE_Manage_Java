@@ -16,6 +16,8 @@ public class ElementEvidenceInDto {
 
     private String approverStaffName;
 
+    private Integer tableID;
+
     public String getCode() {
         return code;
     }
@@ -70,5 +72,13 @@ public class ElementEvidenceInDto {
 
     public void setApproverStaffName(String approverStaffName) {
         this.approverStaffName = approverStaffName;
+    }
+
+    public Integer getTableID() {
+        return tableID;
+    }
+
+    public void setTableID(Integer tableID) {
+        this.tableID = tableID;
     }
 }

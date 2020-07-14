@@ -31,6 +31,7 @@ public class QhseElementsInputController {
     }
 
     //新增要素证据同时修改管理体系要素表状态
+    //同时补充管理体系要素表的审核人和批准人
     @RequestMapping(value = "/element_evidence", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public R addElementEvidence(@RequestBody(required = false) ElementEvidenceInDto elementEvidenceInDto, HttpServletRequest request ){
         elementEvidenceInDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
