@@ -38,11 +38,14 @@ public interface QHSEManageSysElementsDao {
     Integer toZero(@Param("code") String code);
     Integer addScoreCount(@Param("code") String code,@Param("score") Integer score);
 
-    //th----查询基本数据表
+    //th----查询基本数据表，仅启用
     List<QhseElementsPojo> queryQhseElements();
 
     //th----查询基本数据表两级
     List<QhseElementsPojo> queryQhseChildElements();
+    //th----查询所有的数据表
+    List<QhseElementsPojo> queryQhseAllElements();
+
 
 
 

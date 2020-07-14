@@ -247,6 +247,25 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseChildElements()));
         return ok;
     }
+    //th---根据是否启用查询节点
+    @Override
+    public R queryAllElements(int status) {
+        if (status == 0) //查启用
+        {
+            R ok = R.ok();
+            ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseElements()));
+            return ok;
+        } else if (status == 1) //查所有
+        {
+            R ok = R.ok();
+            ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseAllElements()));
+            return ok;
+        }else
+        {
+            throw new WLHSException("查询失败");
+        }
+
+    }
 
     //th---跟新状态
     @Override

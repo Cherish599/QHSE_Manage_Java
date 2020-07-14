@@ -156,6 +156,21 @@
         where Status='启用'
     </select>
 
+    <select id="queryQhseAllElements" resultType="com.wlhse.entity.QhseElementsPojo">
+        select QHSE_ManagerSysElement_ID as qhseManagerSysElementID,
+        Code,
+        Name,
+        Content,
+        Basis,
+        AuditMode,
+        InitialScore,
+        Formula,
+        ProblemDescription,
+        TotalCount,
+        Status
+        from QHSE_ManagerSysElement
+    </select>
+
     <select id="queryQhseChildElements" resultType="com.wlhse.entity.QhseElementsPojo">
         select QHSE_ManagerSysElement_ID as qhseManagerSysElementID,
         Code,
