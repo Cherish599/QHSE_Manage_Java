@@ -1,6 +1,7 @@
 package com.wlhse.service;
 
 import com.wlhse.entity.QHSEManageSysElements;
+import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.util.R;
 
 
@@ -12,6 +13,9 @@ public interface QHSEManageSysElementsService {
 
     //th-查询基本数据表两级
     R queryChildElement();
+    //th---跟新状态
+    String updateElementStatus(QhseElementsPojo rule);
+
 
     String addQHSERule(QHSEManageSysElements rule);
 

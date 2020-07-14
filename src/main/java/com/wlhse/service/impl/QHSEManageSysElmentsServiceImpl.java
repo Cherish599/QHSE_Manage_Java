@@ -1,8 +1,10 @@
 package com.wlhse.service.impl;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
+import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QHSEManageSysElementsService;
 import com.wlhse.util.R;
@@ -180,8 +182,9 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return NR.r();
     }
 
-    public void setOff(String str, String code) {
+   public void setOff(String str, String code) {
         qhseManageSysElementsDao.setOff(str, code);
+
     }//本人及其儿子改成停用
 
     public void setOn(String str, String code) {
@@ -194,7 +197,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         while (len > 0) {//父节点
             String str = code.substring(0, len);
             list.add(str);
-            len -= 2;
+            len -= 3;
         }
         list.remove(0);
         return list;
@@ -244,5 +247,43 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseChildElements()));
         return ok;
     }
+
+    //th---跟新状态
+    @Override
+    public String updateElementStatus(QhseElementsPojo rule) {
+        String code = rule.getCode();
+        Integer len = code.length();
+        String status = rule.getStatus();
+        List<String> list = getParent(code);
+        if (status.equals("停用")) {
+            setOff("停用", code);
+            if (len == 15) {//是叶子节点
+                int score = getScore(code);
+                for (int i = 0; i < list.size(); i++) {
+                    updateScoreCount(list.get(i), score, 1);
+                }
+            } else {//不是叶子节点
+                Integer score = sumScore(code); //score: null
+                Integer count = sumCount(code);//count: 0
+                toZero(code);//将当前项和子项的分数和项数都归零
+                for (int i = 0; i < list.size(); i++) {//该节点所有分母依次减分减项数
+                    updateScoreCount(list.get(i), score, count);
+                }
+            }
+        } else if (status.equals("启用")) {
+            for (int i = 0; i < list.size(); i++) {
+                setOn("启用", list.get(i));
+            }
+            setOn("启用", code);
+            if (len == 15) {
+                int score = getScore(code);
+                addScoreCount(list, score);
+            }
+        }
+        return NR.r();
+
+    }
+
+
 
 }

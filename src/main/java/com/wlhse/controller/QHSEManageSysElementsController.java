@@ -2,6 +2,7 @@ package com.wlhse.controller;
 
 
 import com.wlhse.entity.QHSEManageSysElements;
+import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.service.QHSEManageSysElementsService;
 import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,13 @@ public class QHSEManageSysElementsController {
     public R querryQhseManagerSysChildElement(){
         return qhseManageSysElementsService.queryChildElement();
     }
+    //th---跟新状态
+    @RequestMapping(value = "/updateQHSEElementStatus", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
+    public String updateQHSEElementStatus(@RequestBody(required = false) QhseElementsPojo qhseManageSysElements){
+        return qhseManageSysElementsService.updateElementStatus(qhseManageSysElements);
+    }
+
+
 
     @RequestMapping(value = "/addQHSERule", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public String addQHSERule(@RequestBody(required = false) QHSEManageSysElements qhseManageSysElements){
