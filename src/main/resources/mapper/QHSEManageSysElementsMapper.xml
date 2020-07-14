@@ -172,6 +172,33 @@
         where Status='启用'
         and length (code) &lt;= '6'
     </select>
+    <update id="updateElement" parameterType="com.wlhse.entity.QhseElementsPojo">
+        update qhse_managersyselement
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                Name=#{name},
+            </if>
+            <if test="content!=null and content!=''">
+                Content=#{content},
+            </if>
+            <if test="basis!=null and basis!=''">
+                Basis=#{basis},
+            </if>
+            <if test="auditMode!=null and auditMode!=''">
+                AuditMode=#{auditMode},
+            </if>
+            <if test="initialScore!=null and initialScore!=''">
+                InitialScore=#{initialScore},
+            </if>
+            <if test="formula!=null and formula!=''">
+                Formula=#{formula},
+            </if>
+            <if test="problemDescription!=null and problemDescription!=''">
+                ProblemDescription=#{problemDescription},
+            </if>
+        </trim>
+        where Code=#{code}
+    </update>
 
 
 </mapper>

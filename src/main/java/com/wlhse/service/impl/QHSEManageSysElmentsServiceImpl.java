@@ -231,7 +231,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             qhseManageSysElementsDao.addScoreCount(list.get(i), score);
         }
     }
-
+    //th-------------------------------------更新区------------------------------------------
     //th-查询基本数据表
     @Override
     public R queryAllElement() {
@@ -284,6 +284,35 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
+    @Override
+    public String updateElementcontent(QhseElementsPojo qhseManageSysElement) {
+        String code = qhseManageSysElement.getCode();
+        Integer len = code.length();
+        String status = qhseManageSysElementsDao.querryStatus(code);
+        if ("启用".equals(status)) {
+            if (len == 15) {
+                Integer score = qhseManageSysElementsDao.querryScore(code);
+                Integer newScore = qhseManageSysElement.getInitialScore() - score;
+                if (newScore != 0) {
+                    List<String> parentCode = new ArrayList<String>();
+                    while (len > 3) {//所有父节点
+                        len -= 3;
+                        String str = code.substring(0, len);
+                        parentCode.add(str);
+                    }
+                    for (int i = 0; i < parentCode.size(); i++) {
+                        String pcode = parentCode.get(i);
+                        if (qhseManageSysElementsDao.addInitialScore(pcode, newScore) <= 0)
+                            throw new WLHSException("更新失败");
+                    }
+                }
+            }
+        }
+        if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)
+            throw new WLHSException("更新失败");
+        return NR.r();
+
+    }
 
 
 }

@@ -37,6 +37,11 @@ public class QHSEManageSysElementsController {
     public String updateQHSEElementStatus(@RequestBody(required = false) QhseElementsPojo qhseManageSysElements){
         return qhseManageSysElementsService.updateElementStatus(qhseManageSysElements);
     }
+    //---更新内容
+    @RequestMapping(value = "/updateQHSEElement", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
+    public String updateQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
+        return qhseManageSysElementsService.updateElementcontent(qhseManageSysElement);
+    }
 
 
 

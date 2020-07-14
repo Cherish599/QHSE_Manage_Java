@@ -22,6 +22,7 @@ public interface QHSEManageSysElementsDao {
     Integer addInitialScore(@Param("code") String code,@Param("score") Integer score);
 
     Integer updateRule(QHSEManageSysElements rule);
+    Integer updateElement(QhseElementsPojo rule);//换类型重写
 
     String querryStatus(String code);
 

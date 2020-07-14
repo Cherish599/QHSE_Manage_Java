@@ -15,6 +15,9 @@ public interface QHSEManageSysElementsService {
     R queryChildElement();
     //th---跟新状态
     String updateElementStatus(QhseElementsPojo rule);
+    //th---更新
+    String updateElementcontent(QhseElementsPojo qhseManageSysElement);
+
 
 
     String addQHSERule(QHSEManageSysElements rule);
