@@ -15,6 +15,15 @@ public class QhseEvidenceAttatchDto {
     private String   attachDescrption;
     private String   attach;
     private Date     uploadTime;
+    private String   url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public Integer getqHSE_CompanyYearManagerSysElementEvidence_ID() {
         return qHSE_CompanyYearManagerSysElementEvidence_ID;

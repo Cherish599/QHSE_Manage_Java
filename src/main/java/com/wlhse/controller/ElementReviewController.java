@@ -3,6 +3,7 @@ package com.wlhse.controller;
 import com.wlhse.cache.JedisUtils;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.getDto.EmployeeDto;
+import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.service.ElementReviewService;
 import com.wlhse.util.GetCurrentUserIdUtil;
 import com.wlhse.util.R;
@@ -47,9 +48,9 @@ public class ElementReviewController {
         return  elementReviewService.updateStatus(elementReviewDto);
     }
     //显示要素证据信息
-    @RequestMapping(value = "/show_elementReviewer/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R show(@PathVariable("id") Integer id) {
-        return  elementReviewService.queryAll(id);
+    @RequestMapping(value = "/show_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R show(@ModelAttribute QhseEvidenceAttatchDto qhseEvidenceAttatchDto) {
+        return  elementReviewService.queryAll(qhseEvidenceAttatchDto);
     }
     //审核人不批准不通过
     @RequestMapping(value = "/no_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")

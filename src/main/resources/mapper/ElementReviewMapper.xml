@@ -20,7 +20,8 @@
 
     <select id="queryS" parameterType="com.wlhse.dto.inDto.ElementReviewDto"
             resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
-        select * from qhse_companyyearmanagersyselement  <where>
+        select * from qhse_companyyearmanagersyselement
+        <where>
         <if test="companyName != null and companyName  != ''">
             AND companyName=#{companyName}
         </if>
@@ -39,12 +40,28 @@
         where qHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
     </update>
 
+    <sql id = "element_evidence_key">
+        t1.qHSE_CompanyYearManagerSysElementEvidence_ID,
+        qHSE_CompanyYearManagerSysElement_ID,
+        code,
+        evidenceDescription,
+        checkStaffID,
+        checkStaffName,
+        approverStaffID,
+        approverStaffName,
+        qHSE_CompanyYearManagerSysElementEvidenceAttach_ID,
+        attachDescrption,
+        if(attach='',attach,concat(#{url},attach)) as attach,
+        uploadTime
+    </sql>
 
-    <select id="queryAll" parameterType="Integer" resultType="com.wlhse.dto.outDto.QhseEvidenceAttatchDto">
-        select *
+    <select id="queryAll" parameterType="com.wlhse.dto.outDto.QhseEvidenceAttatchDto"
+            resultType="com.wlhse.dto.outDto.QhseEvidenceAttatchDto">
+        select
+        <include refid="element_evidence_key"/>
          from qhse_companyyearmanagersyselementevidence t1,qhse_companyyearmanagersyselementevidenceattach t2
         where t1.QHSE_CompanyYearManagerSysElementEvidence_ID=t2.QHSE_CompanyYearManagerSysElementEvidence_ID
-        and t1.QHSE_CompanyYearManagerSysElement_ID=#{id}
+        and t1.QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
     </select>
 
 </mapper>

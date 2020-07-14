@@ -9,6 +9,7 @@ import com.wlhse.exception.WLHSException;
 import com.wlhse.service.ElementReviewService;
 import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +24,9 @@ public class ElementReviewServiceImpl implements ElementReviewService {
 
     @Resource
     private TreeUtil treeUtil;
+
+    @Value("${RESOURCES_QHSE_ElementInput_Evidence_URL}")
+    private String url;
 
     @Override
     public R query(ElementReviewDto elementReviewDto) {
@@ -45,11 +49,13 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         return R.ok();
     }
 
+
     @Override
-    public R queryAll(Integer id) {
-        QhseEvidenceAttatchDto qhseEvidenceAttatchDto = elementReviewDao.queryAll(id);
+    public R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) {
+        qhseEvidenceAttatchDto.setUrl(url);
+        QhseEvidenceAttatchDto qhseEvidenceAttatchDtos = elementReviewDao.queryAll(qhseEvidenceAttatchDto);
         Map<String, Object> map = new HashMap<>();
-        map.put("data", qhseEvidenceAttatchDto);
+        map.put("data", qhseEvidenceAttatchDtos);
         return R.ok(map);
     }
 }
