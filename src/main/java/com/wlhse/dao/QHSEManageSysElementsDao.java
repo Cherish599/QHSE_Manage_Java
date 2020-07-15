@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface QHSEManageSysElementsDao {
     String querryLastQHSEChildCode(@Param("code") String code);
+    String querryLastQHSEChildCode2(@Param("code") String code);//查询最后一个字节的重写
 
     Integer addQHSERule(QHSEManageSysElements rule);
+    Integer addQHSEElement(QhseElementsPojo element);//换类型重写
 
     List<QHSECompanySysElementsPojo> querryQHSEReportElements(@Param("status") String status);
 

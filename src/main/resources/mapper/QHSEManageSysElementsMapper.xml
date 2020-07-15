@@ -215,5 +215,16 @@
         where Code=#{code}
     </update>
 
+    <select id="querryLastQHSEChildCode2" resultType="java.lang.String">
+        select Code from qhse_managersyselement where Code like concat(#{code},"___") order by Code desc limit 1
+    </select>
+
+    <insert id="addQHSEElement" parameterType="com.wlhse.entity.QhseElementsPojo">
+        insert into qhse_managersyselement
+        (Code,Name,Content,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
+        values
+        (#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
+    </insert>
+
 
 </mapper>

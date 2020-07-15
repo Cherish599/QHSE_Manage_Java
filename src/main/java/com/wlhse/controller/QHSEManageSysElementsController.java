@@ -44,6 +44,11 @@ public class QHSEManageSysElementsController {
     public String updateQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
         return qhseManageSysElementsService.updateElementcontent(qhseManageSysElement);
     }
+    //---添加节点内容
+    @RequestMapping(value = "/addQHSEElement", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public String addQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
+        return qhseManageSysElementsService.addElement(qhseManageSysElement);
+    }
 
     //---------------旧代码区----------------------------------------
     @RequestMapping(value = "/querryQHSEChildRules/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})

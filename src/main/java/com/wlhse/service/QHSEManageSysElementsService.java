@@ -27,5 +27,6 @@ public interface QHSEManageSysElementsService {
     //th---更新内容
     String updateElementcontent(QhseElementsPojo qhseManageSysElement);
     //th---添加节点内容
+    String addElement(QhseElementsPojo qhseManageSysElement);
 
 }

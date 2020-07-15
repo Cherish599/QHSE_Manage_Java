@@ -302,7 +302,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return NR.r();
 
     }
-
+    //th---更新内容
     @Override
     public String updateElementcontent(QhseElementsPojo qhseManageSysElement) {
         String code = qhseManageSysElement.getCode();
@@ -330,6 +330,88 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)
             throw new WLHSException("更新失败");
         return NR.r();
+
+    }
+    //th---添加节点内容
+    @Override
+    public String addElement(QhseElementsPojo qhseManageSysElement) {
+        String parentCode = qhseManageSysElement.getCode();
+        try {
+            if (parentCode == null || "".equals(parentCode)) {
+                String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2("");
+                Integer maxNum = Integer.parseInt(maxCode);
+                Integer num = maxNum + 1;
+                String numCode = Integer.toString(num);
+                if (num < 10)
+                    qhseManageSysElement.setCode("00" + numCode);
+                else if (num < 100)
+                    qhseManageSysElement.setCode("0" + numCode);
+                else
+                    qhseManageSysElement.setCode(numCode);
+                qhseManageSysElement.setTotalCount(0);
+                qhseManageSysElement.setInitialScore(0);
+            } else {
+                Integer len = parentCode.length();
+                if (len < 12) {
+                    qhseManageSysElement.setTotalCount(0);
+                    qhseManageSysElement.setInitialScore(0);
+                    String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);
+                    if (maxCode == null || "".equals(maxCode))
+                        qhseManageSysElement.setCode(parentCode + "001");
+                    else {
+                        String lastTwoCode = maxCode.substring(maxCode.length() - 3, maxCode.length());
+                        Integer lastTwoNum = Integer.parseInt(lastTwoCode);
+                        Integer num = lastTwoNum + 1;
+                        String numCode = Integer.toString(num);
+                        if (num < 10)
+                            qhseManageSysElement.setCode(parentCode + "00" + numCode);
+                        else if(num<100)
+                            qhseManageSysElement.setCode(parentCode + "0" + numCode);
+                        else
+                            qhseManageSysElement.setCode(parentCode + numCode);
+                    }
+                } else if (len == 12) {
+                    qhseManageSysElement.setTotalCount(1);
+                    String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);
+                    if (maxCode == null || "".equals(maxCode))
+                        qhseManageSysElement.setCode(parentCode + "001");
+                    else {
+                        String lastTwoCode = maxCode.substring(maxCode.length() - 3, maxCode.length());
+                        Integer lastTwoNum = Integer.parseInt(lastTwoCode);
+                        Integer num = lastTwoNum + 1;
+                        String numCode = Integer.toString(num);
+                        if (num < 10)
+                            qhseManageSysElement.setCode(parentCode + "00" + numCode);
+                        else if(num<100)
+                            qhseManageSysElement.setCode(parentCode + "0" + numCode);
+                        else
+                            qhseManageSysElement.setCode(parentCode + numCode);
+                    }
+
+                    Integer len1 = len;
+                    Integer initialScore = qhseManageSysElement.getInitialScore();
+                    List<String> pCode = new ArrayList<String>();
+                    while (len1 > 0) {//所有父节点
+                        String str = parentCode.substring(0, len1);
+                        pCode.add(str);
+                        len1 -= 3;
+                    }
+                    for (int i = 0; i < pCode.size(); i++) {
+                        String code = pCode.get(i);
+                        if (qhseManageSysElementsDao.addTotalCount(code, 1) <= 0)
+                            throw new WLHSException("更新失败");
+                        if (qhseManageSysElementsDao.addInitialScore(code, initialScore) <= 0)
+                            throw new WLHSException("更新失败");
+                    }
+                }
+            }
+            if (qhseManageSysElementsDao.addQHSEElement(qhseManageSysElement) <= 0)
+                throw new WLHSException("新增失败");
+            return NR.r();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WLHSException("新增失败");
+        }
 
     }
 
