@@ -22,7 +22,7 @@ public interface ElementReviewDao {
     int update(ElementReviewDto elementReviewDto);
 
     //查询证据关联信息根据ID
-    QhseEvidenceAttatchDto queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
+    List<QhseEvidenceAttatchDto> queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
 
 
 }

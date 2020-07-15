@@ -22,4 +22,11 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         return R.ok();
     }
 
+    @Override
+    public R queryAll() {
+        R ok = R.ok();
+        ok.put("data",checkRecordDao.queryAll());
+        return ok;
+    }
+
 }

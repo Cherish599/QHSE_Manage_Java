@@ -7,5 +7,6 @@ import com.wlhse.util.R;
 public interface CheckRecordService {
 
     R addCheckRecord(CheckRecordDto checkRecordDto);
+    R queryAll();
 
 }

@@ -13,4 +13,7 @@ public interface CheckRecordDao {
 
     Integer addCheckRecord(CheckRecordDto checkRecordDto);
 
+    //查询所有
+    List<CheckRecordDto> queryAll();
+
 }

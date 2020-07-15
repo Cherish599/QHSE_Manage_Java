@@ -69,5 +69,7 @@
         )
     </insert>
 
-
+    <select id="queryAll" resultType="com.wlhse.dto.CheckRecordDto" >
+        select * from checkrecord
+    </select>
 </mapper>

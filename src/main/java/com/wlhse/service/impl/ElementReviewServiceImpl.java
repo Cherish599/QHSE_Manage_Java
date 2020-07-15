@@ -53,7 +53,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     @Override
     public R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) {
         qhseEvidenceAttatchDto.setUrl(url);
-        QhseEvidenceAttatchDto qhseEvidenceAttatchDtos = elementReviewDao.queryAll(qhseEvidenceAttatchDto);
+        List<QhseEvidenceAttatchDto> qhseEvidenceAttatchDtos = elementReviewDao.queryAll(qhseEvidenceAttatchDto);
         Map<String, Object> map = new HashMap<>();
         map.put("data", qhseEvidenceAttatchDtos);
         return R.ok(map);
