@@ -14,4 +14,6 @@ public interface FileAuditService {
     R deleteFileAudit(Integer id);
     //更新文件审核通过与否状态
     String updateStatus(FileAuditRecordDto fileAuditRecordDto);
+    //结点打分
+    String updateScore(FileAuditRecordDto fileAuditRecordDto);
 }

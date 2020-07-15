@@ -231,7 +231,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             qhseManageSysElementsDao.addScoreCount(list.get(i), score);
         }
     }
-
+    //th-------------------------------------更新区------------------------------------------
     //th-查询基本数据表
     @Override
     public R queryAllElement() {
@@ -246,6 +246,25 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         R ok = R.ok();
         ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseChildElements()));
         return ok;
+    }
+    //th---根据是否启用查询节点
+    @Override
+    public R queryAllElements(int status) {
+        if (status == 0) //查启用
+        {
+            R ok = R.ok();
+            ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseElements()));
+            return ok;
+        } else if (status == 1) //查所有
+        {
+            R ok = R.ok();
+            ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseAllElements()));
+            return ok;
+        }else
+        {
+            throw new WLHSException("查询失败");
+        }
+
     }
 
     //th---跟新状态
@@ -284,6 +303,35 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
+    @Override
+    public String updateElementcontent(QhseElementsPojo qhseManageSysElement) {
+        String code = qhseManageSysElement.getCode();
+        Integer len = code.length();
+        String status = qhseManageSysElementsDao.querryStatus(code);
+        if ("启用".equals(status)) {
+            if (len == 15) {
+                Integer score = qhseManageSysElementsDao.querryScore(code);
+                Integer newScore = qhseManageSysElement.getInitialScore() - score;
+                if (newScore != 0) {
+                    List<String> parentCode = new ArrayList<String>();
+                    while (len > 3) {//所有父节点
+                        len -= 3;
+                        String str = code.substring(0, len);
+                        parentCode.add(str);
+                    }
+                    for (int i = 0; i < parentCode.size(); i++) {
+                        String pcode = parentCode.get(i);
+                        if (qhseManageSysElementsDao.addInitialScore(pcode, newScore) <= 0)
+                            throw new WLHSException("更新失败");
+                    }
+                }
+            }
+        }
+        if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)
+            throw new WLHSException("更新失败");
+        return NR.r();
+
+    }
 
 
 }

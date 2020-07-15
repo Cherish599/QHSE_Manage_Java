@@ -6,20 +6,26 @@ import com.wlhse.util.R;
 
 
 public interface QHSEManageSysElementsService {
+    //------旧代码区----------------
     String querryAllRules(Integer status);
-
-    //th-查询基本数据表
-    R queryAllElement();
-
-    //th-查询基本数据表两级
-    R queryChildElement();
-    //th---跟新状态
-    String updateElementStatus(QhseElementsPojo rule);
-
 
     String addQHSERule(QHSEManageSysElements rule);
 
     String updateStatus(QHSEManageSysElements rule);
 
     String updateQHSERule(QHSEManageSysElements qhseManageSysElements);
+
+    //--------新代码区--------------
+    //th-查询基本数据表
+    R queryAllElement();
+    //th-查询基本数据表两级
+    R queryChildElement();
+    //th---根据是否启用查询节点
+    R queryAllElements(int status);
+    //th---更新状态
+    String updateElementStatus(QhseElementsPojo rule);
+    //th---更新内容
+    String updateElementcontent(QhseElementsPojo qhseManageSysElement);
+    //th---添加节点内容
+
 }
