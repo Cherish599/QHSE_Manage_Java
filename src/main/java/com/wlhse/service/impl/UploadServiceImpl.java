@@ -1,9 +1,14 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.dao.CheckListDao;
+import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.*;
+import com.wlhse.dto.inDto.QSHEMSElementInDto;
+import com.wlhse.exception.WLHSException;
 import com.wlhse.service.UploadService;
 import com.wlhse.util.*;
+import com.wlhse.util.state_code.CodeDict;
+import com.wlhse.util.state_code.NR;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.scheduling.annotation.Async;
@@ -11,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,6 +34,8 @@ public class UploadServiceImpl implements UploadService {
 
     @Resource
     private CheckListDao checkListDao;
+    @Resource
+    private QHSEManageSysElementsDao qHSEManageSysElementsDao;
 
     private final static String staus = "启用";
 
@@ -89,5 +93,65 @@ public class UploadServiceImpl implements UploadService {
             }
         }
         return null;
+    }
+
+    //管理要素审核excel录入数据库
+    @Override
+    public String uploadQHSEManageSysElements(String path) throws Exception {
+        Workbook workbook = poiUtil.createWorkbook(path);
+        Sheet sheet = workbook.getSheetAt(0);//获取指定表可以改成自动获取
+        //创建实体类对象容器
+        List<QSHEMSElementInDto> beanList = new ArrayList<>();
+        //获取EXCEL中CheckList的值
+        HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+        DataFormatter dataFormat=new DataFormatter();
+        System.out.println(sheet.getPhysicalNumberOfRows());
+        for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {
+            Row row = sheet.getRow(j);//按行取
+            QSHEMSElementValueMap.put("qhseManagerSysElementID", dataFormat.formatCellValue(row.getCell(0)));
+            System.out.println(dataFormat.formatCellValue(row.getCell(0)));//
+            QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(1)));
+            System.out.println(dataFormat.formatCellValue(row.getCell(1)));
+            QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(2)));
+            QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(3)));
+            QSHEMSElementValueMap.put("basis", dataFormat.formatCellValue(row.getCell(4)));
+            QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(5)));
+            QSHEMSElementValueMap.put("initialScore", dataFormat.formatCellValue(row.getCell(6)));
+            QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(7)));
+            QSHEMSElementValueMap.put("problemDescription", dataFormat.formatCellValue(row.getCell(8)));
+            QSHEMSElementValueMap.put("totalCount", dataFormat.formatCellValue(row.getCell(9)));
+            QSHEMSElementValueMap.put("status", dataFormat.formatCellValue(row.getCell(10)));
+            //使用BeanUtils将封装的属性注入对象
+            QSHEMSElementInDto qSHEMSElement=new QSHEMSElementInDto();
+            BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+            //放进进容器
+            beanList.add(qSHEMSElement);
+        }
+        if (beanList.size() > 0)
+        {
+            String duplicCode=PoiMSElement.isDuplicelements(beanList);//判断是否有重复编码
+            if (duplicCode== null)
+            {
+                for(QSHEMSElementInDto ele:beanList) {
+                    if(qHSEManageSysElementsDao.IsexistId(ele.getQhseManagerSysElementID() )==0) //不存在则插入
+                    {
+                        if (qHSEManageSysElementsDao.addExcelQHSEElement(ele) <= 0)
+                            throw new WLHSException("新增失败");
+                    }
+                    else//--------存在则更新
+                    {
+                        if (qHSEManageSysElementsDao.updateExcelElement(ele) <= 0)
+                            throw new WLHSException("更新失败");
+                    }
+                }
+                return NR.getPoiProblemReturn(CodeDict.SUCCESS, 0);//导入数据库成功
+            }
+            else {
+                return NR.getPoiReportsReturn(CodeDict.POI_ReportCodeDuplic_ERROR, duplicCode);//提示有重复编码
+                }
+        }
+        else {
+            return NR.getPoiProblemReturn(CodeDict.POI_PROBLEM_EMPTY_FIRST, 0);//list为空，读取excel失败；
+            }
     }
 }

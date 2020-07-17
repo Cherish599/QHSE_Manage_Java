@@ -52,11 +52,11 @@ public class FileUploadUtils {
 
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        }else if("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||"png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||
-                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())){
+        } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
             String fileName = setFile(file, "resources\\QHSEProblem\\photoes");
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
-        }else {
+        } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
     }
@@ -66,17 +66,17 @@ public class FileUploadUtils {
     public String uploadQHSEFill(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {//上传图片和视频
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        } else if("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||"png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||
-                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())){
+        } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
             String fileName = setFile(file, "resources\\QHSEFill\\photoes");
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
-        }else if("mp4".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||"avi".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||
-                "flash".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||
-                "rmvb".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())||
-                "rm".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())){
+        } else if ("mp4".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "avi".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                "flash".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                "rmvb".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                "rm".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
             String fileName = setFile(file, "resources\\QHSEFill\\videos\\");
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
-        }else{
+        } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
     }
@@ -124,7 +124,7 @@ public class FileUploadUtils {
     public String uploadAccident(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        }else{
+        } else {
             String fileName = setFile(file, "resources\\QHSEAccident\\");
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
         }
@@ -136,7 +136,7 @@ public class FileUploadUtils {
     public String uploadEvent(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        }else{
+        } else {
             String fileName = setFile(file, "resources\\QHSEEvent\\");
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
         }
@@ -148,10 +148,22 @@ public class FileUploadUtils {
     public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        }else{
+        } else {
             String fileName = setFile(file, "resources\\QHSEEvidence\\");
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
         }
     }
 
+    //---------管理要素审核excel录入数据库
+    @RequestMapping(value = "/managesyselements_excel_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String uploadQHSEMSElements(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        } else {
+            String fileName = setFile(file, "ManageSysElements\\");
+            String path = System.getProperty("catalina.home") + "\\webapps\\ManageSysElements\\" + fileName;
+            return uploadService.uploadQHSEManageSysElements(path);
+        }
+    }
 }

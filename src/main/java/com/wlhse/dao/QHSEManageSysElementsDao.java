@@ -1,5 +1,6 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.outDto.QhseElementsOutDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
@@ -14,6 +15,8 @@ public interface QHSEManageSysElementsDao {
 
     Integer addQHSERule(QHSEManageSysElements rule);
     Integer addQHSEElement(QhseElementsPojo element);//换类型重写
+    Integer addExcelQHSEElement(QSHEMSElementInDto element);//excel文件添加节点
+
 
     List<QHSECompanySysElementsPojo> querryQHSEReportElements(@Param("status") String status);
 
@@ -25,6 +28,7 @@ public interface QHSEManageSysElementsDao {
 
     Integer updateRule(QHSEManageSysElements rule);
     Integer updateElement(QhseElementsPojo rule);//换类型重写
+    Integer updateExcelElement(QSHEMSElementInDto element);//excel文件更新内容
 
     String querryStatus(String code);
 
@@ -47,6 +51,7 @@ public interface QHSEManageSysElementsDao {
     List<QhseElementsPojo> queryQhseChildElements();
     //th----查询所有的数据表
     List<QhseElementsPojo> queryQhseAllElements();
+    Integer IsexistId(@Param("EiD") Integer EiD);
 
 
 

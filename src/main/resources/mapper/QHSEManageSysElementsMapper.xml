@@ -134,10 +134,10 @@
         update qhse_managersyselement set InitialScore=InitialScore-#{score},TotalCount=TotalCount-#{count} where code = #{code}
     </update>
     <update id="toZero">
-        update qhse_managersyselement set InitialScore=0,TotalCount=0 where Code like concat(#{code},'%') and length(Code)&lt;15;
+        update qhse_managersyselement set InitialScore=0,TotalCount=0 where Code like concat(#{code},'%') and length(Code)&lt;15
     </update>
     <update id="addScoreCount">
-        update qhse_managersyselement set InitialScore=InitialScore+#{score},TotalCount=TotalCount+1 where Code=#{code};
+        update qhse_managersyselement set InitialScore=InitialScore+#{score},TotalCount=TotalCount+1 where Code=#{code}
     </update>
 
     <select id="queryQhseElements" resultType="com.wlhse.entity.QhseElementsPojo">
@@ -226,5 +226,22 @@
         (#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
     </insert>
 
+    <insert id="addExcelQHSEElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
+        insert into qhse_managersyselement
+        (Code,Name,Content,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
+        values
+        (#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
+    </insert>
+
+    <update id="updateExcelElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
+        update qhse_managersyselement
+        set Code=#{code},Name=#{name},Content=#{content},Basis=#{basis},AuditMode=#{auditMode},InitialScore=#{initialScore},
+        TotalCount=#{totalCount},Formula=#{formula},ProblemDescription=#{problemDescription},Status=#{status}
+        where QHSE_ManagerSysElement_ID=#{qhseManagerSysElementID}
+    </update>
+
+    <select id="IsexistId" resultType="java.lang.Integer">
+        SELECT IFNULL(MAX(QHSE_ManagerSysElement_ID),0) FROM qhse_managersyselement where QHSE_ManagerSysElement_ID=#{EiD}
+    </select>
 
 </mapper>
