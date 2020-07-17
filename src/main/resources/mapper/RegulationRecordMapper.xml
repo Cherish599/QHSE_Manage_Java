@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wlhse.dao.RegulationRecordDao">
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="id != null and id  != ''">
+                ID,
+            </if>
+            <if test="checkId != null and checkId  != ''">
+                CheckId,
+            </if>
+            <if test="safeStaff_ID != null and safeStaff_ID  != ''">
+                SafeStaff_ID,
+            </if>
+            <if test="workItem != null and workItem  != ''">
+                WorkItem,
+            </if>
+            <if test="companyId != null and companyId  != ''">
+                CompanyId,
+            </if>
+            <if test="supervisionDate != null and supervisionDate  != ''">
+                SupervisionDate,
+            </if>
+            <if test="type != null and type  != ''">
+                Type,
+            </if>
+            <if test="description != null and description  != ''">
+                Description,
+            </if>
+            <if test="punish != null and punish  != ''">
+                Punish,
+            </if>
+            <if test="approve != null and approve  != ''">
+                Approve,
+            </if>
+            <if test="ok != null and ok  != ''">
+                Ok,
+            </if>
+            <if test="consequenceID != null and consequenceID  != ''">
+                ConsequenceID,
+            </if>
+            <if test="checkType != null and checkType  != ''">
+                CheckType,
+            </if>
+            <if test="affix != null and affix  != ''">
+                Affix,
+            </if>
+            <if test="affixName != null and affixName  != ''">
+                AffixName,
+            </if>
+            <if test="checkName != null and checkName  != ''">
+                CheckName,
+            </if>
+            <if test="updateTime != null and updateTime  != ''">
+                UpdateTime,
+            </if>
+            <if test="recordDate != null and recordDate  != ''">
+                RecordDate,
+            </if>
+            <if test="score != null and score  != ''">
+                Score,
+            </if>
+            <if test="punish1 != null and punish1  != ''">
+                Punish1,
+            </if>
+            <if test="employeeCharacter != null and employeeCharacter  != ''">
+                EmployeeCharacter,
+            </if>
+            <if test="workSeniority != null and workSeniority  != ''">
+                WorkSeniority,
+            </if>
+            <if test="position != null and position  != ''">
+                Position,
+            </if>
+            <if test="regulationCharacter != null and regulationCharacter  != ''">
+                RegulationCharacter,
+            </if>
+            <if test="factorSource != null and factorSource  != ''">
+                FactorSource,
+            </if>
+            <if test="profession != null and profession  != ''">
+                Profession,
+            </if>
+            <if test="factorHSE != null and factorHSE  != ''">
+                FactorHSE,
+            </if>
+            <if test="factorDepartment != null and factorDepartment  != ''">
+                FactorDepartment,
+            </if>
+            <if test="location != null and location  != ''">
+                Location,
+            </if>
+            <if test="affix1 != null and affix1  != ''">
+                Affix1,
+            </if>
+            <if test="affix2 != null and affix2  != ''">
+                Affix2,
+            </if>
+            <if test="affix3 != null and affix3  != ''">
+                Affix3,
+            </if>
+            <if test="affix4 != null and affix4  != ''">
+                Affix4,
+            </if>
+            <if test="isUpload != null and isUpload  != ''">
+                IsUpload,
+            </if>
+            <if test="keyID != null and keyID  != ''">
+                KeyID,
+            </if>
+            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
+                QHSE_CheckType,
+            </if>
+            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
+                QHSE_CheckCategory,
+            </if>
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                QHSE_FileAudit_ID,
+            </if>
+            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
+                QHSE_FileAuditRecord_ID,
+            </if>
+            <if test="code != null and code  != ''">
+                Code,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="value">
+        <trim suffixOverrides=",">
+            <if test="id != null and id  != ''">
+                #{id},
+            </if>
+            <if test="checkId != null and checkId  != ''">
+                #{checkId},
+            </if>
+            <if test="safeStaff_ID != null and safeStaff_ID  != ''">
+                #{safeStaff_ID},
+            </if>
+            <if test="workItem != null and workItem  != ''">
+                #{workItem},
+            </if>
+            <if test="companyId != null and companyId  != ''">
+                #{companyId},
+            </if>
+            <if test="supervisionDate != null and supervisionDate  != ''">
+                #{supervisionDate},
+            </if>
+            <if test="type != null and type  != ''">
+                #{type},
+            </if>
+            <if test="description != null and description  != ''">
+                #{description},
+            </if>
+            <if test="punish != null and punish  != ''">
+                #{punish},
+            </if>
+            <if test="approve != null and approve  != ''">
+                #{approve},
+            </if>
+            <if test="ok != null and ok  != ''">
+                #{ok},
+            </if>
+            <if test="consequenceID != null and consequenceID  != ''">
+                #{consequenceID},
+            </if>
+            <if test="checkType != null and checkType  != ''">
+                #{checkType},
+            </if>
+            <if test="affix != null and affix  != ''">
+                #{affix},
+            </if>
+            <if test="affixName != null and affixName  != ''">
+                #{affixName},
+            </if>
+            <if test="checkName != null and checkName  != ''">
+                #{checkName},
+            </if>
+            <if test="updateTime != null and updateTime  != ''">
+                #{updateTime},
+            </if>
+            <if test="recordDate != null and recordDate  != ''">
+                #{recordDate},
+            </if>
+            <if test="score != null and score  != ''">
+                #{score},
+            </if>
+            <if test="punish1 != null and punish1  != ''">
+                #{punish1},
+            </if>
+            <if test="employeeCharacter != null and employeeCharacter  != ''">
+                #{employeeCharacter},
+            </if>
+            <if test="workSeniority != null and workSeniority  != ''">
+                #{workSeniority},
+            </if>
+            <if test="position != null and position  != ''">
+                #{position},
+            </if>
+            <if test="regulationCharacter != null and regulationCharacter  != ''">
+                #{regulationCharacter},
+            </if>
+            <if test="factorSource != null and factorSource  != ''">
+                #{factorSource},
+            </if>
+            <if test="profession != null and profession  != ''">
+                #{profession},
+            </if>
+            <if test="factorHSE != null and factorHSE  != ''">
+                #{factorHSE},
+            </if>
+            <if test="factorDepartment != null and factorDepartment  != ''">
+                #{factorDepartment},
+            </if>
+            <if test="location != null and location  != ''">
+                #{location},
+            </if>
+            <if test="affix1 != null and affix1  != ''">
+                #{affix1},
+            </if>
+            <if test="affix2 != null and affix2  != ''">
+                #{affix2},
+            </if>
+            <if test="affix3 != null and affix3  != ''">
+                #{affix3},
+            </if>
+            <if test="affix4 != null and affix4  != ''">
+                #{affix4},
+            </if>
+            <if test="isUpload != null and isUpload  != ''">
+                #{isUpload},
+            </if>
+            <if test="keyID != null and keyID  != ''">
+                #{keyID},
+            </if>
+            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
+                #{qHSE_CheckType},
+            </if>
+            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
+                #{qHSE_CheckCategory},
+            </if>
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                #{qHSE_FileAudit_ID},
+            </if>
+            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
+                #{qHSE_FileAuditRecord_ID},
+            </if>
+            <if test="code != null and code  != ''">
+                #{code},
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="addRegulationRecord" parameterType="com.wlhse.dto.RegulationRecordDto" >
+        insert into regulationrecord
+        (<include refid="key"/>)
+        values
+        (<include refid="value"/>)
+    </insert>
+
+    <delete id="deleteRegulationRecord">
+        delete from regulationrecord
+        where ID=#{id}
+    </delete>
+
+    <sql id="value1">
+        <trim prefix="set" suffixOverrides=",">
+            <if test="checkId != null and checkId  != ''">
+                checkId=#{checkId},
+            </if>
+            <if test="safeStaff_ID != null and safeStaff_ID  != ''">
+                safeStaff_ID=#{safeStaff_ID},
+            </if>
+            <if test="workItem != null and workItem  != ''">
+                workItem=#{workItem},
+            </if>
+            <if test="companyId != null and companyId  != ''">
+                companyId=#{companyId},
+            </if>
+            <if test="supervisionDate != null and supervisionDate  != ''">
+                supervisionDate=#{supervisionDate},
+            </if>
+            <if test="type != null and type  != ''">
+                type=#{type},
+            </if>
+            <if test="description != null and description  != ''">
+                description=#{description},
+            </if>
+            <if test="punish != null and punish  != ''">
+                punish=#{punish},
+            </if>
+            <if test="approve != null and approve  != ''">
+                approve=#{approve},
+            </if>
+            <if test="ok != null and ok  != ''">
+                ok=#{ok},
+            </if>
+            <if test="consequenceID != null and consequenceID  != ''">
+                consequenceID=#{consequenceID},
+            </if>
+            <if test="checkType != null and checkType  != ''">
+                checkType=#{checkType},
+            </if>
+            <if test="affix != null and affix  != ''">
+                affix=#{affix},
+            </if>
+            <if test="affixName != null and affixName  != ''">
+                affixName=#{affixName},
+            </if>
+            <if test="checkName != null and checkName  != ''">
+                checkName=#{checkName},
+            </if>
+            <if test="updateTime != null and updateTime  != ''">
+                updateTime=#{updateTime},
+            </if>
+            <if test="recordDate != null and recordDate  != ''">
+                recordDate=#{recordDate},
+            </if>
+            <if test="score != null and score  != ''">
+                score=#{score},
+            </if>
+            <if test="punish1 != null and punish1  != ''">
+                punish1=#{punish1},
+            </if>
+            <if test="employeeCharacter != null and employeeCharacter  != ''">
+                employeeCharacter=#{employeeCharacter},
+            </if>
+            <if test="workSeniority != null and workSeniority  != ''">
+                workSeniority=#{workSeniority},
+            </if>
+            <if test="position != null and position  != ''">
+                position=#{position},
+            </if>
+            <if test="regulationCharacter != null and regulationCharacter  != ''">
+                regulationCharacter=#{regulationCharacter},
+            </if>
+            <if test="factorSource != null and factorSource  != ''">
+                factorSource=#{factorSource},
+            </if>
+            <if test="profession != null and profession  != ''">
+                profession=#{profession},
+            </if>
+            <if test="factorHSE != null and factorHSE  != ''">
+                factorHSE=#{factorHSE},
+            </if>
+            <if test="factorDepartment != null and factorDepartment  != ''">
+                factorDepartment=#{factorDepartment},
+            </if>
+            <if test="location != null and location  != ''">
+                location=#{location},
+            </if>
+            <if test="affix1 != null and affix1  != ''">
+                affix1=#{affix1},
+            </if>
+            <if test="affix2 != null and affix2  != ''">
+                affix2=#{affix2},
+            </if>
+            <if test="affix3 != null and affix3  != ''">
+                affix3=#{affix3},
+            </if>
+            <if test="affix4 != null and affix4  != ''">
+                affix4=#{affix4},
+            </if>
+            <if test="isUpload != null and isUpload  != ''">
+                isUpload=#{isUpload},
+            </if>
+            <if test="keyID != null and keyID  != ''">
+                keyID=#{keyID},
+            </if>
+            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
+                qHSE_CheckType=#{qHSE_CheckType},
+            </if>
+            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
+                qHSE_CheckCategory=#{qHSE_CheckCategory},
+            </if>
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                qHSE_FileAudit_ID=#{qHSE_FileAudit_ID},
+            </if>
+            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
+                qHSE_FileAuditRecord_ID=#{qHSE_FileAuditRecord_ID},
+            </if>
+            <if test="code != null and code  != ''">
+                code=#{code},
+            </if>
+        </trim>
+    </sql>
+
+    <update id="updateRegulationRecord">
+        update regulationrecord
+        <include refid="value1"/>
+        where ID = #{id}
+    </update>
+
+    <select id="queryRegulationRecordById" resultType="com.wlhse.dto.RegulationRecordDto">
+        select * from regulationrecord
+        where ID=#{id}
+    </select>
+</mapper>
