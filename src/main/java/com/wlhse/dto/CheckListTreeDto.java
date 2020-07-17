@@ -1,5 +1,6 @@
 package com.wlhse.dto;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class CheckListTreeDto {
@@ -11,7 +12,7 @@ public class CheckListTreeDto {
     private String isChildNode;
     private String status;
     private String checkContent;
-    private List<CheckListTreeDto> children;
+    private List<CheckListTreeDto> children =  new LinkedList<>();
 
     public Integer getCheckListID() {
         return checkListID;

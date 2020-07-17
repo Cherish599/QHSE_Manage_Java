@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.QhseElementsOutDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
@@ -54,6 +55,7 @@ public interface QHSEManageSysElementsDao {
     Integer IsexistId(@Param("EiD") Integer EiD);
 
 
+    List<YearElementsDto> queryElementsByCode(String c);
 
-
+    Integer findMaxLen();
 }

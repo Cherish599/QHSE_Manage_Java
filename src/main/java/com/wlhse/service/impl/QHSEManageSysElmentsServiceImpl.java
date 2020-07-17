@@ -2,6 +2,7 @@ package com.wlhse.service.impl;
 
 import com.alibaba.fastjson.annotation.JSONType;
 import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
@@ -415,5 +416,21 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
-
+    @Override
+    public R addYearElement(YearElementsDto yearElementsDto) {
+        String[] codes = yearElementsDto.getCodes().split(";");
+        List<YearElementsDto> list = new ArrayList<>();
+        for(String code:codes) {
+            List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code);
+            Integer len = qhseManageSysElementsDao.findMaxLen();
+            for(int i=0;i<temp.size();i++) {
+                if(len.equals(temp.get(i).getCode().length())) {//长度相等，最后一级节点
+                    temp.get(i).setStatus("未提供");
+                }
+                list.add(temp.get(i));
+            }
+        }
+        System.out.println(list);
+        return R.ok();
+    }
 }

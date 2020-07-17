@@ -1,5 +1,6 @@
 package com.wlhse.service;
 
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.util.R;
@@ -29,4 +30,5 @@ public interface QHSEManageSysElementsService {
     //th---添加节点内容
     String addElement(QhseElementsPojo qhseManageSysElement);
 
+    R addYearElement(YearElementsDto yearElementsDto);
 }

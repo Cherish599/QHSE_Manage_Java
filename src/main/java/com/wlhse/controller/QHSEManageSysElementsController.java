@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.service.QHSEManageSysElementsService;
@@ -49,6 +50,17 @@ public class QHSEManageSysElementsController {
     public String addQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
         return qhseManageSysElementsService.addElement(qhseManageSysElement);
     }
+
+    //新增年度qhse管理体系要素
+    //前端二级节点用分号隔开，tableID
+    //YearElementsDto
+    @RequestMapping(value = "/addQHSEYearElement", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public R addQHSEYearElement(@RequestBody(required = false) YearElementsDto yearElementsDto){
+        return qhseManageSysElementsService.addYearElement(yearElementsDto);
+    }
+
+
+
 
     //---------------旧代码区----------------------------------------
     @RequestMapping(value = "/querryQHSEChildRules/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})

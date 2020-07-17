@@ -244,4 +244,24 @@
         SELECT IFNULL(MAX(QHSE_ManagerSysElement_ID),0) FROM qhse_managersyselement where QHSE_ManagerSysElement_ID=#{EiD}
     </select>
 
+    <select id="queryElementsByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select
+        Code as code,
+        name as name,
+        Content as content,
+        basis as basis,
+        auditMode as auditMode,
+        initialScore as initialScore,
+        formula as formula,
+        problemDescription as problemDescription,
+        totalCount as totalCount
+        from QHSE_ManagerSysElement
+        where code like concat(#{c},'%')
+        and status='启用'
+    </select>
+
+    <select id="findMaxLen" resultType="integer">
+        select Max(LENGTH(code)) FROM QHSE_ManagerSysElement
+    </select>
+
 </mapper>
