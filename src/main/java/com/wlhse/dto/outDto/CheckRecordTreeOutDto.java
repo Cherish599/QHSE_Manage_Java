@@ -1,9 +1,12 @@
-package com.wlhse.dto;
+package com.wlhse.dto.outDto;
 
-public class CheckRecordDto {
+import java.util.LinkedList;
+import java.util.List;
+
+public class CheckRecordTreeOutDto {
     private Integer checkRecordID;
-    private String code;
-    private String name;
+    private String checkListCode;
+    private String checkListName;
     private String content;
     private String checkType;
     private String checkCategory;
@@ -11,6 +14,7 @@ public class CheckRecordDto {
     private String companyCode;
     private String checkDate;
     private String checkContent;
+    private List<CheckRecordTreeOutDto> childNode = new LinkedList<>();
 
     public Integer getCheckRecordID() {
         return checkRecordID;
@@ -20,20 +24,20 @@ public class CheckRecordDto {
         this.checkRecordID = checkRecordID;
     }
 
-    public String getCode() {
-        return code;
+    public String getCheckListCode() {
+        return checkListCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCheckListCode(String checkListCode) {
+        this.checkListCode = checkListCode;
     }
 
-    public String getName() {
-        return name;
+    public String getCheckListName() {
+        return checkListName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCheckListName(String checkListName) {
+        this.checkListName = checkListName;
     }
 
     public String getContent() {
@@ -92,12 +96,20 @@ public class CheckRecordDto {
         this.checkContent = checkContent;
     }
 
+    public List<CheckRecordTreeOutDto> getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(List<CheckRecordTreeOutDto> childNode) {
+        this.childNode = childNode;
+    }
+
     @Override
     public String toString() {
-        return "CheckRecordDto{" +
+        return "CheckRecordTreeOutDto{" +
                 "checkRecordID=" + checkRecordID +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", checkListName='" + checkListName + '\'' +
                 ", content='" + content + '\'' +
                 ", checkType='" + checkType + '\'' +
                 ", checkCategory='" + checkCategory + '\'' +
@@ -105,6 +117,7 @@ public class CheckRecordDto {
                 ", companyCode='" + companyCode + '\'' +
                 ", checkDate='" + checkDate + '\'' +
                 ", checkContent='" + checkContent + '\'' +
+                ", childNode=" + childNode +
                 '}';
     }
 }

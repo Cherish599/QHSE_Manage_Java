@@ -1,9 +1,9 @@
 package com.wlhse.dto;
 
-public class CheckRecordDto {
+public class CheckRecordTreeDto {
     private Integer checkRecordID;
-    private String code;
-    private String name;
+    private String checkListCode;
+    private String checkListName;
     private String content;
     private String checkType;
     private String checkCategory;
@@ -20,20 +20,20 @@ public class CheckRecordDto {
         this.checkRecordID = checkRecordID;
     }
 
-    public String getCode() {
-        return code;
+    public String getCheckListCode() {
+        return checkListCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCheckListCode(String checkListCode) {
+        this.checkListCode = checkListCode;
     }
 
-    public String getName() {
-        return name;
+    public String getCheckListName() {
+        return checkListName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCheckListName(String checkListName) {
+        this.checkListName = checkListName;
     }
 
     public String getContent() {
@@ -94,10 +94,10 @@ public class CheckRecordDto {
 
     @Override
     public String toString() {
-        return "CheckRecordDto{" +
+        return "CheckRecordTreeDto{" +
                 "checkRecordID=" + checkRecordID +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", checkListName='" + checkListName + '\'' +
                 ", content='" + content + '\'' +
                 ", checkType='" + checkType + '\'' +
                 ", checkCategory='" + checkCategory + '\'' +

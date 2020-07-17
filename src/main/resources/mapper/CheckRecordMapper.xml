@@ -72,4 +72,56 @@
     <select id="queryAll" resultType="com.wlhse.dto.CheckRecordDto" >
         select * from checkrecord
     </select>
+
+    <select id="queryAllByParentCode" resultType="com.wlhse.dto.CheckRecordTreeDto" >
+        select checklist.CheckListCode,
+        checklist.CheckListName,
+        checkrecord.CheckRecordID,
+        checkrecord.CheckType,
+        checkrecord.CheckCategory,
+        checkrecord.CompanyName,
+        checkrecord.CompanyCode,
+        checkrecord.CheckContent,
+        checkrecord.CheckDate,
+        checkrecord.Content
+        from checklist
+        left join checkrecord
+        on checklist.CheckListCode=checkrecord.code
+        where checklist.CheckListCode like concat(#{code},'%')
+    </select>
+
+    <update id="updateCheckRecord" parameterType="com.wlhse.dto.CheckRecordDto">
+        update checkrecord
+        <set>
+            <if test="content != null and content  != ''">
+                content=#{content},
+            </if>
+            <if test="checkType != null and checkType  != ''">
+                checkType=#{checkType},
+            </if>
+            <if test="checkCategory != null and checkCategory  != ''">
+                checkCategory=#{checkCategory},
+            </if>
+            <if test="companyName != null and companyName  != ''">
+                companyName=#{companyName},
+            </if>
+            <if test="companyCode != null and companyCode  != ''">
+                companyCode=#{companyCode},
+            </if>
+            <if test="checkDate != null and checkDate  != ''">
+                checkDate=#{checkDate},
+            </if>
+            <if test="checkContent != null and checkContent  != ''">
+                checkContent=#{checkContent},
+            </if>
+        </set>
+        where checkRecordID=#{checkRecordID}
+    </update>
+
+    <delete id="deleteCheckRecord">
+        delete from CheckRecord
+        where checkRecordID=#{checkRecordID}
+    </delete>
+
+
 </mapper>

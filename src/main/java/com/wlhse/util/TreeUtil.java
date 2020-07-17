@@ -3,6 +3,7 @@ package com.wlhse.util;
 import com.wlhse.dao.ModuleDao;
 import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckListTreeDto;
+import com.wlhse.dto.CheckRecordTreeDto;
 import com.wlhse.dto.TreeDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
@@ -352,7 +353,6 @@ public class TreeUtil {
         return result;
     }
 
-
     public List<QhseElementsOutDto> getCurrentQhseElementTree(List<QHSECompanyYearManagerSysElementDto> qhseElementsPojos) {
         Map<String, QhseElementsOutDto> map1 = new TreeMap<>();
         List<Integer> code = new ArrayList<>();
@@ -401,6 +401,7 @@ public class TreeUtil {
         }
         return result;
     }
+
     public List<QHSECompanyYearManagerSysElementDto> getCurrentQhseElementTree1(List<QHSECompanyYearManagerSysElementDto> qhseElementsPojos) {
         Map<String, QHSECompanyYearManagerSysElementDto> map1 = new TreeMap<>();
         List<Integer> code = new ArrayList<>();
@@ -426,4 +427,53 @@ public class TreeUtil {
         }
         return returnCurrentQhseElementList1(map1, code);
     }
+
+    //checkrecord树状显示
+    public List<CheckRecordTreeOutDto> returnCheckRecordTree(Map<String, CheckRecordTreeOutDto> map, List<Integer> code) {
+        List<CheckRecordTreeOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, CheckRecordTreeOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                CheckRecordTreeOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<CheckRecordTreeOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    public List<CheckRecordTreeOutDto> getCheckRecordTree(List<CheckRecordTreeDto> checkRecordTreeDtos) {
+        Map<String, CheckRecordTreeOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (CheckRecordTreeDto pojo : checkRecordTreeDtos) {
+            CheckRecordTreeOutDto checkRecordTreeOutDto = new CheckRecordTreeOutDto();
+            checkRecordTreeOutDto.setCheckCategory(pojo.getCheckCategory());
+            checkRecordTreeOutDto.setCheckContent(pojo.getCheckContent());
+            checkRecordTreeOutDto.setCheckDate(pojo.getCheckDate());
+            checkRecordTreeOutDto.setCheckListCode(pojo.getCheckListCode());
+            checkRecordTreeOutDto.setCheckListName(pojo.getCheckListName());
+            checkRecordTreeOutDto.setCheckRecordID(pojo.getCheckRecordID());
+            checkRecordTreeOutDto.setCompanyCode(pojo.getCompanyCode());
+            checkRecordTreeOutDto.setCompanyName(pojo.getCompanyName());
+            checkRecordTreeOutDto.setContent(pojo.getContent());
+            checkRecordTreeOutDto.setCheckType(pojo.getCheckType());
+            //System.out.println(pojo.getQhseManagerSysElementID());
+            map1.put(checkRecordTreeOutDto.getCheckListCode(), checkRecordTreeOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCheckListCode().length()) == -1)
+                code.add(pojo.getCheckListCode().length());
+        }
+        return returnCheckRecordTree(map1, code);
+    }
+
 }
