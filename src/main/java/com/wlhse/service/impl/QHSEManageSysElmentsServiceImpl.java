@@ -419,7 +419,9 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     @Override
     public R addYearElement(YearElementsDto yearElementsDto) {
         String[] codes = yearElementsDto.getCodes().split(";");
+        System.out.println(codes);
         List<YearElementsDto> list = new ArrayList<>();
+        Integer id = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
         for(String code:codes) {
             List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code);
             Integer len = qhseManageSysElementsDao.findMaxLen();
@@ -427,6 +429,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 if(len.equals(temp.get(i).getCode().length())) {//长度相等，最后一级节点
                     temp.get(i).setStatus("未提供");
                 }
+                temp.get(i).setQhseCompanyYearManagerSysElementTableID(id);
                 list.add(temp.get(i));
             }
         }

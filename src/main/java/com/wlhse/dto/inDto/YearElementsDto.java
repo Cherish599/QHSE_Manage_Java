@@ -2,7 +2,7 @@ package com.wlhse.dto.inDto;
 
 public class YearElementsDto {
     private String codes;//选择的所有二级节点
-    private String qhseCompanyYearManagerSysElementTableID;//tableid
+    private Integer qhseCompanyYearManagerSysElementTableID;//tableid
     private String code;
     private String name;
     private String content;
@@ -25,11 +25,11 @@ public class YearElementsDto {
         this.codes = codes;
     }
 
-    public String getQhseCompanyYearManagerSysElementTableID() {
+    public Integer getQhseCompanyYearManagerSysElementTableID() {
         return qhseCompanyYearManagerSysElementTableID;
     }
 
-    public void setQhseCompanyYearManagerSysElementTableID(String qhseCompanyYearManagerSysElementTableID) {
+    public void setQhseCompanyYearManagerSysElementTableID(Integer qhseCompanyYearManagerSysElementTableID) {
         this.qhseCompanyYearManagerSysElementTableID = qhseCompanyYearManagerSysElementTableID;
     }
 
