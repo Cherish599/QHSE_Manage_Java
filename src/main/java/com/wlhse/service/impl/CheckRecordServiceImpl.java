@@ -41,6 +41,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         R ok = R.ok();
         //先查询checkrecord中前4位不同的code
         List<CheckRecordDto> checkRecordDtos = checkRecordDao.queryAll();
+        System.out.println(checkRecordDtos);
         List<String> codes = new ArrayList<>();
         for (CheckRecordDto dto:checkRecordDtos) {
             if (codes.indexOf(dto.getCode().substring(0,4)) == -1) {

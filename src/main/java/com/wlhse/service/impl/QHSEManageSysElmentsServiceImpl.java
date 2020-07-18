@@ -442,12 +442,14 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             }
         }
         //执行新增操作
-        qhseManageSysElementsDao.addYearElement(yearElementsDto);
-
-        R ok = R.ok();
-        ok.put("data", list);
-        return ok;
-//        System.out.println(list);
-//        return R.ok();
+        int result=0;
+        for (int i =0;i<list.size();i++) {
+            result = qhseManageSysElementsDao.addYearElement(list.get(i));
+            if (result<=0) break;
+        }
+        System.out.println(list);
+        if (result<=0)
+            throw new WLHSException("新增失败");
+        return R.ok();
     }
 }

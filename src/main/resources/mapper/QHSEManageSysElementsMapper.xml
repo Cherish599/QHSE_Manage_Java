@@ -265,7 +265,96 @@
     </select>
 
     <insert id="addYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto">
-
+        insert into QHSE_CompanyYearManagerSysElement
+        (
+        <trim suffixOverrides=",">
+            QHSE_CompanyYearManagerSysElementTable_ID,
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="content != null and content != ''">
+                content,
+            </if>
+            <if test="basis != null and basis != ''">
+                basis,
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                auditMode,
+            </if>
+            initialScore,
+            <if test="formula != null and formula != ''">
+                formula,
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                problemDescription,
+            </if>
+            totalCount,
+            <if test="status != null and status != ''">
+                status,
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                companyCode,
+            </if>
+            <if test="companyName != null and companyName != ''">
+                companyName,
+            </if>
+            <if test="year != null and year != ''">
+                year,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            #{qhseCompanyYearManagerSysElementTableID},
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="basis != null and basis != ''">
+                #{basis},
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                #{auditMode},
+            </if>
+            #{initialScore},
+            <if test="formula != null and formula != ''">
+                #{formula},
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                #{problemDescription},
+            </if>
+            #{totalCount},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                #{companyCode},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                #{companyName},
+            </if>
+            <if test="year != null and year != ''">
+                #{year},
+            </if>
+        </trim>
+        )
     </insert>
+
+    <!--<insert id="addYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto">-->
+        <!--insert into QHSE_CompanyYearManagerSysElement(QHSE_CompanyYearManagerSysElementTable_ID,Code,-->
+        <!--name,content,basis,auditMode,initialScore,formula,problemDescription,totalCount,status,-->
+        <!--companyCode,companyName,year,)-->
+        <!--values(#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{formula},#{problemDescription},#{totalCount},#{status},#{companyCode},-->
+        <!--#{companyName},#{year})-->
+    <!--</insert>-->
 
 </mapper>
