@@ -12,6 +12,7 @@ import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
 import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.annotation.Resource;
@@ -416,24 +417,37 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
+    @Transactional
     @Override
     public R addYearElement(YearElementsDto yearElementsDto) {
         String[] codes = yearElementsDto.getCodes().split(";");
         System.out.println(codes);
         List<YearElementsDto> list = new ArrayList<>();
         Integer id = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
+        String companyCode = yearElementsDto.getCompanyCode();
+        String companyName = yearElementsDto.getCompanyName();
+        String year = yearElementsDto.getYear();
+        Integer len = qhseManageSysElementsDao.findMaxLen();
         for(String code:codes) {
             List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code);
-            Integer len = qhseManageSysElementsDao.findMaxLen();
             for(int i=0;i<temp.size();i++) {
-                if(len.equals(temp.get(i).getCode().length())) {//长度相等，最后一级节点
+                if(len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
                     temp.get(i).setStatus("未提供");
                 }
                 temp.get(i).setQhseCompanyYearManagerSysElementTableID(id);
+                temp.get(i).setCompanyCode(companyCode);
+                temp.get(i).setCompanyName(companyName);
+                temp.get(i).setYear(year);
                 list.add(temp.get(i));
             }
         }
-        System.out.println(list);
-        return R.ok();
+        //执行新增操作
+        qhseManageSysElementsDao.addYearElement(yearElementsDto);
+
+        R ok = R.ok();
+        ok.put("data", list);
+        return ok;
+//        System.out.println(list);
+//        return R.ok();
     }
 }

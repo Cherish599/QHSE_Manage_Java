@@ -264,4 +264,8 @@
         select Max(LENGTH(code)) FROM QHSE_ManagerSysElement
     </select>
 
+    <insert id="addYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto">
+
+    </insert>
+
 </mapper>

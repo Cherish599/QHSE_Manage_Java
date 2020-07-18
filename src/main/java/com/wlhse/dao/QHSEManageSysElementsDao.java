@@ -59,4 +59,7 @@ public interface QHSEManageSysElementsDao {
     List<YearElementsDto> queryElementsByCode(String c);
 
     Integer findMaxLen();
+
+    Integer addYearElement(YearElementsDto yearElementsDto);
+
 }
