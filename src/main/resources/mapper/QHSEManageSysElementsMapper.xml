@@ -235,13 +235,13 @@
 
     <update id="updateExcelElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
         update qhse_managersyselement
-        set Code=#{code},Name=#{name},Content=#{content},Basis=#{basis},AuditMode=#{auditMode},InitialScore=#{initialScore},
+        set Name=#{name},Content=#{content},Basis=#{basis},AuditMode=#{auditMode},InitialScore=#{initialScore},
         TotalCount=#{totalCount},Formula=#{formula},ProblemDescription=#{problemDescription},Status=#{status}
-        where QHSE_ManagerSysElement_ID=#{qhseManagerSysElementID}
+        where Code=#{code}
     </update>
 
-    <select id="IsexistId" resultType="java.lang.Integer">
-        SELECT IFNULL(MAX(QHSE_ManagerSysElement_ID),0) FROM qhse_managersyselement where QHSE_ManagerSysElement_ID=#{EiD}
+    <select id="querryCode" resultType="java.lang.String">
+        SELECT Code FROM qhse_managersyselement where Code=#{code}
     </select>
 
     <select id="queryElementsByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">

@@ -52,7 +52,8 @@ public interface QHSEManageSysElementsDao {
     List<QhseElementsPojo> queryQhseChildElements();
     //th----查询所有的数据表
     List<QhseElementsPojo> queryQhseAllElements();
-    Integer IsexistId(@Param("EiD") Integer EiD);
+    //查询编码是否存在
+    String querryCode(@Param("code") String code);
 
 
     List<YearElementsDto> queryElementsByCode(String c);
