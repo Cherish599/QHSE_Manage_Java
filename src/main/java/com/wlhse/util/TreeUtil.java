@@ -5,6 +5,7 @@ import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckListTreeDto;
 import com.wlhse.dto.CheckRecordTreeDto;
 import com.wlhse.dto.TreeDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
 import org.apache.poi.ss.formula.functions.T;
@@ -330,6 +331,59 @@ public class TreeUtil {
         }
         return returnQhseElementList(map1, code);
     }
+
+    //th---年度要素
+    public List<QhseYearElementsOutDto> returnQhseYearElementList(Map<String, QhseYearElementsOutDto> map, List<Integer> code) {
+        List<QhseYearElementsOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QhseYearElementsOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QhseYearElementsOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QhseYearElementsOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    public List<QhseYearElementsOutDto> getQhseYearElementTree(List<YearElementsDto> qhseElementsPojos) {
+        Map<String, QhseYearElementsOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (YearElementsDto pojo : qhseElementsPojos) {
+            QhseYearElementsOutDto qhseElementsOutDto = new QhseYearElementsOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setBasis(pojo.getBasis());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setContent(pojo.getContent());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setProblemDescription(pojo.getProblemDescription());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setId(pojo.getQhseCompanyYearManagerSysElementID());
+            qhseElementsOutDto.setTableID(pojo.getQhseCompanyYearManagerSysElementTableID());
+            qhseElementsOutDto.setCompanyCode(pojo.getCompanyCode());
+            qhseElementsOutDto.setCompanyName(pojo.getCompanyName());
+            qhseElementsOutDto.setYear(pojo.getYear());
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQhseYearElementList(map1, code);
+    }
+
 
     //th/lhl---单位年度管理体系要素表根据当前登陆人和年度单位查询
     public List<QhseElementsOutDto> returnCurrentQhseElementList(Map<String, QhseElementsOutDto> map, List<Integer> code) {

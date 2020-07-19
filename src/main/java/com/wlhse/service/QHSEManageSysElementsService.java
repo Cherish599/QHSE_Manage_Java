@@ -19,6 +19,8 @@ public interface QHSEManageSysElementsService {
     //--------新代码区--------------
     //th-查询基本数据表
     R queryAllElement();
+    //年度要素
+    R queryYearElement(YearElementsDto yearElementsDto);
     //th-查询基本数据表两级
     R queryChildElement();
     //th---根据是否启用查询节点

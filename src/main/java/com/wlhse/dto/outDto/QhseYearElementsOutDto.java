@@ -1,45 +1,48 @@
-package com.wlhse.dto.inDto;
+package com.wlhse.dto.outDto;
 
-public class YearElementsDto {
-    private Integer qhseCompanyYearManagerSysElementID;//主键，自增id
-    private String codes;//选择的所有二级节点
-    private Integer qhseCompanyYearManagerSysElementTableID;//tableid
+import java.util.LinkedList;
+import java.util.List;
+
+public class QhseYearElementsOutDto {
+
+    private Integer id;
+
+    private Integer tableID;
+
     private String code;
+
     private String name;
+
     private String content;
+
     private String basis;
+
     private String auditMode;
+
     private Integer initialScore;
+
     private String formula;
+
     private String problemDescription;
+
     private Integer totalCount;
+
     private String status;
+
     private String companyCode;
+
     private String companyName;
+
     private String year;
 
-    public Integer getQhseCompanyYearManagerSysElementID() {
-        return qhseCompanyYearManagerSysElementID;
+    private List<QhseYearElementsOutDto> childNode = new LinkedList<>();
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setQhseCompanyYearManagerSysElementID(Integer qhseCompanyYearManagerSysElementID) {
-        this.qhseCompanyYearManagerSysElementID = qhseCompanyYearManagerSysElementID;
-    }
-
-    public String getCodes() {
-        return codes;
-    }
-
-    public void setCodes(String codes) {
-        this.codes = codes;
-    }
-
-    public Integer getQhseCompanyYearManagerSysElementTableID() {
-        return qhseCompanyYearManagerSysElementTableID;
-    }
-
-    public void setQhseCompanyYearManagerSysElementTableID(Integer qhseCompanyYearManagerSysElementTableID) {
-        this.qhseCompanyYearManagerSysElementTableID = qhseCompanyYearManagerSysElementTableID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCode() {
@@ -122,6 +125,14 @@ public class YearElementsDto {
         this.status = status;
     }
 
+    public Integer getTableID() {
+        return tableID;
+    }
+
+    public void setTableID(Integer tableID) {
+        this.tableID = tableID;
+    }
+
     public String getCompanyCode() {
         return companyCode;
     }
@@ -146,24 +157,12 @@ public class YearElementsDto {
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return "YearElementsDto{" +
-                "codes='" + codes + '\'' +
-                ", qhseCompanyYearManagerSysElementTableID='" + qhseCompanyYearManagerSysElementTableID + '\'' +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", content='" + content + '\'' +
-                ", basis='" + basis + '\'' +
-                ", auditMode='" + auditMode + '\'' +
-                ", initialScore=" + initialScore +
-                ", formula='" + formula + '\'' +
-                ", problemDescription='" + problemDescription + '\'' +
-                ", totalCount=" + totalCount +
-                ", status='" + status + '\'' +
-                ", companyCode='" + companyCode + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", year='" + year + '\'' +
-                '}';
+    public List<QhseYearElementsOutDto> getChildNode() {
+        return childNode;
     }
+
+    public void setChildNode(List<QhseYearElementsOutDto> childNode) {
+        this.childNode = childNode;
+    }
+
 }

@@ -242,6 +242,14 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return ok;
     }
 
+    //th-查询年度要素
+    @Override
+    public R queryYearElement(YearElementsDto yearElementsDto) {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseYearElementTree(qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto)));
+        return ok;
+    }
+
     //th-查询基本数据表两级
     @Override
     public R queryChildElement() {

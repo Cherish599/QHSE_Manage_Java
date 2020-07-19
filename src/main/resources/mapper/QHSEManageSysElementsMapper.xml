@@ -156,6 +156,33 @@
         where Status='启用'
     </select>
 
+    <select id="queryQhseYearElements" parameterType="com.wlhse.dto.inDto.YearElementsDto" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
+        Code,
+        Name,
+        Content,
+        Basis,
+        AuditMode,
+        InitialScore,
+        Formula,
+        ProblemDescription,
+        TotalCount,
+        Status,
+        CompanyCode as companyCode,
+        CompanyName as companyName,
+        Year as year
+        from QHSE_CompanyYearManagerSysElement
+        <where>
+            <if test="companyCode !=null and companyCode!=''">
+                AND CompanyCode like concat(#{companyCode},'%')
+            </if>
+            <if test="year !=null and year!=''">
+                AND Year=#{year}
+            </if>
+        </where>
+    </select>
+
     <select id="queryQhseAllElements" resultType="com.wlhse.entity.QhseElementsPojo">
         select QHSE_ManagerSysElement_ID as qhseManagerSysElementID,
         Code,

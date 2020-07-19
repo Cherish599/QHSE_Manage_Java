@@ -24,6 +24,13 @@ public class QHSEManageSysElementsController {
         return qhseManageSysElementsService.queryAllElement();
     }
 
+    //th---查询年度要素
+    //条件查询，指定公司code和年度
+    @RequestMapping(value = "/querryYearElement", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQhseYearElement(@ModelAttribute YearElementsDto yearElementsDto){
+        return qhseManageSysElementsService.queryYearElement(yearElementsDto);
+    }
+
     //th---查询QHSE_ManagerSysElement基本表两级
     @RequestMapping(value = "/querryQhseChildElement", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public R querryQhseManagerSysChildElement(){

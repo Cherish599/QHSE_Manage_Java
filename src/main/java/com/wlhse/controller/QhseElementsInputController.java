@@ -34,8 +34,8 @@ public class QhseElementsInputController {
     //同时补充管理体系要素表的审核人和批准人
     @RequestMapping(value = "/element_evidence", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public R addElementEvidence(@RequestBody(required = false) ElementEvidenceInDto elementEvidenceInDto, HttpServletRequest request ){
-        elementEvidenceInDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
-        elementEvidenceInDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
+        //elementEvidenceInDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
+        //elementEvidenceInDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
         return qhseElementsInputService.addElementEvidence(elementEvidenceInDto);
     }
 

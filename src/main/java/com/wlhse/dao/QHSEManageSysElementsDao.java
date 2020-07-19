@@ -47,6 +47,8 @@ public interface QHSEManageSysElementsDao {
 
     //th----查询基本数据表，仅启用
     List<QhseElementsPojo> queryQhseElements();
+    //查询年度要素表
+    List<YearElementsDto> queryQhseYearElements(YearElementsDto yearElementsDto);
 
     //th----查询基本数据表两级
     List<QhseElementsPojo> queryQhseChildElements();

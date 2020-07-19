@@ -57,7 +57,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
         int id = qhseElementsInputDao.selectElementTableID(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
         elementEvidenceInDto.setTableID(id);
         int k = qhseElementsInputDao.updateElementTableByID(elementEvidenceInDto);
-        if(i*j*k<=0)
+        if(i*j*k*id<=0)
             throw new WLHSException("新增失败");
         return R.ok();
     }
