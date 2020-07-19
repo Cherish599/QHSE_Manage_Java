@@ -40,4 +40,10 @@ public class RegulationRecordController {
         return regulationRecordService.queryRegulationRecordById(id);
     }
 
+    @RequestMapping(value = "/query_regulationrecord", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public String queryDangerRecord(@ModelAttribute RegulationRecordDto regulationRecordDto) {
+
+        return regulationRecordService.queryRegulationRecord(regulationRecordDto);
+    }
+
 }

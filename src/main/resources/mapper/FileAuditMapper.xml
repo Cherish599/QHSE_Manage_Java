@@ -140,4 +140,13 @@
         where Code=#{code}
     </update>
 
+    <select id="getScore" resultType="com.wlhse.dto.FileAuditRecordDto">
+        select codeScore from qhse_fileauditrecord
+        <where>
+            <if test="code != null and code  != ''">
+                AND Code=#{code}
+            </if>
+        </where>
+    </select>
+
 </mapper>

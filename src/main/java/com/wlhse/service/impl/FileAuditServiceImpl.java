@@ -11,6 +11,7 @@ import com.wlhse.util.R;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +56,11 @@ public class FileAuditServiceImpl implements FileAuditService {
         if(fileAuditDao.updateScore(fileAuditRecordDto)<=0)
             throw new WLHSException("更新失败");
         return NR.r();
+    }
+
+    @Override
+    public String getScore(FileAuditRecordDto fileAuditRecordDto) {
+        List<FileAuditRecordDto> list = fileAuditDao.getScore(fileAuditRecordDto);
+        return NR.r(list);
     }
 }

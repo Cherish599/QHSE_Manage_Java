@@ -1,5 +1,6 @@
 package com.wlhse.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.wlhse.dao.RegulationRecordDao;
 import com.wlhse.dto.RegulationRecordDto;
 import com.wlhse.exception.WLHSException;
@@ -42,5 +43,14 @@ public class RegulationRecordServiceImpl implements RegulationRecordService {
     public String queryRegulationRecordById(Integer id) {
         List<RegulationRecordDto> list = regulationRecordDao.queryRegulationRecordById(id);
         return NR.r(list);
+    }
+
+    @Override
+    public String queryRegulationRecord(RegulationRecordDto regulationRecordDto) {
+        int total = regulationRecordDao.queryTotal(regulationRecordDto);
+        int pageIdx = regulationRecordDto.getPageIdx();
+        PageHelper.startPage(pageIdx, regulationRecordDto.getPageSize());
+        List<RegulationRecordDto> list = regulationRecordDao.queryRegulationRecord(regulationRecordDto);
+        return NR.r(list, total, pageIdx);
     }
 }

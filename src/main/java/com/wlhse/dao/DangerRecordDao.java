@@ -17,4 +17,7 @@ public interface DangerRecordDao {
     int updateDangerRecord(DangerRecordDto dangerRecordDto);
     //按ID查询隐患记录
     List<DangerRecordDto> queryDangerRecordById(@Param("id") Integer id);
+    //条件查询隐患记录
+    int queryTotal(DangerRecordDto dangerRecordDto);
+    List<DangerRecordDto> queryDangerRecord(DangerRecordDto dangerRecordDto);
 }

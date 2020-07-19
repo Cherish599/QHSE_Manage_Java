@@ -43,4 +43,9 @@ public class FileAuditController {
         return fileAuditService.updateScore(fileAuditRecordDto);
     }
 
+    @RequestMapping(value = "/get_score", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public String getScore(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
+        return fileAuditService.getScore(fileAuditRecordDto);
+    }
+
 }

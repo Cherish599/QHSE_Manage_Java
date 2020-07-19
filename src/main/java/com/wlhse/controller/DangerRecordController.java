@@ -39,4 +39,10 @@ public class DangerRecordController {
 
         return dangerRecordService.queryDangerRecordById(id);
     }
+
+    @RequestMapping(value = "/query_dangerrecord", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public String queryDangerRecord(@ModelAttribute DangerRecordDto dangerRecordDto) {
+
+        return dangerRecordService.queryDangerRecord(dangerRecordDto);
+    }
 }

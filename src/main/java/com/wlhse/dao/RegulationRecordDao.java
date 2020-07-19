@@ -19,4 +19,7 @@ public interface RegulationRecordDao {
     int updateRegulationRecord(RegulationRecordDto regulationRecordDto);
     //按ID查询违章记录
     List<RegulationRecordDto> queryRegulationRecordById(@Param("id") Integer id);
+    //条件查询违章记录
+    int queryTotal(RegulationRecordDto regulationRecordDto);
+    List<RegulationRecordDto> queryRegulationRecord(RegulationRecordDto regulationRecordDto);
 }

@@ -25,4 +25,8 @@ public interface FileAuditDao {
 
     //对结点打分
     int updateScore(FileAuditRecordDto fileAuditRecordDto);
+
+    //获取结点分数
+    List<FileAuditRecordDto> getScore(FileAuditRecordDto fileAuditRecordDto);
+
 }

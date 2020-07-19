@@ -16,4 +16,7 @@ public interface FileAuditService {
     String updateStatus(FileAuditRecordDto fileAuditRecordDto);
     //结点打分
     String updateScore(FileAuditRecordDto fileAuditRecordDto);
+
+    String getScore(FileAuditRecordDto fileAuditRecordDto);
+
 }

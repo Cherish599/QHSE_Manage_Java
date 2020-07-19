@@ -1,5 +1,6 @@
 package com.wlhse.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dto.DangerRecordDto;
 import com.wlhse.exception.WLHSException;
@@ -42,5 +43,14 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     public String queryDangerRecordById(Integer id) {
         List<DangerRecordDto> list = dangerRecordDao.queryDangerRecordById(id);
         return NR.r(list);
+    }
+
+    @Override
+    public String queryDangerRecord(DangerRecordDto dangerRecordDto) {
+        int total = dangerRecordDao.queryTotal(dangerRecordDto);
+        int pageIdx = dangerRecordDto.getPageIdx();
+        PageHelper.startPage(pageIdx, dangerRecordDto.getPageSize());
+        List<DangerRecordDto> list = dangerRecordDao.queryDangerRecord(dangerRecordDto);
+        return NR.r(list, total, pageIdx);
     }
 }

@@ -13,4 +13,6 @@ public interface RegulationRecordService {
     R updateRegulationRecord (RegulationRecordDto regulationRecordDto);
     //按ID查询
     String queryRegulationRecordById(Integer id);
+    //查询
+    String queryRegulationRecord(RegulationRecordDto regulationRecordDto);
 }

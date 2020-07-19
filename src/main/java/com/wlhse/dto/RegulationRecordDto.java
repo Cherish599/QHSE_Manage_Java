@@ -1,6 +1,8 @@
 package com.wlhse.dto;
 
-public class RegulationRecordDto {
+import com.wlhse.dto.getDto.BaseGetDto;
+
+public class RegulationRecordDto extends BaseGetDto {
     private Integer id;
     private Integer checkId;
     private Integer safeStaff_ID;
