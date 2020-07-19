@@ -128,7 +128,7 @@
         where QHSE_CompanyYearManagerSysElementEvidence_ID=#{id}
     </select>
 
-    <select id="selectElementTableID" resultType="integer">
+    <select id="selectElementTableID" parameterType="int">
         select QHSE_CompanyYearManagerSysElementTable_ID
         from QHSE_CompanyYearManagerSysElement
         where QHSE_CompanyYearManagerSysElement_ID=#{id}

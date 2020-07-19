@@ -27,8 +27,8 @@ public interface QhseElementsInputDao {
 
     ElementEvidenceAttachInDto queryEvidenceAttach(Integer id);
 
-    Integer selectElementTableID(Integer id);
+    int selectElementTableID(Integer id);
 
-    Integer updateElementTableByID(ElementEvidenceInDto elementEvidenceInDto);
+    int updateElementTableByID(ElementEvidenceInDto elementEvidenceInDto);
 
 }
