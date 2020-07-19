@@ -7,6 +7,7 @@ import com.wlhse.dto.CheckRecordTreeDto;
 import com.wlhse.dto.TreeDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -406,22 +407,8 @@ public class TreeUtil {
         Map<String, QHSECompanyYearManagerSysElementDto> map1 = new TreeMap<>();
         List<Integer> code = new ArrayList<>();
         for (QHSECompanyYearManagerSysElementDto pojo : qhseElementsPojos) {
-            QHSECompanyYearManagerSysElementDto qHSECompanyYearManagerSysElementDto = new QHSECompanyYearManagerSysElementDto();
-            qHSECompanyYearManagerSysElementDto.setqHSE_CompanyYearManagerSysElement_ID(pojo.getqHSE_CompanyYearManagerSysElement_ID());
-            qHSECompanyYearManagerSysElementDto.setqHSE_CompanyYearManagerSysElementTable_ID(pojo.getqHSE_CompanyYearManagerSysElementTable_ID());
-            qHSECompanyYearManagerSysElementDto.setChildNode(pojo.getChildNode());
-            qHSECompanyYearManagerSysElementDto.setCode(pojo.getCode());
-            qHSECompanyYearManagerSysElementDto.setName(pojo.getName());
-            qHSECompanyYearManagerSysElementDto.setContent(pojo.getContent());
-            qHSECompanyYearManagerSysElementDto.setBasis(pojo.getBasis());
-            qHSECompanyYearManagerSysElementDto.setAuditMode(pojo.getAuditMode());
-            qHSECompanyYearManagerSysElementDto.setInitialScore(pojo.getInitialScore());
-            qHSECompanyYearManagerSysElementDto.setFormula(pojo.getFormula());
-            qHSECompanyYearManagerSysElementDto.setProblemDescription(pojo.getProblemDescription());
-            qHSECompanyYearManagerSysElementDto.setTotalCount(pojo.getTotalCount());
-            qHSECompanyYearManagerSysElementDto.setStatus(pojo.getStatus());
-            map1.put(qHSECompanyYearManagerSysElementDto.getCode(), qHSECompanyYearManagerSysElementDto);
-            //同一层节点长度一样
+            map1.put(pojo.getCode(), pojo);
+            //存入长度相同的数字
             if (code.indexOf(pojo.getCode().length()) == -1)
                 code.add(pojo.getCode().length());
         }

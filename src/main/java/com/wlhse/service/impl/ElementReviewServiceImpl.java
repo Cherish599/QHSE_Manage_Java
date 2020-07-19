@@ -2,8 +2,6 @@ package com.wlhse.service.impl;
 
 import com.wlhse.dao.ElementReviewDao;
 import com.wlhse.dto.inDto.ElementReviewDto;
-import com.wlhse.dto.getDto.EmployeeDto;
-import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.ElementReviewService;
@@ -54,8 +52,22 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     public R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) {
         qhseEvidenceAttatchDto.setUrl(url);
         List<QhseEvidenceAttatchDto> qhseEvidenceAttatchDtos = elementReviewDao.queryAll(qhseEvidenceAttatchDto);
+        QhseEvidenceAttatchDto returnPojo=new QhseEvidenceAttatchDto();
+            Long dates[] = new Long[qhseEvidenceAttatchDtos.size()];
+            for (int i = 0; i <qhseEvidenceAttatchDtos.size(); i++) {
+                dates[i] = qhseEvidenceAttatchDtos.get(i).getUploadTime().getTime();
+            }
+            Long maxIndex = dates[0];// 定义最大值为该数组的第一个数
+            int j,k = 0;
+            for (j = 1; j < dates.length; j++) {
+                if (maxIndex <=dates[j]){
+                    maxIndex = dates[j];
+                    k=j;
+                } 
+            }
+        returnPojo = qhseEvidenceAttatchDtos.get(k);
         Map<String, Object> map = new HashMap<>();
-        map.put("data", qhseEvidenceAttatchDtos);
+        map.put("data", returnPojo);
         return R.ok(map);
     }
 }

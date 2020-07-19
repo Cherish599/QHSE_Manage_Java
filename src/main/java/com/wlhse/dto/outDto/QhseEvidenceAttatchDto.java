@@ -14,7 +14,7 @@ public class QhseEvidenceAttatchDto {
     private Integer  qHSE_CompanyYearManagerSysElementEvidenceAttach_ID;
     private String   attachDescrption;
     private String   attach;
-    private Date     uploadTime;
+    private Date   uploadTime;
     private String   url;
 
     public String getUrl() {
@@ -113,12 +113,12 @@ public class QhseEvidenceAttatchDto {
         this.attach = attach;
     }
 
-    public Date getUploadTime() {
-        return uploadTime;
-    }
-
     public void setUploadTime(Date uploadTime) {
         this.uploadTime = uploadTime;
+    }
+
+    public Date getUploadTime() {
+        return uploadTime;
     }
 
     @Override
