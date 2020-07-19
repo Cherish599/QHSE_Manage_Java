@@ -187,6 +187,7 @@
         where Status='启用'
         and length (code) &lt;= '6'
     </select>
+
     <update id="updateElement" parameterType="com.wlhse.entity.QhseElementsPojo">
         update qhse_managersyselement
         <trim prefix="set" suffixOverrides=",">
@@ -221,16 +222,132 @@
 
     <insert id="addQHSEElement" parameterType="com.wlhse.entity.QhseElementsPojo">
         insert into qhse_managersyselement
-        (Code,Name,Content,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="name != null and name != ''">
+                Name,
+            </if>
+            <if test="content != null and content != ''">
+                Content,
+            </if>
+            <if test="basis != null and basis != ''">
+                Basis,
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                AuditMode,
+            </if>
+            InitialScore,
+            <if test="formula != null and formula != ''">
+                Formula,
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                ProblemDescription,
+            </if>
+            TotalCount,
+            <if test="status != null and status != ''">
+                Status,
+            </if>
+        </trim>
+        )
         values
-        (#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="basis != null and basis != ''">
+                #{basis},
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                #{auditMode},
+            </if>
+            #{initialScore},
+            <if test="formula != null and formula != ''">
+                #{formula},
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                #{problemDescription},
+            </if>
+            #{totalCount},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+        </trim>
+        )
     </insert>
 
     <insert id="addExcelQHSEElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
         insert into qhse_managersyselement
-        (Code,Name,Content,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="name != null and name != ''">
+                Name,
+            </if>
+            <if test="content != null and content != ''">
+                Content,
+            </if>
+            <if test="basis != null and basis != ''">
+                Basis,
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                AuditMode,
+            </if>
+            InitialScore,
+            <if test="formula != null and formula != ''">
+                Formula,
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                ProblemDescription,
+            </if>
+            TotalCount,
+            <if test="status != null and status != ''">
+                Status,
+            </if>
+        </trim>
+        )
         values
-        (#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="basis != null and basis != ''">
+                #{basis},
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                #{auditMode},
+            </if>
+            #{initialScore},
+            <if test="formula != null and formula != ''">
+                #{formula},
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                #{problemDescription},
+            </if>
+            #{totalCount},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+        </trim>
+        )
     </insert>
 
     <update id="updateExcelElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
