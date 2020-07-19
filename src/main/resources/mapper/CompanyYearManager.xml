@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.CompanyYearManagerDao">
+
+    <select id="queryAll" parameterType="com.wlhse.dto.inDto.CompanyYearManagerDto"
+            resultType="com.wlhse.dto.inDto.CompanyYearManagerDto">
+        select * from qhse_companyyearmanagersyselementtable
+        <where>
+            <if test="companyName != null and companyName  != ''">
+                AND companyName=#{companyName}
+            </if>
+            <if test="year != null and year  != ''">
+                AND year=#{year}
+            </if>
+
+        </where>
+    </select>
+
+
+
+    <update id="updateAll">
+        update QHSE_CompanyYearManagerSysElementTable
+        set status='已发布'
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
+    </update>
+
+  <delete id="deleteAll">
+      delete from QHSE_CompanyYearManagerSysElementTable where  QHSE_CompanyYearManagerSysElementTable_ID=#{id}
+  </delete>
+
+</mapper>
