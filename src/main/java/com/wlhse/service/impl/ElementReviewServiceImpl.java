@@ -53,6 +53,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         qhseEvidenceAttatchDto.setUrl(url);
         List<QhseEvidenceAttatchDto> qhseEvidenceAttatchDtos = elementReviewDao.queryAll(qhseEvidenceAttatchDto);
         QhseEvidenceAttatchDto returnPojo=new QhseEvidenceAttatchDto();
+        if(qhseEvidenceAttatchDtos!=null && !qhseEvidenceAttatchDtos.isEmpty()){
             Long dates[] = new Long[qhseEvidenceAttatchDtos.size()];
             for (int i = 0; i <qhseEvidenceAttatchDtos.size(); i++) {
                 dates[i] = qhseEvidenceAttatchDtos.get(i).getUploadTime().getTime();
@@ -63,9 +64,10 @@ public class ElementReviewServiceImpl implements ElementReviewService {
                 if (maxIndex <=dates[j]){
                     maxIndex = dates[j];
                     k=j;
-                } 
+                }
             }
-        returnPojo = qhseEvidenceAttatchDtos.get(k);
+            returnPojo = qhseEvidenceAttatchDtos.get(k);
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("data", returnPojo);
         return R.ok(map);
