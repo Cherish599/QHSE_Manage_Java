@@ -21,4 +21,6 @@ public interface ElementReviewService {
 
     R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
 
+    QHSECompanyYearManagerSysElementDto queryParent(String code);
+
 }

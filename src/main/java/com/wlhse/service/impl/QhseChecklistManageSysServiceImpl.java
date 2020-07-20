@@ -1,7 +1,9 @@
 package com.wlhse.service.impl;
 
+import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QhseChecklistManageSysDao;
 import com.wlhse.dto.inDto.QHSEManageSysElementsDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QHSECompanyYearManagerSysElementPojo;
 import com.wlhse.entity.QHSECompanyYearManagerSysElementTablePojo;
 import com.wlhse.entity.QHSEManageSysElements;
@@ -16,6 +18,8 @@ import java.util.List;
 public class QhseChecklistManageSysServiceImpl implements QhseChecklistManageSysService {
     @Resource
     private QhseChecklistManageSysDao QhseChecklistManageSysDao;
+    @Resource
+    QHSEManageSysElementsDao qhseManageSysElementsDao;
 
     @Override
     public List<QHSECompanyYearManagerSysElementPojo> query(QHSEManageSysElementsDto qHSEManageSysElementsDto) {
@@ -36,7 +40,9 @@ public class QhseChecklistManageSysServiceImpl implements QhseChecklistManageSys
 
     @Override
     public R addAll(List<QHSECompanyYearManagerSysElementPojo> qHSECompanyYearManagerSysElementPojo, QHSEManageSysElementsDto qHSEManageSysElementsDto) {
+        Integer len = qhseManageSysElementsDao.findMaxLen();
         for (QHSECompanyYearManagerSysElementPojo pojo:qHSECompanyYearManagerSysElementPojo) {
+            if(len.equals(pojo.getCode().length()))
             pojo.setStatus("未提供");
             pojo.setqHSECompanyYearManagerSysElementTableID(qHSEManageSysElementsDto.getId());
             pojo.setCompanyName(qHSEManageSysElementsDto.getCompanyName());

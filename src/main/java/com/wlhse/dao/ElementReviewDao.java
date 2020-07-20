@@ -24,5 +24,7 @@ public interface ElementReviewDao {
     //查询证据关联信息根据ID
     List<QhseEvidenceAttatchDto> queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
 
+    //查父节点
+    QHSECompanyYearManagerSysElementDto queryParent(String code);
 
 }

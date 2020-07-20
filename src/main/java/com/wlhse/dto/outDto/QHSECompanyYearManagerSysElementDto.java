@@ -149,4 +149,26 @@ public class QHSECompanyYearManagerSysElementDto {
     public void setChildNode(List<QHSECompanyYearManagerSysElementDto> childNode) {
         this.childNode = childNode;
     }
+
+    @Override
+    public String toString() {
+        return "QHSECompanyYearManagerSysElementDto{" +
+                "qHSE_CompanyYearManagerSysElement_ID=" + qHSE_CompanyYearManagerSysElement_ID +
+                ", qHSE_CompanyYearManagerSysElementTable_ID=" + qHSE_CompanyYearManagerSysElementTable_ID +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", basis='" + basis + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", problemDescription='" + problemDescription + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", year='" + year + '\'' +
+                ", childNode=" + childNode +
+                '}';
+    }
 }
