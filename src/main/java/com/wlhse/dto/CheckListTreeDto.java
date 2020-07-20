@@ -1,9 +1,15 @@
 package com.wlhse.dto;
 
+import com.alibaba.fastjson.annotation.JSONType;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.stereotype.Component;
+
 import java.util.LinkedList;
 import java.util.List;
-
-public class CheckListTreeDto {
+@Component
+@JSONType(orders = {"checkListID","checkListName","checkListCode","attribute","parentName","isChildNode","status","checkContent","children"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class CheckListTreeDto  implements Cloneable{
     private Integer checkListID;
     private String checkListName;
     private String checkListCode;
@@ -12,7 +18,7 @@ public class CheckListTreeDto {
     private String isChildNode;
     private String status;
     private String checkContent;
-    private List<CheckListTreeDto> children =  new LinkedList<>();
+    private List<CheckListTreeDto> children;//=new LinkedList<>()
 
     public Integer getCheckListID() {
         return checkListID;
@@ -86,4 +92,7 @@ public class CheckListTreeDto {
         this.children = children;
     }
 
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
 }

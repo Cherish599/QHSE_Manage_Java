@@ -18,7 +18,6 @@ public class FactorController {
     @Resource
     private FactorService factorService;
 
-    //人不安全行为
     @RequestMapping(value = "/factor", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryFactor(@ModelAttribute FactorDto factorDto) {
         return factorService.queryFactor(factorDto);

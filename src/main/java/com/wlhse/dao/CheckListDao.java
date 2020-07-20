@@ -17,6 +17,9 @@ public interface CheckListDao {
     //查询所有
     List<CheckListDto> getTreeDto();
 
+    //查询节点最大长度
+    int getMaxLen();
+
     //根据code查询
     CheckListDto getCheckListOne(@Param("code") String code);
 

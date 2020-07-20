@@ -1,8 +1,10 @@
 package com.wlhse.dto.outDto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.LinkedList;
 import java.util.List;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FactorOutDto2 {
 
     private Integer id;
@@ -23,7 +25,7 @@ public class FactorOutDto2 {
 
     private String factorDepartmentCode;
 
-    private List<FactorOutDto2> childNode = new LinkedList<>();
+    private List<FactorOutDto2> childNode;
 
     public Integer getId() {
         return id;

@@ -68,4 +68,16 @@ public class TreeDto implements Cloneable{
     public Object clone() throws CloneNotSupportedException{
         return super.clone();
     }
+
+    @Override
+    public String toString() {
+        return "TreeDto{" +
+                "nodeCode='" + nodeCode + '\'' +
+                ", label='" + label + '\'' +
+                ", children=" + children +
+                ", id='" + id + '\'' +
+                ", uRl='" + uRl + '\'' +
+                ", img='" + img + '\'' +
+                '}';
+    }
 }

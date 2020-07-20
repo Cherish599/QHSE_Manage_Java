@@ -1,5 +1,6 @@
 package com.wlhse.util;
 
+import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.ModuleDao;
 import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckListTreeDto;
@@ -21,6 +22,9 @@ public class TreeUtil {
 
     @Resource
     private ModuleDao moduleDao;
+
+    @Resource
+    private CheckListDao checkListDao;
 
     public List<TreeDto> GetModuleTree(List<ModulePojo> pojos) {
         Map<String, TreeDto> map1 = new TreeMap<>();
@@ -85,6 +89,7 @@ public class TreeUtil {
             if (code.indexOf(pojo.getCompanyCode().length()) == -1)
                 code.add(pojo.getCompanyCode().length());
         }
+        System.out.println(map1);
         return returnList(map1, code);
     }
 
@@ -101,6 +106,7 @@ public class TreeUtil {
             if (code.indexOf(pojo.getCompanyCode().length()) == -1)
                 code.add(pojo.getCompanyCode().length());
         }
+        System.out.println(map1);
         return returnList(map1, code);
     }
 
@@ -211,8 +217,11 @@ public class TreeUtil {
                     List<CheckListTreeDto> tmp = new ArrayList<>();
                     tmp.add(entry.getValue());
                     treeDto.setChildren(tmp);
-                } else
+                } else {
+                    //找到节点中长度最长的那一个
+                    CheckListTreeDto value = entry.getValue();
                     treeDto.getChildren().add(entry.getValue());
+                }
             }
         }
         return result;

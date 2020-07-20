@@ -1,5 +1,7 @@
 package com.wlhse.dto;
 
+import com.alibaba.fastjson.annotation.JSONType;
+
 public class CheckListDto {
     private Integer checkListID;
     private String checkListName;
