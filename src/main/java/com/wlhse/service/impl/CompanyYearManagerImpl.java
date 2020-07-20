@@ -38,4 +38,12 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
             throw new WLHSException("删除失败");
         return R.ok();
     }
+    @Override
+    public R addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto) {
+        companyYearManagerDto.setStatus("未发布");
+        if(companyYearManagerDao.addCompanyYearManager(companyYearManagerDto)<=0)
+            throw new WLHSException("新增失败");
+        return R.ok();
+    }
+
 }

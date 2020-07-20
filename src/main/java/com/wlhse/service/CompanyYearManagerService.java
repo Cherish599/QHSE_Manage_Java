@@ -13,4 +13,6 @@ public interface CompanyYearManagerService {
     R queryAll(CompanyYearManagerDto companyYearManagerDto);
     //删除信息
     R deleteALL(int id);
+    //新增年度检查表
+    R addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto);
 }

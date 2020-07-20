@@ -24,12 +24,18 @@ public class CompanyYearManagerController {
     }
     //状态修改
     @RequestMapping(value = "/approval_companyYearManager/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R companyYearManager(@PathVariable int id) {
+    public R updateCompanyYearManager(@PathVariable int id) {
         return companyYearManagerService.updateStatus(id);
     }
     //删除记录
     @RequestMapping(value = "/delete_companyYearManager/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
-    public R companyYearManager2(@PathVariable int id) {
+    public R deleteCompanyYearManager(@PathVariable int id) {
         return companyYearManagerService.deleteALL(id);
     }
+    //新增检查表
+    @RequestMapping(value = "/companyYearManager", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public R addCompanyYearManager(@RequestBody CompanyYearManagerDto companyYearManagerDto) {
+        return companyYearManagerService.addCompanyYearManager(companyYearManagerDto);
+    }
+
 }

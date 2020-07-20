@@ -28,4 +28,47 @@
       delete from QHSE_CompanyYearManagerSysElementTable where  QHSE_CompanyYearManagerSysElementTable_ID=#{id}
   </delete>
 
+    <insert id="addCompanyYearManager" parameterType="com.wlhse.dto.inDto.CompanyYearManagerDto">
+        insert into QHSE_CompanyYearManagerSysElementTable
+        (
+        <trim suffixOverrides=",">
+            <if test="companyName != null and companyName != ''">
+                CompanyName,
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                CompanyCode,
+            </if>
+            <if test="year != null and year != ''">
+                Year,
+            </if>
+            <if test="elementTableName != null and elementTableName != ''">
+                ElementTableName,
+            </if>
+            <if test="status != null and status != ''">
+                Status,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="companyName != null and companyName != ''">
+                #{companyName},
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                #{companyCode},
+            </if>
+            <if test="year != null and year != ''">
+                #{year},
+            </if>
+            <if test="elementTableName != null and elementTableName != ''">
+                #{elementTableName},
+            </if>
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+        </trim>
+        )
+  </insert>
+
 </mapper>

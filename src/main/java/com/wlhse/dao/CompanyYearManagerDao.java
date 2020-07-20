@@ -18,4 +18,6 @@ public interface CompanyYearManagerDao {
     List<CompanyYearManagerDto> queryAll(CompanyYearManagerDto companyYearManagerDto);
     //删除信息
     int deleteAll(int id);
+    //新增检查表
+    int addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto);
 }
