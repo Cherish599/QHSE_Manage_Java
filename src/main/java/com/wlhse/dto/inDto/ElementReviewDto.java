@@ -7,10 +7,19 @@ public class ElementReviewDto {
     private Integer qHSE_CompanyYearManagerSysElement_ID;
     private String code;
     private String companyName;
+    private String companyCode;
     private String year;
     private String status;
     private Integer checkStaffID;
     private Integer approverStaffID;
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
         return qHSE_CompanyYearManagerSysElement_ID;

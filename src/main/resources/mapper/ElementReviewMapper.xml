@@ -6,8 +6,8 @@
             resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
         select * from qhse_companyyearmanagersyselement
         <where>
-            <if test="companyName != null and companyName  != ''">
-                AND companyName=#{companyName}
+            <if test="companyCode !=null and companyCode!=''">
+                AND companyCode like concat(#{companyCode},'%')
             </if>
             <if test="year != null and year  != ''">
                 AND year=#{year}
@@ -22,9 +22,9 @@
             resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
         select * from qhse_companyyearmanagersyselement
         <where>
-        <if test="companyName != null and companyName  != ''">
-            AND companyName=#{companyName}
-        </if>
+            <if test="companyCode !=null and companyCode!=''">
+                AND companyCode like concat(#{companyCode},'%')
+            </if>
         <if test="year != null and year  != ''">
             AND year=#{year}
         </if>
@@ -62,6 +62,11 @@
          from qhse_companyyearmanagersyselementevidence t1,qhse_companyyearmanagersyselementevidenceattach t2
         where t1.QHSE_CompanyYearManagerSysElementEvidence_ID=t2.QHSE_CompanyYearManagerSysElementEvidence_ID
         and t1.QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </select>
+
+    <select id="queryParent" parameterType="java.lang.String"
+            resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
+        select * from qhse_companyyearmanagersyselement where code=#{code}
     </select>
 
 </mapper>
