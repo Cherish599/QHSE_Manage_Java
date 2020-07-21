@@ -13,6 +13,7 @@ import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 @RestController("ElementReviewController")
 @RequestMapping("/api/v3")
@@ -49,7 +50,7 @@ public class ElementReviewController {
     }
     //显示要素证据信息
     @RequestMapping(value = "/show_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R show(@ModelAttribute QhseEvidenceAttatchDto qhseEvidenceAttatchDto) {
+    public R show(@ModelAttribute QhseEvidenceAttatchDto qhseEvidenceAttatchDto) throws ParseException {
         return  elementReviewService.queryAll(qhseEvidenceAttatchDto);
     }
     //审核人不批准不通过

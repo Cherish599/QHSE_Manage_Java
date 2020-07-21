@@ -25,6 +25,6 @@ public interface ElementReviewDao {
     List<QhseEvidenceAttatchDto> queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
 
     //查父节点
-    QHSECompanyYearManagerSysElementDto queryParent(String code);
+    List<QHSECompanyYearManagerSysElementDto> queryParent(String code);
 
 }

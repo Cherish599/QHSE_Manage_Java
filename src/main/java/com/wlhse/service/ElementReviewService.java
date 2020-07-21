@@ -7,6 +7,7 @@ import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.util.R;
 import org.apache.ibatis.annotations.Param;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface ElementReviewService {
@@ -19,8 +20,8 @@ public interface ElementReviewService {
     //修改审核人状态
     R updateStatus(ElementReviewDto elementReviewDto);
 
-    R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
+    R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) throws ParseException;
 
-    QHSECompanyYearManagerSysElementDto queryParent(String code);
+   List<QHSECompanyYearManagerSysElementDto>  queryParent(String code);
 
 }
