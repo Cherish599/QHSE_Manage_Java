@@ -11,13 +11,13 @@
                 CheckId,
             </if>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
-                SafeStaff_ID,
+                SafeStaff_ID,SafeStaff_Name,
             </if>
             <if test="workItem != null and workItem  != ''">
                 WorkItem,
             </if>
             <if test="companyId != null and companyId  != ''">
-                CompanyId,
+                CompanyId,CompanyName,
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 SupervisionDate,
@@ -145,13 +145,13 @@
                 #{checkId},
             </if>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
-                #{safeStaff_ID},
+                #{safeStaff_ID},(select Name from employee where EmployeeID=#{safeStaff_ID}),
             </if>
             <if test="workItem != null and workItem  != ''">
                 #{workItem},
             </if>
             <if test="companyId != null and companyId  != ''">
-                #{companyId},
+                #{companyId},(select name from sys_company where CompanyCode=#{companyId}),
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 #{supervisionDate},
@@ -288,13 +288,13 @@
                 checkId=#{checkId},
             </if>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
-                safeStaff_ID=#{safeStaff_ID},
+                safeStaff_ID=#{safeStaff_ID},safeStaff_Name=(select Name from employee where EmployeeID=#{safeStaff_ID}),
             </if>
             <if test="workItem != null and workItem  != ''">
                 workItem=#{workItem},
             </if>
             <if test="companyId != null and companyId  != ''">
-                companyId=#{companyId},
+                companyId=#{companyId},companyName=(select name from sys_company where CompanyCode=#{companyId}),
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 supervisionDate=#{supervisionDate},
@@ -435,11 +435,17 @@
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 AND safeStaff_ID=#{safeStaff_ID}
             </if>
+            <if test="safeStaff_Name != null and safeStaff_Name  != ''">
+                AND safeStaff_Name=#{safeStaff_Name}
+            </if>
             <if test="workItem != null and workItem  != ''">
                 AND workItem=#{workItem}
             </if>
             <if test="companyId != null and companyId  != ''">
                 AND companyId=#{companyId}
+            </if>
+            <if test="companyName != null and companyName  != ''">
+                AND companyName=#{companyName}
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 AND supervisionDate=#{supervisionDate}
@@ -559,7 +565,8 @@
     </select>
     
     <select id="queryDangerRecord" resultType="com.wlhse.dto.DangerRecordDto">
-        select * from dangerrecord
+        select *
+        from dangerrecord
         <where>
             <if test="checkId != null and checkId  != ''">
                 AND checkId=#{checkId}
@@ -567,11 +574,17 @@
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 AND safeStaff_ID=#{safeStaff_ID}
             </if>
+            <if test="safeStaff_Name != null and safeStaff_Name  != ''">
+                AND safeStaff_Name=#{safeStaff_Name}
+            </if>
             <if test="workItem != null and workItem  != ''">
                 AND workItem=#{workItem}
             </if>
             <if test="companyId != null and companyId  != ''">
                 AND companyId=#{companyId}
+            </if>
+            <if test="companyName != null and companyName  != ''">
+                AND companyName=#{companyName}
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 AND supervisionDate=#{supervisionDate}

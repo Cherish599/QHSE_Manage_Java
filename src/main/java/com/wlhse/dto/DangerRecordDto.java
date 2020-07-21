@@ -6,8 +6,10 @@ public class DangerRecordDto extends BaseGetDto {
     private Integer id;
     private Integer checkId;
     private Integer safeStaff_ID;
+    private String safeStaff_Name;
     private String workItem;
     private String companyId;
+    private String companyName;
     private String supervisionDate;
     private String type;
     private String description;
@@ -71,6 +73,14 @@ public class DangerRecordDto extends BaseGetDto {
         this.safeStaff_ID = safeStaff_ID;
     }
 
+    public String getSafeStaff_Name() {
+        return safeStaff_Name;
+    }
+
+    public void setSafeStaff_Name(String safeStaff_Name) {
+        this.safeStaff_Name = safeStaff_Name;
+    }
+
     public String getWorkItem() {
         return workItem;
     }
@@ -85,6 +95,14 @@ public class DangerRecordDto extends BaseGetDto {
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getSupervisionDate() {
