@@ -20,7 +20,8 @@ public interface FileAuditService {
     String updateScore(FileAuditRecordDto fileAuditRecordDto);
     //获取结点分数
     String getScore(FileAuditRecordDto fileAuditRecordDto);
-
+    //获取结点审核状态
+    String getStatus(FileAuditRecordDto fileAuditRecordDto);
 
 
 }

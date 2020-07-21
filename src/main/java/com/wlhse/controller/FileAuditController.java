@@ -53,4 +53,9 @@ public class FileAuditController {
         return fileAuditService.addFileAuditRecord(fileAuditRecordDto);
     }
 
+    @RequestMapping(value = "/get_status", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public String getStatus(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
+        return fileAuditService.getStatus(fileAuditRecordDto);
+    }
+
 }

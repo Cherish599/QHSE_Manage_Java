@@ -32,4 +32,6 @@ public interface FileAuditDao {
     //获取结点分数
     List<FileAuditRecordDto> getScore(FileAuditRecordDto fileAuditRecordDto);
 
+    //获取结点审核状态
+    List<FileAuditRecordDto> getStatus(FileAuditRecordDto fileAuditRecordDto);
 }

@@ -189,4 +189,16 @@
         </where>
     </select>
 
+    <select id="getStatus" resultType="com.wlhse.dto.FileAuditRecordDto">
+        select Pass from qhse_fileauditrecord
+        <where>
+            <if test="code != null and code  != ''">
+                AND QHSE_FileAudit_ID=#{fileAuditId}
+            </if>
+            <if test="code != null and code  != ''">
+                AND Code=#{code}
+            </if>
+        </where>
+    </select>
+
 </mapper>

@@ -71,4 +71,12 @@ public class FileAuditServiceImpl implements FileAuditService {
         List<FileAuditRecordDto> list = fileAuditDao.getScore(fileAuditRecordDto);
         return NR.r(list);
     }
+
+    @Override
+    public String getStatus(FileAuditRecordDto fileAuditRecordDto) {
+        List<FileAuditRecordDto> list = fileAuditDao.getStatus(fileAuditRecordDto);
+        return NR.r(list);
+    }
+
+
 }
