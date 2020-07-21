@@ -55,6 +55,8 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     public R addElementEvidence(ElementEvidenceInDto elementEvidenceInDto) {
         try {
+            QHSECompanyYearManagerSysElementEvidenceDto dto = qhseElementsInputDao.queryElementsEvidence(elementEvidenceInDto);
+            if(dto==null) {}
             EmployeeDto empCheck = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getCheckStaffID());
             EmployeeDto empApprove = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getApproverStaffID());
             System.out.println(elementEvidenceInDto);
