@@ -28,9 +28,10 @@
             <if test="description != null and description  != ''">
                 Description,
             </if>
-            <if test="punish != null and punish  != ''">
-                Punish,
+            <if test="punishID != null and punishID  != ''">
+                PunishID,Punish,
             </if>
+
             <if test="approve != null and approve  != ''">
                 Approve,
             </if>
@@ -79,8 +80,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 FactorSource,
             </if>
-            <if test="profession != null and profession  != ''">
-                Profession,
+            <if test="professionID != null and professionID  != ''">
+                ProfessionID,Profession,
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 FactorHSE,
@@ -153,8 +154,8 @@
             <if test="description != null and description  != ''">
                 #{description},
             </if>
-            <if test="punish != null and punish  != ''">
-                #{punish},
+            <if test="punishID != null and punishID  != ''">
+                #{punishID},(select Name from employee where EmployeeID=#{punishID}),
             </if>
             <if test="approve != null and approve  != ''">
                 #{approve},
@@ -204,8 +205,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 #{factorSource},
             </if>
-            <if test="profession != null and profession  != ''">
-                #{profession},
+            <if test="professionID != null and professionID  != ''">
+                #{professionID},(select Name from employee where EmployeeID=#{professionID}),
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 #{factorHSE},
@@ -287,8 +288,8 @@
             <if test="description != null and description  != ''">
                 description=#{description},
             </if>
-            <if test="punish != null and punish  != ''">
-                punish=#{punish},
+            <if test="punishID != null and punishID  != ''">
+                punishID=#{punishID},punish=(select Name from employee where EmployeeID=#{punishID}),
             </if>
             <if test="approve != null and approve  != ''">
                 approve=#{approve},
@@ -338,8 +339,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 factorSource=#{factorSource},
             </if>
-            <if test="profession != null and profession  != ''">
-                profession=#{profession},
+            <if test="professionID != null and professionID  != ''">
+                professionID=#{professionID},profession=(select Name from employee where EmployeeID=#{professionID}),
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 factorHSE=#{factorHSE},
@@ -428,6 +429,9 @@
             <if test="description != null and description  != ''">
                 AND description=#{description}
             </if>
+            <if test="punishID != null and punishID  != ''">
+                AND punishID=#{punishID}
+            </if>
             <if test="punish != null and punish  != ''">
                 AND punish=#{punish}
             </if>
@@ -478,6 +482,9 @@
             </if>
             <if test="factorSource != null and factorSource  != ''">
                 AND factorSource=#{factorSource}
+            </if>
+            <if test="professionID != null and professionID  != ''">
+                AND professionID=#{professionID}
             </if>
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}
@@ -557,6 +564,9 @@
             <if test="description != null and description  != ''">
                 AND description=#{description}
             </if>
+            <if test="punishID != null and punishID  != ''">
+                AND punishID=#{punishID}
+            </if>
             <if test="punish != null and punish  != ''">
                 AND punish=#{punish}
             </if>
@@ -607,6 +617,9 @@
             </if>
             <if test="factorSource != null and factorSource  != ''">
                 AND factorSource=#{factorSource}
+            </if>
+            <if test="professionID != null and professionID  != ''">
+                AND professionID=#{professionID}
             </if>
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}

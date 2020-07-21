@@ -14,6 +14,7 @@ public class RegulationRecordDto extends BaseGetDto {
     private String type;
     private String description;
     private String punish;
+    private String punishID;
     private Integer approve;
     private Integer ok;
     private Integer consequenceID;
@@ -30,6 +31,7 @@ public class RegulationRecordDto extends BaseGetDto {
     private String position;
     private String regulationCharacter;
     private String factorSource;
+    private String professionID;
     private String profession;
     private String factorHSE;
     private String factorDepartment;
@@ -136,6 +138,14 @@ public class RegulationRecordDto extends BaseGetDto {
 
     public void setPunish(String punish) {
         this.punish = punish;
+    }
+
+    public String getPunishID() {
+        return punishID;
+    }
+
+    public void setPunishID(String punishID) {
+        this.punishID = punishID;
     }
 
     public Integer getApprove() {
@@ -352,6 +362,14 @@ public class RegulationRecordDto extends BaseGetDto {
 
     public void setKeyID(String keyID) {
         this.keyID = keyID;
+    }
+
+    public String getProfessionID() {
+        return professionID;
+    }
+
+    public void setProfessionID(String professionID) {
+        this.professionID = professionID;
     }
 
     public String getqHSE_CheckType() {

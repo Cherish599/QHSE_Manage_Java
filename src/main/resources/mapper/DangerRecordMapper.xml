@@ -34,8 +34,8 @@
             <if test="solution != null and solution  != ''">
                 Solution,
             </if>
-            <if test="reformPerson != null and reformPerson  != ''">
-                ReformPerson,
+            <if test="reformPersonID != null and reformPersonID  != ''">
+                ReformPersonID,ReformPerson,
             </if>
             <if test="limitDate != null and limitDate  != ''">
                 LimitDate,
@@ -85,8 +85,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 FactorSource,
             </if>
-            <if test="profession != null and profession  != ''">
-                Profession,
+            <if test="professionID != null and professionID  != ''">
+                ProfessionID,Profession,
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 FactorHSE,
@@ -168,8 +168,8 @@
             <if test="solution != null and solution  != ''">
                 #{solution},
             </if>
-            <if test="reformPerson != null and reformPerson  != ''">
-                #{reformPerson},
+            <if test="reformPersonID != null and reformPersonID  != ''">
+                #{reformPersonID},(select Name from employee where EmployeeID=#{reformPersonID}),
             </if>
             <if test="limitDate != null and limitDate  != ''">
                 #{limitDate},
@@ -219,8 +219,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 #{factorSource},
             </if>
-            <if test="profession != null and profession  != ''">
-                #{profession},
+            <if test="professionID != null and professionID  != ''">
+                #{professionID},(select Name from employee where EmployeeID=#{professionID}),
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 #{factorHSE},
@@ -311,8 +311,8 @@
             <if test="solution != null and solution  != ''">
                 solution=#{solution},
             </if>
-            <if test="reformPerson != null and reformPerson  != ''">
-                reformPerson=#{reformPerson},
+            <if test="reformPersonID != null and reformPersonID  != ''">
+                reformPersonID=#{reformPersonID},reformPerson=(select Name from employee where EmployeeID=#{reformPersonID}),
             </if>
             <if test="limitDate != null and limitDate  != ''">
                 limitDate=#{limitDate},
@@ -362,8 +362,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 factorSource=#{factorSource},
             </if>
-            <if test="profession != null and profession  != ''">
-                profession=#{profession},
+            <if test="professionID != null and professionID  != ''">
+                professionID=#{professionID},profession=(select Name from employee where EmployeeID=#{professionID}),
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 factorHSE=#{factorHSE},
@@ -462,6 +462,9 @@
             <if test="solution != null and solution  != ''">
                 AND solution=#{solution}
             </if>
+            <if test="reformPersonID != null and reformPersonID  != ''">
+                AND reformPersonID=#{reformPersonID}
+            </if>
             <if test="reformPerson != null and reformPerson  != ''">
                 AND reformPerson=#{reformPerson}
             </if>
@@ -512,6 +515,9 @@
             </if>
             <if test="factorSource != null and factorSource  != ''">
                 AND factorSource=#{factorSource}
+            </if>
+            <if test="professionID != null and professionID  != ''">
+                AND professionID=#{professionID}
             </if>
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}
@@ -601,6 +607,9 @@
             <if test="solution != null and solution  != ''">
                 AND solution=#{solution}
             </if>
+            <if test="reformPersonID != null and reformPersonID  != ''">
+                AND reformPersonID=#{reformPersonID}
+            </if>
             <if test="reformPerson != null and reformPerson  != ''">
                 AND reformPerson=#{reformPerson}
             </if>
@@ -651,6 +660,9 @@
             </if>
             <if test="factorSource != null and factorSource  != ''">
                 AND factorSource=#{factorSource}
+            </if>
+            <if test="professionID != null and professionID  != ''">
+                AND professionID=#{professionID}
             </if>
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}

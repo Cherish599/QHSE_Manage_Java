@@ -15,6 +15,7 @@ public class DangerRecordDto extends BaseGetDto {
     private String description;
     private Integer status;
     private String solution;
+    private String reformPersonID;
     private String reformPerson;
     private String limitDate;
     private String receptionDate;
@@ -32,6 +33,7 @@ public class DangerRecordDto extends BaseGetDto {
     private String recordDate;
     private String rank;
     private String factorSource;
+    private String professionID;
     private String profession;
     private String factorHSE;
     private String factorDepartment;
@@ -143,6 +145,14 @@ public class DangerRecordDto extends BaseGetDto {
 
     public void setSolution(String solution) {
         this.solution = solution;
+    }
+
+    public String getReformPersonID() {
+        return reformPersonID;
+    }
+
+    public void setReformPersonID(String reformPersonID) {
+        this.reformPersonID = reformPersonID;
     }
 
     public String getReformPerson() {
@@ -279,6 +289,14 @@ public class DangerRecordDto extends BaseGetDto {
 
     public void setFactorSource(String factorSource) {
         this.factorSource = factorSource;
+    }
+
+    public String getProfessionID() {
+        return professionID;
+    }
+
+    public void setProfessionID(String professionID) {
+        this.professionID = professionID;
     }
 
     public String getProfession() {
