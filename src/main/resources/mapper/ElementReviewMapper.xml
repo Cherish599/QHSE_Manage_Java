@@ -51,7 +51,7 @@
         approverStaffName,
         qHSE_CompanyYearManagerSysElementEvidenceAttach_ID,
         attachDescrption,
-        if(attach='',attach,concat(#{url},attach)) as attach,
+        attach,
         uploadTime
     </sql>
 
@@ -66,7 +66,7 @@
 
     <select id="queryParent" parameterType="java.lang.String"
             resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
-        select * from qhse_companyyearmanagersyselement where code=#{code}
+        select * from qhse_companyyearmanagersyselement where  code=#{code}
     </select>
 
 </mapper>

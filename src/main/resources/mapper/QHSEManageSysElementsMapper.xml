@@ -158,29 +158,32 @@
     </select>
 
     <select id="queryQhseYearElements" parameterType="com.wlhse.dto.inDto.YearElementsDto" resultType="com.wlhse.dto.inDto.YearElementsDto">
-        select QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
-        QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
-        Code,
-        Name,
-        Content,
-        Basis,
-        AuditMode,
-        InitialScore,
-        Formula,
-        ProblemDescription,
-        TotalCount,
-        Status,
-        CompanyCode as companyCode,
-        CompanyName as companyName,
-        Year as year
-        from QHSE_CompanyYearManagerSysElement
+        select t1.QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        t1.QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
+        t1.Code,
+        t1.Name,
+        t1.Content,
+        t1.Basis,
+        t1.AuditMode,
+        t1.InitialScore,
+        t1.Formula,
+        t1.ProblemDescription,
+        t1.TotalCount,
+        t1.Status,
+        t1.CompanyCode as companyCode,
+        t1.CompanyName as companyName,
+        t1.Year as year
+        from QHSE_CompanyYearManagerSysElement as t1
+        join QHSE_CompanyYearManagerSysElementTable as t2
+        on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
         <where>
             <if test="companyCode !=null and companyCode!=''">
-                AND CompanyCode like concat(#{companyCode},'%')
+                AND t1.CompanyCode like concat(#{companyCode},'%')
             </if>
             <if test="year !=null and year!=''">
-                AND Year=#{year}
+                AND t1.Year=#{year}
             </if>
+            AND t2.Status='已发布'
         </where>
     </select>
 

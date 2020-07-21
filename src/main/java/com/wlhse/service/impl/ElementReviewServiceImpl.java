@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ElementReviewServiceImpl implements ElementReviewService {
@@ -42,7 +42,9 @@ public class ElementReviewServiceImpl implements ElementReviewService {
             }
             //查询父节点并插入
             for (String code : codes) {
-                lists.add(elementReviewDao.queryParent(code));
+                List <QHSECompanyYearManagerSysElementDto> parent=elementReviewDao.queryParent(code);
+                if(parent!=null && !parent.isEmpty())
+                lists.add(parent.get(0));
             }
         }
         R ok = R.ok();
@@ -64,7 +66,10 @@ public class ElementReviewServiceImpl implements ElementReviewService {
             }
             //查询父节点并插入
             for (String code : codes) {
-                lists.add(elementReviewDao.queryParent(code));
+                List <QHSECompanyYearManagerSysElementDto>parent=new ArrayList<>();
+                parent=elementReviewDao.queryParent(code);
+                if(parent!=null && !parent.isEmpty())
+                    lists.add(parent.get(0));
             }
         }
         R ok = R.ok();
@@ -81,14 +86,17 @@ public class ElementReviewServiceImpl implements ElementReviewService {
 
 
     @Override
-    public R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) {
+    public R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) throws ParseException {
         qhseEvidenceAttatchDto.setUrl(url);
         List<QhseEvidenceAttatchDto> qhseEvidenceAttatchDtos = elementReviewDao.queryAll(qhseEvidenceAttatchDto);
         QhseEvidenceAttatchDto returnPojo=new QhseEvidenceAttatchDto();
         if(qhseEvidenceAttatchDtos!=null && !qhseEvidenceAttatchDtos.isEmpty()){
             Long dates[] = new Long[qhseEvidenceAttatchDtos.size()];
             for (int i = 0; i <qhseEvidenceAttatchDtos.size(); i++) {
-                dates[i] = qhseEvidenceAttatchDtos.get(i).getUploadTime().getTime();
+                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+                String str=qhseEvidenceAttatchDtos.get(i).getUploadTime();
+                Date date=df.parse(str);
+                dates[i] = date.getTime();
             }
             Long maxIndex = dates[0];// 定义最大值为该数组的第一个数
             int j,k = 0;
@@ -99,6 +107,14 @@ public class ElementReviewServiceImpl implements ElementReviewService {
                 }
             }
             returnPojo = qhseEvidenceAttatchDtos.get(k);
+            //拼接图片
+            String[] urs = returnPojo.getAttach().split(";");
+            String strs = "";
+            for (String str:urs) {
+                System.out.println(str);
+                strs+=url+str+";";
+            }
+            returnPojo.setAttach(strs);
         }
         Map<String, Object> map = new HashMap<>();
         map.put("data", returnPojo);
@@ -106,7 +122,9 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     }
 
     @Override
-    public QHSECompanyYearManagerSysElementDto queryParent(String code) {
+    public List<QHSECompanyYearManagerSysElementDto> queryParent(String code) {
         return elementReviewDao.queryParent(code);
     }
+
+
 }
