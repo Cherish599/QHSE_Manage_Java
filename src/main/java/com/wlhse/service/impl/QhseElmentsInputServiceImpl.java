@@ -7,6 +7,7 @@ import com.wlhse.dto.getDto.EmployeeDto;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.dto.inDto.ElementEvidenceInDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
+import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementEvidenceDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.exception.WLHSException;
@@ -35,7 +36,14 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     public R querryElementEvidence(ElementEvidenceInDto elementEvidenceInDto) {
         R ok = R.ok();
         try{
-            ok.put("data", qhseElementsInputDao.queryElementsEvidence(elementEvidenceInDto));
+            QHSECompanyYearManagerSysElementEvidenceDto dto = qhseElementsInputDao.queryElementsEvidence(elementEvidenceInDto);
+            String name1 = dto.getCheckStaffName()+"("+qhseElementsInputDao.getEmployeeCompany(dto.getCheckStaffID())+")";
+            String name2 = dto.getApproverStaffName()+"("+qhseElementsInputDao.getEmployeeCompany(dto.getApproverStaffID())+")";
+            dto.setCheckStaffName(name1);
+            dto.setApproverStaffName(name2);
+            System.out.println(name1);
+            System.out.println(name2);
+            ok.put("data", dto);
         } catch (Exception e) {
             e.printStackTrace();
             throw new WLHSException("查询失败");

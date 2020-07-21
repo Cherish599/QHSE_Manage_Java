@@ -184,7 +184,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return NR.r();
     }
 
-   public void setOff(String str, String code) {
+    public void setOff(String str, String code) {
         qhseManageSysElementsDao.setOff(str, code);
 
     }//本人及其儿子改成停用
@@ -233,6 +233,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             qhseManageSysElementsDao.addScoreCount(list.get(i), score);
         }
     }
+
     //th-------------------------------------更新区------------------------------------------
     //th-查询基本数据表
     @Override
@@ -257,6 +258,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseChildElements()));
         return ok;
     }
+
     //th---根据是否启用查询节点
     @Override
     public R queryAllElements(int status) {
@@ -270,8 +272,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             R ok = R.ok();
             ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseAllElements()));
             return ok;
-        }else
-        {
+        } else {
             throw new WLHSException("查询失败");
         }
 
@@ -312,6 +313,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return NR.r();
 
     }
+
     //th---更新内容
     @Override
     public String updateElementcontent(QhseElementsPojo qhseManageSysElement) {
@@ -342,6 +344,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return NR.r();
 
     }
+
     //th---添加节点内容
     @Override
     public String addElement(QhseElementsPojo qhseManageSysElement) {
@@ -375,7 +378,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                         String numCode = Integer.toString(num);
                         if (num < 10)
                             qhseManageSysElement.setCode(parentCode + "00" + numCode);
-                        else if(num<100)
+                        else if (num < 100)
                             qhseManageSysElement.setCode(parentCode + "0" + numCode);
                         else
                             qhseManageSysElement.setCode(parentCode + numCode);
@@ -392,7 +395,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                         String numCode = Integer.toString(num);
                         if (num < 10)
                             qhseManageSysElement.setCode(parentCode + "00" + numCode);
-                        else if(num<100)
+                        else if (num < 100)
                             qhseManageSysElement.setCode(parentCode + "0" + numCode);
                         else
                             qhseManageSysElement.setCode(parentCode + numCode);
@@ -428,36 +431,46 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     @Transactional
     @Override
     public R addYearElement(YearElementsDto yearElementsDto) {
-        String[] codes = yearElementsDto.getCodes().split(";");
-        System.out.println(codes);
-        List<YearElementsDto> list = new ArrayList<>();
-        Integer id = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
-        String companyCode = yearElementsDto.getCompanyCode();
-        String companyName = yearElementsDto.getCompanyName();
-        String year = yearElementsDto.getYear();
-        Integer len = qhseManageSysElementsDao.findMaxLen();
-        for(String code:codes) {
-            List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code);
-            for(int i=0;i<temp.size();i++) {
-                if(len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
-                    temp.get(i).setStatus("未提供");
-                }
-                temp.get(i).setQhseCompanyYearManagerSysElementTableID(id);
-                temp.get(i).setCompanyCode(companyCode);
-                temp.get(i).setCompanyName(companyName);
-                temp.get(i).setYear(year);
-                list.add(temp.get(i));
+        try {
+            String[] codes = yearElementsDto.getCodes().split(";");
+            System.out.println(codes);
+            List<YearElementsDto> list = new ArrayList<>();
+            Integer id = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
+            String companyCode = yearElementsDto.getCompanyCode();
+            String companyName = yearElementsDto.getCompanyName();
+            String year = yearElementsDto.getYear();
+            Integer len = qhseManageSysElementsDao.findMaxLen();
+            //新增先查询tableid是否存在数据，存在先删除再新增，不存在才直接新增
+            List<YearElementsDto> yearElementsDtos = qhseManageSysElementsDao.queryByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
+            if(yearElementsDtos.size()>0) {//删除
+                qhseManageSysElementsDao.deleteByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
             }
-        }
-        //执行新增操作
-        int result=0;
-        for (int i =0;i<list.size();i++) {
-            result = qhseManageSysElementsDao.addYearElement(list.get(i));
-            if (result<=0) break;
-        }
-        System.out.println(list);
-        if (result<=0)
+            for (String code : codes) {
+                List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code);
+                for (int i = 0; i < temp.size(); i++) {
+                    if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
+                        temp.get(i).setStatus("未提供");
+                    }
+                    temp.get(i).setQhseCompanyYearManagerSysElementTableID(id);
+                    temp.get(i).setCompanyCode(companyCode);
+                    temp.get(i).setCompanyName(companyName);
+                    temp.get(i).setYear(year);
+                    list.add(temp.get(i));
+                }
+            }
+            //执行新增操作
+            int result = 0;
+            for (int i = 0; i < list.size(); i++) {
+                result = qhseManageSysElementsDao.addYearElement(list.get(i));
+                if (result <= 0) break;
+            }
+            System.out.println(list);
+            if (result <= 0)
+                throw new WLHSException("新增失败");
+        }catch (Exception e) {
+            e.printStackTrace();
             throw new WLHSException("新增失败");
+        }
         return R.ok();
     }
 }

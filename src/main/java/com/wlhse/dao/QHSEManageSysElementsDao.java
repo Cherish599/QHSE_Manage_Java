@@ -64,4 +64,9 @@ public interface QHSEManageSysElementsDao {
 
     Integer addYearElement(YearElementsDto yearElementsDto);
 
+    //查找指定tableid
+    List<YearElementsDto> queryByTableID(@Param("id") Integer id);
+
+    int deleteByTableID(@Param("id") Integer id);
+
 }

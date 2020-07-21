@@ -7,12 +7,35 @@
         QHSE_CompanyYearManagerSysElementEvidence_ID as qhseCompanyYearManagerSysElementEvidenceID,
         QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
         Code as code,
-        EvidenceDescription as evidenceDescription
+        EvidenceDescription as evidenceDescription,
+        checkStaffID as checkStaffID,
+        checkStaffName as checkStaffName,
+        approverStaffID as approverStaffID,
+        approverStaffName as approverStaffName
         from QHSE_CompanyYearManagerSysElementEvidence
         <where>
             <if test="code != null and code!= ''">
                 Code = #{code}
             </if>
+        </where>
+    </select>
+
+    <select id="getEmployeeCompany" resultType="string">
+        select
+        c1.`Name` as companyName
+        from employee as e1
+        left join sys_company as c1
+        on e1.CompanyCode=c1.CompanyCode
+        left join sys_user as u1
+        on e1.EmployeeID=u1.EmployeeID
+        <where>
+            e1.EmployeeID=#{employeeID}
+            <!--<if test="name1 != null and name1 !=''">-->
+                <!--and e1.Name LIKE CONCAT('%','${name1}','%')-->
+            <!--</if>-->
+            <!--<if test="companyCode != null and companyCode !=''">-->
+                <!--and substring(e1.companyCode,1,length(#{companyCode})) = #{companyCode}-->
+            <!--</if>-->
         </where>
     </select>
 
