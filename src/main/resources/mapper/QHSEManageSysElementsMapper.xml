@@ -3,6 +3,7 @@
 
 <mapper namespace="com.wlhse.dao.QHSEManageSysElementsDao">
 
+
     <select id="querryRuleChild" parameterType="com.wlhse.entity.QHSEManageSysElements"
             resultType="com.wlhse.entity.QHSEManageSysElements">
         select * from qhse_managersyselement
@@ -407,6 +408,21 @@
     <select id="findMaxLen" resultType="integer">
         select Max(LENGTH(code)) FROM QHSE_ManagerSysElement
     </select>
+
+    <select id="queryByTableID" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select
+        QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
+        code as code,
+        name as name
+        from QHSE_CompanyYearManagerSysElement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
+    </select>
+
+    <delete id="deleteByTableID">
+        delete from QHSE_CompanyYearManagerSysElement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
+    </delete>
 
     <insert id="addYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto">
         insert into QHSE_CompanyYearManagerSysElement
