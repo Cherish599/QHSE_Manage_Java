@@ -1,8 +1,10 @@
 package com.wlhse.dto.outDto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.LinkedList;
 import java.util.List;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CheckRecordTreeOutDto {
     private Integer checkRecordID;
     private String checkListCode;
@@ -14,7 +16,7 @@ public class CheckRecordTreeOutDto {
     private String companyCode;
     private String checkDate;
     private String checkContent;
-    private List<CheckRecordTreeOutDto> childNode = new LinkedList<>();
+    private List<CheckRecordTreeOutDto> childNode;
 
     public Integer getCheckRecordID() {
         return checkRecordID;

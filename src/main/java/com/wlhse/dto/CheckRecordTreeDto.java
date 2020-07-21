@@ -1,5 +1,8 @@
 package com.wlhse.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CheckRecordTreeDto {
     private Integer checkRecordID;
     private String checkListCode;

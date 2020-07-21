@@ -89,6 +89,10 @@
         where status="启用"
     </select>
 
+    <select id="getMaxLen" resultType="int">
+        select MAX(checkListCode) from CheckList
+    </select>
+
     <select id="getCheckListOne" resultType="com.wlhse.dto.CheckListDto">
         select * from CheckList
         where CheckListCode=#{code}

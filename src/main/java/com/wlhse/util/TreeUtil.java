@@ -1,5 +1,6 @@
 package com.wlhse.util;
 
+import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.ModuleDao;
 import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckListTreeDto;
@@ -21,6 +22,9 @@ public class TreeUtil {
 
     @Resource
     private ModuleDao moduleDao;
+
+    @Resource
+    private CheckListDao checkListDao;
 
     public List<TreeDto> GetModuleTree(List<ModulePojo> pojos) {
         Map<String, TreeDto> map1 = new TreeMap<>();
@@ -85,6 +89,7 @@ public class TreeUtil {
             if (code.indexOf(pojo.getCompanyCode().length()) == -1)
                 code.add(pojo.getCompanyCode().length());
         }
+        System.out.println(map1);
         return returnList(map1, code);
     }
 
@@ -101,6 +106,7 @@ public class TreeUtil {
             if (code.indexOf(pojo.getCompanyCode().length()) == -1)
                 code.add(pojo.getCompanyCode().length());
         }
+        System.out.println(map1);
         return returnList(map1, code);
     }
 
@@ -211,8 +217,11 @@ public class TreeUtil {
                     List<CheckListTreeDto> tmp = new ArrayList<>();
                     tmp.add(entry.getValue());
                     treeDto.setChildren(tmp);
-                } else
+                } else {
+                    //找到节点中长度最长的那一个
+                    CheckListTreeDto value = entry.getValue();
                     treeDto.getChildren().add(entry.getValue());
+                }
             }
         }
         return result;
@@ -516,5 +525,52 @@ public class TreeUtil {
         }
         return returnCheckRecordTree(map1, code);
     }
+
+    //factor树状显示
+    public List<FactorOutDto2> returnFactoryTree(Map<String, FactorOutDto2> map, List<Integer> code) {
+        List<FactorOutDto2> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, FactorOutDto2> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                FactorOutDto2 treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<FactorOutDto2> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    public List<FactorOutDto2> getFactoryTree(List<FactorOutDto> checkRecordTreeDtos) {
+        Map<String, FactorOutDto2> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (FactorOutDto pojo : checkRecordTreeDtos) {
+            FactorOutDto2 factorOutDto2 = new FactorOutDto2();
+            factorOutDto2.setId(pojo.getId());
+            factorOutDto2.setFactorCode(pojo.getFactorCode());
+            factorOutDto2.setFactorID(pojo.getFactorID());
+            factorOutDto2.setName(pojo.getName());
+            factorOutDto2.setRight(pojo.getRigth());
+            factorOutDto2.setFactorHseCode(pojo.getFactorHseCode());
+            factorOutDto2.setFactorObserverCode(pojo.getFactorObserverCode());
+            factorOutDto2.setFactorSourceCode(pojo.getFactorSourceCode());
+            factorOutDto2.setFactorDepartmentCode(pojo.getFactorDepartmentCode());
+            map1.put(factorOutDto2.getFactorCode(), factorOutDto2);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getFactorCode().length()) == -1)
+                code.add(pojo.getFactorCode().length());
+        }
+        return returnFactoryTree(map1, code);
+    }
+
 
 }
