@@ -20,6 +20,9 @@ public interface FileAuditDao {
     //删除审核记录
     int deleteFileAudit(@Param("id") Integer id);
 
+    //增加审核记录
+    int addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto);
+
     //更新文件审核通过与否状态
     int updateStatus(FileAuditRecordDto fileAuditRecordDto);
 

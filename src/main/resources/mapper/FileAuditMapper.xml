@@ -117,6 +117,47 @@
     </delete>
 
 
+    <sql id="key1">
+        <trim suffixOverrides=",">
+            <if test="fileAuditId != null and fileAuditId  != ''">
+                QHSE_FileAudit_ID,
+            </if>
+            <if test="code != null and code  != ''">
+                Code,
+            </if>
+            <if test="codeScore != null and codeScore  != ''">
+                CodeScore,
+            </if>
+            <if test="pass != null and pass  != ''">
+                Pass,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="value2">
+        <trim suffixOverrides=",">
+            <if test="fileAuditId != null and fileAuditId  != ''">
+                #{fileAuditId},
+            </if>
+            <if test="code != null and code  != ''">
+                #{code},
+            </if>
+            <if test="codeScore != null and codeScore  != ''">
+                #{codeScore},
+            </if>
+            <if test="pass != null and pass  != ''">
+                #{pass},
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="addFileAuditRecord" parameterType="com.wlhse.dto.FileAuditRecordDto" >
+        insert into qhse_fileauditrecord
+        (<include refid="key1"/>)
+        values
+        (<include refid="value2"/>)
+    </insert>
+
     <update id="updateStatus" parameterType="com.wlhse.dto.FileAuditRecordDto">
     update qhse_fileauditrecord
         <trim prefix="set" suffixOverrides=",">
@@ -125,8 +166,7 @@
             </if>
         </trim>
         <where>
-            QHSE_FileAudit_ID=(select QHSE_FileAudit_ID from qhse_fileaudit
-            where year =#{year} and companyName=#{companyName})
+            QHSE_FileAudit_ID = #{fileAuditId}
         </where>
     </update>
 

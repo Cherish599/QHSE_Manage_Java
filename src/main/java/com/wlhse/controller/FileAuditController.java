@@ -48,4 +48,9 @@ public class FileAuditController {
         return fileAuditService.getScore(fileAuditRecordDto);
     }
 
+    @RequestMapping(value = "/add_fileaduitrecord", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public R addFileAuditRecord(@RequestBody(required = false) FileAuditRecordDto fileAuditRecordDto) {
+        return fileAuditService.addFileAuditRecord(fileAuditRecordDto);
+    }
+
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FileAuditServiceImpl implements FileAuditService {
@@ -41,6 +42,13 @@ public class FileAuditServiceImpl implements FileAuditService {
     public R deleteFileAudit(Integer id) {
         if(fileAuditDao.deleteFileAudit(id)<=0)
             throw new WLHSException("删除失败");
+        return R.ok();
+    }
+
+    @Override
+    public R addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto) {
+        if(fileAuditDao.addFileAuditRecord(fileAuditRecordDto)<=0)
+            throw new WLHSException("新增记录失败");
         return R.ok();
     }
 

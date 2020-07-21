@@ -7,6 +7,7 @@ public class FileAuditRecordDto {
     private String codeScore;
     private String pass;
     private String year;
+    private String companyCode;
     private String companyName;
 
     public String getYear() {
@@ -15,6 +16,14 @@ public class FileAuditRecordDto {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getCompanyName() {

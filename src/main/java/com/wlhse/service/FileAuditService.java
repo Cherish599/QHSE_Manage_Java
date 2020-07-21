@@ -12,11 +12,15 @@ public interface FileAuditService {
     R addFileAudit(FileAuditDto fileAuditDto);
     // 删除
     R deleteFileAudit(Integer id);
+    //增加文件审核的记录
+    R addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto);
     //更新文件审核通过与否状态
     String updateStatus(FileAuditRecordDto fileAuditRecordDto);
     //结点打分
     String updateScore(FileAuditRecordDto fileAuditRecordDto);
-
+    //获取结点分数
     String getScore(FileAuditRecordDto fileAuditRecordDto);
+
+
 
 }
