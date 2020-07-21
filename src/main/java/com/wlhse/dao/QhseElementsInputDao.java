@@ -17,6 +17,8 @@ public interface QhseElementsInputDao {
 
     QHSECompanyYearManagerSysElementEvidenceDto queryElementsEvidence(ElementEvidenceInDto elementEvidenceInDto);
 
+    String getEmployeeCompany(@Param("employeeID") Integer employeeID);
+
     int addElementsEvidence(ElementEvidenceInDto elementEvidenceInDto);
 
     int updateElementsStatus(Integer id);

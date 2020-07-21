@@ -10,6 +10,14 @@ public class QHSECompanyYearManagerSysElementEvidenceDto {
 
     private String evidenceDescription;
 
+    private Integer checkStaffID;
+
+    private String checkStaffName;
+
+    private Integer approverStaffID;
+
+    private String approverStaffName;
+
     public Integer getQhseCompanyYearManagerSysElementEvidenceID() {
         return qhseCompanyYearManagerSysElementEvidenceID;
     }
@@ -42,4 +50,35 @@ public class QHSECompanyYearManagerSysElementEvidenceDto {
         this.evidenceDescription = evidenceDescription;
     }
 
+    public Integer getCheckStaffID() {
+        return checkStaffID;
+    }
+
+    public void setCheckStaffID(Integer checkStaffID) {
+        this.checkStaffID = checkStaffID;
+    }
+
+    public String getCheckStaffName() {
+        return checkStaffName;
+    }
+
+    public void setCheckStaffName(String checkStaffName) {
+        this.checkStaffName = checkStaffName;
+    }
+
+    public Integer getApproverStaffID() {
+        return approverStaffID;
+    }
+
+    public void setApproverStaffID(Integer approverStaffID) {
+        this.approverStaffID = approverStaffID;
+    }
+
+    public String getApproverStaffName() {
+        return approverStaffName;
+    }
+
+    public void setApproverStaffName(String approverStaffName) {
+        this.approverStaffName = approverStaffName;
+    }
 }
