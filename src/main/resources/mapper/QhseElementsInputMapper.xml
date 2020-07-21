@@ -128,10 +128,16 @@
         where QHSE_CompanyYearManagerSysElementEvidence_ID=#{id}
     </select>
 
-    <select id="selectElementTableID" parameterType="int">
+    <select id="selectElementTableID" resultType="integer">
         select QHSE_CompanyYearManagerSysElementTable_ID
         from QHSE_CompanyYearManagerSysElement
         where QHSE_CompanyYearManagerSysElement_ID=#{id}
+    </select>
+
+    <select id="selectYearElement">
+        select QHSE_CompanyYearManagerSysElementTable_ID
+        from QHSE_CompanyYearManagerSysElement
+        where QHSE_CompanyYearManagerSysElement_ID='18'
     </select>
 
     <update id="updateElementTableByID" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto">
