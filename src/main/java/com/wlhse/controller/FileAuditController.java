@@ -19,7 +19,7 @@ public class FileAuditController {
 
     @RequestMapping(value = "/add_fileaduit", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addFileAudit(@RequestBody(required = false) FileAuditDto fileAuditDto) {
-
+        System.out.println(fileAuditDto.getTableId());
         return fileAuditService.addFileAudit(fileAuditDto);
     }
 
