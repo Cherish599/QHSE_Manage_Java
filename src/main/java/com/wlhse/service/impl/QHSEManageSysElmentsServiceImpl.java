@@ -450,6 +450,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 for (int i = 0; i < temp.size(); i++) {
                     if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
                         temp.get(i).setStatus("未提供");
+                        temp.get(i).setFileCheckStatus("未审核");
                     }
                     temp.get(i).setQhseCompanyYearManagerSysElementTableID(id);
                     temp.get(i).setCompanyCode(companyCode);
