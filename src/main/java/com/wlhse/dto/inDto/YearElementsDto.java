@@ -17,6 +17,9 @@ public class YearElementsDto {
     private String companyCode;
     private String companyName;
     private String year;
+    private String fileCheckStatus;
+
+
 
     public Integer getQhseCompanyYearManagerSysElementID() {
         return qhseCompanyYearManagerSysElementID;
@@ -146,6 +149,14 @@ public class YearElementsDto {
         this.year = year;
     }
 
+    public String getFileCheckStatus() {
+        return fileCheckStatus;
+    }
+
+    public void setFileCheckStatus(String fileCheckStatus) {
+        this.fileCheckStatus = fileCheckStatus;
+    }
+
     @Override
     public String toString() {
         return "YearElementsDto{" +
@@ -164,6 +175,7 @@ public class YearElementsDto {
                 ", companyCode='" + companyCode + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
+                ", fileCheckStatus='" + fileCheckStatus + '\'' +
                 '}';
     }
 }

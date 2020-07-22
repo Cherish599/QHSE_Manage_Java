@@ -384,6 +384,7 @@ public class TreeUtil {
             qhseElementsOutDto.setCompanyCode(pojo.getCompanyCode());
             qhseElementsOutDto.setCompanyName(pojo.getCompanyName());
             qhseElementsOutDto.setYear(pojo.getYear());
+            qhseElementsOutDto.setFileCheckStatus(pojo.getFileCheckStatus());
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样

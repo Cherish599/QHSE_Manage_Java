@@ -35,6 +35,8 @@ public class QhseYearElementsOutDto {
 
     private String year;
 
+    private String fileCheckStatus;
+
     private List<QhseYearElementsOutDto> childNode = new LinkedList<>();
 
     public Integer getId() {
@@ -165,4 +167,11 @@ public class QhseYearElementsOutDto {
         this.childNode = childNode;
     }
 
+    public String getFileCheckStatus() {
+        return fileCheckStatus;
+    }
+
+    public void setFileCheckStatus(String fileCheckStatus) {
+        this.fileCheckStatus = fileCheckStatus;
+    }
 }

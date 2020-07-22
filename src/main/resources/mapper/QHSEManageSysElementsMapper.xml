@@ -172,7 +172,8 @@
         t1.Status,
         t1.CompanyCode as companyCode,
         t1.CompanyName as companyName,
-        t1.Year as year
+        t1.Year as year,
+        t1.fileCheckStatus
         from QHSE_CompanyYearManagerSysElement as t1
         join QHSE_CompanyYearManagerSysElementTable as t2
         on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
