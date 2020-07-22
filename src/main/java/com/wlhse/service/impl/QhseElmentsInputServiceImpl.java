@@ -55,28 +55,35 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     public R addElementEvidence(ElementEvidenceInDto elementEvidenceInDto) {
         try {
-            EmployeeDto empCheck = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getCheckStaffID());
-            EmployeeDto empApprove = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getApproverStaffID());
-            System.out.println(elementEvidenceInDto);
-            System.out.println(empCheck.getName());
-            elementEvidenceInDto.setApproverStaffName(empApprove.getName());
-            elementEvidenceInDto.setCheckStaffName(empCheck.getName());
-            //新增要素证据
-            int i = qhseElementsInputDao.addElementsEvidence(elementEvidenceInDto);
-            System.out.println("新增成功");
-            //修改管理体系要素状态为未审核
-            int j = qhseElementsInputDao.updateElementsStatus(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
-            System.out.println("修改成功");
-            //补充管理体系要素表的审核人和批准人
-            //先在管理体系要素种根据要素id找到要素表id，再补充
-            System.out.println(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
-            int id = qhseElementsInputDao.selectElementTableID(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
-            elementEvidenceInDto.setTableID(id);
-            System.out.println("补充成功");
-            System.out.println(id);
-            int k = qhseElementsInputDao.updateElementTableByID(elementEvidenceInDto);
-            if(i*j*k<=0)
-                throw new WLHSException("新增失败");
+            QHSECompanyYearManagerSysElementEvidenceDto dto = qhseElementsInputDao.queryElementsEvidence(elementEvidenceInDto);
+            if(dto==null) {
+                EmployeeDto empCheck = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getCheckStaffID());
+                EmployeeDto empApprove = employeeManagementDao.getEmployeePojo(elementEvidenceInDto.getApproverStaffID());
+                System.out.println(elementEvidenceInDto);
+                System.out.println(empCheck.getName());
+                elementEvidenceInDto.setApproverStaffName(empApprove.getName());
+                elementEvidenceInDto.setCheckStaffName(empCheck.getName());
+                //新增要素证据
+                int i = qhseElementsInputDao.addElementsEvidence(elementEvidenceInDto);
+                System.out.println("新增成功");
+                //修改管理体系要素状态为未审核
+                int j = qhseElementsInputDao.updateElementsStatus(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
+                System.out.println("修改成功");
+                //补充管理体系要素表的审核人和批准人
+                //先在管理体系要素种根据要素id找到要素表id，再补充
+                System.out.println(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
+                int id = qhseElementsInputDao.selectElementTableID(elementEvidenceInDto.getQhseCompanyYearManagerSysElementID());
+                elementEvidenceInDto.setTableID(id);
+                System.out.println("补充成功");
+                System.out.println(id);
+                int k = qhseElementsInputDao.updateElementTableByID(elementEvidenceInDto);
+                if(i*j*k<=0)
+                    throw new WLHSException("新增失败");
+            }
+            else {
+                return R.ok().put("data",dto);
+            }
+
         } catch (Exception e) {
             throw new WLHSException("新增失败");
         }
