@@ -106,18 +106,17 @@ public class UploadServiceImpl implements UploadService {
         HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
         DataFormatter dataFormat=new DataFormatter();
         for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {
-            Row row = sheet.getRow(j);//按行取
-            // QSHEMSElementValueMap.put("qhseManagerSysElementID", dataFormat.formatCellValue(row.getCell(0)));//不要ID也行
-            QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(1)));
-            QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(2)));
-            QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(3)));
-            QSHEMSElementValueMap.put("basis", dataFormat.formatCellValue(row.getCell(4)));
-            QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(5)));
-            QSHEMSElementValueMap.put("initialScore", dataFormat.formatCellValue(row.getCell(6)));
-            QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(7)));
-            QSHEMSElementValueMap.put("problemDescription", dataFormat.formatCellValue(row.getCell(8)));
-            QSHEMSElementValueMap.put("totalCount", dataFormat.formatCellValue(row.getCell(9)));
-            QSHEMSElementValueMap.put("status", dataFormat.formatCellValue(row.getCell(10)));
+            Row row = sheet.getRow(j);//按行
+            QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
+            QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));
+            QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(2)));
+            QSHEMSElementValueMap.put("basis", dataFormat.formatCellValue(row.getCell(3)));
+            QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(4)));
+            QSHEMSElementValueMap.put("initialScore", dataFormat.formatCellValue(row.getCell(5)));
+            QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(6)));
+            QSHEMSElementValueMap.put("problemDescription", dataFormat.formatCellValue(row.getCell(7)));
+            QSHEMSElementValueMap.put("totalCount", dataFormat.formatCellValue(row.getCell(8)));
+            QSHEMSElementValueMap.put("status", dataFormat.formatCellValue(row.getCell(9)));
             //使用BeanUtils将封装的属性注入对象
             QSHEMSElementInDto qSHEMSElement=new QSHEMSElementInDto();
             BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
