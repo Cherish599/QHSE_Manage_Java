@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.wlhse.dao.FileAuditDao;
 import com.wlhse.dto.FileAuditDto;
 import com.wlhse.dto.FileAuditRecordDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.FileAuditService;
 import com.wlhse.util.R;
@@ -76,6 +77,13 @@ public class FileAuditServiceImpl implements FileAuditService {
     public String getStatus(FileAuditRecordDto fileAuditRecordDto) {
         List<FileAuditRecordDto> list = fileAuditDao.getStatus(fileAuditRecordDto);
         return NR.r(list);
+    }
+
+    @Override
+    public String updateCheckStatus(YearElementsDto yearElementsDto) {
+        if(fileAuditDao.updateCheckStatus(yearElementsDto)<=0)
+            throw new WLHSException("更新失败");
+        return NR.r();
     }
 
 

@@ -3,6 +3,7 @@ package com.wlhse.controller;
 
 import com.wlhse.dto.FileAuditDto;
 import com.wlhse.dto.FileAuditRecordDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.service.FileAuditService;
 import com.wlhse.util.R;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,11 @@ public class FileAuditController {
     @RequestMapping(value = "/get_status", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String getStatus(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
         return fileAuditService.getStatus(fileAuditRecordDto);
+    }
+
+    @RequestMapping(value = "/update_checkstatus", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public String updateCheckStatus(@RequestBody(required = false) YearElementsDto yearElementsDto) {
+        return fileAuditService.updateCheckStatus(yearElementsDto);
     }
 
 }

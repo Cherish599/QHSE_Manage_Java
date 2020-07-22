@@ -199,6 +199,17 @@
         </where>
     </select>
 
+    <update id="updateCheckStatus" parameterType="com.wlhse.dto.inDto.YearElementsDto">
+        update qhse_companyyearmanagersyselement
+        <trim prefix="set" suffixOverrides=",">
+            <if test="fileCheckStatus != null and fileCheckStatus != ''">
+                fileCheckStatus=#{fileCheckStatus},
+            </if>
+        </trim>
+        where Code=#{code} and
+        QHSE_CompanyYearManagerSysElementTable_ID=#{qhseCompanyYearManagerSysElementTableID}
+    </update>
+
 
 
 </mapper>

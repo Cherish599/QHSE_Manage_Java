@@ -2,6 +2,7 @@ package com.wlhse.dao;
 
 import com.wlhse.dto.FileAuditDto;
 import com.wlhse.dto.FileAuditRecordDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +35,7 @@ public interface FileAuditDao {
 
     //获取结点审核状态
     List<FileAuditRecordDto> getStatus(FileAuditRecordDto fileAuditRecordDto);
+
+    //更改要素表中的审核状态
+    int updateCheckStatus(YearElementsDto yearElementsDto);
 }

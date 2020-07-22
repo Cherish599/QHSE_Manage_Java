@@ -2,6 +2,7 @@ package com.wlhse.service;
 
 import com.wlhse.dto.FileAuditDto;
 import com.wlhse.dto.FileAuditRecordDto;
+import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.util.R;
 
 public interface FileAuditService {
@@ -22,6 +23,7 @@ public interface FileAuditService {
     String getScore(FileAuditRecordDto fileAuditRecordDto);
     //获取结点审核状态
     String getStatus(FileAuditRecordDto fileAuditRecordDto);
-
+    //更改要素表中的审核状态
+    String updateCheckStatus(YearElementsDto yearElementsDto);
 
 }
