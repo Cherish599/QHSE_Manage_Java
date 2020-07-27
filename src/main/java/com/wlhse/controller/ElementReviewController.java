@@ -14,6 +14,11 @@ import redis.clients.jedis.Jedis;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 @RestController("ElementReviewController")
 @RequestMapping("/api/v3")
@@ -58,5 +63,14 @@ public class ElementReviewController {
     public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
         elementReviewDto.setStatus("不通过");
         return  elementReviewService.updateStatus(elementReviewDto);
+    }
+    //测试split()
+    @RequestMapping(value="/test",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+    public String test(){
+        Date date=new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+        System.out.println(sdf.format(date.getTime()));
+        return "ok";
     }
 }
