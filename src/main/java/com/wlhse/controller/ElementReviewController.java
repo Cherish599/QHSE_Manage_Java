@@ -8,6 +8,7 @@ import com.wlhse.service.ElementReviewService;
 import com.wlhse.util.GetCurrentUserIdUtil;
 import com.wlhse.util.R;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
 
@@ -63,14 +64,5 @@ public class ElementReviewController {
     public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
         elementReviewDto.setStatus("不通过");
         return  elementReviewService.updateStatus(elementReviewDto);
-    }
-    //测试split()
-    @RequestMapping(value="/test",method=RequestMethod.GET,produces="application/json;charset=utf-8")
-    public String test(){
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-
-        System.out.println(sdf.format(date.getTime()));
-        return "ok";
     }
 }

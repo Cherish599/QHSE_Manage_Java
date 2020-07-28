@@ -12,9 +12,9 @@
             <if test="year != null and year  != ''">
                 AND year=#{year}
             </if>
-            and qHSE_CompanyYearManagerSysElementTable_ID in
-             (select qHSE_CompanyYearManagerSysElementTable_ID
-            from qhse_companyyearmanagersyselementtable where checkStaffID=#{checkStaffID}) and status="未审核"
+            and qHSE_CompanyYearManagerSysElement_ID in
+             (select qHSE_CompanyYearManagerSysElement_ID
+            from qhse_companyyearmanagersyselementevidence where checkStaffID=#{checkStaffID}) and status="未审核"
         </where>
     </select>
 
@@ -28,9 +28,9 @@
         <if test="year != null and year  != ''">
             AND year=#{year}
         </if>
-        and qHSE_CompanyYearManagerSysElementTable_ID in
-        (select qHSE_CompanyYearManagerSysElementTable_ID
-        from qhse_companyyearmanagersyselementtable where approverStaffID=#{approverStaffID})and status="未批准"
+        and qHSE_CompanyYearManagerSysElement_ID in
+            (select qHSE_CompanyYearManagerSysElement_ID
+            from qhse_companyyearmanagersyselementevidence where approverStaffID=#{approverStaffID})and status="未批准"
     </where>
     </select>
 
