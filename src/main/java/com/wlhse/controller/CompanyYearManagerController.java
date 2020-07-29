@@ -2,15 +2,14 @@ package com.wlhse.controller;
 
 
 import com.wlhse.dto.inDto.CompanyYearManagerDto;
-import com.wlhse.dto.inDto.ElementReviewDto;
-import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
+
 import com.wlhse.service.CompanyYearManagerService;
-import com.wlhse.service.ElementReviewService;
+
 import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+
 
 @RestController("CompanyYearManagerController")
 @RequestMapping("/api/v3")
@@ -34,7 +33,7 @@ public class CompanyYearManagerController {
     }
     //新增检查表
     @RequestMapping(value = "/companyYearManager", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public R addCompanyYearManager(@RequestBody CompanyYearManagerDto companyYearManagerDto) {
+    public R addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto) {
         return companyYearManagerService.addCompanyYearManager(companyYearManagerDto);
     }
 

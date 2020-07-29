@@ -33,4 +33,13 @@ public interface QhseElementsInputDao {
 
     int updateElementTableByID(ElementEvidenceInDto elementEvidenceInDto);
 
+    List<Integer> getCompanyManagerSysElementId(int tableId);
+
+    int deleteFromCompanyManagerSysElement(int tableId);
+
+    List<Integer> getCompanyYearManagerSysElementEvidenceId(int elementId);
+
+    int deleteFromCompanyYearManagerSysElementEvidence(int elementId);
+
+    int deleteFromCompanyYearManagerSysElementEvidenceAttach(int evidenceId);
 }

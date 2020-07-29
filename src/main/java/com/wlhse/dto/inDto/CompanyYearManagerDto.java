@@ -6,7 +6,6 @@ public class CompanyYearManagerDto {
     private String companyName;
     private String year;
     private String elementTableName;
-    private String status;
 
     public String getQHSE_CompanyYearManagerSysElementTable_ID() {
         return qHSE_CompanyYearManagerSysElementTable_ID;
@@ -48,23 +47,14 @@ public class CompanyYearManagerDto {
         this.elementTableName = elementTableName;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "CompanyYearManagerDto{" +
-                "qHSE_CompanyYearManagerSysElementTable_ID=" + qHSE_CompanyYearManagerSysElementTable_ID+
+                "qHSE_CompanyYearManagerSysElementTable_ID='" + qHSE_CompanyYearManagerSysElementTable_ID + '\'' +
                 ", companyCode='" + companyCode + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
                 ", elementTableName='" + elementTableName + '\'' +
-                ", status='" + status + '\'' +
                 '}';
     }
 }

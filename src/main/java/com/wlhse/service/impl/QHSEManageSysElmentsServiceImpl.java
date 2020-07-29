@@ -444,6 +444,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             String companyName = yearElementsDto.getCompanyName();
             String year = yearElementsDto.getYear();
             Integer len = qhseManageSysElementsDao.findMaxLen();
+            //TODO Refactor add new element logic
             //新增先查询tableid是否存在数据，存在先删除再新增，不存在才直接新增
             List<YearElementsDto> yearElementsDtos = qhseManageSysElementsDao.queryByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
             if(yearElementsDtos.size()>0) {//删除

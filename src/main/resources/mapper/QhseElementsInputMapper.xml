@@ -179,5 +179,29 @@
         QHSE_CompanyYearManagerSysElementTable_ID=#{tableID}
     </update>
 
+    <select id="getCompanyManagerSysElementId" resultType="Integer" >
+        select QHSE_CompanyYearManagerSysElement_ID
+        from QHSE_CompanyYearManagerSysElement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+    </select>
 
+    <delete id="deleteFromCompanyManagerSysElement">
+        delete from  QHSE_CompanyYearManagerSysElement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+    </delete>
+
+    <select id="getCompanyYearManagerSysElementEvidenceId" resultType="Integer">
+        select QHSE_CompanyYearManagerSysElementEvidence_ID
+        from QHSE_CompanyYearManagerSysElementEvidence
+        where QHSE_CompanyYearManagerSysElement_ID=#{elementId}
+    </select>
+
+    <delete id="deleteFromCompanyYearManagerSysElementEvidence">
+        delete from QHSE_CompanyYearManagerSysElementEvidence
+        where  QHSE_CompanyYearManagerSysElement_ID=#{elementId}
+    </delete>
+    <delete id="deleteFromCompanyYearManagerSysElementEvidenceAttach">
+        delete from QHSE_CompanyYearManagerSysElementEvidenceAttach
+        where QHSE_CompanyYearManagerSysElementEvidence_ID=#{evidenceId}
+    </delete>
 </mapper>
