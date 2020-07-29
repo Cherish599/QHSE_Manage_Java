@@ -468,6 +468,9 @@
             <if test="year != null and year != ''">
                 year,
             </if>
+            <if test="fileCheckStatus != null and fileCheckStatus != ''">
+                fileCheckStatus,
+            </if>
         </trim>
         )
         values
@@ -508,6 +511,9 @@
             </if>
             <if test="year != null and year != ''">
                 #{year},
+            </if>
+            <if test="fileCheckStatus != null and fileCheckStatus != ''">
+                #{fileCheckStatus},
             </if>
         </trim>
         )
