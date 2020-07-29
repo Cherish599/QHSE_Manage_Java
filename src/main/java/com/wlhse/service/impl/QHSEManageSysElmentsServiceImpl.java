@@ -234,7 +234,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         }
     }
 
-    //th-------------------------------------更新区------------------------------------------
+    //-------------------------------------更新区------------------------------------------
     //th-查询基本数据表
     @Override
     public R queryAllElement() {
@@ -280,7 +280,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     //th---跟新状态
     @Override
-    public String updateElementStatus(QhseElementsPojo rule) {
+    public R updateElementStatus(QhseElementsPojo rule) {
         String code = rule.getCode();
         Integer len = code.length();
         String status = rule.getStatus();
@@ -310,13 +310,13 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 addScoreCount(list, score);
             }
         }
-        return NR.r();
+        return R.ok();
 
     }
 
     //th---更新内容
     @Override
-    public String updateElementcontent(QhseElementsPojo qhseManageSysElement) {
+    public R updateElementcontent(QhseElementsPojo qhseManageSysElement) {
         String code = qhseManageSysElement.getCode();
         Integer len = code.length();
         String status = qhseManageSysElementsDao.querryStatus(code);
@@ -341,13 +341,13 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         }
         if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)
             throw new WLHSException("更新失败");
-        return NR.r();
+        return R.ok();
 
     }
 
     //th---添加节点内容
     @Override
-    public String addElement(QhseElementsPojo qhseManageSysElement) {
+    public R addElement(QhseElementsPojo qhseManageSysElement) {
         String parentCode = qhseManageSysElement.getCode();
         try {
             if (parentCode == null || "".equals(parentCode)) {
@@ -420,7 +420,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             }
             if (qhseManageSysElementsDao.addQHSEElement(qhseManageSysElement) <= 0)
                 throw new WLHSException("新增失败");
-            return NR.r();
+            return R.ok();
         } catch (Exception e) {
             e.printStackTrace();
             throw new WLHSException("新增失败");
