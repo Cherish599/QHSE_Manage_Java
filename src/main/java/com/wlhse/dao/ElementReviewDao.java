@@ -21,7 +21,7 @@ public interface ElementReviewDao {
     //修改审核人状态
     int update(ElementReviewDto elementReviewDto);
 
-    //查询证据关联信息根据ID
+    //查询证据
     List<QhseEvidenceAttatchDto> queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);
 
     //查父节点
