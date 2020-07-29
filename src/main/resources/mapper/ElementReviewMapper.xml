@@ -14,7 +14,7 @@
             </if>
             and qHSE_CompanyYearManagerSysElementTable_ID in
              (select qHSE_CompanyYearManagerSysElementTable_ID
-            from qhse_companyyearmanagersyselementtable where checkStaffID=#{checkStaffID})
+            from qhse_companyyearmanagersyselementtable where checkStaffID=#{checkStaffID}) and status='未审核'
         </where>
     </select>
 
@@ -30,7 +30,7 @@
         </if>
         and qHSE_CompanyYearManagerSysElementTable_ID in
         (select qHSE_CompanyYearManagerSysElementTable_ID
-        from qhse_companyyearmanagersyselementtable where approverStaffID=#{approverStaffID})
+        from qhse_companyyearmanagersyselementtable where approverStaffID=#{approverStaffID}) and status='未批准'
     </where>
     </select>
 
