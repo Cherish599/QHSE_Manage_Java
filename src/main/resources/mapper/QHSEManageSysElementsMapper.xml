@@ -35,9 +35,9 @@
 
     <insert id="addQHSERule" parameterType="com.wlhse.entity.QHSEManageSysElements">
         insert into qhse_managersyselement
-        (Code,Name,Content,RecordFile,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
+        (Code,Name,Content,RecordFile,Basis,AuditMode,InitialScore,TotalCount,Formula,Status)
         values
-        (#{code},#{name},#{content},#{recordFile},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
+        (#{code},#{name},#{content},#{recordFile},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{status})
     </insert>
 
     <update id="updateRuleStatus" parameterType="com.wlhse.entity.QHSEManageSysElements">
@@ -97,9 +97,6 @@
             <if test="formula!=null and formula!=''">
                 Formula=#{formula},
             </if>
-            <if test="problemDescription!=null and problemDescription!=''">
-                ProblemDescription=#{problemDescription},
-            </if>
         </trim>
         where Code=#{code}
     </update>
@@ -150,7 +147,6 @@
         AuditMode,
         InitialScore,
         Formula,
-        ProblemDescription,
         TotalCount,
         Status
         from QHSE_ManagerSysElement
@@ -167,7 +163,6 @@
         t1.AuditMode,
         t1.InitialScore,
         t1.Formula,
-        t1.ProblemDescription,
         t1.TotalCount,
         t1.Status,
         t1.CompanyCode as companyCode,
@@ -196,7 +191,6 @@
         AuditMode,
         InitialScore,
         Formula,
-        ProblemDescription,
         TotalCount,
         Status
         from QHSE_ManagerSysElement
@@ -211,7 +205,6 @@
         AuditMode,
         InitialScore,
         Formula,
-        ProblemDescription,
         TotalCount,
         Status
         from QHSE_ManagerSysElement
