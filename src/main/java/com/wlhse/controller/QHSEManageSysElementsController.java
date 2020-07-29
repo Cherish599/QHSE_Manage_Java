@@ -36,6 +36,7 @@ public class QHSEManageSysElementsController {
     public R querryQhseManagerSysChildElement(){
         return qhseManageSysElementsService.queryChildElement();
     }
+
     //th---根据是否启用查询节点
     @RequestMapping(value = "/querryQhseElements/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public R querryQhseManagerSysElements(@PathVariable("status") int status){
@@ -44,17 +45,17 @@ public class QHSEManageSysElementsController {
 
     //th---跟新状态
     @RequestMapping(value = "/updateQHSEElementStatus", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
-    public String updateQHSEElementStatus(@RequestBody(required = false) QhseElementsPojo qhseManageSysElements){
+    public R updateQHSEElementStatus(@RequestBody(required = false) QhseElementsPojo qhseManageSysElements){
         return qhseManageSysElementsService.updateElementStatus(qhseManageSysElements);
     }
     //---更新内容
     @RequestMapping(value = "/updateQHSEElement", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
-    public String updateQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
+    public R updateQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
         return qhseManageSysElementsService.updateElementcontent(qhseManageSysElement);
     }
     //---添加节点内容
     @RequestMapping(value = "/addQHSEElement", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-    public String addQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
+    public R addQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
         return qhseManageSysElementsService.addElement(qhseManageSysElement);
     }
 

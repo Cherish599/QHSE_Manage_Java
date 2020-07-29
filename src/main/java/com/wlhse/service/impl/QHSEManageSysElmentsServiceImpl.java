@@ -234,7 +234,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         }
     }
 
-    //th-------------------------------------更新区------------------------------------------
+    //-------------------------------------更新区------------------------------------------
     //th-查询基本数据表
     @Override
     public R queryAllElement() {
@@ -279,8 +279,9 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     }
 
     //th---跟新状态
+    //TODO 最大层数，编码位数
     @Override
-    public String updateElementStatus(QhseElementsPojo rule) {
+    public R updateElementStatus(QhseElementsPojo rule) {
         String code = rule.getCode();
         Integer len = code.length();
         String status = rule.getStatus();
@@ -310,18 +311,20 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 addScoreCount(list, score);
             }
         }
-        return NR.r();
+        return R.ok();
 
     }
 
     //th---更新内容
+    //TODO 最大层数，编码位数
     @Override
-    public String updateElementcontent(QhseElementsPojo qhseManageSysElement) {
+    public R updateElementcontent(QhseElementsPojo qhseManageSysElement) {
         String code = qhseManageSysElement.getCode();
         Integer len = code.length();
         String status = qhseManageSysElementsDao.querryStatus(code);
         if ("启用".equals(status)) {
-            if (len == 15) {
+            if (len == 15) //如果是叶子节点
+                {
                 Integer score = qhseManageSysElementsDao.querryScore(code);
                 Integer newScore = qhseManageSysElement.getInitialScore() - score;
                 if (newScore != 0) {
@@ -341,37 +344,38 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         }
         if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)
             throw new WLHSException("更新失败");
-        return NR.r();
+        return R.ok();
 
     }
 
     //th---添加节点内容
     @Override
-    public String addElement(QhseElementsPojo qhseManageSysElement) {
-        String parentCode = qhseManageSysElement.getCode();
+    public R addElement(QhseElementsPojo qhseManageSysElement) {
+        String parentCode = qhseManageSysElement.getCode();//传入的code都是插入的这一级的父节点编码
         try {
-            if (parentCode == null || "".equals(parentCode)) {
-                String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2("");
-                Integer maxNum = Integer.parseInt(maxCode);
-                Integer num = maxNum + 1;
-                String numCode = Integer.toString(num);
-                if (num < 10)
+            if (parentCode == null || "".equals(parentCode)) //如果是插入的第一级，父节点就是空字符
+            {
+                String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2("");//获得当前插入这一级的最大编码
+                Integer maxNum = Integer.parseInt(maxCode);//编码转成数字
+                Integer num = maxNum + 1;                 //加一
+                String numCode = Integer.toString(num);//数字转成编码
+                if (num < 10)                                     //-------数字换成编码，由于编码是三位，可能需要补0；
                     qhseManageSysElement.setCode("00" + numCode);
                 else if (num < 100)
                     qhseManageSysElement.setCode("0" + numCode);
                 else
                     qhseManageSysElement.setCode(numCode);
-                qhseManageSysElement.setTotalCount(0);
-                qhseManageSysElement.setInitialScore(0);
-            } else {
+                qhseManageSysElement.setTotalCount(0);//设置叶子总是
+                qhseManageSysElement.setInitialScore(0);//设置分数
+            } else {                                          //如果插入是非第一级和最后一级
                 Integer len = parentCode.length();
                 if (len < 12) {
                     qhseManageSysElement.setTotalCount(0);
                     qhseManageSysElement.setInitialScore(0);
-                    String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);
-                    if (maxCode == null || "".equals(maxCode))
+                    String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode); //查找插入那级最大编码
+                    if (maxCode == null || "".equals(maxCode))//如果还没节点，直接生成
                         qhseManageSysElement.setCode(parentCode + "001");
-                    else {
+                    else {                                      //否则最大编码加1
                         String lastTwoCode = maxCode.substring(maxCode.length() - 3, maxCode.length());
                         Integer lastTwoNum = Integer.parseInt(lastTwoCode);
                         Integer num = lastTwoNum + 1;
@@ -383,7 +387,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                         else
                             qhseManageSysElement.setCode(parentCode + numCode);
                     }
-                } else if (len == 12) {
+                } else if (len == 12) {  //插入是叶子节点
                     qhseManageSysElement.setTotalCount(1);
                     String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);
                     if (maxCode == null || "".equals(maxCode))
@@ -401,10 +405,10 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                             qhseManageSysElement.setCode(parentCode + numCode);
                     }
 
-                    Integer len1 = len;
+                    Integer len1 = len;              //修改叶子节点所有的父节点的分数和节点数
                     Integer initialScore = qhseManageSysElement.getInitialScore();
                     List<String> pCode = new ArrayList<String>();
-                    while (len1 > 0) {//所有父节点
+                    while (len1 > 0) {//获得所有父节点
                         String str = parentCode.substring(0, len1);
                         pCode.add(str);
                         len1 -= 3;
@@ -420,7 +424,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             }
             if (qhseManageSysElementsDao.addQHSEElement(qhseManageSysElement) <= 0)
                 throw new WLHSException("新增失败");
-            return NR.r();
+            return R.ok();
         } catch (Exception e) {
             e.printStackTrace();
             throw new WLHSException("新增失败");
