@@ -18,8 +18,15 @@ public class YearElementsDto {
     private String companyName;
     private String year;
     private String fileCheckStatus;
+    private String configStatus;
 
+    public String getConfigStatus() {
+        return configStatus;
+    }
 
+    public void setConfigStatus(String configStatus) {
+        this.configStatus = configStatus;
+    }
 
     public Integer getQhseCompanyYearManagerSysElementID() {
         return qhseCompanyYearManagerSysElementID;
@@ -160,8 +167,9 @@ public class YearElementsDto {
     @Override
     public String toString() {
         return "YearElementsDto{" +
-                "codes='" + codes + '\'' +
-                ", qhseCompanyYearManagerSysElementTableID='" + qhseCompanyYearManagerSysElementTableID + '\'' +
+                "qhseCompanyYearManagerSysElementID=" + qhseCompanyYearManagerSysElementID +
+                ", codes='" + codes + '\'' +
+                ", qhseCompanyYearManagerSysElementTableID=" + qhseCompanyYearManagerSysElementTableID +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
@@ -176,6 +184,7 @@ public class YearElementsDto {
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
                 ", fileCheckStatus='" + fileCheckStatus + '\'' +
+                ", configStatus='" + configStatus + '\'' +
                 '}';
     }
 }

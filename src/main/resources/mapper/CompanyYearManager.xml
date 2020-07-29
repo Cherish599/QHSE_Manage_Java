@@ -20,7 +20,6 @@
 
     <update id="updateAll">
         update QHSE_CompanyYearManagerSysElementTable
-        set status='已发布'
         where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
     </update>
 
@@ -44,9 +43,7 @@
             <if test="elementTableName != null and elementTableName != ''">
                 ElementTableName,
             </if>
-            <if test="status != null and status != ''">
-                Status,
-            </if>
+
         </trim>
         )
         values
@@ -63,9 +60,6 @@
             </if>
             <if test="elementTableName != null and elementTableName != ''">
                 #{elementTableName},
-            </if>
-            <if test="status != null and status != ''">
-                #{status},
             </if>
         </trim>
         )

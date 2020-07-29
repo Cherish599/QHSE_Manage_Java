@@ -267,9 +267,6 @@
             <if test="formula != null and formula != ''">
                 Formula,
             </if>
-            <if test="problemDescription != null and problemDescription != ''">
-                ProblemDescription,
-            </if>
             TotalCount,
             <if test="status != null and status != ''">
                 Status,
@@ -297,9 +294,6 @@
             #{initialScore},
             <if test="formula != null and formula != ''">
                 #{formula},
-            </if>
-            <if test="problemDescription != null and problemDescription != ''">
-                #{problemDescription},
             </if>
             #{totalCount},
             <if test="status != null and status != ''">
@@ -332,9 +326,6 @@
             <if test="formula != null and formula != ''">
                 Formula,
             </if>
-            <if test="problemDescription != null and problemDescription != ''">
-                ProblemDescription,
-            </if>
             TotalCount,
             <if test="status != null and status != ''">
                 Status,
@@ -363,9 +354,6 @@
             <if test="formula != null and formula != ''">
                 #{formula},
             </if>
-            <if test="problemDescription != null and problemDescription != ''">
-                #{problemDescription},
-            </if>
             #{totalCount},
             <if test="status != null and status != ''">
                 #{status},
@@ -377,7 +365,7 @@
     <update id="updateExcelElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
         update qhse_managersyselement
         set Name=#{name},Content=#{content},Basis=#{basis},AuditMode=#{auditMode},InitialScore=#{initialScore},
-        TotalCount=#{totalCount},Formula=#{formula},ProblemDescription=#{problemDescription},Status=#{status}
+        TotalCount=#{totalCount},Formula=#{formula},Status=#{status}
         where Code=#{code}
     </update>
 
@@ -394,7 +382,6 @@
         auditMode as auditMode,
         initialScore as initialScore,
         formula as formula,
-        problemDescription as problemDescription,
         totalCount as totalCount
         from QHSE_ManagerSysElement
         where code like concat(#{c},'%')
@@ -463,6 +450,9 @@
             <if test="fileCheckStatus != null and fileCheckStatus != ''">
                 fileCheckStatus,
             </if>
+            <if test="configStatus != null and configStatus != ''">
+                configStatus,
+            </if>
         </trim>
         )
         values
@@ -506,6 +496,9 @@
             </if>
             <if test="fileCheckStatus != null and fileCheckStatus != ''">
                 #{fileCheckStatus},
+            </if>
+            <if test="configStatus != null and configStatus != ''">
+                #{configStatus},
             </if>
         </trim>
         )
