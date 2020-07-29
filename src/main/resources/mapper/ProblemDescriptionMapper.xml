@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wlhse.dao.ProblemDescriptionDao">
+    <insert id="addProblemDescription" parameterType="com.wlhse.dto.ProblemDescriptionDto" >
+        insert into qhse_auditproblemrecord
+        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code)
+        values
+        (#{qHSE_FileAudit_ID},#{qHSE_FileAuditRecord_ID},#{problemDescription},#{code})
+    </insert>
+
+    <delete id="deleteProblemDescription">
+        delete from qhse_auditproblemrecord
+        where qHSE_AuditProblemRecord_ID=#{id}
+    </delete>
+
+    <sql id="value1">
+        <trim prefix="set" suffixOverrides=",">
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                QHSE_FileAudit_ID=#{qHSE_FileAudit_ID},
+            </if>
+            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
+                QHSE_FileAuditRecord_ID=#{qHSE_FileAuditRecord_ID},
+            </if>
+            <if test="problemDescription != null and problemDescription  != ''">
+                ProblemDescription=#{problemDescription},
+            </if>
+            <if test="code != null and code  != ''">
+                Code=#{code},
+            </if>
+        </trim>
+    </sql>
+
+    <update id="updateProblemDescription">
+        update qhse_auditproblemrecord
+        <include refid="value1"/>
+        where QHSE_AuditProblemRecord_ID = #{qHSE_AuditProblemRecord_ID}
+    </update>
+
+    <select id="queryProblemDescription" resultType="com.wlhse.dto.ProblemDescriptionDto">
+        select *
+        from qhse_auditproblemrecord as t1
+        join qhse_fileaudit as t2
+        on t1.QHSE_FileAudit_ID = t2.QHSE_FileAudit_ID
+        <where>
+            <if test="startDate != null and startDate  != ''">
+                AND t2.AuditTime>=#{startDate}
+            </if>
+            <if test="endDate != null and endDate  != ''">
+                AND #{endDate}>=t2.AuditTime
+            </if>
+            <if test="auditor != null and auditor  != ''">
+                AND t2.Additor=#{auditor}
+            </if>
+            <if test="companyCode != null and companyCode  != ''">
+                AND t2.CompanyCode=#{companyCode}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
