@@ -17,7 +17,7 @@
                 WorkItem,
             </if>
             <if test="companyId != null and companyId  != ''">
-                CompanyId,CompanyName,
+                CompanyID,CompanyName,
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 SupervisionDate,
@@ -151,7 +151,7 @@
                 #{workItem},
             </if>
             <if test="companyId != null and companyId  != ''">
-                #{companyId},(select name from sys_company where CompanyCode=#{companyId}),
+                #{companyId},(select name from sys_company where SYS_CompanyID=#{companyId}),
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 #{supervisionDate},
@@ -294,7 +294,7 @@
                 workItem=#{workItem},
             </if>
             <if test="companyId != null and companyId  != ''">
-                companyId=#{companyId},companyName=(select name from sys_company where CompanyCode=#{companyId}),
+                companyId=#{companyId},companyName=(select name from sys_company where SYS_CompanyID=#{companyId}),
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 supervisionDate=#{supervisionDate},
@@ -429,17 +429,11 @@
         select count(*)
         from dangerrecord
         <where>
-            <if test="checkId != null and checkId  != ''">
-                AND checkId=#{checkId}
-            </if>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 AND safeStaff_ID=#{safeStaff_ID}
             </if>
             <if test="safeStaff_Name != null and safeStaff_Name  != ''">
                 AND safeStaff_Name=#{safeStaff_Name}
-            </if>
-            <if test="workItem != null and workItem  != ''">
-                AND workItem=#{workItem}
             </if>
             <if test="companyId != null and companyId  != ''">
                 AND companyId=#{companyId}
@@ -447,74 +441,14 @@
             <if test="companyName != null and companyName  != ''">
                 AND companyName=#{companyName}
             </if>
-            <if test="supervisionDate != null and supervisionDate  != ''">
-                AND supervisionDate=#{supervisionDate}
+            <if test="startDate != null and startDate  != ''">
+                AND supervisionDate >= #{startDate}
             </if>
-            <if test="type != null and type  != ''">
-                AND type=#{type}
-            </if>
-            <if test="description != null and description  != ''">
-                AND description=#{description}
-            </if>
-            <if test="status != null and status  != ''">
-                AND status=#{status}
-            </if>
-            <if test="solution != null and solution  != ''">
-                AND solution=#{solution}
-            </if>
-            <if test="reformPersonID != null and reformPersonID  != ''">
-                AND reformPersonID=#{reformPersonID}
+            <if test="endDate != null and endDate  != ''">
+                AND #{endDate} >= supervisionDate
             </if>
             <if test="reformPerson != null and reformPerson  != ''">
                 AND reformPerson=#{reformPerson}
-            </if>
-            <if test="limitDate != null and limitDate  != ''">
-                AND limitDate=#{limitDate}
-            </if>
-            <if test="receptionDate != null and receptionDate  != ''">
-                AND receptionDate=#{receptionDate}
-            </if>
-            <if test="reformCase != null and reformCase  != ''">
-                AND reformCase=#{reformCase}
-            </if>
-            <if test="reason != null and reason  != ''">
-                AND reason=#{reason}
-            </if>
-            <if test="approve != null and approve  != ''">
-                AND approve=#{approve},
-            </if>
-            <if test="ok != null and ok  != ''">
-                AND ok=#{ok}
-            </if>
-            <if test="consequenceID != null and consequenceID  != ''">
-                AND consequenceID=#{consequenceID}
-            </if>
-            <if test="checkType != null and checkType  != ''">
-                AND checkType=#{checkType}
-            </if>
-            <if test="affix != null and affix  != ''">
-                AND affix=#{affix}
-            </if>
-            <if test="affixName != null and affixName  != ''">
-                AND affixName=#{affixName}
-            </if>
-            <if test="checkName != null and checkName  != ''">
-                AND checkName=#{checkName}
-            </if>
-            <if test="updateTime != null and updateTime  != ''">
-                AND updateTime=#{updateTime}
-            </if>
-            <if test="dataStatus != null and dataStatus  != ''">
-                AND dataStatus=#{dataStatus}
-            </if>
-            <if test="recordDate != null and recordDate  != ''">
-                AND recordDate=#{recordDate}
-            </if>
-            <if test="rank != null and rank  != ''">
-                AND rank=#{rank}
-            </if>
-            <if test="factorSource != null and factorSource  != ''">
-                AND factorSource=#{factorSource}
             </if>
             <if test="professionID != null and professionID  != ''">
                 AND professionID=#{professionID}
@@ -522,50 +456,8 @@
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}
             </if>
-            <if test="factorHSE != null and factorHSE  != ''">
-                AND factorHSE=#{factorHSE}
-            </if>
-            <if test="factorDepartment != null and factorDepartment  != ''">
-                AND factorDepartment=#{factorDepartment}
-            </if>
-            <if test="consequence != null and consequence  != ''">
-                AND consequence=#{consequence}
-            </if>
             <if test="location != null and location  != ''">
-                AND location=#{location}
-            </if>
-            <if test="affix1 != null and affix1  != ''">
-                AND affix1=#{affix1}
-            </if>
-            <if test="affix2 != null and affix2  != ''">
-                AND affix2=#{affix2}
-            </if>
-            <if test="affix3 != null and affix3  != ''">
-                AND affix3=#{affix3}
-            </if>
-            <if test="affix4 != null and affix4  != ''">
-                AND affix4=#{affix4}
-            </if>
-            <if test="isUpload != null and isUpload  != ''">
-                AND isUpload=#{isUpload}
-            </if>
-            <if test="keyID != null and keyID  != ''">
-                AND keyID=#{keyID}
-            </if>
-            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
-                AND qHSE_CheckType=#{qHSE_CheckType}
-            </if>
-            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
-                AND qHSE_CheckCategory=#{qHSE_CheckCategory}
-            </if>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                AND qHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
-            </if>
-            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
-                AND qHSE_FileAuditRecord_ID=#{qHSE_FileAuditRecord_ID}
-            </if>
-            <if test="code != null and code  != ''">
-                AND code=#{code}
+                AND location LIKE CONCAT(CONCAT('%',#{location},'%'))
             </if>
         </where>
     </select>
@@ -574,17 +466,11 @@
         select *
         from dangerrecord
         <where>
-            <if test="checkId != null and checkId  != ''">
-                AND checkId=#{checkId}
-            </if>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 AND safeStaff_ID=#{safeStaff_ID}
             </if>
             <if test="safeStaff_Name != null and safeStaff_Name  != ''">
                 AND safeStaff_Name=#{safeStaff_Name}
-            </if>
-            <if test="workItem != null and workItem  != ''">
-                AND workItem=#{workItem}
             </if>
             <if test="companyId != null and companyId  != ''">
                 AND companyId=#{companyId}
@@ -592,74 +478,14 @@
             <if test="companyName != null and companyName  != ''">
                 AND companyName=#{companyName}
             </if>
-            <if test="supervisionDate != null and supervisionDate  != ''">
-                AND supervisionDate=#{supervisionDate}
+            <if test="startDate != null and startDate  != ''">
+                AND supervisionDate >= #{startDate}
             </if>
-            <if test="type != null and type  != ''">
-                AND type=#{type}
-            </if>
-            <if test="description != null and description  != ''">
-                AND description=#{description}
-            </if>
-            <if test="status != null and status  != ''">
-                AND status=#{status}
-            </if>
-            <if test="solution != null and solution  != ''">
-                AND solution=#{solution}
-            </if>
-            <if test="reformPersonID != null and reformPersonID  != ''">
-                AND reformPersonID=#{reformPersonID}
+            <if test="endDate != null and endDate  != ''">
+                AND #{endDate} >= supervisionDate
             </if>
             <if test="reformPerson != null and reformPerson  != ''">
                 AND reformPerson=#{reformPerson}
-            </if>
-            <if test="limitDate != null and limitDate  != ''">
-                AND limitDate=#{limitDate}
-            </if>
-            <if test="receptionDate != null and receptionDate  != ''">
-                AND receptionDate=#{receptionDate}
-            </if>
-            <if test="reformCase != null and reformCase  != ''">
-                AND reformCase=#{reformCase}
-            </if>
-            <if test="reason != null and reason  != ''">
-                AND reason=#{reason}
-            </if>
-            <if test="approve != null and approve  != ''">
-                AND approve=#{approve},
-            </if>
-            <if test="ok != null and ok  != ''">
-                AND ok=#{ok}
-            </if>
-            <if test="consequenceID != null and consequenceID  != ''">
-                AND consequenceID=#{consequenceID}
-            </if>
-            <if test="checkType != null and checkType  != ''">
-                AND checkType=#{checkType}
-            </if>
-            <if test="affix != null and affix  != ''">
-                AND affix=#{affix}
-            </if>
-            <if test="affixName != null and affixName  != ''">
-                AND affixName=#{affixName}
-            </if>
-            <if test="checkName != null and checkName  != ''">
-                AND checkName=#{checkName}
-            </if>
-            <if test="updateTime != null and updateTime  != ''">
-                AND updateTime=#{updateTime}
-            </if>
-            <if test="dataStatus != null and dataStatus  != ''">
-                AND dataStatus=#{dataStatus}
-            </if>
-            <if test="recordDate != null and recordDate  != ''">
-                AND recordDate=#{recordDate}
-            </if>
-            <if test="rank != null and rank  != ''">
-                AND rank=#{rank}
-            </if>
-            <if test="factorSource != null and factorSource  != ''">
-                AND factorSource=#{factorSource}
             </if>
             <if test="professionID != null and professionID  != ''">
                 AND professionID=#{professionID}
@@ -667,50 +493,8 @@
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}
             </if>
-            <if test="factorHSE != null and factorHSE  != ''">
-                AND factorHSE=#{factorHSE}
-            </if>
-            <if test="factorDepartment != null and factorDepartment  != ''">
-                AND factorDepartment=#{factorDepartment}
-            </if>
-            <if test="consequence != null and consequence  != ''">
-                AND consequence=#{consequence}
-            </if>
             <if test="location != null and location  != ''">
-                AND location=#{location}
-            </if>
-            <if test="affix1 != null and affix1  != ''">
-                AND affix1=#{affix1}
-            </if>
-            <if test="affix2 != null and affix2  != ''">
-                AND affix2=#{affix2}
-            </if>
-            <if test="affix3 != null and affix3  != ''">
-                AND affix3=#{affix3}
-            </if>
-            <if test="affix4 != null and affix4  != ''">
-                AND affix4=#{affix4}
-            </if>
-            <if test="isUpload != null and isUpload  != ''">
-                AND isUpload=#{isUpload}
-            </if>
-            <if test="keyID != null and keyID  != ''">
-                AND keyID=#{keyID}
-            </if>
-            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
-                AND qHSE_CheckType=#{qHSE_CheckType}
-            </if>
-            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
-                AND qHSE_CheckCategory=#{qHSE_CheckCategory}
-            </if>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                AND qHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
-            </if>
-            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
-                AND qHSE_FileAuditRecord_ID=#{qHSE_FileAuditRecord_ID}
-            </if>
-            <if test="code != null and code  != ''">
-                AND code=#{code}
+                AND location LIKE CONCAT(CONCAT('%',#{location},'%'))
             </if>
         </where>
     </select>
