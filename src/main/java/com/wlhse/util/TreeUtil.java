@@ -327,7 +327,6 @@ public class TreeUtil {
             qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
             qhseElementsOutDto.setFormula(pojo.getFormula());
             qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
-            qhseElementsOutDto.setProblemDescription(pojo.getProblemDescription());
             qhseElementsOutDto.setName(pojo.getName());
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());

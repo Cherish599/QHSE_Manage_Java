@@ -184,7 +184,6 @@
             <if test="year !=null and year!=''">
                 AND t1.Year=#{year}
             </if>
-            AND t2.Status='已发布'
         </where>
     </select>
 

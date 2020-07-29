@@ -17,7 +17,6 @@ public class QSHEMSElementInDto {
 
     private String formula;
 
-    private String problemDescription;
 
     private Integer totalCount;
 
@@ -87,14 +86,6 @@ public class QSHEMSElementInDto {
         this.formula = formula;
     }
 
-    public String getProblemDescription() {
-        return problemDescription;
-    }
-
-    public void setProblemDescription(String problemDescription) {
-        this.problemDescription = problemDescription;
-    }
-
     public Integer getTotalCount() {
         return totalCount;
     }
@@ -122,7 +113,6 @@ public class QSHEMSElementInDto {
                 ", auditMode='" + auditMode + '\'' +
                 ", initialScore=" + initialScore +
                 ", formula='" + formula + '\'' +
-                ", problemDescription='" + problemDescription + '\'' +
                 ", totalCount=" + totalCount +
                 ", status='" + status + '\'' +
                 '}';

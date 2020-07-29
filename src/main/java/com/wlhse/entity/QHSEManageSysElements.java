@@ -12,7 +12,6 @@ public class QHSEManageSysElements{
     private Integer initialScore;
     private Integer totalCount;
     private String formula;
-    private String problemDescription;
     private String status;
 
     public Integer getId() {
@@ -95,13 +94,7 @@ public class QHSEManageSysElements{
         this.formula = formula;
     }
 
-    public String getProblemDescription() {
-        return problemDescription;
-    }
 
-    public void setProblemDescription(String problemDescription) {
-        this.problemDescription = problemDescription;
-    }
 
     public String getStatus() {
         return status;

@@ -27,6 +27,9 @@
             <if test="checkContent != null and checkContent != ''">
                 checkContent,
             </if>
+            <if test="checkType != null and checkType != ''">
+                checkType,
+            </if>
         </trim>
         )
         values
@@ -52,6 +55,9 @@
             </if>
             <if test="checkContent != null and checkContent != ''">
                 #{checkContent},
+            </if>
+            <if test="checkType != null and checkType != ''">
+                #{checkType},
             </if>
         </trim>
         )
@@ -80,6 +86,9 @@
             </if>
             <if test="checkContent != null and checkContent != ''">
                 checkContent=#{checkContent} and
+            </if>
+            <if test="checkType != null and checkType != ''">
+                CheckType=#{checkType},
             </if>
         </trim>
     </select>

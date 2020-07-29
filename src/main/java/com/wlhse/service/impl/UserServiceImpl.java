@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(UserDto userDto, HttpServletRequest request) {
         String ip = GetIPUtil.getIpAddr(request);
+        System.out.println("test----------------");
         int path = HashUtil.getPath(ip);
         System.out.println(path);
         if (jedisClient.get(ip, path) != null && Integer.parseInt(jedisClient.get(ip, path)) >= 5)
@@ -60,6 +61,7 @@ public class UserServiceImpl implements UserService {
         String psw = userDto.getPsw();
         String MD5psw = MD5Util.getMD5(psw);
         userOutDto = userDao.getUserPojo(userName, MD5psw);
+
         if (userOutDto == null)
             throw new WLHSException("密码错误");
         if (!userOutDto.getStatus().equals("启用"))
@@ -68,6 +70,7 @@ public class UserServiceImpl implements UserService {
         //设置15天的token过期，根据客户需求可以在增加时间长度
         jedisClient.setSeconds(token, String.valueOf(userOutDto.getUserId()), 1296000);
         userOutDto.setToken(token);
+        System.out.println("token"+token);
         return NR.r(userOutDto);
     }
 
