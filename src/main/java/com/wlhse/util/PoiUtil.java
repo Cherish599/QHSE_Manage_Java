@@ -18,9 +18,10 @@ public class PoiUtil {
     private Workbook wb;
 
     public Workbook createWorkbook(String filePath) {
+        FileInputStream fis=null;
         try {
             if (null != filePath) {
-                FileInputStream fis = new FileInputStream(filePath);
+                fis = new FileInputStream(filePath);
                 if (filePath.endsWith(".xls")) {
                     //2003版本的excel，用.xls结尾
                     wb = new HSSFWorkbook(fis);//得到工作簿
@@ -32,6 +33,15 @@ public class PoiUtil {
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+        }
+        finally {
+            if (fis!= null) {
+                try {
+                    fis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
