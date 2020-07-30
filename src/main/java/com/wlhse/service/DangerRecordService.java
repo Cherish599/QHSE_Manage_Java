@@ -7,7 +7,7 @@ public interface DangerRecordService {
     // 增
     R addDangerRecord(DangerRecordDto dangerRecordDto);
     //删
-    R deleteDangerRecord(Integer id);
+    R deleteDangerRecord(DangerRecordDto dangerRecordDto);
     //改
     R updateDangerRecord(DangerRecordDto dangerRecordDto);
     //按ID查询

@@ -129,6 +129,12 @@
             <if test="pass != null and pass  != ''">
                 Pass,
             </if>
+            <if test="additor != null and additor  != ''">
+                Additor,
+            </if>
+            <if test="auditTime != null and auditTime  != ''">
+                AuditTime,
+            </if>
         </trim>
     </sql>
 
@@ -146,6 +152,12 @@
             <if test="pass != null and pass  != ''">
                 #{pass},
             </if>
+            <if test="additor != null and additor  != ''">
+                #{additor},
+            </if>
+            <if test="auditTime != null and auditTime  != ''">
+                #{auditTime},
+            </if>
         </trim>
     </sql>
 
@@ -155,6 +167,11 @@
         values
         (<include refid="value2"/>)
     </insert>
+
+    <delete id="deleteFileAuditRecord">
+        delete from qhse_fileauditrecord
+        where QHSE_FileAudit_ID = #{id1}
+    </delete>
 
     <update id="updateStatus" parameterType="com.wlhse.dto.FileAuditRecordDto">
     update qhse_fileauditrecord

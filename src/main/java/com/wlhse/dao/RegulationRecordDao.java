@@ -14,7 +14,7 @@ public interface RegulationRecordDao {
     //新增违章记录
     int addRegulationRecord(RegulationRecordDto regulationRecordDto);
     //删除违章记录
-    int deleteRegulationRecord(@Param("id") Integer id);
+    int deleteRegulationRecord(RegulationRecordDto regulationRecordDto);
     //修改违章记录
     int updateRegulationRecord(RegulationRecordDto regulationRecordDto);
     //按ID查询违章记录

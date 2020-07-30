@@ -279,7 +279,14 @@
 
     <delete id="deleteDangerRecord">
         delete from dangerrecord
-        where ID=#{id}
+        <where>
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                AND QHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
+            </if>
+            <if test="code != null and code  != ''">
+                AND Code=#{code}
+            </if>
+        </where>
     </delete>
 
     <sql id="value1">

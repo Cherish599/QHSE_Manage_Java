@@ -12,7 +12,7 @@ public interface DangerRecordDao {
     //新增隐患记录
     int addDangerRecord(DangerRecordDto dangerRecordDto);
     //删除隐患记录
-    int deleteDangerRecord(@Param("id") Integer id);
+    int deleteDangerRecord(DangerRecordDto dangerRecordDto);
     //修改隐患记录
     int updateDangerRecord(DangerRecordDto dangerRecordDto);
     //按ID查询隐患记录

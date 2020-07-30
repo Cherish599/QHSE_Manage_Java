@@ -26,8 +26,8 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     }
 
     @Override
-    public R deleteDangerRecord(Integer id) {
-        if(dangerRecordDao.deleteDangerRecord(id)<=0)
+    public R deleteDangerRecord(DangerRecordDto dangerRecordDto) {
+        if(dangerRecordDao.deleteDangerRecord(dangerRecordDto)<=0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
