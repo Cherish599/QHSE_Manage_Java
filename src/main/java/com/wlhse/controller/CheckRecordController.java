@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 import com.wlhse.dto.CheckRecordDto;
+import com.wlhse.entity.CheckConditionPOJO;
 import com.wlhse.service.CheckRecordService;
 import com.wlhse.util.R;
 import org.apache.ibatis.annotations.Param;
@@ -24,8 +25,10 @@ public class CheckRecordController {
 
     //查询所有记录
     @RequestMapping(value = "/check_record", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R queryAllCheckRecord() {
-        return checkRecordService.queryAll();
+    public R queryAllCheckRecord(CheckConditionPOJO checkConditionPOJO) {
+        if (checkConditionPOJO.getIsAll()==1)
+            return checkRecordService.queryAll();
+       return checkRecordService.queryByCondition(checkConditionPOJO);
     }
 
     //查询所有checkrecord的树状结构

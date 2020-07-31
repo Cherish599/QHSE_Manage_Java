@@ -3,6 +3,7 @@ package com.wlhse.service.impl;
 import com.alibaba.fastjson.annotation.JSONType;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.inDto.YearElementsDto;
+import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
@@ -16,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsService {
@@ -439,14 +439,63 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             String[] codes = yearElementsDto.getCodes().split(";");
             System.out.println(codes);
             List<YearElementsDto> list = new ArrayList<>();
-            Integer id = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
+            Integer tableId = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
             String companyCode = yearElementsDto.getCompanyCode();
             String companyName = yearElementsDto.getCompanyName();
             String year = yearElementsDto.getYear();
-            Integer len = qhseManageSysElementsDao.findMaxLen();
+      /*      Integer len = qhseManageSysElementsDao.findMaxLen();*/
             //TODO Refactor add new element logic
-            //新增先查询tableid是否存在数据，存在先删除再新增，不存在才直接新增
-            List<YearElementsDto> yearElementsDtos = qhseManageSysElementsDao.queryByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
+            //get the table's elements status and code
+            Map<String, String> elementCodeAndConfigStatusMap = getElementCodeAndConfigStatusMap(tableId);
+            Map<String,String> elementsFromClients=new HashMap<>(),
+                    needToReopenElement=new HashMap<>(),
+                    needToAddElement=new HashMap<>(),
+                    openedMap = new HashMap<>(),
+                    stoppedMap = new HashMap<>(),
+                    elementNeedToStop=new HashMap<>();
+            //covert codes to Map<code,configStatus>
+            for (String code:codes){
+                elementsFromClients.put(code,"启用");
+            }
+            //the following algorithm is very inefficient.
+            //please do some optimization.
+            //commit  by Coco 2020-7-30 11:34 PM
+            for (Map.Entry<String, String> entry : elementCodeAndConfigStatusMap.entrySet()) {
+                //find elements that have been stopped
+                if (entry.getValue() == "停用") {
+                    stoppedMap.put(entry.getKey(), entry.getValue());
+                }
+                //find elements that  in open status
+                if(entry.getValue()=="启用"){
+                    openedMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+            //find elements need to stop
+            for (Map.Entry<String,String> entry:openedMap.entrySet()){
+                if (elementsFromClients.containsKey(entry.getKey())==false){
+                    elementNeedToStop.put(entry.getKey(),"停用");
+                }
+            }
+            //find elements need to reopen and add
+            for (Map.Entry<String,String> entry : elementsFromClients.entrySet()){
+                if (elementCodeAndConfigStatusMap.size()==0){
+                    needToAddElement=elementsFromClients;
+                    break;
+                }
+                if (elementCodeAndConfigStatusMap.containsKey(entry.getKey())==false){
+                    needToAddElement.put(entry.getKey(),entry.getValue());
+                }
+                if (stoppedMap.containsKey(entry.getKey())){
+                    needToReopenElement.put(entry.getKey(),entry.getValue());
+                }
+            }
+            System.out.println("客户端传来的element:"+elementsFromClients);
+            System.out.println("停用的element:"+stoppedMap);
+            System.out.println("需要停用的element:"+elementNeedToStop);
+            System.out.println("启用的element:"+openedMap);
+            System.out.println("新增的element:"+needToAddElement);
+            System.out.println("需要重启的element:"+needToReopenElement);
+/*            List<YearElementsDto> yearElementsDtos = qhseManageSysElementsDao.queryByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
             if(yearElementsDtos.size()>0) {//删除
                 qhseManageSysElementsDao.deleteByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
             }
@@ -457,26 +506,62 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                         temp.get(i).setStatus("未提供");
                         temp.get(i).setFileCheckStatus("未审核");
                     }
-                    temp.get(i).setQhseCompanyYearManagerSysElementTableID(id);
+                    temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
                     temp.get(i).setCompanyCode(companyCode);
                     temp.get(i).setCompanyName(companyName);
                     temp.get(i).setYear(year);
                     list.add(temp.get(i));
                 }
-            }
-            //执行新增操作
+            }*/
             int result = 0;
-            for (int i = 0; i < list.size(); i++) {
-                result = qhseManageSysElementsDao.addYearElement(list.get(i));
-                if (result <= 0) break;
+            //add new element
+            if(needToAddElement.size()!=0) {
+                List<YearElementsDto> yearElementsDtoList=new ArrayList<>();
+                for (Map.Entry<String,String> entry:needToAddElement.entrySet()){
+                    YearElementsDto yearElementsDto1 = qhseManageSysElementsDao.queryElementByCode(entry.getKey());
+                    yearElementsDto1.setQhseCompanyYearManagerSysElementTableID(tableId);
+                    yearElementsDto1.setCompanyCode(companyCode);
+                    yearElementsDto1.setCompanyName(companyName);
+                    yearElementsDto1.setYear(year);
+                  /*  if (len.equals(entry.getKey().length())) {*/
+                        yearElementsDto1.setStatus("未提供");
+                        yearElementsDto1.setFileCheckStatus("未审核");
+             /*       }*/
+                    yearElementsDtoList.add(yearElementsDto1);
+                }
+                for (int i = 0; i < yearElementsDtoList.size(); i++) {
+                    result = qhseManageSysElementsDao.addYearElement(yearElementsDtoList.get(i));
+                    if (result <= 0) break;
+                }
             }
-            System.out.println(list);
-            if (result <= 0)
+            //update Manager Sys Element's configStatus
+            //when some elements need to stop.
+            if (elementNeedToStop.size()!=0){
+                for (Map.Entry<String,String> entry:elementNeedToStop.entrySet())
+                qhseManageSysElementsDao.updateConfigStatus(entry.getKey(),tableId,entry.getValue());
+            }
+            //when some elements need to reopen
+            if (needToReopenElement.size()!=0){
+             for (Map.Entry<String,String> entry:needToReopenElement.entrySet()){
+                 qhseManageSysElementsDao.updateConfigStatus(entry.getKey(),tableId,entry.getValue());
+             }
+            }
+            if (result < 0)
                 throw new WLHSException("新增失败");
         }catch (Exception e) {
             e.printStackTrace();
             throw new WLHSException("新增失败");
         }
         return R.ok();
+    }
+    private Map<String,String> getElementCodeAndConfigStatusMap(int tableId){
+        Map<String,String> map=new HashMap<>();
+        List<ElementAndConfigStatusDto> elementAndConfigStatusDto = qhseManageSysElementsDao.selectCodeAndConfigStatusByTableId(tableId);
+        Iterator<ElementAndConfigStatusDto> iterator = elementAndConfigStatusDto.iterator();
+        while (iterator.hasNext()){
+            ElementAndConfigStatusDto next = iterator.next();
+            map.put(next.getElementCode(),next.getConfigStatus());
+        }
+        return map;
     }
 }

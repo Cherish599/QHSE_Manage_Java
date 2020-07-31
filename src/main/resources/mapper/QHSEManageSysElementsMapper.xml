@@ -233,9 +233,6 @@
             <if test="formula!=null and formula!=''">
                 Formula=#{formula},
             </if>
-            <if test="problemDescription!=null and problemDescription!=''">
-                ProblemDescription=#{problemDescription},
-            </if>
         </trim>
         where Code=#{code}
     </update>
@@ -387,7 +384,20 @@
         where code like concat(#{c},'%')
         and status='启用'
     </select>
-
+    <select id="queryElementByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select
+        Code as code,
+        name as name,
+        Content as content,
+        basis as basis,
+        auditMode as auditMode,
+        initialScore as initialScore,
+        formula as formula,
+        totalCount as totalCount
+        from QHSE_ManagerSysElement
+        where code=#{code}
+        and status='启用'
+    </select>
     <select id="findMaxLen" resultType="integer">
         select Max(LENGTH(code)) FROM QHSE_ManagerSysElement
     </select>
@@ -397,7 +407,7 @@
         QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
         QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
         code as code,
-        name as name
+        `name` as name
         from QHSE_CompanyYearManagerSysElement
         where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
     </select>
@@ -416,7 +426,7 @@
                 Code,
             </if>
             <if test="name != null and name != ''">
-                name,
+                `name`,
             </if>
             <if test="content != null and content != ''">
                 content,
@@ -445,7 +455,7 @@
                 companyName,
             </if>
             <if test="year != null and year != ''">
-                year,
+                `year`,
             </if>
             <if test="fileCheckStatus != null and fileCheckStatus != ''">
                 fileCheckStatus,
@@ -498,7 +508,8 @@
                 #{fileCheckStatus},
             </if>
             <if test="configStatus != null and configStatus != ''">
-                #{configStatus},
+                /*默认启用*/
+                '启用',
             </if>
         </trim>
         )
@@ -511,5 +522,17 @@
         <!--values(#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{formula},#{problemDescription},#{totalCount},#{status},#{companyCode},-->
         <!--#{companyName},#{year})-->
     <!--</insert>-->
+    <select id="selectCodeAndConfigStatusByTableId" resultType="com.wlhse.dto.outDto.ElementAndConfigStatusDto">
+        select Code as elementCode,
+        ConfigStatus as configStatus
+        from qhse_companyyearmanagersyselement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+    </select>
 
+    <update id="updateConfigStatus">
+        update from qhse_companyyearmanagersyselement
+        set ConfigStatus=#{status}
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+        and Code=#{code}
+    </update>
 </mapper>

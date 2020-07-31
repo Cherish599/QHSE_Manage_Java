@@ -2,6 +2,7 @@ package com.wlhse.dao;
 
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.inDto.YearElementsDto;
+import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
 import com.wlhse.dto.outDto.QhseElementsOutDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
@@ -59,7 +60,7 @@ public interface QHSEManageSysElementsDao {
 
 
     List<YearElementsDto> queryElementsByCode(String c);
-
+    YearElementsDto queryElementByCode(String code);
     Integer findMaxLen();
 
     Integer addYearElement(YearElementsDto yearElementsDto);
@@ -69,4 +70,6 @@ public interface QHSEManageSysElementsDao {
 
     int deleteByTableID(@Param("id") Integer id);
 
+    List<ElementAndConfigStatusDto> selectCodeAndConfigStatusByTableId(int tableId);
+    int updateConfigStatus(String code,int tableId,String status);
 }

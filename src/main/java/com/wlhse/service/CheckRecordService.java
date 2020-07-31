@@ -2,6 +2,7 @@ package com.wlhse.service;
 
 
 import com.wlhse.dto.CheckRecordDto;
+import com.wlhse.entity.CheckConditionPOJO;
 import com.wlhse.util.R;
 
 public interface CheckRecordService {
@@ -15,4 +16,6 @@ public interface CheckRecordService {
     R updateCheckrecord(int id, CheckRecordDto checkRecordDto);
 
     R deleteCheckrecord(int id);
+
+    R queryByCondition(CheckConditionPOJO checkConditionPOJO);
 }
