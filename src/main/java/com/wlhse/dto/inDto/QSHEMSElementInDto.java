@@ -9,8 +9,6 @@ public class QSHEMSElementInDto {
 
     private String content;
 
-    private String basis;
-
     private String auditMode;
 
     private Integer initialScore;
@@ -52,14 +50,6 @@ public class QSHEMSElementInDto {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getBasis() {
-        return basis;
-    }
-
-    public void setBasis(String basis) {
-        this.basis = basis;
     }
 
     public String getAuditMode() {
@@ -109,7 +99,6 @@ public class QSHEMSElementInDto {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
-                ", basis='" + basis + '\'' +
                 ", auditMode='" + auditMode + '\'' +
                 ", initialScore=" + initialScore +
                 ", formula='" + formula + '\'' +
