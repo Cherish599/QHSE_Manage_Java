@@ -2,6 +2,7 @@ package com.wlhse.service.impl;
 
 import com.alibaba.fastjson.annotation.JSONType;
 import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
@@ -261,7 +262,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     //th---根据是否启用查询节点
     @Override
-    public R queryAllElements(int status) {
+    public R queryAllElements(Integer status) {
         if (status == 0) //查启用
         {
             R ok = R.ok();
@@ -430,6 +431,37 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             throw new WLHSException("新增失败");
         }
 
+    }
+
+    @Override
+    public R querryQhseProblemDiscription(String code) {
+        R ok = R.ok();
+        ok.put("data", qhseManageSysElementsDao.querryDescriptionBycode(code));
+        return ok;
+
+    }
+    //根据ID删除对应的问题描述
+    @Override
+    public R deleteQhseProblemDiscription(Integer id) {
+        if(qhseManageSysElementsDao.deleteDescriptionById(id)<=0)
+            throw new WLHSException("删除失败");
+        return R.ok();
+    }
+
+    @Override
+    public R updateQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto) {
+        if(qhseManageSysElementsDao.updateDescriptionById(qHSEproblemDiscriptionDto)<=0)
+            throw new WLHSException("更新失败");
+        return R.ok();
+    }
+
+    @Override
+    public R addQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto) {
+        String code=qHSEproblemDiscriptionDto.getCode();
+        String description=qHSEproblemDiscriptionDto.getDescription();
+        if(qhseManageSysElementsDao.addProblemDescription(code,description)<=0)
+            throw new WLHSException("添加失败");
+        return R.ok();
     }
 
     @Transactional

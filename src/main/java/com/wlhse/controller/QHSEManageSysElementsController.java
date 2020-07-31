@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 
+import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
@@ -58,6 +59,31 @@ public class QHSEManageSysElementsController {
     public R addQHSEElement(@RequestBody(required = false) QhseElementsPojo qhseManageSysElement){
         return qhseManageSysElementsService.addElement(qhseManageSysElement);
     }
+    //查询问题列表，根据返回的code查询
+    @RequestMapping(value = "/querryQHSEproblemDiscription/{code}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQHSEproblemDiscription(@PathVariable String code){
+        return qhseManageSysElementsService.querryQhseProblemDiscription(code);
+    }
+    //删除
+    @RequestMapping(value = "/deleteQHSEproblemDiscription/{id}", method = RequestMethod.DELETE,produces = {"application/json;charset=UTF-8"})
+    public R deleteQHSEproblemDiscription(@PathVariable Integer id)
+    {
+        return qhseManageSysElementsService.deleteQhseProblemDiscription(id);
+    }
+    //跟新
+    @RequestMapping(value = "/updateQHSEproblemDiscription", method = RequestMethod.PUT,produces = {"application/json;charset=UTF-8"})
+    public R updateQHSEproblemDiscription(@RequestBody(required = false)QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto)
+    {
+        return qhseManageSysElementsService.updateQhseProblemDiscription(qHSEproblemDiscriptionDto);
+    }
+    //添加
+    @RequestMapping(value = "/addQHSEproblemDiscription", method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    public R addQHSEproblemDiscription(@RequestBody(required = false) QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto)
+    {
+        return qhseManageSysElementsService.addQhseProblemDiscription(qHSEproblemDiscriptionDto);
+    }
+
+
 
     //新增年度qhse管理体系要素
     //前端二级节点用分号隔开，tableID

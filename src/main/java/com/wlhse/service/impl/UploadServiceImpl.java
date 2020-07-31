@@ -99,15 +99,42 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public String uploadQHSEManageSysElements(String path) throws Exception {
         Workbook workbook = poiUtil.createWorkbook(path);
-        Sheet sheet = workbook.getSheetAt(0);//获取指定表可以改成自动获取
+        //得到第一张表
+        Sheet sheet = workbook.getSheetAt(0);
+        // 得到标题行
+        Row titleRow=sheet.getRow(0);
         //创建实体类对象容器
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
-        //获取EXCEL中CheckList的值
-        HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+        //获取EXCEL中的值
+
         DataFormatter dataFormat=new DataFormatter();
-        for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {
-            Row row = sheet.getRow(j);//按行
-            QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
+        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+            HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+            Row row = sheet.getRow(i);//按行读取
+            String rcode=new String();
+            for(int j=0;j<titleRow.getLastCellNum();j++)
+            {
+                // 得到列名
+                String key = titleRow.getCell(j).getStringCellValue();
+                String value=dataFormat.formatCellValue(row.getCell(j));
+                //找到该条记录的code
+
+                if("code".equals(key)) {
+                    rcode = value;
+                }
+                if("problemDescription".equals(key)) {
+                    if(value==null||"".equals(value))
+                        continue;
+                    else {
+                        insertProblemDescription(rcode, value);
+                        continue;
+                    }
+                }
+                QSHEMSElementValueMap.put(key, value);
+
+
+            }
+            /*QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
             QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));
             QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(2)));
             QSHEMSElementValueMap.put("basis", dataFormat.formatCellValue(row.getCell(3)));
@@ -116,7 +143,7 @@ public class UploadServiceImpl implements UploadService {
             QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(6)));
             QSHEMSElementValueMap.put("problemDescription", dataFormat.formatCellValue(row.getCell(7)));
             QSHEMSElementValueMap.put("totalCount", dataFormat.formatCellValue(row.getCell(8)));
-            QSHEMSElementValueMap.put("status", dataFormat.formatCellValue(row.getCell(9)));
+            QSHEMSElementValueMap.put("status", dataFormat.formatCellValue(row.getCell(9)));*/
             //使用BeanUtils将封装的属性注入对象
             QSHEMSElementInDto qSHEMSElement=new QSHEMSElementInDto();
             BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
@@ -150,6 +177,23 @@ public class UploadServiceImpl implements UploadService {
         }
         else {
             return NR.getPoiProblemReturn(CodeDict.POI_PROBLEM_EMPTY_FIRST, 0);//list为空，读取excel失败；
+        }
+    }
+    public void insertProblemDescription(String code,String problemDescription)  {
+        String[] description=problemDescription.split("([1-9][0-9]{0,1})");//用0-99的数字打断，中间为正则表达式
+        qHSEManageSysElementsDao.deleteByCode(code);//先把该code的问题描述全部删除，再添加。
+        for(int i=0;i<description.length;i++)
+        {
+            if(i!=0) {//数组第一个必为空字符“ ”；
+                if (".".equals(description[i].substring(0, 1))){//数据格式为：1.问题某某（有“.”符号）
+                    if(qHSEManageSysElementsDao.addProblemDescription(code, description[i].substring(1))<=0)
+                        throw new WLHSException("新增失败");
+                }
+                else{//数据格式为：1问题某某（无“.”符号），增加兼容性。
+                    if(qHSEManageSysElementsDao.addProblemDescription(code, description[i])<=0)
+                        throw new WLHSException("新增失败");
+                }
+            }
         }
     }
 }
