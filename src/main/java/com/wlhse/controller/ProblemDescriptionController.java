@@ -21,10 +21,10 @@ public class ProblemDescriptionController {
         return problemDescriptionService.addProblemDescription(problemDescriptionDto);
     }
 
-    @RequestMapping(value = "/delete_problemDescription/{id}", method = RequestMethod.DELETE,produces = {"application/json;charset=UTF-8"})
-    public R deleteProblemDescription(@PathVariable int id)
+    @RequestMapping(value = "/delete_problemDescription", method = RequestMethod.DELETE,produces = {"application/json;charset=UTF-8"})
+    public R deleteProblemDescription(@ModelAttribute ProblemDescriptionDto problemDescriptionDto)
     {
-        return problemDescriptionService.deleteProblemDescription(id);
+        return problemDescriptionService.deleteProblemDescription(problemDescriptionDto);
     }
 
     @RequestMapping(value = "/update_problemDescription/{id}", method = RequestMethod.PUT,produces = {"application/json;charset=UTF-8"})
@@ -34,7 +34,7 @@ public class ProblemDescriptionController {
         return problemDescriptionService.updateProblemDescription(problemDescriptionDto);
     }
 
-    @RequestMapping(value = "/query_problemDescription", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+        @RequestMapping(value = "/query_problemDescription", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String queryProblemDescription(@ModelAttribute ProblemDescriptionDto problemDescriptionDto) {
         return problemDescriptionService.queryProblemDescription(problemDescriptionDto);
     }

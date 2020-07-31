@@ -53,6 +53,15 @@ public class RegulationRecordDto extends BaseGetDto {
     private String code;
     private String startDate;
     private String endDate;
+    private String regulationSource;
+
+    public String getRegulationSource() {
+        return regulationSource;
+    }
+
+    public void setRegulationSource(String regulationSource) {
+        this.regulationSource = regulationSource;
+    }
 
     public String getStartDate() {
         return startDate;

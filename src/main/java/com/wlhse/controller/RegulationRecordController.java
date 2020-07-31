@@ -21,10 +21,10 @@ public class RegulationRecordController {
         return regulationRecordService.addRegulationRecord(regulationRecordDto);
     }
 
-    @RequestMapping(value = "/delete_regulationrecord/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
-    public R deleteRegulationRecord(@PathVariable int id) {
+    @RequestMapping(value = "/delete_regulationrecord", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
+    public R deleteRegulationRecord(@ModelAttribute RegulationRecordDto regulationRecordDto) {
 
-        return regulationRecordService.deleteRegulationRecord(id);
+        return regulationRecordService.deleteRegulationRecord(regulationRecordDto);
     }
 
     @RequestMapping(value = "/update_regulationrecord/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")

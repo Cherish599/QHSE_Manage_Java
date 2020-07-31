@@ -9,6 +9,24 @@ public class FileAuditRecordDto {
     private String year;
     private String companyCode;
     private String companyName;
+    private String additor;
+    private String auditTime;
+
+    public String getAdditor() {
+        return additor;
+    }
+
+    public void setAdditor(String additor) {
+        this.additor = additor;
+    }
+
+    public String getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(String auditTime) {
+        this.auditTime = auditTime;
+    }
 
     public String getYear() {
         return year;

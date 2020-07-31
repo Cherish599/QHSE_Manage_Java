@@ -54,6 +54,12 @@ public class FileAuditController {
         return fileAuditService.addFileAuditRecord(fileAuditRecordDto);
     }
 
+    @RequestMapping(value = "/delete_fileaduitrecord/{id1}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
+    public R deleteFileAuditRecord(@PathVariable int id1) {
+        return fileAuditService.deleteFileAuditRecord(id1);
+    }
+
+
     @RequestMapping(value = "/get_status", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String getStatus(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
         return fileAuditService.getStatus(fileAuditRecordDto);

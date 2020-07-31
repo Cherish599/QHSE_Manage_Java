@@ -54,6 +54,13 @@ public class FileAuditServiceImpl implements FileAuditService {
     }
 
     @Override
+    public R deleteFileAuditRecord(Integer id1) {
+        if(fileAuditDao.deleteFileAuditRecord(id1)<=0)
+            throw new WLHSException("删除失败");
+        return R.ok();
+    }
+
+    @Override
     public String updateStatus(FileAuditRecordDto fileAuditRecordDto) {
         if(fileAuditDao.updateStatus(fileAuditRecordDto)<=0)
             throw new WLHSException("更新失败");

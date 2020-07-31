@@ -15,6 +15,8 @@ public interface FileAuditService {
     R deleteFileAudit(Integer id);
     //增加文件审核的记录
     R addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto);
+    //删除文件审核的记录
+    R deleteFileAuditRecord(Integer id1);
     //更新文件审核通过与否状态
     String updateStatus(FileAuditRecordDto fileAuditRecordDto);
     //结点打分

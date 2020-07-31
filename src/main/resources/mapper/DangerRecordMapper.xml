@@ -133,6 +133,9 @@
             <if test="code != null and code  != ''">
                 Code,
             </if>
+            <if test="dangerSource != null and dangerSource  != ''">
+                DangerSource,
+            </if>
         </trim>
     </sql>
 
@@ -267,6 +270,9 @@
             <if test="code != null and code  != ''">
                 #{code},
             </if>
+            <if test="dangerSource != null and dangerSource  != ''">
+                #{dangerSource},
+            </if>
         </trim>
     </sql>
 
@@ -279,7 +285,14 @@
 
     <delete id="deleteDangerRecord">
         delete from dangerrecord
-        where ID=#{id}
+        <where>
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                AND QHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
+            </if>
+            <if test="code != null and code  != ''">
+                AND Code=#{code}
+            </if>
+        </where>
     </delete>
 
     <sql id="value1">

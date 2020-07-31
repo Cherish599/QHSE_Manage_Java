@@ -26,8 +26,8 @@ public class RegulationRecordServiceImpl implements RegulationRecordService {
     }
 
     @Override
-    public R deleteRegulationRecord(Integer id) {
-        if(regulationRecordDao.deleteRegulationRecord(id)<=0)
+    public R deleteRegulationRecord(RegulationRecordDto regulationRecordDto) {
+        if(regulationRecordDao.deleteRegulationRecord(regulationRecordDto)<=0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
