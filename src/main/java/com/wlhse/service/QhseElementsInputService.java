@@ -9,10 +9,8 @@ import com.wlhse.util.R;
 
 public interface QhseElementsInputService {
 
-    R querryElementEvidence(ElementEvidenceInDto elementEvidenceInDto);
-
-    R addElementEvidence(ElementEvidenceInDto elementEvidenceInDto);
-
     R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
+    R queryAll(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
+
 
 }

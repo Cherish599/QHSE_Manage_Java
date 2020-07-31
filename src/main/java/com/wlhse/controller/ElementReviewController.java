@@ -30,27 +30,31 @@ public class ElementReviewController {
     @Resource
     private GetCurrentUserIdUtil getCurrentUserIdUtil;
 
-    //根据当前登录人查询审核要素
+    //查询审核要素
     @RequestMapping(value = "/query_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R elementReviewer(@ModelAttribute ElementReviewDto elementReviewDto,HttpServletRequest request ) {
-        elementReviewDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
+    public R elementReviewer(@ModelAttribute ElementReviewDto elementReviewDto) {
         return  elementReviewService.query(elementReviewDto);
     }
-    //根据当前登录人查询批准要素
+    //查询批准要素
     @RequestMapping(value = "/query_elementReviewers", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R elementReviewers(@ModelAttribute ElementReviewDto elementReviewDto,HttpServletRequest request ) {
-        elementReviewDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
         return  elementReviewService.queryS(elementReviewDto);
     }
     //审核人通过
     @RequestMapping(value = "/pass_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R elementReviewer1(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
+    public R elementReviewer1(ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+        elementReviewDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
+
+        System.out.println(elementReviewDto);
         elementReviewDto.setStatus("未批准");
+        elementReviewService.updateCheck(elementReviewDto);
         return  elementReviewService.updateStatus(elementReviewDto);
     }
     //审核人批准
     @RequestMapping(value = "/approval_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R elementReviewer2(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
+    public R elementReviewer2(ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+        elementReviewDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
+        elementReviewService.updateApprove(elementReviewDto);
         elementReviewDto.setStatus("备案待查");
         return  elementReviewService.updateStatus(elementReviewDto);
     }
@@ -61,7 +65,8 @@ public class ElementReviewController {
     }
     //审核人不批准不通过
     @RequestMapping(value = "/no_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
+    public R elementReviewer3(ElementReviewDto elementReviewDto) {
+        elementReviewService.deletes(elementReviewDto);
         elementReviewDto.setStatus("不通过");
         return  elementReviewService.updateStatus(elementReviewDto);
     }
