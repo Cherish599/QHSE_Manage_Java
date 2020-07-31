@@ -26,7 +26,7 @@ public class CheckRecordController {
     //查询所有记录
     @RequestMapping(value = "/check_record", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryAllCheckRecord(CheckConditionPOJO checkConditionPOJO) {
-        int a;
+
         if (checkConditionPOJO.getIsAll()==1)
             return checkRecordService.queryAll();
        return checkRecordService.queryByCondition(checkConditionPOJO);
