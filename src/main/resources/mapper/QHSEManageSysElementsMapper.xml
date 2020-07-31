@@ -536,4 +536,32 @@
         where QHSE_ManagerSysElementProblemDescription_ID=#{qHSE_ManagerSysElementProblemDescription_ID}
     </update>
 
+    <select id="selectCodeAndConfigStatusByTableId" resultType="com.wlhse.dto.outDto.ElementAndConfigStatusDto">
+        select Code as elementCode,
+        ConfigStatus as configStatus
+        from qhse_companyyearmanagersyselement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+    </select>
+
+    <select id="queryElementByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select
+        Code as code,
+        name as name,
+        Content as content,
+        basis as basis,
+        auditMode as auditMode,
+        initialScore as initialScore,
+        formula as formula,
+        totalCount as totalCount
+        from QHSE_ManagerSysElement
+        where code=#{code}
+        and status='启用'
+    </select>
+
+    <update id="updateConfigStatus">
+        update from qhse_companyyearmanagersyselement
+        set ConfigStatus=#{status}
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+        and Code=#{code}
+    </update>
 </mapper>
