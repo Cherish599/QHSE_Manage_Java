@@ -13,8 +13,6 @@ public class QhseElementsOutDto {
 
     private String content;
 
-    private String basis;
-
     private String auditMode;
 
     private Integer initialScore;
@@ -61,13 +59,6 @@ public class QhseElementsOutDto {
         this.content = content;
     }
 
-    public String getBasis() {
-        return basis;
-    }
-
-    public void setBasis(String basis) {
-        this.basis = basis;
-    }
 
     public String getAuditMode() {
         return auditMode;

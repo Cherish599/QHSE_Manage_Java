@@ -4,7 +4,6 @@ package com.wlhse.controller;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.dto.inDto.ElementEvidenceInDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
-import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.service.QHSEManageSysElementsService;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.GetCurrentUserIdUtil;

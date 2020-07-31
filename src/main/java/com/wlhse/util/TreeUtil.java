@@ -321,7 +321,6 @@ public class TreeUtil {
         for (QhseElementsPojo pojo : qhseElementsPojos) {
             QhseElementsOutDto qhseElementsOutDto = new QhseElementsOutDto();
             qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
-            qhseElementsOutDto.setBasis(pojo.getBasis());
             qhseElementsOutDto.setCode(pojo.getCode());
             qhseElementsOutDto.setContent(pojo.getContent());
             qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
@@ -423,7 +422,6 @@ public class TreeUtil {
         for (QHSECompanyYearManagerSysElementDto pojo : qhseElementsPojos) {
             QhseElementsOutDto qhseElementsOutDto = new QhseElementsOutDto();
             qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
-            qhseElementsOutDto.setBasis(pojo.getBasis());
             qhseElementsOutDto.setCode(pojo.getCode());
             qhseElementsOutDto.setContent(pojo.getContent());
             qhseElementsOutDto.setTotalCount(pojo.getTotalCount());

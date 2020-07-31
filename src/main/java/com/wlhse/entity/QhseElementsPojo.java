@@ -13,7 +13,6 @@ public class QhseElementsPojo {
 
     private String content;
 
-    private String basis;
 
     private String auditMode;
 
@@ -58,13 +57,6 @@ public class QhseElementsPojo {
         this.content = content;
     }
 
-    public String getBasis() {
-        return basis;
-    }
-
-    public void setBasis(String basis) {
-        this.basis = basis;
-    }
 
     public String getAuditMode() {
         return auditMode;

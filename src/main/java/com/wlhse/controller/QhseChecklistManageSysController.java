@@ -3,7 +3,6 @@ package com.wlhse.controller;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.inDto.QHSEManageSysElementsDto;
 import com.wlhse.entity.QHSECompanyYearManagerSysElementPojo;
-import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.service.QhseChecklistManageSysService;
 import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
