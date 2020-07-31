@@ -22,6 +22,13 @@ public interface ElementReviewService {
 
     R queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto) throws ParseException;
 
-   List<QHSECompanyYearManagerSysElementDto>  queryParent(String code);
+    List<QHSECompanyYearManagerSysElementDto>  queryParent(String code);
 
+    //添加审核人
+    int updateCheck(ElementReviewDto elementReviewDto);
+
+    int updateApprove(ElementReviewDto elementReviewDto);
+
+    //不通过删除附件信息
+    R deletes(ElementReviewDto elementReviewDto);
 }

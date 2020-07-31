@@ -35,9 +35,9 @@
 
     <insert id="addQHSERule" parameterType="com.wlhse.entity.QHSEManageSysElements">
         insert into qhse_managersyselement
-        (Code,Name,Content,RecordFile,Basis,AuditMode,InitialScore,TotalCount,Formula,Status)
+        (Code,Name,Content,RecordFile,Basis,AuditMode,InitialScore,TotalCount,Formula,ProblemDescription,Status)
         values
-        (#{code},#{name},#{content},#{recordFile},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{status})
+        (#{code},#{name},#{content},#{recordFile},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{problemDescription},#{status})
     </insert>
 
     <update id="updateRuleStatus" parameterType="com.wlhse.entity.QHSEManageSysElements">
@@ -97,6 +97,9 @@
             <if test="formula!=null and formula!=''">
                 Formula=#{formula},
             </if>
+            <if test="problemDescription!=null and problemDescription!=''">
+                ProblemDescription=#{problemDescription},
+            </if>
         </trim>
         where Code=#{code}
     </update>
@@ -147,6 +150,7 @@
         AuditMode,
         InitialScore,
         Formula,
+        ProblemDescription,
         TotalCount,
         Status
         from QHSE_ManagerSysElement
@@ -163,6 +167,7 @@
         t1.AuditMode,
         t1.InitialScore,
         t1.Formula,
+        t1.ProblemDescription,
         t1.TotalCount,
         t1.Status,
         t1.CompanyCode as companyCode,
@@ -179,6 +184,7 @@
             <if test="year !=null and year!=''">
                 AND t1.Year=#{year}
             </if>
+            AND t2.Status='已发布'
         </where>
     </select>
 
@@ -191,6 +197,7 @@
         AuditMode,
         InitialScore,
         Formula,
+        ProblemDescription,
         TotalCount,
         Status
         from QHSE_ManagerSysElement
@@ -205,6 +212,7 @@
         AuditMode,
         InitialScore,
         Formula,
+        ProblemDescription,
         TotalCount,
         Status
         from QHSE_ManagerSysElement
@@ -232,6 +240,9 @@
             </if>
             <if test="formula!=null and formula!=''">
                 Formula=#{formula},
+            </if>
+            <if test="problemDescription!=null and problemDescription!=''">
+                ProblemDescription=#{problemDescription},
             </if>
         </trim>
         where Code=#{code}
@@ -264,6 +275,9 @@
             <if test="formula != null and formula != ''">
                 Formula,
             </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                ProblemDescription,
+            </if>
             TotalCount,
             <if test="status != null and status != ''">
                 Status,
@@ -291,6 +305,9 @@
             #{initialScore},
             <if test="formula != null and formula != ''">
                 #{formula},
+            </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                #{problemDescription},
             </if>
             #{totalCount},
             <if test="status != null and status != ''">
@@ -323,6 +340,9 @@
             <if test="formula != null and formula != ''">
                 Formula,
             </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                ProblemDescription,
+            </if>
             TotalCount,
             <if test="status != null and status != ''">
                 Status,
@@ -351,6 +371,9 @@
             <if test="formula != null and formula != ''">
                 #{formula},
             </if>
+            <if test="problemDescription != null and problemDescription != ''">
+                #{problemDescription},
+            </if>
             #{totalCount},
             <if test="status != null and status != ''">
                 #{status},
@@ -362,7 +385,7 @@
     <update id="updateExcelElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
         update qhse_managersyselement
         set Name=#{name},Content=#{content},Basis=#{basis},AuditMode=#{auditMode},InitialScore=#{initialScore},
-        TotalCount=#{totalCount},Formula=#{formula},Status=#{status}
+        TotalCount=#{totalCount},Formula=#{formula},ProblemDescription=#{problemDescription},Status=#{status}
         where Code=#{code}
     </update>
 
@@ -379,25 +402,13 @@
         auditMode as auditMode,
         initialScore as initialScore,
         formula as formula,
+        problemDescription as problemDescription,
         totalCount as totalCount
         from QHSE_ManagerSysElement
         where code like concat(#{c},'%')
         and status='启用'
     </select>
-    <select id="queryElementByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
-        select
-        Code as code,
-        name as name,
-        Content as content,
-        basis as basis,
-        auditMode as auditMode,
-        initialScore as initialScore,
-        formula as formula,
-        totalCount as totalCount
-        from QHSE_ManagerSysElement
-        where code=#{code}
-        and status='启用'
-    </select>
+
     <select id="findMaxLen" resultType="integer">
         select Max(LENGTH(code)) FROM QHSE_ManagerSysElement
     </select>
@@ -407,7 +418,7 @@
         QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
         QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
         code as code,
-        `name` as name
+        name as name
         from QHSE_CompanyYearManagerSysElement
         where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
     </select>
@@ -529,10 +540,4 @@
         where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
     </select>
 
-    <update id="updateConfigStatus">
-        update from qhse_companyyearmanagersyselement
-        set ConfigStatus=#{status}
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
-        and Code=#{code}
-    </update>
 </mapper>

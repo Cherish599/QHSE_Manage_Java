@@ -2,15 +2,47 @@ package com.wlhse.dto.inDto;
 
 public class ElementEvidenceAttachInDto {
 
-    private Integer id;
+    private Integer id;//要素id
 
-    private Integer qhseCompanyYearManagerSysElementEvidenceID;
+    private Integer evidenceID;//证据id
+
+    private String code;
+
+    private String evidenceDescription;
+
+    private String attachID;//附件id
 
     private String attachDescrption;
 
     private String attach;
 
     private String uploadTime;
+
+    private Integer checkStaffID;
+
+    private String checkStaffName;
+
+    private Integer approverStaffID;
+
+    private String approverStaffName;
+
+    @Override
+    public String toString() {
+        return "ElementEvidenceAttachInDto{" +
+                "id=" + id +
+                ", evidenceID=" + evidenceID +
+                ", code='" + code + '\'' +
+                ", evidenceDescription='" + evidenceDescription + '\'' +
+                ", attachID='" + attachID + '\'' +
+                ", attachDescrption='" + attachDescrption + '\'' +
+                ", attach='" + attach + '\'' +
+                ", uploadTime='" + uploadTime + '\'' +
+                ", checkStaffID=" + checkStaffID +
+                ", checkStaffName='" + checkStaffName + '\'' +
+                ", approverStaffID=" + approverStaffID +
+                ", approverStaffName='" + approverStaffName + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -20,12 +52,36 @@ public class ElementEvidenceAttachInDto {
         this.id = id;
     }
 
-    public Integer getQhseCompanyYearManagerSysElementEvidenceID() {
-        return qhseCompanyYearManagerSysElementEvidenceID;
+    public Integer getEvidenceID() {
+        return evidenceID;
     }
 
-    public void setQhseCompanyYearManagerSysElementEvidenceID(Integer qhseCompanyYearManagerSysElementEvidenceID) {
-        this.qhseCompanyYearManagerSysElementEvidenceID = qhseCompanyYearManagerSysElementEvidenceID;
+    public void setEvidenceID(Integer evidenceID) {
+        this.evidenceID = evidenceID;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getEvidenceDescription() {
+        return evidenceDescription;
+    }
+
+    public void setEvidenceDescription(String evidenceDescription) {
+        this.evidenceDescription = evidenceDescription;
+    }
+
+    public String getAttachID() {
+        return attachID;
+    }
+
+    public void setAttachID(String attachID) {
+        this.attachID = attachID;
     }
 
     public String getAttachDescrption() {
@@ -50,5 +106,37 @@ public class ElementEvidenceAttachInDto {
 
     public void setUploadTime(String uploadTime) {
         this.uploadTime = uploadTime;
+    }
+
+    public Integer getCheckStaffID() {
+        return checkStaffID;
+    }
+
+    public void setCheckStaffID(Integer checkStaffID) {
+        this.checkStaffID = checkStaffID;
+    }
+
+    public String getCheckStaffName() {
+        return checkStaffName;
+    }
+
+    public void setCheckStaffName(String checkStaffName) {
+        this.checkStaffName = checkStaffName;
+    }
+
+    public Integer getApproverStaffID() {
+        return approverStaffID;
+    }
+
+    public void setApproverStaffID(Integer approverStaffID) {
+        this.approverStaffID = approverStaffID;
+    }
+
+    public String getApproverStaffName() {
+        return approverStaffName;
+    }
+
+    public void setApproverStaffName(String approverStaffName) {
+        this.approverStaffName = approverStaffName;
     }
 }

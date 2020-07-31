@@ -2,44 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wlhse.dao.QhseElementsInputDao">
 
-    <select id="queryElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto" resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementEvidenceDto">
+    <select id="query" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto" resultType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
         select
-        QHSE_CompanyYearManagerSysElementEvidence_ID as qhseCompanyYearManagerSysElementEvidenceID,
-        QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        t1.QHSE_CompanyYearManagerSysElementEvidence_ID as evidenceID,
+        QHSE_CompanyYearManagerSysElement_ID as id,
         Code as code,
         EvidenceDescription as evidenceDescription,
-        checkStaffID as checkStaffID,
-        checkStaffName as checkStaffName,
-        approverStaffID as approverStaffID,
-        approverStaffName as approverStaffName
-        from QHSE_CompanyYearManagerSysElementEvidence
-        <where>
-            <if test="code != null and code!= ''">
-                Code = #{code}
-            </if>
-        </where>
+        QHSE_CompanyYearManagerSysElementEvidenceAttach_ID as attachId,
+        AttachDescrption as attachDescrption,
+        Attach as attach,
+        uploadTime
+        from QHSE_CompanyYearManagerSysElementEvidence t1,QHSE_CompanyYearManagerSysElementEvidenceAttach t2
+        where t1.QHSE_CompanyYearManagerSysElementEvidence_ID=t2.QHSE_CompanyYearManagerSysElementEvidence_ID
+        and t1.QHSE_CompanyYearManagerSysElement_ID=#{id}
     </select>
 
-    <select id="getEmployeeCompany" resultType="string">
-        select
-        c1.`Name` as companyName
-        from employee as e1
-        left join sys_company as c1
-        on e1.CompanyCode=c1.CompanyCode
-        left join sys_user as u1
-        on e1.EmployeeID=u1.EmployeeID
-        <where>
-            e1.EmployeeID=#{employeeID}
-            <!--<if test="name1 != null and name1 !=''">-->
-                <!--and e1.Name LIKE CONCAT('%','${name1}','%')-->
-            <!--</if>-->
-            <!--<if test="companyCode != null and companyCode !=''">-->
-                <!--and substring(e1.companyCode,1,length(#{companyCode})) = #{companyCode}-->
-            <!--</if>-->
-        </where>
-    </select>
-
-    <insert id="addElementsEvidence" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto">
+    <insert id="add" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto"
+            useGeneratedKeys="true" keyProperty="evidenceID" keyColumn="QHSE_CompanyYearManagerSysElementEvidence_ID">
         insert into QHSE_CompanyYearManagerSysElementEvidence
         (
         <trim suffixOverrides=",">
@@ -49,14 +28,6 @@
             <if test="evidenceDescription != null and evidenceDescription != ''">
                 EvidenceDescription,
             </if>
-            <if test="checkStaffName != null and checkStaffName != ''">
-                CheckStaffName,
-            </if>
-            <if test="approverStaffName != null and approverStaffName != ''">
-                ApproverStaffName,
-            </if>
-            CheckStaffID,
-            ApproverStaffID,
             QHSE_CompanyYearManagerSysElement_ID,
         </trim>
         )
@@ -69,41 +40,42 @@
             <if test="evidenceDescription != null and evidenceDescription != ''">
                 #{evidenceDescription},
             </if>
-            <if test="checkStaffName != null and checkStaffName != ''">
-                #{checkStaffName},
-            </if>
-            <if test="approverStaffName != null and approverStaffName != ''">
-                #{approverStaffName},
-            </if>
-            #{checkStaffID},
-            #{approverStaffID},
-            #{qhseCompanyYearManagerSysElementID},
+            #{id},
         </trim>
         )
     </insert>
 
-    <update id="updateElementsStatus">
-        update QHSE_CompanyYearManagerSysElement
+    <update id="update" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto" >
+        update QHSE_CompanyYearManagerSysElementEvidence
         <set>
-            status = '未审核'
+            <if test="code != null and code != ''">
+                Code= #{code},
+            </if>
+            <if test="evidenceDescription != null and evidenceDescription != ''">
+                EvidenceDescription= #{evidenceDescription},
+            </if>
         </set>
         where QHSE_CompanyYearManagerSysElement_ID=#{id}
     </update>
 
-    <insert id="addElementsEvidenceAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
+
+    <insert id="addAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto"
+            useGeneratedKeys="true" keyProperty="evidenceID" keyColumn="QHSE_CompanyYearManagerSysElementEvidence_ID">
         insert into QHSE_CompanyYearManagerSysElementEvidenceAttach
         (
         <trim suffixOverrides=",">
             <if test="attachDescrption != null and attachDescrption != ''">
-                AttachDescrption,
+                attachDescrption,
             </if>
             <if test="attach != null and attach != ''">
-                Attach,
+                attach,
             </if>
             <if test="uploadTime != null and uploadTime != ''">
                 uploadTime,
             </if>
-            QHSE_CompanyYearManagerSysElementEvidence_ID,
+            <if test="evidenceID != null and evidenceID != ''">
+                QHSE_CompanyYearManagerSysElementEvidence_ID,
+            </if>
         </trim>
         )
         values
@@ -118,90 +90,72 @@
             <if test="uploadTime != null and uploadTime != ''">
                 #{uploadTime},
             </if>
-            #{qhseCompanyYearManagerSysElementEvidenceID},
+            <if test="evidenceID != null and evidenceID != ''">
+                #{evidenceID},
+            </if>
         </trim>
         )
+
     </insert>
 
-    <update id="updateElementsEvidenceAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
+    <update id="updateAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
         update QHSE_CompanyYearManagerSysElementEvidenceAttach
         <set>
-            <if test="attachDescrption!=null and attachDescrption!=''">
+            <if test="attachDescrption != null and attachDescrption != ''">
                 AttachDescrption=#{attachDescrption},
             </if>
-            <if test="attach!=null and attach!=''">
+            <if test="attach != null and attach != ''">
                 Attach=#{attach},
             </if>
-            <if test="uploadTime!=null and uploadTime!=''">
+            <if test="uploadTime != null and uploadTime != ''">
                 uploadTime=#{uploadTime},
             </if>
         </set>
-        where
-        QHSE_CompanyYearManagerSysElementEvidence_ID=#{qhseCompanyYearManagerSysElementEvidenceID}
+        where QHSE_CompanyYearManagerSysElementEvidence_ID=#{evidenceID}
     </update>
 
-    <select id="queryEvidenceAttach" resultType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">
-        select
-        QHSE_CompanyYearManagerSysElementEvidenceAttach_ID as id,
-        QHSE_CompanyYearManagerSysElementEvidence_ID as qhseCompanyYearManagerSysElementEvidenceID,
-        AttachDescrption as attachDescrption,
-        Attach as attach,
-        uploadTime
-        from QHSE_CompanyYearManagerSysElementEvidenceAttach
-        where QHSE_CompanyYearManagerSysElementEvidence_ID=#{id}
-    </select>
-
-    <select id="selectElementTableID" resultType="integer">
-        select QHSE_CompanyYearManagerSysElementTable_ID
-        from QHSE_CompanyYearManagerSysElement
+    <update id="updateStatus" parameterType="java.lang.Integer">
+        update QHSE_CompanyYearManagerSysElement set Status="未审核"
         where QHSE_CompanyYearManagerSysElement_ID=#{id}
-    </select>
-
-    <select id="selectYearElement">
-        select QHSE_CompanyYearManagerSysElementTable_ID
-        from QHSE_CompanyYearManagerSysElement
-        where QHSE_CompanyYearManagerSysElement_ID='18'
-    </select>
-
-    <update id="updateElementTableByID" parameterType="com.wlhse.dto.inDto.ElementEvidenceInDto">
-        update QHSE_CompanyYearManagerSysElementTable
-        <set>
-            <if test="checkStaffName != null and checkStaffName != ''">
-                checkStaffName=#{checkStaffName},
-            </if>
-            <if test="approverStaffName != null and approverStaffName != ''">
-                approverStaffName=#{approverStaffName},
-            </if>
-            checkStaffID=#{checkStaffID},
-            approverStaffID=#{approverStaffID},
-        </set>
-        where
-        QHSE_CompanyYearManagerSysElementTable_ID=#{tableID}
     </update>
 
-    <select id="getCompanyManagerSysElementId" resultType="Integer" >
-        select QHSE_CompanyYearManagerSysElement_ID
-        from QHSE_CompanyYearManagerSysElement
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
-    </select>
 
-    <delete id="deleteFromCompanyManagerSysElement">
-        delete from  QHSE_CompanyYearManagerSysElement
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
-    </delete>
 
-    <select id="getCompanyYearManagerSysElementEvidenceId" resultType="Integer">
-        select QHSE_CompanyYearManagerSysElementEvidence_ID
-        from QHSE_CompanyYearManagerSysElementEvidence
-        where QHSE_CompanyYearManagerSysElement_ID=#{elementId}
-    </select>
 
-    <delete id="deleteFromCompanyYearManagerSysElementEvidence">
-        delete from QHSE_CompanyYearManagerSysElementEvidence
-        where  QHSE_CompanyYearManagerSysElement_ID=#{elementId}
-    </delete>
-    <delete id="deleteFromCompanyYearManagerSysElementEvidenceAttach">
-        delete from QHSE_CompanyYearManagerSysElementEvidenceAttach
-        where QHSE_CompanyYearManagerSysElementEvidence_ID=#{evidenceId}
-    </delete>
+<!--    <select id="getEmployeeCompany" resultType="string">-->
+<!--        select-->
+<!--        c1.`Name` as companyName-->
+<!--        from employee as e1-->
+<!--        left join sys_company as c1-->
+<!--        on e1.CompanyCode=c1.CompanyCode-->
+<!--        left join sys_user as u1-->
+<!--        on e1.EmployeeID=u1.EmployeeID-->
+<!--        <where>-->
+<!--            e1.EmployeeID=#{employeeID}-->
+<!--            &lt;!&ndash;<if test="name1 != null and name1 !=''">&ndash;&gt;-->
+<!--                &lt;!&ndash;and e1.Name LIKE CONCAT('%','${name1}','%')&ndash;&gt;-->
+<!--            &lt;!&ndash;</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;<if test="companyCode != null and companyCode !=''">&ndash;&gt;-->
+<!--                &lt;!&ndash;and substring(e1.companyCode,1,length(#{companyCode})) = #{companyCode}&ndash;&gt;-->
+<!--            &lt;!&ndash;</if>&ndash;&gt;-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    <update id="updateElementsEvidenceAttach" parameterType="com.wlhse.dto.inDto.ElementEvidenceAttachInDto">-->
+<!--        update QHSE_CompanyYearManagerSysElementEvidenceAttach-->
+<!--        <set>-->
+<!--            <if test="attachDescrption!=null and attachDescrption!=''">-->
+<!--                AttachDescrption=#{attachDescrption},-->
+<!--            </if>-->
+<!--            <if test="attach!=null and attach!=''">-->
+<!--                Attach=#{attach},-->
+<!--            </if>-->
+<!--            <if test="uploadTime!=null and uploadTime!=''">-->
+<!--                uploadTime=#{uploadTime},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where-->
+<!--        QHSE_CompanyYearManagerSysElementEvidence_ID=#{qhseCompanyYearManagerSysElementEvidenceID}-->
+<!--    </update>-->
+
 </mapper>

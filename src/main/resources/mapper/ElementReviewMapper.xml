@@ -12,9 +12,7 @@
             <if test="year != null and year  != ''">
                 AND year=#{year}
             </if>
-            and qHSE_CompanyYearManagerSysElement_ID in
-            (select qHSE_CompanyYearManagerSysElement_ID
-            from qhse_companyyearmanagersyselementevidence where checkStaffID=#{checkStaffID}) and status="未审核"
+            and ConfigStatus="启用" and status="未审核"
         </where>
     </select>
 
@@ -25,12 +23,10 @@
             <if test="companyCode !=null and companyCode!=''">
                 AND companyCode like concat(#{companyCode},'%')
             </if>
-            <if test="year != null and year  != ''">
-                AND year=#{year}
-            </if>
-            and qHSE_CompanyYearManagerSysElement_ID in
-            (select qHSE_CompanyYearManagerSysElement_ID
-            from qhse_companyyearmanagersyselementevidence where approverStaffID=#{approverStaffID})and status="未批准"
+        <if test="year != null and year  != ''">
+            AND year=#{year}
+        </if>
+        and ConfigStatus="启用" and status="未批准"
         </where>
     </select>
 
@@ -38,6 +34,18 @@
         update qhse_companyyearmanagersyselement
         set status=#{status}
         where qHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </update>
+
+    <update id="updateCheck" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        update QHSE_CompanyYearManagerSysElementEvidence set
+        CheckStaffID=#{checkStaffID},CheckStaffName=(select Name from employee where EmployeeID=#{checkStaffID})
+        where QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </update>
+
+    <update id="updateApprove" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        update QHSE_CompanyYearManagerSysElementEvidence set
+        ApproverStaffID=#{approverStaffID},ApproverStaffName=(select Name from employee where EmployeeID=#{approverStaffID})
+        where QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
     </update>
 
     <sql id = "element_evidence_key">
@@ -68,5 +76,17 @@
             resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto">
         select * from qhse_companyyearmanagersyselement where  code=#{code}
     </select>
+
+    <delete id="delete" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        delete  from QHSE_CompanyYearManagerSysElementEvidence where
+         QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID};
+    </delete>
+
+    <delete id="deleteAttach" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        delete from QHSE_CompanyYearManagerSysElementEvidenceAttach where
+         QHSE_CompanyYearManagerSysElementEvidence_ID=(select QHSE_CompanyYearManagerSysElementEvidence_ID
+         from QHSE_CompanyYearManagerSysElementEvidence where
+          QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID});
+    </delete>
 
 </mapper>

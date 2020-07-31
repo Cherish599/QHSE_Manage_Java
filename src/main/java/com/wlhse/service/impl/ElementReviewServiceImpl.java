@@ -126,5 +126,23 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         return elementReviewDao.queryParent(code);
     }
 
+    @Override
+    public int updateCheck(ElementReviewDto elementReviewDto) {
+        return  elementReviewDao.updateCheck(elementReviewDto);
+    }
+
+    @Override
+    public int updateApprove(ElementReviewDto elementReviewDto) {
+        return  elementReviewDao.updateApprove(elementReviewDto);
+    }
+
+    @Override
+    public R deletes(ElementReviewDto elementReviewDto) {
+        int j= elementReviewDao.deleteAttach(elementReviewDto);
+       int i= elementReviewDao.delete(elementReviewDto);
+       if(i*j<0) throw new WLHSException("不通过删除附件失败");
+        return R.ok();
+    }
+
 
 }
