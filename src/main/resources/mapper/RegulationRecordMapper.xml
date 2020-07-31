@@ -125,6 +125,9 @@
             <if test="code != null and code  != ''">
                 Code,
             </if>
+            <if test="regulationSource != null and regulationSource  != ''">
+                RegulationSource,
+            </if>
         </trim>
     </sql>
 
@@ -249,6 +252,9 @@
             </if>
             <if test="code != null and code  != ''">
                 #{code},
+            </if>
+            <if test="regulationSource != null and regulationSource  != ''">
+                #{regulationSource},
             </if>
         </trim>
     </sql>
