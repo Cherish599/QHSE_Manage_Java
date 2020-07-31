@@ -2,13 +2,12 @@ package com.wlhse.util;
 
 import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.ModuleDao;
-import com.wlhse.dto.CheckListDto;
-import com.wlhse.dto.CheckListTreeDto;
-import com.wlhse.dto.CheckRecordTreeDto;
-import com.wlhse.dto.TreeDto;
+import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dto.*;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
+import org.apache.ibatis.annotations.Param;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +21,9 @@ public class TreeUtil {
 
     @Resource
     private ModuleDao moduleDao;
+
+    @Resource
+    QHSEManageSysElementsDao qhseManageSysElementsDao;
 
     @Resource
     private CheckListDao checkListDao;
@@ -329,7 +331,6 @@ public class TreeUtil {
             qhseElementsOutDto.setName(pojo.getName());
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
-            //System.out.println(pojo.getQhseManagerSysElementID());
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样
@@ -337,6 +338,43 @@ public class TreeUtil {
                 code.add(pojo.getCode().length());
         }
         return returnQhseElementList(map1, code);
+    }
+
+    public List<QhseElementsOutDto> getQhseElementTreeForExcel(List<QhseElementsPojo> qhseElementsPojos) {
+        Map<String, QhseElementsOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QhseElementsPojo pojo : qhseElementsPojos) {
+            QhseElementsOutDto qhseElementsOutDto = new QhseElementsOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setContent(pojo.getContent());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
+            if(pojo.getCode().length()==15)//加入问题描述字段
+            {
+                qhseElementsOutDto.setProblemDescription(getProblemDescriptionByCode(pojo.getCode()));
+            }
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQhseElementList(map1, code);
+    }
+    public String getProblemDescriptionByCode(String code)//拼接获得问题描述字段
+    {
+        List<QHSEproblemDiscriptionDto> DiscriptionList=qhseManageSysElementsDao.querryDescriptionBycode(code);
+        String problemDescription="";
+        for (int i = 0; i < DiscriptionList.size(); i++)
+        {
+            problemDescription+=(i+1+"."+DiscriptionList.get(i).getDescription());
+        }
+        return problemDescription;
     }
 
     //th---年度要素
