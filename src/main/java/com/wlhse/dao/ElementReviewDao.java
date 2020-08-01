@@ -27,4 +27,15 @@ public interface ElementReviewDao {
     //查父节点
     List<QHSECompanyYearManagerSysElementDto> queryParent(String code);
 
+    //添加审核人
+    int updateCheck(ElementReviewDto elementReviewDto);
+
+    int updateApprove(ElementReviewDto elementReviewDto);
+
+    //不通过删除证据
+    int delete(ElementReviewDto elementReviewDto);
+
+    int deleteAttach(ElementReviewDto elementReviewDto);
+
+
 }

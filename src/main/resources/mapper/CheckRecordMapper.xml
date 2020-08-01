@@ -12,14 +12,8 @@
             <if test="name != null and name != ''">
                 Name,
             </if>
-            <if test="content != null and content != ''">
-                Content,
-            </if>
             <if test="checkType != null and checkType != ''">
                 CheckType,
-            </if>
-            <if test="checkCategory != null and checkCategory != ''">
-                CheckCategory,
             </if>
             <if test="companyName != null and companyName != ''">
                 CompanyName,
@@ -30,8 +24,20 @@
             <if test="checkDate != null and checkDate != ''">
                 CheckDate,
             </if>
-            <if test="checkContent != null and checkContent != ''">
-                CheckContent,
+            <if test="problems != null and problems !=''">
+                Problems,
+            </if>
+            <if test="checkTypeCode !=null and checkTypeCode!=''">
+                CheckTypeCode,
+            </if>
+            <if test="pass !=null and pass!=''">
+                Pass,
+            </if>
+            <if test="checkPersonId !=null and checkPersonId!=''">
+                CheckPersonId,
+            </if>
+            <if test="checkPerson!=null and checkPerson!=''">
+                CheckPerson,
             </if>
         </trim>
         )
@@ -44,14 +50,8 @@
             <if test="name != null and name != ''">
                 #{name},
             </if>
-            <if test="content != null and content != ''">
-                #{content},
-            </if>
             <if test="checkType != null and checkType != ''">
                 #{checkType},
-            </if>
-            <if test="checkCategory != null and checkCategory != ''">
-                #{checkCategory},
             </if>
             <if test="companyName != null and companyName != ''">
                 #{companyName},
@@ -62,8 +62,20 @@
             <if test="checkDate != null and checkDate != ''">
                 #{checkDate},
             </if>
-            <if test="checkContent != null and checkContent != ''">
-                #{checkContent},
+            <if test="problems != null and problems !=''">
+                #{problems},
+            </if>
+            <if test="checkTypeCode !=null and checkTypeCode!=''">
+                #{checkTypeCode},
+            </if>
+            <if test="pass !=null and pass!=''">
+                #{pass},
+            </if>
+            <if test="checkPersonId !=null and checkPersonId!=''">
+                #{checkPersonId},
+            </if>
+            <if test="checkPerson!=null and checkPerson!=''">
+                #{checkPerson},
             </if>
         </trim>
         )
@@ -78,12 +90,14 @@
         checklist.CheckListName,
         checkrecord.CheckRecordID,
         checkrecord.CheckType,
-        checkrecord.CheckCategory,
         checkrecord.CompanyName,
         checkrecord.CompanyCode,
-        checkrecord.CheckContent,
         checkrecord.CheckDate,
-        checkrecord.Content
+        checkrecord.Pass,
+        checkrecord.Problems,
+        checkrecord.CheckTypeCode,
+        checkrecord.CheckPersonId,
+        checkrecord.CheckPerson
         from checklist
         left join checkrecord
         on checklist.CheckListCode=checkrecord.code
@@ -93,14 +107,8 @@
     <update id="updateCheckRecord" parameterType="com.wlhse.dto.CheckRecordDto">
         update checkrecord
         <set>
-            <if test="content != null and content  != ''">
-                content=#{content},
-            </if>
             <if test="checkType != null and checkType  != ''">
                 checkType=#{checkType},
-            </if>
-            <if test="checkCategory != null and checkCategory  != ''">
-                checkCategory=#{checkCategory},
             </if>
             <if test="companyName != null and companyName  != ''">
                 companyName=#{companyName},
@@ -111,8 +119,20 @@
             <if test="checkDate != null and checkDate  != ''">
                 checkDate=#{checkDate},
             </if>
-            <if test="checkContent != null and checkContent  != ''">
-                checkContent=#{checkContent},
+            <if test="problems != null and problems !=''">
+                problems= #{problems},
+            </if>
+            <if test="checkTypeCode !=null and checkTypeCode!=''">
+                checkTypeCode=  #{checkTypeCode},
+            </if>
+            <if test="pass !=null and pass!=''">
+                pass=  #{pass},
+            </if>
+            <if test="checkPersonId !=null and checkPersonId!=''">
+                checkPersonId=#{checkPersonId},
+            </if>
+            <if test="checkPerson!=null and checkPerson!=''">
+                checkPerson= #{checkPerson},
             </if>
         </set>
         where checkRecordID=#{checkRecordID}
@@ -123,5 +143,35 @@
         where checkRecordID=#{checkRecordID}
     </delete>
 
+    <select id="queryByCondition" resultType="com.wlhse.dto.CheckRecordDto" parameterType="com.wlhse.entity.CheckConditionPOJO">
+        select *
+        from checkrecord
+        <where>
+        <if test="checkType!=null and checkType!=''">
+        checkType=#{checkType}
+        </if>
+        <if test="companyName!=null and companyName!=''">
+        and companyName=#{companyName}
+        </if>
+        <if test="checkDate!=null and checkDate!=''">
+        and checkDate=#{checkDate}
+        </if>
+        <if test="pass!=null and pass!=''">
+        and pass=#{pass}
+        </if>
+        <if test="checkTypeCode!=null and checkTypeCode!=''">
+        and checkTypeCode=#{checkTypeCode}
+        </if>
+        <if test="problems!=null and problems!=''">
+        and problems=#{problems}
+        </if>
+        <if test="checkPersonId!=null and checkPersonId!=''">
+        and checkPersonId=#{checkPersonId}
+        </if>
+        <if test="checkPerson!=null and checkPerson!=''">
+        and  checkPerson=#{checkPerson}
+        </if>
+        </where>
+    </select>
 
 </mapper>

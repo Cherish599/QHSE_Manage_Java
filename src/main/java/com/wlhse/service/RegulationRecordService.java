@@ -8,7 +8,7 @@ public interface RegulationRecordService {
     //增
     R addRegulationRecord(RegulationRecordDto regulationRecordDto);
     //删
-    R deleteRegulationRecord(Integer id);
+    R deleteRegulationRecord(RegulationRecordDto regulationRecordDto);
     //改
     R updateRegulationRecord (RegulationRecordDto regulationRecordDto);
     //按ID查询

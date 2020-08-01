@@ -20,8 +20,6 @@
         <result property="tableId" column="QHSE_CompanyYearManagerSysElementTable_ID"/>
         <result property="auditName" column="AuditName"/>
         <result property="auditType" column="AuditType"/>
-        <result property="auditTime" column="AuditTime"/>
-        <result property="additor" column="Additor"/>
         <result property="companyCode" column="CompanyCode"/>
         <result property="companyName" column="CompanyName"/>
         <result property="year" column="Year"/>
@@ -55,12 +53,7 @@
             <if test="auditType != null and auditType  != ''">
                 auditType,
             </if>
-            <if test="auditTime != null and auditTime  != ''">
-                auditTime,
-            </if>
-            <if test="additor != null and additor  != ''">
-                additor,
-            </if>
+
             <if test="companyCode != null and companyCode  != ''">
             companyCode,companyName,
             </if>
@@ -84,12 +77,7 @@
             <if test="auditType != null and auditType  != ''">
                 #{auditType},
             </if>
-            <if test="auditTime != null and auditTime  != ''">
-                #{auditTime},
-            </if>
-            <if test="additor != null and additor  != ''">
-                #{additor},
-            </if>
+
             <if test="companyCode != null and companyCode  != ''">
                 #{companyCode},(select name from sys_company where CompanyCode=#{companyCode}),
             </if>
@@ -129,6 +117,12 @@
             <if test="pass != null and pass  != ''">
                 Pass,
             </if>
+            <if test="additor!=null and additor!=''">
+                Additor,
+            </if>
+            <if test="auditTime!=null and auditTime!=''">
+                AuditTime,
+            </if>
         </trim>
     </sql>
 
@@ -146,6 +140,12 @@
             <if test="pass != null and pass  != ''">
                 #{pass},
             </if>
+            <if test="additor!=null and additor!=''">
+                #{additor}
+            </if>
+            <if test="auditTime!=null and auditTime!=''">
+                #{auditTime},
+            </if>
         </trim>
     </sql>
 
@@ -155,6 +155,11 @@
         values
         (<include refid="value2"/>)
     </insert>
+
+    <delete id="deleteFileAuditRecord">
+        delete from qhse_fileauditrecord
+        where QHSE_FileAudit_ID = #{id1}
+    </delete>
 
     <update id="updateStatus" parameterType="com.wlhse.dto.FileAuditRecordDto">
     update qhse_fileauditrecord

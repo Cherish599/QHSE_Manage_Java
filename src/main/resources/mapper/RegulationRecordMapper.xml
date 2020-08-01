@@ -125,6 +125,9 @@
             <if test="code != null and code  != ''">
                 Code,
             </if>
+            <if test="regulationSource != null and regulationSource  != ''">
+                RegulationSource,
+            </if>
         </trim>
     </sql>
 
@@ -250,6 +253,9 @@
             <if test="code != null and code  != ''">
                 #{code},
             </if>
+            <if test="regulationSource != null and regulationSource  != ''">
+                #{regulationSource},
+            </if>
         </trim>
     </sql>
 
@@ -262,7 +268,14 @@
 
     <delete id="deleteRegulationRecord">
         delete from regulationrecord
-        where ID=#{id}
+        <where>
+            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
+                AND QHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
+            </if>
+            <if test="code != null and code  != ''">
+                AND Code=#{code}
+            </if>
+        </where>
     </delete>
 
     <sql id="value1">

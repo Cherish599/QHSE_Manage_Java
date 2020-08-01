@@ -24,12 +24,7 @@
             <if test="status != null and status != ''">
                 status,
             </if>
-            <if test="checkContent != null and checkContent != ''">
-                checkContent,
-            </if>
-            <if test="checkType != null and checkType != ''">
-                checkType,
-            </if>
+
         </trim>
         )
         values
@@ -52,12 +47,6 @@
             </if>
             <if test="status != null and status != ''">
                 #{status},
-            </if>
-            <if test="checkContent != null and checkContent != ''">
-                #{checkContent},
-            </if>
-            <if test="checkType != null and checkType != ''">
-                #{checkType},
             </if>
         </trim>
         )
@@ -82,13 +71,7 @@
                 IsChildNode=#{isChildNode} and
             </if>
             <if test="status != null and status != ''">
-                Status=#{status} and
-            </if>
-            <if test="checkContent != null and checkContent != ''">
-                checkContent=#{checkContent} and
-            </if>
-            <if test="checkType != null and checkType != ''">
-                CheckType=#{checkType},
+                Status=#{status} ,
             </if>
         </trim>
     </select>

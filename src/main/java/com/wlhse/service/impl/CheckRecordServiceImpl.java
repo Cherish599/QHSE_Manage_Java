@@ -3,6 +3,7 @@ package com.wlhse.service.impl;
 import com.wlhse.dao.CheckRecordDao;
 import com.wlhse.dto.CheckRecordDto;
 import com.wlhse.dto.CheckRecordTreeDto;
+import com.wlhse.entity.CheckConditionPOJO;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.CheckRecordService;
 import com.wlhse.util.R;
@@ -71,6 +72,13 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         if (checkRecordDao.deleteCheckRecord(id)<=0)
             throw new WLHSException("删除失败");
         return R.ok();
+    }
+
+    @Override
+    public R queryByCondition(CheckConditionPOJO checkConditionPOJO) {
+        R ok = R.ok();
+        ok.put("data",checkRecordDao.queryByCondition(checkConditionPOJO));
+        return ok;
     }
 
 }

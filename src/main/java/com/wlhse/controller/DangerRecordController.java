@@ -21,10 +21,10 @@ public class DangerRecordController {
         return dangerRecordService.addDangerRecord(dangerRecordDto);
     }
 
-    @RequestMapping(value = "/delete_dangerrecord/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
-    public R deleteDangerRecord(@PathVariable int id) {
+    @RequestMapping(value = "/delete_dangerrecord", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
+    public R deleteDangerRecord(@ModelAttribute DangerRecordDto dangerRecordDto) {
 
-        return dangerRecordService.deleteDangerRecord(id);
+        return dangerRecordService.deleteDangerRecord(dangerRecordDto);
     }
 
     @RequestMapping(value = "/update_dangerrecord/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")

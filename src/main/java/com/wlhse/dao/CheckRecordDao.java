@@ -3,6 +3,7 @@ package com.wlhse.dao;
 import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckRecordDto;
 import com.wlhse.dto.CheckRecordTreeDto;
+import com.wlhse.entity.CheckConditionPOJO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,8 @@ public interface CheckRecordDao {
 
     //查询所有
     List<CheckRecordDto> queryAll();
+
+    List<CheckRecordDao> queryByCondition(CheckConditionPOJO checkConditionPOJO);
 
     List<CheckRecordTreeDto> queryAllByParentCode(@Param("code") String code);
 

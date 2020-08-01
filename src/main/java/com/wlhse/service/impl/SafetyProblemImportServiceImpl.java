@@ -43,13 +43,10 @@ public class SafetyProblemImportServiceImpl implements SafetyProblemImportServic
         CheckRecordDto checkRecordDto=new CheckRecordDto();
         checkRecordDto.setCode(newSafetyProblemDto.getCheckListItemCode());
         checkRecordDto.setName(newSafetyProblemDto.getCheckListItemName());
-        checkRecordDto.setContent(newSafetyProblemDto.getContent());///*a5f46saad*/分隔
         checkRecordDto.setCheckType(newSafetyProblemDto.getCheckType());
-        checkRecordDto.setCheckCategory(newSafetyProblemDto.getCheckCategory());
         checkRecordDto.setCompanyName(newSafetyProblemDto.getCompanyName());
         checkRecordDto.setCompanyCode(newSafetyProblemDto.getCompanyCode());
         checkRecordDto.setCheckDate(newSafetyProblemDto.getCheckDate());
-        checkRecordDto.setCheckContent(newSafetyProblemDto.getCheckContent());
         int i = safetyProblemImportDao.addNewProblem(newSafetyProblemDto);
         int j = checkRecordDao.addCheckRecord(checkRecordDto);
         if (i*j <= 0)

@@ -52,6 +52,15 @@ public class DangerRecordDto extends BaseGetDto {
     private String code;
     private String startDate;
     private String endDate;
+    private String dangerSource;
+
+    public String getDangerSource() {
+        return dangerSource;
+    }
+
+    public void setDangerSource(String dangerSource) {
+        this.dangerSource = dangerSource;
+    }
 
     public String getStartDate() {
         return startDate;

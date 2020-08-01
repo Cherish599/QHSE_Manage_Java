@@ -61,7 +61,6 @@ public class CheckListServiceImpl implements CheckListService {
             saveDto.setCheckListCode(node);
             saveDto.setIsChildNode("true");
             saveDto.setAttribute(checkListAddDto.getAttribute());
-            saveDto.setCheckContent(checkListAddDto.getCheckContent());
         }else{
             //新增节点
             CheckListDto temp=null;
@@ -78,7 +77,6 @@ public class CheckListServiceImpl implements CheckListService {
                 }
                 saveDto.setAttribute(temp.getAttribute()+"/*a5f46saad*/"+checkListAddDto.getAttribute());
                 saveDto.setIsChildNode("true");//新增节点一定是子节点
-                saveDto.setCheckContent(temp.getCheckContent());
             }else{
                 System.out.println(list);
                 //获取最大的子节点,加1
@@ -91,7 +89,6 @@ public class CheckListServiceImpl implements CheckListService {
                 saveDto.setAttribute(temp.getAttribute());
                 saveDto.setParentName(temp.getParentName());
                 saveDto.setIsChildNode("true");//新增节点一定是子节点
-                saveDto.setCheckContent(temp.getCheckContent());
                 saveDto.setCheckListCode(childNode);
             }
             //判断当前父节点是不是最后一级，如果是，isChild变成false

@@ -7,13 +7,15 @@ public class CheckRecordTreeDto {
     private Integer checkRecordID;
     private String checkListCode;
     private String checkListName;
-    private String content;
     private String checkType;
-    private String checkCategory;
     private String companyName;
     private String companyCode;
     private String checkDate;
-    private String checkContent;
+    private String problems;
+    private String checkTypeCode;
+    private String pass;
+    private String checkPersonId;
+    private String checkPerson;
 
     public Integer getCheckRecordID() {
         return checkRecordID;
@@ -39,13 +41,7 @@ public class CheckRecordTreeDto {
         this.checkListName = checkListName;
     }
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getCheckType() {
         return checkType;
@@ -55,13 +51,7 @@ public class CheckRecordTreeDto {
         this.checkType = checkType;
     }
 
-    public String getCheckCategory() {
-        return checkCategory;
-    }
 
-    public void setCheckCategory(String checkCategory) {
-        this.checkCategory = checkCategory;
-    }
 
     public String getCompanyName() {
         return companyName;
@@ -87,12 +77,44 @@ public class CheckRecordTreeDto {
         this.checkDate = checkDate;
     }
 
-    public String getCheckContent() {
-        return checkContent;
+    public String getProblems() {
+        return problems;
     }
 
-    public void setCheckContent(String checkContent) {
-        this.checkContent = checkContent;
+    public void setProblems(String problems) {
+        this.problems = problems;
+    }
+
+    public String getCheckTypeCode() {
+        return checkTypeCode;
+    }
+
+    public void setCheckTypeCode(String checkTypeCode) {
+        this.checkTypeCode = checkTypeCode;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getCheckPersonId() {
+        return checkPersonId;
+    }
+
+    public void setCheckPersonId(String checkPersonId) {
+        this.checkPersonId = checkPersonId;
+    }
+
+    public String getCheckPerson() {
+        return checkPerson;
+    }
+
+    public void setCheckPerson(String checkPerson) {
+        this.checkPerson = checkPerson;
     }
 
     @Override
@@ -101,13 +123,15 @@ public class CheckRecordTreeDto {
                 "checkRecordID=" + checkRecordID +
                 ", checkListCode='" + checkListCode + '\'' +
                 ", checkListName='" + checkListName + '\'' +
-                ", content='" + content + '\'' +
                 ", checkType='" + checkType + '\'' +
-                ", checkCategory='" + checkCategory + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", companyCode='" + companyCode + '\'' +
                 ", checkDate='" + checkDate + '\'' +
-                ", checkContent='" + checkContent + '\'' +
+                ", problems='" + problems + '\'' +
+                ", checkTypeCode='" + checkTypeCode + '\'' +
+                ", pass='" + pass + '\'' +
+                ", checkPersonId='" + checkPersonId + '\'' +
+                ", checkPerson='" + checkPerson + '\'' +
                 '}';
     }
 }

@@ -238,7 +238,6 @@ public class TreeUtil {
             checkListTreeDto.setCheckListCode(pojo.getCheckListCode());
             checkListTreeDto.setCheckListName(pojo.getCheckListName());
             checkListTreeDto.setAttribute(pojo.getAttribute());
-            checkListTreeDto.setCheckContent(pojo.getCheckContent());
             checkListTreeDto.setParentName(pojo.getParentName());
             checkListTreeDto.setIsChildNode(pojo.getIsChildNode());
             checkListTreeDto.setStatus(pojo.getStatus());
@@ -406,13 +405,11 @@ public class TreeUtil {
         for (YearElementsDto pojo : qhseElementsPojos) {
             QhseYearElementsOutDto qhseElementsOutDto = new QhseYearElementsOutDto();
             qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
-            qhseElementsOutDto.setBasis(pojo.getBasis());
             qhseElementsOutDto.setCode(pojo.getCode());
             qhseElementsOutDto.setContent(pojo.getContent());
             qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
             qhseElementsOutDto.setFormula(pojo.getFormula());
             qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
-            qhseElementsOutDto.setProblemDescription(pojo.getProblemDescription());
             qhseElementsOutDto.setName(pojo.getName());
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseCompanyYearManagerSysElementID());
@@ -542,16 +539,18 @@ public class TreeUtil {
         List<Integer> code = new ArrayList<>();
         for (CheckRecordTreeDto pojo : checkRecordTreeDtos) {
             CheckRecordTreeOutDto checkRecordTreeOutDto = new CheckRecordTreeOutDto();
-            checkRecordTreeOutDto.setCheckCategory(pojo.getCheckCategory());
-            checkRecordTreeOutDto.setCheckContent(pojo.getCheckContent());
             checkRecordTreeOutDto.setCheckDate(pojo.getCheckDate());
             checkRecordTreeOutDto.setCheckListCode(pojo.getCheckListCode());
             checkRecordTreeOutDto.setCheckListName(pojo.getCheckListName());
             checkRecordTreeOutDto.setCheckRecordID(pojo.getCheckRecordID());
             checkRecordTreeOutDto.setCompanyCode(pojo.getCompanyCode());
             checkRecordTreeOutDto.setCompanyName(pojo.getCompanyName());
-            checkRecordTreeOutDto.setContent(pojo.getContent());
             checkRecordTreeOutDto.setCheckType(pojo.getCheckType());
+            checkRecordTreeOutDto.setProblems(pojo.getProblems());
+            checkRecordTreeOutDto.setPass(pojo.getPass());
+            checkRecordTreeOutDto.setCheckPersonId(pojo.getCheckPersonId());
+            checkRecordTreeOutDto.setCheckPerson(pojo.getCheckPerson());
+            checkRecordTreeOutDto.setCheckTypeCode(pojo.getCheckTypeCode());
             //System.out.println(pojo.getQhseManagerSysElementID());
             map1.put(checkRecordTreeOutDto.getCheckListCode(), checkRecordTreeOutDto);
 

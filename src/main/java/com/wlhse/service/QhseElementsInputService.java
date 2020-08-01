@@ -11,10 +11,8 @@ import java.util.List;
 
 public interface QhseElementsInputService {
 
-    R querryElementEvidence(ElementEvidenceInDto elementEvidenceInDto);
-
-    R addElementEvidence(ElementEvidenceInDto elementEvidenceInDto);
-
     R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
+    R queryAll(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
+
 
 }

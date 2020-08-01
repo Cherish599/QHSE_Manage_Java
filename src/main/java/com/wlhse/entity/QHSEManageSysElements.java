@@ -7,7 +7,6 @@ public class QHSEManageSysElements{
     private String name;
     private String content;
     private String recordFile;
-    private String basis;
     private String auditMode;
     private Integer initialScore;
     private Integer totalCount;
@@ -62,13 +61,7 @@ public class QHSEManageSysElements{
         this.recordFile = recordFile;
     }
 
-    public String getBasis() {
-        return basis;
-    }
 
-    public void setBasis(String basis) {
-        this.basis = basis;
-    }
 
     public String getAuditMode() {
         return auditMode;
