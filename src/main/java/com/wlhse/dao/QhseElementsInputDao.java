@@ -30,4 +30,14 @@ public interface QhseElementsInputDao {
 
     //更改状态
     int updateStatus(Integer id);
+
+    List<Integer> getCompanyManagerSysElementId(int tableId);
+
+    int deleteFromCompanyManagerSysElement(int tableId);
+
+    List<Integer> getCompanyYearManagerSysElementEvidenceId(int elementId);
+
+    int deleteFromCompanyYearManagerSysElementEvidence(int elementId);
+
+    int deleteFromCompanyYearManagerSysElementEvidenceAttach(int evidenceId);
 }

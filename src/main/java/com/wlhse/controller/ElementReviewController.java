@@ -42,7 +42,7 @@ public class ElementReviewController {
     }
     //审核人通过
     @RequestMapping(value = "/pass_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R elementReviewer1(ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+    public R elementReviewer1(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
         elementReviewDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
 
         System.out.println(elementReviewDto);
@@ -52,7 +52,7 @@ public class ElementReviewController {
     }
     //审核人批准
     @RequestMapping(value = "/approval_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R elementReviewer2(ElementReviewDto elementReviewDto,HttpServletRequest request ) {
+    public R elementReviewer2(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
         elementReviewDto.setApproverStaffID(getCurrentUserIdUtil.getUserId(request));
         elementReviewService.updateApprove(elementReviewDto);
         elementReviewDto.setStatus("备案待查");
@@ -65,7 +65,7 @@ public class ElementReviewController {
     }
     //审核人不批准不通过
     @RequestMapping(value = "/no_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R elementReviewer3(ElementReviewDto elementReviewDto) {
+    public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
         elementReviewService.deletes(elementReviewDto);
         elementReviewDto.setStatus("不通过");
         return  elementReviewService.updateStatus(elementReviewDto);
