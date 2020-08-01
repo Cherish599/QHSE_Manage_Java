@@ -26,6 +26,8 @@ public interface QHSEManageSysElementsService {
     R queryChildElement();
     //th---根据是否启用查询节点
     R queryAllElements(Integer tag);
+    //用于导出excel的查询；
+    R queryAllElementsForExcel();
     //th---更新状态
     R updateElementStatus(QhseElementsPojo rule);
     //th---更新内容

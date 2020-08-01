@@ -43,6 +43,11 @@ public class QHSEManageSysElementsController {
     public R querryQhseManagerSysElements(@PathVariable("tag") int tag){
         return qhseManageSysElementsService.queryAllElements(tag);
     }
+    //用于导出excel，包含问题描述字段的查询接口
+    @RequestMapping(value = "/querryQhseElementsForExcel", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQhseElementsForExcel(){
+        return qhseManageSysElementsService.queryAllElementsForExcel();
+    }
 
     //th---跟新状态
     @RequestMapping(value = "/updateQHSEElementStatus", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})

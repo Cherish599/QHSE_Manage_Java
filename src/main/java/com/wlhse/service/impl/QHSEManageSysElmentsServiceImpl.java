@@ -279,6 +279,14 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
+    //用于导出excel的查询；
+    @Override
+    public R queryAllElementsForExcel() {
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()));
+        return ok;
+    }
+
     //th---跟新状态
     //TODO 最大层数，编码位数
     @Override
