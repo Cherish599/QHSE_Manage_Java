@@ -338,8 +338,8 @@ public class TreeUtil {
         }
         return returnQhseElementList(map1, code);
     }
-
-    public List<QhseElementsOutDto> getQhseElementTreeForExcel(List<QhseElementsPojo> qhseElementsPojos) {
+    //导出excel查询接口
+    /*public List<QhseElementsOutDto> getQhseElementTreeForExcel(List<QhseElementsPojo> qhseElementsPojos) {
         Map<String, QhseElementsOutDto> map1 = new TreeMap<>();
         List<Integer> code = new ArrayList<>();
         for (QhseElementsPojo pojo : qhseElementsPojos) {
@@ -375,7 +375,7 @@ public class TreeUtil {
         }
         return problemDescription;
     }
-
+*/
     //th---年度要素
     public List<QhseYearElementsOutDto> returnQhseYearElementList(Map<String, QhseYearElementsOutDto> map, List<Integer> code) {
         List<QhseYearElementsOutDto> result = new ArrayList<>();
