@@ -105,9 +105,7 @@ public class UploadServiceImpl implements UploadService {
         Row titleRow=sheet.getRow(0);
         //创建实体类对象容器
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
-        //获取EXCEL中的值
-
-        DataFormatter dataFormat=new DataFormatter();
+        //获取EXCEL中的值DataFormatter dataFormat=new DataFormatter();
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
             Row row = sheet.getRow(i);//按行读取
@@ -116,9 +114,9 @@ public class UploadServiceImpl implements UploadService {
             {
                 // 得到列名
                 String key = titleRow.getCell(j).getStringCellValue();
+                //得到当前列的值
                 String value=dataFormat.formatCellValue(row.getCell(j));
                 //找到该条记录的code
-
                 if("code".equals(key)) {
                     rcode = value;
                 }
@@ -131,8 +129,6 @@ public class UploadServiceImpl implements UploadService {
                     }
                 }
                 QSHEMSElementValueMap.put(key, value);
-
-
             }
             /*QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
             QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));

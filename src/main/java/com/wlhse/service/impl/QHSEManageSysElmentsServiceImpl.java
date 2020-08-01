@@ -262,13 +262,13 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     //th---根据是否启用查询节点
     @Override
-    public R queryAllElements(Integer status) {
-        if (status == 0) //查启用
+    public R queryAllElements(Integer tag) {
+        if (tag == 0) //查启用
         {
             R ok = R.ok();
             ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseElements()));
             return ok;
-        } else if (status == 1) //查所有
+        } else if (tag == 1) //查所有
         {
             R ok = R.ok();
             ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseAllElements()));

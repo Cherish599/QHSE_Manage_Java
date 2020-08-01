@@ -39,9 +39,9 @@ public class QHSEManageSysElementsController {
     }
 
     //th---根据是否启用查询节点
-    @RequestMapping(value = "/querryQhseElements/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public R querryQhseManagerSysElements(@PathVariable("status") int status){
-        return qhseManageSysElementsService.queryAllElements(status);
+    @RequestMapping(value = "/querryQhseElements/{tag}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R querryQhseManagerSysElements(@PathVariable("tag") int tag){
+        return qhseManageSysElementsService.queryAllElements(tag);
     }
 
     //th---跟新状态
@@ -61,12 +61,12 @@ public class QHSEManageSysElementsController {
     }
     //查询问题列表，根据返回的code查询
     @RequestMapping(value = "/querryQHSEproblemDiscription/{code}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public R querryQHSEproblemDiscription(@PathVariable String code){
+    public R querryQHSEproblemDiscription(@PathVariable("code") String code){
         return qhseManageSysElementsService.querryQhseProblemDiscription(code);
     }
     //删除
     @RequestMapping(value = "/deleteQHSEproblemDiscription/{id}", method = RequestMethod.DELETE,produces = {"application/json;charset=UTF-8"})
-    public R deleteQHSEproblemDiscription(@PathVariable Integer id)
+    public R deleteQHSEproblemDiscription(@PathVariable("id") Integer id)
     {
         return qhseManageSysElementsService.deleteQhseProblemDiscription(id);
     }

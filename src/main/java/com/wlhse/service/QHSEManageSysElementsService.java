@@ -25,7 +25,7 @@ public interface QHSEManageSysElementsService {
     //th-查询基本数据表两级
     R queryChildElement();
     //th---根据是否启用查询节点
-    R queryAllElements(Integer status);
+    R queryAllElements(Integer tag);
     //th---更新状态
     R updateElementStatus(QhseElementsPojo rule);
     //th---更新内容
