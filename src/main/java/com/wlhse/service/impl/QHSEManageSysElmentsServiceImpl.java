@@ -283,7 +283,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     @Override
     public R queryAllElementsForExcel() {
         R ok = R.ok();
-        ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()));
+        ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseAllElements()));
         return ok;
     }
 
