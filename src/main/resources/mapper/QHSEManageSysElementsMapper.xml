@@ -35,9 +35,9 @@
 
     <insert id="addQHSERule" parameterType="com.wlhse.entity.QHSEManageSysElements">
         insert into qhse_managersyselement
-        (Code,Name,Content,RecordFile,Basis,AuditMode,InitialScore,TotalCount,Formula,Status)
+        (Code,Name,Content,RecordFile,AuditMode,InitialScore,TotalCount,Formula,Status)
         values
-        (#{code},#{name},#{content},#{recordFile},#{basis},#{auditMode},#{initialScore},#{totalCount},#{formula},#{status})
+        (#{code},#{name},#{content},#{recordFile},#{auditMode},#{initialScore},#{totalCount},#{formula},#{status})
     </insert>
 
     <update id="updateRuleStatus" parameterType="com.wlhse.entity.QHSEManageSysElements">
@@ -84,9 +84,6 @@
             </if>
             <if test="recordFile!=null and recordFile!=''">
                 RecordFile=#{recordFile},
-            </if>
-            <if test="basis!=null and basis!=''">
-                Basis=#{basis},
             </if>
             <if test="auditMode!=null and auditMode!=''">
                 AuditMode=#{auditMode},
@@ -158,7 +155,6 @@
         t1.Code,
         t1.Name,
         t1.Content,
-        t1.Basis,
         t1.AuditMode,
         t1.InitialScore,
         t1.Formula,
@@ -357,7 +353,6 @@
         Code as code,
         name as name,
         Content as content,
-        basis as basis,
         auditMode as auditMode,
         initialScore as initialScore,
         formula as formula,
@@ -400,18 +395,12 @@
             <if test="content != null and content != ''">
                 content,
             </if>
-            <if test="basis != null and basis != ''">
-                basis,
-            </if>
             <if test="auditMode != null and auditMode != ''">
                 auditMode,
             </if>
             initialScore,
             <if test="formula != null and formula != ''">
                 formula,
-            </if>
-            <if test="problemDescription != null and problemDescription != ''">
-                problemDescription,
             </if>
             totalCount,
             <if test="status != null and status != ''">
@@ -447,18 +436,12 @@
             <if test="content != null and content != ''">
                 #{content},
             </if>
-            <if test="basis != null and basis != ''">
-                #{basis},
-            </if>
             <if test="auditMode != null and auditMode != ''">
                 #{auditMode},
             </if>
             #{initialScore},
             <if test="formula != null and formula != ''">
                 #{formula},
-            </if>
-            <if test="problemDescription != null and problemDescription != ''">
-                #{problemDescription},
             </if>
             #{totalCount},
             <if test="status != null and status != ''">
@@ -548,7 +531,6 @@
         Code as code,
         name as name,
         Content as content,
-        basis as basis,
         auditMode as auditMode,
         initialScore as initialScore,
         formula as formula,

@@ -10,16 +10,9 @@ public class CheckListDto {
     private String parentName;
     private String isChildNode;
     private String status;
-    private String checkContent;
-    private String checkType;
 
-    public String getCheckType() {
-        return checkType;
-    }
 
-    public void setCheckType(String checkType) {
-        this.checkType = checkType;
-    }
+
 
     public Integer getCheckListID() {
         return checkListID;
@@ -77,14 +70,6 @@ public class CheckListDto {
         this.status = status;
     }
 
-    public String getCheckContent() {
-        return checkContent;
-    }
-
-    public void setCheckContent(String checkContent) {
-        this.checkContent = checkContent;
-    }
-
     @Override
     public String toString() {
         return "CheckListDto{" +
@@ -95,8 +80,6 @@ public class CheckListDto {
                 ", parentName='" + parentName + '\'' +
                 ", isChildNode='" + isChildNode + '\'' +
                 ", status='" + status + '\'' +
-                ", checkContent='" + checkContent + '\'' +
-                ", checkType='" + checkType + '\'' +
                 '}';
     }
 }
