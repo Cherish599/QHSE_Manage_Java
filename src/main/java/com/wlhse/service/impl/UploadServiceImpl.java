@@ -105,7 +105,8 @@ public class UploadServiceImpl implements UploadService {
         Row titleRow=sheet.getRow(0);
         //创建实体类对象容器
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
-        //获取EXCEL中的值DataFormatter dataFormat=new DataFormatter();
+        //获取EXCEL中的值
+        DataFormatter dataFormat=new DataFormatter();
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
             Row row = sheet.getRow(i);//按行读取
