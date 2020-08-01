@@ -4,13 +4,73 @@ public class CheckRecordDto {
     private Integer checkRecordID;
     private String code;
     private String name;
-    private String content;
     private String checkType;
-    private String checkCategory;
     private String companyName;
     private String companyCode;
     private String checkDate;
-    private String checkContent;
+    private String problems;
+    private String checkTypeCode;
+    private String pass;
+    private String checkPersonId;
+    private String checkPerson;
+
+    @Override
+    public String toString() {
+        return "CheckRecordDto{" +
+                "checkRecordID=" + checkRecordID +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", checkType='" + checkType + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", checkDate='" + checkDate + '\'' +
+                ", problems='" + problems + '\'' +
+                ", checkTypeCode='" + checkTypeCode + '\'' +
+                ", pass='" + pass + '\'' +
+                ", checkPersonId='" + checkPersonId + '\'' +
+                ", checkPerson='" + checkPerson + '\'' +
+                '}';
+    }
+
+    public String getProblems() {
+        return problems;
+    }
+
+    public void setProblems(String problems) {
+        this.problems = problems;
+    }
+
+    public String getCheckTypeCode() {
+        return checkTypeCode;
+    }
+
+    public void setCheckTypeCode(String checkTypeCode) {
+        this.checkTypeCode = checkTypeCode;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getCheckPersonId() {
+        return checkPersonId;
+    }
+
+    public void setCheckPersonId(String checkPersonId) {
+        this.checkPersonId = checkPersonId;
+    }
+
+    public String getCheckPerson() {
+        return checkPerson;
+    }
+
+    public void setCheckPerson(String checkPerson) {
+        this.checkPerson = checkPerson;
+    }
 
     public Integer getCheckRecordID() {
         return checkRecordID;
@@ -36,13 +96,7 @@ public class CheckRecordDto {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getCheckType() {
         return checkType;
@@ -50,14 +104,6 @@ public class CheckRecordDto {
 
     public void setCheckType(String checkType) {
         this.checkType = checkType;
-    }
-
-    public String getCheckCategory() {
-        return checkCategory;
-    }
-
-    public void setCheckCategory(String checkCategory) {
-        this.checkCategory = checkCategory;
     }
 
     public String getCompanyName() {
@@ -84,27 +130,5 @@ public class CheckRecordDto {
         this.checkDate = checkDate;
     }
 
-    public String getCheckContent() {
-        return checkContent;
-    }
 
-    public void setCheckContent(String checkContent) {
-        this.checkContent = checkContent;
-    }
-
-    @Override
-    public String toString() {
-        return "CheckRecordDto{" +
-                "checkRecordID=" + checkRecordID +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", content='" + content + '\'' +
-                ", checkType='" + checkType + '\'' +
-                ", checkCategory='" + checkCategory + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", companyCode='" + companyCode + '\'' +
-                ", checkDate='" + checkDate + '\'' +
-                ", checkContent='" + checkContent + '\'' +
-                '}';
-    }
 }

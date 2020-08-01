@@ -7,11 +7,9 @@ public class YearElementsDto {
     private String code;
     private String name;
     private String content;
-    private String basis;
     private String auditMode;
     private Integer initialScore;
     private String formula;
-    private String problemDescription;
     private Integer totalCount;
     private String status;
     private String companyCode;
@@ -76,13 +74,6 @@ public class YearElementsDto {
         this.content = content;
     }
 
-    public String getBasis() {
-        return basis;
-    }
-
-    public void setBasis(String basis) {
-        this.basis = basis;
-    }
 
     public String getAuditMode() {
         return auditMode;
@@ -108,13 +99,6 @@ public class YearElementsDto {
         this.formula = formula;
     }
 
-    public String getProblemDescription() {
-        return problemDescription;
-    }
-
-    public void setProblemDescription(String problemDescription) {
-        this.problemDescription = problemDescription;
-    }
 
     public Integer getTotalCount() {
         return totalCount;
@@ -173,11 +157,9 @@ public class YearElementsDto {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
-                ", basis='" + basis + '\'' +
                 ", auditMode='" + auditMode + '\'' +
                 ", initialScore=" + initialScore +
                 ", formula='" + formula + '\'' +
-                ", problemDescription='" + problemDescription + '\'' +
                 ", totalCount=" + totalCount +
                 ", status='" + status + '\'' +
                 ", companyCode='" + companyCode + '\'' +

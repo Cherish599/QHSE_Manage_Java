@@ -7,8 +7,6 @@ public class FileAuditDto extends BaseGetDto {
     private Integer tableId;
     private String auditName;
     private String auditType;
-    private String auditTime;
-    private String additor;
     private String companyCode;
     private String companyName;
     private String year;
@@ -45,21 +43,6 @@ public class FileAuditDto extends BaseGetDto {
         this.auditType = auditType;
     }
 
-    public String getAuditTime() {
-        return auditTime;
-    }
-
-    public void setAuditTime(String auditTime) {
-        this.auditTime = auditTime;
-    }
-
-    public String getAdditor() {
-        return additor;
-    }
-
-    public void setAdditor(String additor) {
-        this.additor = additor;
-    }
 
     public String getCompanyCode() {
         return companyCode;

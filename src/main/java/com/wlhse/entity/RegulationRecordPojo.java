@@ -49,6 +49,15 @@ public class RegulationRecordPojo {
     private String qHSE_FileAudit_ID;
     private String qHSE_FileAuditRecord_ID;
     private String code;
+    private String regulationSource;
+
+    public String getRegulationSource() {
+        return regulationSource;
+    }
+
+    public void setRegulationSource(String regulationSource) {
+        this.regulationSource = regulationSource;
+    }
 
     public Integer getId() {
         return id;

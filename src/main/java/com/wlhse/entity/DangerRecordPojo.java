@@ -44,6 +44,7 @@ public class DangerRecordPojo {
     private String qHSE_FileAudit_ID;
     private String qHSE_FileAuditRecord_ID;
     private String code;
+    private String dangerSource;
 
     public Integer getId() {
         return id;
@@ -387,5 +388,13 @@ public class DangerRecordPojo {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDangerSource() {
+        return dangerSource;
+    }
+
+    public void setDangerSource(String dangerSource) {
+        this.dangerSource = dangerSource;
     }
 }

@@ -17,16 +17,8 @@ public class CheckListTreeDto  implements Cloneable{
     private String parentName;
     private String isChildNode;
     private String status;
-    private String checkContent;
-    private String checkType;
 
-    public String getCheckType() {
-        return checkType;
-    }
 
-    public void setCheckType(String checkType) {
-        this.checkType = checkType;
-    }
 
     private List<CheckListTreeDto> children;//=new LinkedList<>()
 
@@ -86,13 +78,6 @@ public class CheckListTreeDto  implements Cloneable{
         this.status = status;
     }
 
-    public String getCheckContent() {
-        return checkContent;
-    }
-
-    public void setCheckContent(String checkContent) {
-        this.checkContent = checkContent;
-    }
 
     public List<CheckListTreeDto> getChildren() {
         return children;

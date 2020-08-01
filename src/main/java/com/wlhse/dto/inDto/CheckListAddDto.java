@@ -6,8 +6,6 @@ public class CheckListAddDto {
     private String checkListCode;//父节点code
     private String attribute;//新增节点属性
     private String status;
-    private String checkContent;
-    private String contentType;
 
     public String getCheckListName() {
         return checkListName;
@@ -49,19 +47,5 @@ public class CheckListAddDto {
         this.parentName = parentName;
     }
 
-    public String getCheckContent() {
-        return checkContent;
-    }
 
-    public void setCheckContent(String checkContent) {
-        this.checkContent = checkContent;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
 }

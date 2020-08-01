@@ -6,12 +6,29 @@ public class CompanyYearManagerDto {
     private String companyName;
     private String year;
     private String elementTableName;
+    private String status;
 
     public String getQHSE_CompanyYearManagerSysElementTable_ID() {
         return qHSE_CompanyYearManagerSysElementTable_ID;
     }
 
     public void setQHSE_CompanyYearManagerSysElementTable_ID(String qHSE_CompanyYearManagerSysElementTable_ID) {
+        this.qHSE_CompanyYearManagerSysElementTable_ID = qHSE_CompanyYearManagerSysElementTable_ID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getqHSE_CompanyYearManagerSysElementTable_ID() {
+        return qHSE_CompanyYearManagerSysElementTable_ID;
+    }
+
+    public void setqHSE_CompanyYearManagerSysElementTable_ID(String qHSE_CompanyYearManagerSysElementTable_ID) {
         this.qHSE_CompanyYearManagerSysElementTable_ID = qHSE_CompanyYearManagerSysElementTable_ID;
     }
 
@@ -55,6 +72,7 @@ public class CompanyYearManagerDto {
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
                 ", elementTableName='" + elementTableName + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
