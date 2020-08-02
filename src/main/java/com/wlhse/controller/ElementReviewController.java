@@ -44,8 +44,6 @@ public class ElementReviewController {
     @RequestMapping(value = "/pass_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R elementReviewer1(@RequestBody(required = false) ElementReviewDto elementReviewDto,HttpServletRequest request ) {
         elementReviewDto.setCheckStaffID(getCurrentUserIdUtil.getUserId(request));
-
-        System.out.println(elementReviewDto);
         elementReviewDto.setStatus("未批准");
         elementReviewService.updateCheck(elementReviewDto);
         return  elementReviewService.updateStatus(elementReviewDto);
