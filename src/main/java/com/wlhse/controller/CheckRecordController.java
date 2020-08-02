@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 import com.wlhse.dto.CheckRecordDto;
+import com.wlhse.dto.inDto.CheckRecordPOJO;
 import com.wlhse.entity.CheckConditionPOJO;
 import com.wlhse.service.CheckRecordService;
 import com.wlhse.util.R;
@@ -48,6 +49,12 @@ public class CheckRecordController {
     @RequestMapping(value = "/check_record/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
     public R deleteCheckRecord(@PathVariable int id) {
         return checkRecordService.deleteCheckrecord(id);
+    }
+
+    //get check record in condition ||add new check record
+    @RequestMapping(value = "/add_checkList",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
+    public R getCheckRecord( @RequestBody CheckRecordPOJO checkRecordPOJO){
+        return checkRecordService.getCheckRecord(checkRecordPOJO);
     }
 
 }

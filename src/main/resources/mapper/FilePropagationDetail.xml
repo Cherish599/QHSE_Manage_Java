@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.FilePropagationDetailDao">
+    <select id="getFilePropagationByStaffId" resultType="com.wlhse.dto.outDto.FilePropagationDetailDto">
+        select File_PropagationPlanDetailID as filePropagationPlanDetailID,
+        File_PropagationID as filePropagationID,
+        PushCompanyCode as pushCompanyCode,
+        PushCompanyName as pushCompanyName,
+        PushStaffId as pushStaffId,
+        PushStaffName as pushStaffName,
+        Status as status,
+        ReadDate as readDate
+        from file_propagationplandetail
+        where PushStaffId=#{staffId}
+    </select>
+    <insert id="addNewDetail">
+        insert into file_propagationplandetail
+        (
+        <trim suffixOverrides=",">
+            <if test="filePropagationID != null and filePropagationID != ''">
+                File_PropagationID,
+            </if>
+            <if test="pushCompanyCode != null and pushCompanyCode != ''">
+                PushCompanyCode,
+            </if>
+            <if test="companyName != null and companyName != ''">
+                PushCompanyCode,
+            </if>
+            <if test="pushCompanyName != null and pushCompanyName != ''">
+                PushCompanyName,
+            </if>
+            <if test="pushStaffId != null and pushStaffId != ''">
+                PushStaffId,
+            </if>
+            <if test="pushStaffName != null and pushStaffName != ''">
+                PushStaffName,
+            </if>
+            <if test="status != null and status !=''">
+                Status,
+            </if>
+            <if test="readDate!=null  and readDate!=''">
+                ReadDate,
+            </if>
+        </trim>
+        )
+        values (
+        <trim suffixOverrides=",">
+            <if test="filePropagationID != null and filePropagationID != ''">
+                #{filePropagationID},
+            </if>
+            <if test="pushCompanyCode != null and pushCompanyCode != ''">
+                #{pushCompanyCode},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                #{companyName},
+            </if>
+            <if test="pushCompanyName != null and pushCompanyName != ''">
+                #{pushCompanyName},
+            </if>
+            <if test="pushStaffId != null and pushStaffId != ''">
+                #{pushStaffId},
+            </if>
+            <if test="pushStaffName != null and pushStaffName != ''">
+                #{pushStaffName},
+            </if>
+            <if test="status != null and status !=''">
+                '未读'
+            </if>
+            <if test="readDate!=null  and readDate!=''">
+                #{readDate},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updateFilePropagationStatus">
+        update file_propagationplandetail
+        set Status='已读'
+        where File_PropagationPlanDetailID=#{filePropagationPlanDetailID}
+        and PushStaffId=#{staffId}
+    </update>
+</mapper>

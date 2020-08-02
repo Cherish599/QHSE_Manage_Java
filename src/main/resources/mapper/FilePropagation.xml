@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.FilePropagationDao">
+    <insert id="insertNewFilePropagationPlan" parameterType="com.wlhse.entity.FilePropagationPOJO">
+        insert into
+        file_propagationplan
+        (
+        <trim suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">
+                FileName,
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                CompanyCode,
+            </if>
+            <if test="companyName != null and companyName != ''">
+                CompanyName,
+            </if>
+            <if test="propagationDate != null and propagationDate != ''">
+                PropagationDate,
+            </if>
+            <if test="description != null and description != ''">
+                Description,
+            </if>
+            <if test="staffId != null and staffId != ''">
+                StaffId,
+            </if>
+            <if test="staffName != null and staffName !=''">
+                StaffName,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">
+                #{fileName},
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                #{companyCode},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                #{companyName},
+            </if>
+            <if test="propagationDate != null and propagationDate != ''">
+                #{propagationDate},
+            </if>
+            <if test="description != null and description != ''">
+                #{description},
+            </if>
+            <if test="staffId != null and staffId != ''">
+                #{staffId},
+            </if>
+            <if test="staffName != null and staffName !=''">
+                #{staffName},
+            </if>
+        </trim>
+        )
+    </insert>
+
+</mapper>

@@ -475,7 +475,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             String companyCode = yearElementsDto.getCompanyCode();
             String companyName = yearElementsDto.getCompanyName();
             String year = yearElementsDto.getYear();
-      /*      Integer len = qhseManageSysElementsDao.findMaxLen();*/
+            Integer len = qhseManageSysElementsDao.findMaxLen();
             //TODO Refactor add new element logic
             //get the table's elements status and code
             Map<String, String> elementCodeAndConfigStatusMap = getElementCodeAndConfigStatusMap(tableId);
@@ -492,6 +492,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             //the following algorithm is very inefficient.
             //please do some optimization.
             //commit  by Coco 2020-7-30 11:34 PM
+            if (elementCodeAndConfigStatusMap.size()!=0){
             for (Map.Entry<String, String> entry : elementCodeAndConfigStatusMap.entrySet()) {
                 //find elements that have been stopped
                 if (entry.getValue() == "停用") {
@@ -501,12 +502,14 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 if(entry.getValue()=="启用"){
                     openedMap.put(entry.getKey(), entry.getValue());
                 }
-            }
+            }}
             //find elements need to stop
+            if (openedMap.size()!=0){
             for (Map.Entry<String,String> entry:openedMap.entrySet()){
                 if (elementsFromClients.containsKey(entry.getKey())==false){
                     elementNeedToStop.put(entry.getKey(),"停用");
                 }
+            }
             }
             //find elements need to reopen and add
             for (Map.Entry<String,String> entry : elementsFromClients.entrySet()){
@@ -527,43 +530,27 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             System.out.println("启用的element:"+openedMap);
             System.out.println("新增的element:"+needToAddElement);
             System.out.println("需要重启的element:"+needToReopenElement);
-/*            List<YearElementsDto> yearElementsDtos = qhseManageSysElementsDao.queryByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
-            if(yearElementsDtos.size()>0) {//删除
-                qhseManageSysElementsDao.deleteByTableID(yearElementsDto.getQhseCompanyYearManagerSysElementTableID());
-            }
-            for (String code : codes) {
-                List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code);
-                for (int i = 0; i < temp.size(); i++) {
-                    if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
-                        temp.get(i).setStatus("未提供");
-                        temp.get(i).setFileCheckStatus("未审核");
-                    }
-                    temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
-                    temp.get(i).setCompanyCode(companyCode);
-                    temp.get(i).setCompanyName(companyName);
-                    temp.get(i).setYear(year);
-                    list.add(temp.get(i));
-                }
-            }*/
+            int size = needToAddElement.size();
             int result = 0;
-            //add new element
-            if(needToAddElement.size()!=0) {
-                List<YearElementsDto> yearElementsDtoList=new ArrayList<>();
-                for (Map.Entry<String,String> entry:needToAddElement.entrySet()){
-                    YearElementsDto yearElementsDto1 = qhseManageSysElementsDao.queryElementByCode(entry.getKey());
-                    yearElementsDto1.setQhseCompanyYearManagerSysElementTableID(tableId);
-                    yearElementsDto1.setCompanyCode(companyCode);
-                    yearElementsDto1.setCompanyName(companyName);
-                    yearElementsDto1.setYear(year);
-                  /*  if (len.equals(entry.getKey().length())) {*/
-                        yearElementsDto1.setStatus("未提供");
-                        yearElementsDto1.setFileCheckStatus("未审核");
-             /*       }*/
-                    yearElementsDtoList.add(yearElementsDto1);
+            if (size!=0) {
+                for (Map.Entry<String, String> code : needToAddElement.entrySet()) {
+                    List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code.getKey());
+                    for (int i = 0; i < temp.size(); i++) {
+                        if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
+                            temp.get(i).setStatus("未提供");
+                            temp.get(i).setFileCheckStatus("未审核");
+                        }
+                        temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
+                        temp.get(i).setCompanyCode(companyCode);
+                        temp.get(i).setCompanyName(companyName);
+                        temp.get(i).setYear(year);
+                        temp.get(i).setConfigStatus("启用");
+                        list.add(temp.get(i));
+                    }
                 }
-                for (int i = 0; i < yearElementsDtoList.size(); i++) {
-                    result = qhseManageSysElementsDao.addYearElement(yearElementsDtoList.get(i));
-                    if (result <= 0) break;
+                //add new element
+                for (YearElementsDto yearElementsDto1:list){
+                    qhseManageSysElementsDao.addYearElement(yearElementsDto1);
                 }
             }
             //update Manager Sys Element's configStatus

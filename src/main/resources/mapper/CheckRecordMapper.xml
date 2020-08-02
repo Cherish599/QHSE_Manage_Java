@@ -173,5 +173,14 @@
         </if>
         </where>
     </select>
-
+    <select id="getCheckRecord" resultType="com.wlhse.dto.CheckRecordDto">
+        select * from
+        checkrecord
+        where CompanyCode=#{companyCode}
+        and CompanyName=#{companyName}
+        and Name=#{name}
+        and Code=#{checkListCode}
+        and CheckType=#{checkType}
+        and CheckDate=#{checkDate}
+    </select>
 </mapper>

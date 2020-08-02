@@ -1,8 +1,8 @@
 package com.wlhse.dao;
 
-import com.wlhse.dto.CheckListDto;
 import com.wlhse.dto.CheckRecordDto;
 import com.wlhse.dto.CheckRecordTreeDto;
+import com.wlhse.dto.inDto.CheckRecordPOJO;
 import com.wlhse.entity.CheckConditionPOJO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -25,4 +25,7 @@ public interface CheckRecordDao {
     int updateCheckRecord(CheckRecordDto checkRecordDto);
 
     int deleteCheckRecord(int id);
+
+    CheckRecordDto getCheckRecord( CheckRecordPOJO checkRecordPOJO);
+
 }

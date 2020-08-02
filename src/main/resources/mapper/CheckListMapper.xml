@@ -82,7 +82,7 @@
     </select>
 
     <select id="getMaxLen" resultType="int">
-        select MAX(checkListCode) from CheckList
+        select MAX(LENGTH (checkListCode)) from CheckList
     </select>
 
     <select id="getCheckListOne" resultType="com.wlhse.dto.CheckListDto">
