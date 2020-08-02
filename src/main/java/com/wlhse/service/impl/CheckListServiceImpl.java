@@ -136,7 +136,7 @@ public class CheckListServiceImpl implements CheckListService {
                 throw new WLHSException("停用失败");
         }else if ("停用".equals(checkListDto.getStatus()))//设为启用
         {
-            List<String> list = getParentBycode(code);
+            List<String> list = getParentByCode(code);
             int j=1;
             for (int i = 0; i < list.size(); i++) {
                 j*=checkListDao.updateStatus("启用", list.get(i));//所有父节点设为启用；
@@ -149,7 +149,7 @@ public class CheckListServiceImpl implements CheckListService {
         }
         return R.ok();
     }
-    public List<String> getParentBycode(String code) //获得所有父节点，不包括本人
+    public List<String> getParentByCode(String code) //获得所有父节点，不包括本人
     {
         List<String> list = new ArrayList<String>();
         int len = code.length();
