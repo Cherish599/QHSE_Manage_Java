@@ -111,7 +111,6 @@ public class ElementReviewServiceImpl implements ElementReviewService {
             String[] urs = returnPojo.getAttach().split(";");
             String strs = "";
             for (String str:urs) {
-                System.out.println(str);
                 strs+=url+str+";";
             }
             returnPojo.setAttach(strs);

@@ -29,6 +29,9 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Resource
     QhseElementsInputDao qhseElementsInputDao;
 
+    @Value("${RESOURCES_QHSE_ElementInput_Evidence_URL}")
+    private String url;
+
 
     @Override
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
@@ -47,6 +50,12 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     public R queryAll(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
         ElementEvidenceAttachInDto elementEvidenceAttachInDtos=qhseElementsInputDao.query(elementEvidenceAttachInDto);
+        String[] attachs=elementEvidenceAttachInDtos.getAttach().split(";");
+        String strs="";
+        for (String str:attachs) {
+            strs+=url+str+";";
+        }
+        elementEvidenceAttachInDtos.setAttach(strs);
         R ok = R.ok();
         ok.put("data",elementEvidenceAttachInDtos);
         return ok;
