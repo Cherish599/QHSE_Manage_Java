@@ -16,25 +16,25 @@ public class CheckListController {
 
     @Resource
     private CheckListService checkListService;
-
-    @RequestMapping(value = "/check_list_tree", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R getCheckListParentAndSon() {
-        return checkListService.getTreeDto();
+    //查询
+    @RequestMapping(value = "/check_list_tree/{tag}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getCheckListParentAndSon(@PathVariable("tag") int tag) {
+        return checkListService.getTreeDto(tag);
     }
-
-    @RequestMapping(value = "/check_list", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    //添加
+    @RequestMapping(value = "/addCheckListNode", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addCheckListNode(@RequestBody(required = false)CheckListAddDto checkListAddDto) {
         return checkListService.addCheckListNode(checkListAddDto);
     }
 
     //改检查情况，改一级节点下的所有节点
-    @RequestMapping(value = "/check_list/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R updateCheckList(@PathVariable int id,@RequestBody(required = false)CheckListAddDto checkListAddDto) {
+    @RequestMapping(value = "/updateCheckList/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R updateCheckList(@PathVariable("id") int id,@RequestBody(required = false)CheckListAddDto checkListAddDto) {
         return checkListService.updateCheckList(id,checkListAddDto);
     }
-
-    @RequestMapping(value = "/check_list/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
-    public R deleteCheckList(@PathVariable int id) {
+    //更改状态
+    @RequestMapping(value = "/deleteCheckList/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
+    public R deleteCheckList(@PathVariable("id") int id) {
         return checkListService.deleteCheckList(id);
     }
 

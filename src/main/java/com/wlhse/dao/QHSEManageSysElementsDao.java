@@ -68,6 +68,8 @@ public interface QHSEManageSysElementsDao {
     Integer deleteDescriptionById(@Param("id") Integer id);
     //更新
     Integer updateDescriptionById(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto);
+    //查询所有问题描述，导入Excel
+    List<QHSEproblemDiscriptionDto> querryAllDescription();
 
 
 

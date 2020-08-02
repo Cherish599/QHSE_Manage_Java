@@ -13,9 +13,10 @@ public interface CheckListDao {
     Integer addCheckList(CheckListDto checkListDto);
 
     String checkListIsExist(CheckListDto checkListDto);
-
-    //查询所有
+    //只查启用
     List<CheckListDto> getTreeDto();
+    //查启用和停用
+    List<CheckListDto> getAllTreeDto();
 
     //查询节点最大长度
     int getMaxLen();
@@ -42,5 +43,8 @@ public interface CheckListDao {
     List<CheckListDto> getCurrentAllChild(@Param("code") String code);
 
     int updateCheckList(CheckListDto checkListDto);
+
+    //更改状态
+    int updateStatus(@Param("status") String status,@Param("code")String code);
 
 }

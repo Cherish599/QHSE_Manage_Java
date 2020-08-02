@@ -81,6 +81,10 @@
         where status="启用"
     </select>
 
+    <select id="getAllTreeDto" resultType="com.wlhse.dto.CheckListDto">
+        select * from CheckList
+    </select>
+
     <select id="getMaxLen" resultType="int">
         select MAX(LENGTH (checkListCode)) from CheckList
     </select>
@@ -96,7 +100,7 @@
         and status='启用'
     </select>
 
-    <update id="updateIsChild" parameterType="integer">
+    <update id="updateIsChild">
         update CheckList
         <set>
             IsChildNode=#{status}
@@ -142,6 +146,14 @@
             </if>
         </set>
         where CheckListID=#{checkListID}
+    </update>
+
+    <update id="updateStatus" >
+        update CheckList
+        <set>
+            Status=#{status}
+        </set>
+        where CheckListCode=#{code}
     </update>
 
 </mapper>
