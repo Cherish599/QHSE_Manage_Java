@@ -508,6 +508,10 @@
         select QHSE_ManagerSysElementProblemDescription_ID,Code,Description from qhse_managersyselementproblemdescription where Code=#{code}
     </select>
 
+    <select id="querryAllDescription" resultType="com.wlhse.dto.QHSEproblemDiscriptionDto">
+        select QHSE_ManagerSysElementProblemDescription_ID,Code,Description from qhse_managersyselementproblemdescription order by Code
+    </select>
+
     <delete id="deleteDescriptionById">
         delete from qhse_managersyselementproblemdescription
         where QHSE_ManagerSysElementProblemDescription_ID=#{id}
