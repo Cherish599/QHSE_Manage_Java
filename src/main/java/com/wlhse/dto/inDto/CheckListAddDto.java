@@ -2,9 +2,9 @@ package com.wlhse.dto.inDto;
 
 public class CheckListAddDto {
     private String checkListName;//新增节点name
-    private String parentName;//父节点name
-    private String checkListCode;//父节点code
-    private String attribute;//新增节点属性
+    private String parentName;//父节点name,
+    private String checkListCode;//就是本级code
+    private String attribute;//新增节点属性，想增加的那级的名称头
     private String status;
 
     public String getCheckListName() {

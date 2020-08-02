@@ -5,8 +5,7 @@ import com.wlhse.dto.inDto.CheckListAddDto;
 import com.wlhse.util.R;
 
 public interface CheckListService {
-
-    R getTreeDto();
+    R getTreeDto(int tag);
 
     R addCheckListNode(CheckListAddDto checkListAddDto);
 
