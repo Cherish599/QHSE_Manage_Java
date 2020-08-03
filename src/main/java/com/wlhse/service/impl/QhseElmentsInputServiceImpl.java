@@ -50,12 +50,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     public R queryAll(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
         ElementEvidenceAttachInDto elementEvidenceAttachInDtos=qhseElementsInputDao.query(elementEvidenceAttachInDto);
-        String[] attachs=elementEvidenceAttachInDtos.getAttach().split(";");
-        String strs="";
-        for (String str:attachs) {
-            strs+=url+str+";";
-        }
-        elementEvidenceAttachInDtos.setAttach(strs);
+       if(elementEvidenceAttachInDtos!=null) elementEvidenceAttachInDtos.setUrl(url);
         R ok = R.ok();
         ok.put("data",elementEvidenceAttachInDtos);
         return ok;
