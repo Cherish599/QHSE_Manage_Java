@@ -14,7 +14,7 @@ public class SortCodeUtil {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
         numberFormat.setMinimumIntegerDigits(strCode.length());
         numberFormat.setGroupingUsed(false);
-        return numberFormat.format(Integer.parseInt(strCode) + 1);
+        return numberFormat.format(Long.valueOf(strCode) + 1);
     }
 
     public String getNoNumberString(String servletPath) {

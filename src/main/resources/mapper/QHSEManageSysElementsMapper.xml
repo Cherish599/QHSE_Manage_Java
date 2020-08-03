@@ -551,4 +551,10 @@
         where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
         and Code=#{code}
     </update>
+
+    <select id="getElementById" resultType="com.wlhse.entity.QhseElementsPojo">
+        select * from qhse_managersyselement
+        where QHSE_ManagerSysElement_ID=#{id}
+    </select>
 </mapper>
+

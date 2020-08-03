@@ -50,9 +50,9 @@ public class QHSEManageSysElementsController {
     }
 
     //th---跟新状态
-    @RequestMapping(value = "/updateQHSEElementStatus", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
-    public R updateQHSEElementStatus(@RequestBody(required = false) QhseElementsPojo qhseManageSysElements){
-        return qhseManageSysElementsService.updateElementStatus(qhseManageSysElements);
+    @RequestMapping(value = "/updateQHSEElementStatus/{id}", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
+    public R updateQHSEElementStatus(@PathVariable("id") int id){
+        return qhseManageSysElementsService.updateElementStatus(id);
     }
     //---更新内容
     @RequestMapping(value = "/updateQHSEElement", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})

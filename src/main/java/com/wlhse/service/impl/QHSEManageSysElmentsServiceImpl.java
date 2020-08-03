@@ -11,6 +11,7 @@ import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QHSEManageSysElementsService;
 import com.wlhse.util.R;
+import com.wlhse.util.SortCodeUtil;
 import com.wlhse.util.TreeUtil;
 import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,13 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     QHSEManageSysElementsDao qhseManageSysElementsDao;
 
     @Resource
+    private SortCodeUtil sortCodeUtil;
+
+    @Resource
     private TreeUtil treeUtil;
     private String code;
+    private final int QHSEMSETREE_MAX_HEIGHT=5;//定义树的最大层数
+    private final int QHSEMSETREE_CODE_BITS=3;//定义树的每级编码位数
 
     @Override
     public String querryAllRules(Integer status) {
@@ -260,7 +266,10 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return ok;
     }
 
-    //th---根据是否启用查询节点
+    /**
+     * 该方法用于根据节点是否启用获得审核要素的查询树，
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R queryAllElements(Integer tag) {
         if (tag == 0) //查启用
@@ -279,7 +288,10 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
-    //用于导出excel的查询；
+    /**
+     * 该方法用于获得审核要素的查询树，并包含的问题描述字段，用于导出excel
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R queryAllElementsForExcel() {
         R ok = R.ok();
@@ -287,22 +299,30 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return ok;
     }
 
-    //th---跟新状态
-    //TODO 最大层数，编码位数
+    /**
+     * 该方法用于审核要素的状态切换
+     * @param id 该参数为int型，表示欲改变status的节点的ID
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
-    public R updateElementStatus(QhseElementsPojo rule) {
-        String code = rule.getCode();
+    public R updateElementStatus(int id) {
+        /*
+        思想：根据id查询其节点，如果是停用，就改为启用，上面父节点全部设启用，如果是叶子，还要改变所有父节点分数；
+        如果是启用，就改为停用，下面孩子全部停用，上面所有父节点也要改变分数和节点数；
+         */
+        QhseElementsPojo qhseElementsPojo=qhseManageSysElementsDao.getElementById(id);//根据id得到节点
+        String code = qhseElementsPojo.getCode();//获得相关属性
         Integer len = code.length();
-        String status = rule.getStatus();
-        List<String> list = getParent(code);
-        if (status.equals("停用")) {
-            setOff("停用", code);
-            if (len == 15) {//是叶子节点
+        String status = qhseElementsPojo.getStatus();
+        List<String> list = getParent(code);//得到所有的父节点
+        if (status.equals("启用")) {//如果原来状态是启用，就停用；
+            setOff("停用", code);//本人及其孩子改成停用
+            if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) {//如果是叶子节点，修改上面父节点的分数和节点数；
                 int score = getScore(code);
                 for (int i = 0; i < list.size(); i++) {
                     updateScoreCount(list.get(i), score, 1);
                 }
-            } else {//不是叶子节点
+            } else {//不是叶子节点，先统计本节点的总分，和叶节点数；
                 Integer score = sumScore(code); //score: null
                 Integer count = sumCount(code);//count: 0
                 toZero(code);//将当前项和子项的分数和项数都归零
@@ -310,12 +330,12 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     updateScoreCount(list.get(i), score, count);
                 }
             }
-        } else if (status.equals("启用")) {
-            for (int i = 0; i < list.size(); i++) {
+        } else if (status.equals("停用")) {//如果原来状态是启停用，就启用；
+            for (int i = 0; i < list.size(); i++) {//父节点全设为启用
                 setOn("启用", list.get(i));
             }
-            setOn("启用", code);
-            if (len == 15) {
+            setOn("启用", code);//本节点设为启用
+            if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) {//如果是叶子节点，更新所有父节点的分数，cout;
                 int score = getScore(code);
                 addScoreCount(list, score);
             }
@@ -324,26 +344,31 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
-    //th---更新内容
-    //TODO 最大层数，编码位数
+    /**
+     * 该方法用于审核要素的跟新编辑
+     * @param qhseManageSysElement 该参数为一个QhseElementsPojo对象，为欲编辑的节点；
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R updateElementcontent(QhseElementsPojo qhseManageSysElement) {
+         /*
+        思想：不是叶子节点，直接更新。是叶子节点，如果分数变化，还要更新上面所有父节点的分数；
+         */
         String code = qhseManageSysElement.getCode();
         Integer len = code.length();
         String status = qhseManageSysElementsDao.querryStatus(code);
         if ("启用".equals(status)) {
-            if (len == 15) //如果是叶子节点
-                {
+            if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) { //如果是叶子节点，还要更新所有父节点的分数
                 Integer score = qhseManageSysElementsDao.querryScore(code);
-                Integer newScore = qhseManageSysElement.getInitialScore() - score;
-                if (newScore != 0) {
+                Integer newScore = qhseManageSysElement.getInitialScore() - score;//获得新编辑的分数与原来的分数差
+                if (newScore != 0) {//获得所有父节点
                     List<String> parentCode = new ArrayList<String>();
-                    while (len > 3) {//所有父节点
-                        len -= 3;
+                    while (len > QHSEMSETREE_CODE_BITS) {
+                        len -= QHSEMSETREE_CODE_BITS;
                         String str = code.substring(0, len);
                         parentCode.add(str);
                     }
-                    for (int i = 0; i < parentCode.size(); i++) {
+                    for (int i = 0; i < parentCode.size(); i++) {//所有父节点加上这个分数差
                         String pcode = parentCode.get(i);
                         if (qhseManageSysElementsDao.addInitialScore(pcode, newScore) <= 0)
                             throw new WLHSException("更新失败");
@@ -351,78 +376,68 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 }
             }
         }
-        if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)
+        if (qhseManageSysElementsDao.updateElement(qhseManageSysElement) <= 0)//更新本节点的内容
             throw new WLHSException("更新失败");
         return R.ok();
 
     }
 
-    //th---添加节点内容
+
+    /**
+     * 该方法用于审核要素的新增
+     * @param qhseManageSysElement 该参数为一个QhseElementsPojo对象，为欲新增节点的父节点；
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R addElement(QhseElementsPojo qhseManageSysElement) {
+        /*
+        思想：先根据父节点在数据库里找到父节点下的子节点的最大编码，然后加1，生成新增节点编码。
+        然后又根据第一级节点，中间节点，叶子节点的不同情况，分别设置属性，其中叶子节点还要更新所有父节点的分数，节点数。最后插入添加的节点。
+         */
         String parentCode = qhseManageSysElement.getCode();//传入的code都是插入的这一级的父节点编码
         try {
             if (parentCode == null || "".equals(parentCode)) //如果是插入的第一级，父节点就是空字符
             {
                 String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2("");//获得当前插入这一级的最大编码
-                Integer maxNum = Integer.parseInt(maxCode);//编码转成数字
-                Integer num = maxNum + 1;                 //加一
-                String numCode = Integer.toString(num);//数字转成编码
-                if (num < 10)                                     //-------数字换成编码，由于编码是三位，可能需要补0；
-                    qhseManageSysElement.setCode("00" + numCode);
-                else if (num < 100)
-                    qhseManageSysElement.setCode("0" + numCode);
-                else
-                    qhseManageSysElement.setCode(numCode);
+                String newcode;
+                if(maxCode == null ||"".equals(maxCode)){//如果第一级还没有节点；
+                    newcode="001";
+                }else{//有节点，最大节点加一；
+                    newcode=sortCodeUtil.getMaxCodeString(maxCode);
+                }
+                qhseManageSysElement.setCode(newcode);
                 qhseManageSysElement.setTotalCount(0);//设置叶子总是
                 qhseManageSysElement.setInitialScore(0);//设置分数
-            } else {                                          //如果插入是非第一级和最后一级
+            } else {
                 Integer len = parentCode.length();
-                if (len < 12) {
+                if (len < (QHSEMSETREE_MAX_HEIGHT-1)*QHSEMSETREE_CODE_BITS) {    //如果插入是非第一级和最后一级,len<12
                     qhseManageSysElement.setTotalCount(0);
                     qhseManageSysElement.setInitialScore(0);
                     String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode); //查找插入那级最大编码
+                    System.out.println(maxCode);
                     if (maxCode == null || "".equals(maxCode))//如果还没节点，直接生成
                         qhseManageSysElement.setCode(parentCode + "001");
-                    else {                                      //否则最大编码加1
-                        String lastTwoCode = maxCode.substring(maxCode.length() - 3, maxCode.length());
-                        Integer lastTwoNum = Integer.parseInt(lastTwoCode);
-                        Integer num = lastTwoNum + 1;
-                        String numCode = Integer.toString(num);
-                        if (num < 10)
-                            qhseManageSysElement.setCode(parentCode + "00" + numCode);
-                        else if (num < 100)
-                            qhseManageSysElement.setCode(parentCode + "0" + numCode);
-                        else
-                            qhseManageSysElement.setCode(parentCode + numCode);
+                    else {//否则最大编码加1
+                        qhseManageSysElement.setCode(sortCodeUtil.getMaxCodeString(maxCode));
                     }
-                } else if (len == 12) {  //插入是叶子节点
+                } else if (len == (QHSEMSETREE_MAX_HEIGHT-1)*QHSEMSETREE_CODE_BITS) {  //插入是叶子节点,len==12
                     qhseManageSysElement.setTotalCount(1);
-                    String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);
+                    String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);//查找插入那级最大编码
                     if (maxCode == null || "".equals(maxCode))
                         qhseManageSysElement.setCode(parentCode + "001");
                     else {
-                        String lastTwoCode = maxCode.substring(maxCode.length() - 3, maxCode.length());
-                        Integer lastTwoNum = Integer.parseInt(lastTwoCode);
-                        Integer num = lastTwoNum + 1;
-                        String numCode = Integer.toString(num);
-                        if (num < 10)
-                            qhseManageSysElement.setCode(parentCode + "00" + numCode);
-                        else if (num < 100)
-                            qhseManageSysElement.setCode(parentCode + "0" + numCode);
-                        else
-                            qhseManageSysElement.setCode(parentCode + numCode);
+                        qhseManageSysElement.setCode(sortCodeUtil.getMaxCodeString(maxCode));
                     }
-
-                    Integer len1 = len;              //修改叶子节点所有的父节点的分数和节点数
+                    //如果是插入叶子节点还要修改父节的分数，cout;
+                    Integer len1 = len;
                     Integer initialScore = qhseManageSysElement.getInitialScore();
-                    List<String> pCode = new ArrayList<String>();
-                    while (len1 > 0) {//获得所有父节点
+                    List<String> pCode = new ArrayList<String>();//获得所有父节点
+                    while (len1 > 0) {
                         String str = parentCode.substring(0, len1);
                         pCode.add(str);
-                        len1 -= 3;
+                        len1 -= QHSEMSETREE_CODE_BITS;
                     }
-                    for (int i = 0; i < pCode.size(); i++) {
+                    for (int i = 0; i < pCode.size(); i++) {//修改叶子节点所有的父节点的分数和节点数
                         String code = pCode.get(i);
                         if (qhseManageSysElementsDao.addTotalCount(code, 1) <= 0)
                             throw new WLHSException("更新失败");
@@ -431,6 +446,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     }
                 }
             }
+            //最后添加叶子节点
             if (qhseManageSysElementsDao.addQHSEElement(qhseManageSysElement) <= 0)
                 throw new WLHSException("新增失败");
             return R.ok();
@@ -441,6 +457,11 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     }
 
+    /**
+     * 该方法用于根据审核要素查询其所有的问题描述
+     * @param code 审核要素管理节点的code
+     * @return 返回问题描述的树
+     */
     @Override
     public R querryQhseProblemDiscription(String code) {
         R ok = R.ok();
@@ -448,7 +469,12 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return ok;
 
     }
-    //根据ID删除对应的问题描述
+
+    /**
+     * 该方法用于问题描述的删除
+     * @param id 问题描述的id
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R deleteQhseProblemDiscription(Integer id) {
         if(qhseManageSysElementsDao.deleteDescriptionById(id)<=0)
@@ -456,6 +482,11 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return R.ok();
     }
 
+    /**
+     * 该方法用于更新问题描述
+     * @param qHSEproblemDiscriptionDto 问题描述的一个对象
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R updateQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto) {
         if(qhseManageSysElementsDao.updateDescriptionById(qHSEproblemDiscriptionDto)<=0)
@@ -463,6 +494,11 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return R.ok();
     }
 
+    /**
+     * 该方法用于增加问题描述
+     * @param qHSEproblemDiscriptionDto 问题描述的一个对象
+     * @return 返回新增操作成功，失败的消息，为json对象
+     */
     @Override
     public R addQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto) {
         String code=qHSEproblemDiscriptionDto.getCode();

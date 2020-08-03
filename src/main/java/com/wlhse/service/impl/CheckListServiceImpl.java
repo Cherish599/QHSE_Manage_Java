@@ -123,8 +123,8 @@ public class CheckListServiceImpl implements CheckListService {
             String parentCode=code.substring(0,code.length()-4);
             //获取父节点下面同一级的所有子节点
             List<String>  listDtos= checkListDao.getCurrentChildNodes(parentCode);
-            System.out.println(parentCode);
-            System.out.println(listDtos);
+            //System.out.println(parentCode);
+           // System.out.println(listDtos);
             int i=1;
             if (listDtos.size()-1==0){
                 //更新父节点isChild字段
@@ -136,14 +136,14 @@ public class CheckListServiceImpl implements CheckListService {
                 throw new WLHSException("停用失败");
         }else if ("停用".equals(checkListDto.getStatus()))//设为启用
         {
-            List<String> list = getParentByCode(code);
+            List<String> list = getParentByCode(code);//获得所有的父节点；
             int j=1;
             for (int i = 0; i < list.size(); i++) {
                 j*=checkListDao.updateStatus("启用", list.get(i));//所有父节点设为启用；
                 j*=checkListDao.updateIsChild(list.get(i),"false");//所有父节点设为不是叶子节点；
             }
-            j*=checkListDao.updateStatus("启用",code );
-            j*=checkListDao.updateIsChild(code,"true");
+            j*=checkListDao.updateStatus("启用",code );//当前节点设为启用
+            j*=checkListDao.updateIsChild(code,"true");//当前节点设为叶子节点
             if(j<=0)
                 throw new WLHSException("启用失败");
         }

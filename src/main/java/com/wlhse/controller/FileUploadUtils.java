@@ -105,7 +105,7 @@ public class FileUploadUtils {
         }
     }
 
-    //仅用于项目运行本地时，checklist数据填充
+    //checklistEXCEL上传
     @RequestMapping(value = "/check_list_excel_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String uploadCheckList(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
