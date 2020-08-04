@@ -62,42 +62,75 @@ public class UploadServiceImpl implements UploadService {
         return getBeanListByExcel.getReportsBeanList(workbook, strArray, ExcelUploadReportDto.class);
     }
 
-//用于数据库新增checkList数据
+    /**
+     * 该方法用于数据库新增checkList数据
+     * @param path 传入文件的路径
+     * @return 返回操作成功，失败，重复编码，excel为空等消息
+     * @throws Exception
+     */
     @Override
     public String uploadCheckList(String path) throws Exception {
         //String[] strArray = {"checkListCode","checkListName","attribute","parentName","isChildNode","status", "checkContent"};
         Workbook workbook = poiUtil.createWorkbook(path);
-        Sheet sheet = workbook.getSheetAt(2);//获取指定表可以改成自动获取
+        Sheet sheet = workbook.getSheetAt(0);//获取指定表可以改成自动获取
         //获取EXCEL中CheckList的值
-        CheckListDto checkListDto=new CheckListDto();
-        HashMap<String, String> checkListValueMap = new HashMap<>();
+        List<CheckListDto> beanList = new ArrayList<>();
         DataFormatter dataFormat=new DataFormatter();
-        System.out.println(sheet.getPhysicalNumberOfRows());
-        for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {
+       // System.out.println(sheet.getPhysicalNumberOfRows());
+        for (int j = 2; j < sheet.getPhysicalNumberOfRows(); j++) {//从第三行读
+            HashMap<String, String> checkListValueMap = new HashMap<>();
             Row row = sheet.getRow(j);//按行取
             checkListValueMap.put("checkListCode",dataFormat.formatCellValue(row.getCell(0)));
+            System.out.println(dataFormat.formatCellValue(row.getCell(0)));
             checkListValueMap.put("checkListName",dataFormat.formatCellValue(row.getCell(1)));
             checkListValueMap.put("attribute",dataFormat.formatCellValue(row.getCell(2)));
             checkListValueMap.put("parentName",dataFormat.formatCellValue(row.getCell(3)));
             checkListValueMap.put("isChildNode",dataFormat.formatCellValue(row.getCell(4)));
             checkListValueMap.put("status",dataFormat.formatCellValue(row.getCell(5)));
-            checkListValueMap.put("checkContent",dataFormat.formatCellValue(row.getCell(6)));
             //使用BeanUtils将封装的属性注入对象
+            CheckListDto checkListDto=new CheckListDto();
             BeanUtils.populate(checkListDto, checkListValueMap);
-            String id=checkListDao.checkListIsExist(checkListDto);
-            if(id==null||"".equals(id)){//插入checklist
-                System.out.println("新加入");
-                checkListDao.addCheckList(checkListDto);
-            }else{
-                checkListDto.setCheckListID(Integer.valueOf(id));
+            beanList.add(checkListDto);
+        }
+        workbook.close();
+        if (beanList.size() > 0) {
+            String duplicCode=PoiMSElement.isDuplicelements2(beanList);//判断是否有重复编码
+            if (duplicCode== null) {
+                for(CheckListDto ele:beanList) {
+                    String ecode = checkListDao.querryCheckListCode(ele.getCheckListCode());
+                    if(ecode == null||"".equals(ecode)) {//--------不存在则插入
+                        if (checkListDao.addCheckList(ele) <= 0)
+                            throw new WLHSException("新增失败");
+                    }
+                    else{//-------编码存在则更新
+                        if (checkListDao.updateCheckListByCode(ele) <= 0)
+                            throw new WLHSException("更新失败");
+                    }
+                }
+                return NR.getPoiProblemReturn(CodeDict.SUCCESS, 0);//导入数据库成功
+            }
+            else {
+                return NR.getPoiReportsReturn(CodeDict.POI_ReportCodeDuplic_ERROR, duplicCode);//提示有重复编码
             }
         }
-        return null;
+        else {
+            return NR.getPoiProblemReturn(CodeDict.POI_PROBLEM_EMPTY_FIRST, 0);//list为空，读取excel失败；
+        }
     }
+    /**
+     * 该方法用于管理要素审核excel录入数据库
+     * @param path 传入文件的路径
+     * @return 返回操作成功，失败，重复编码，excel为空等消息
+     * @throws Exception
+     */
 
-    //管理要素审核excel录入数据库
     @Override
     public String uploadQHSEManageSysElements(String path) throws Exception {
+        /*
+        思想：创建excel工具类对象，使用该对象对表格进行读写，读写的顺序为一行一行从左往右，每读一行，即一条记录，一个对象；
+        然后把存放对象属性值的键值对MAP封装为对象，放进list中；
+        然后对数据进行校验，包括是否为空表，读取失败，有重复编码；都没问题再写入，根据code有则更新，无则添加；
+         */
         Workbook workbook = poiUtil.createWorkbook(path);
         //得到第一张表
         Sheet sheet = workbook.getSheetAt(0);
@@ -107,9 +140,9 @@ public class UploadServiceImpl implements UploadService {
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
         //获取EXCEL中的值
         DataFormatter dataFormat=new DataFormatter();
-        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+        for (int i = 2; i < sheet.getPhysicalNumberOfRows(); i++) {//类似二维数组的读取，外层为行，内层为列；从第3行开始读；
             HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
-            Row row = sheet.getRow(i);//按行读取
+            Row row = sheet.getRow(i);
             String rcode=new String();
             for(int j=0;j<titleRow.getLastCellNum();j++)
             {
@@ -121,7 +154,7 @@ public class UploadServiceImpl implements UploadService {
                 if("code".equals(key)) {
                     rcode = value;
                 }
-                if("problemDescription".equals(key)) {
+                if("problemDescription".equals(key)) {//对问题描述单独写入
                     if(value==null||"".equals(value))
                         continue;
                     else {
@@ -129,7 +162,7 @@ public class UploadServiceImpl implements UploadService {
                         continue;
                     }
                 }
-                QSHEMSElementValueMap.put(key, value);
+                QSHEMSElementValueMap.put(key, value);//把列名即属性名，和属性内容放入MAP里
             }
             /*QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
             QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));
@@ -144,7 +177,7 @@ public class UploadServiceImpl implements UploadService {
             //使用BeanUtils将封装的属性注入对象
             QSHEMSElementInDto qSHEMSElement=new QSHEMSElementInDto();
             BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
-            //放进进容器
+            //对象放进进容器
             beanList.add(qSHEMSElement);
         }
         workbook.close();
@@ -176,6 +209,12 @@ public class UploadServiceImpl implements UploadService {
             return NR.getPoiProblemReturn(CodeDict.POI_PROBLEM_EMPTY_FIRST, 0);//list为空，读取excel失败；
         }
     }
+
+    /**
+     * 该方法用于打断分割问题描述，并写入数据库；
+     * @param code 审核要素的code
+     * @param problemDescription 原始的问题描述字段
+     */
     public void insertProblemDescription(String code,String problemDescription)  {
         String[] description=problemDescription.split("([1-9][0-9]{0,1})");//用0-99的数字打断，中间为正则表达式
         qHSEManageSysElementsDao.deleteByCode(code);//先把该code的问题描述全部删除，再添加。

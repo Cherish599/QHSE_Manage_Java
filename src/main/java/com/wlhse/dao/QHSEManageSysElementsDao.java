@@ -46,6 +46,8 @@ public interface QHSEManageSysElementsDao {
     Integer updateScoreCount(@Param("code") String code,@Param("score") Integer score,@Param("count") Integer count);
     Integer toZero(@Param("code") String code);
     Integer addScoreCount(@Param("code") String code,@Param("score") Integer score);
+    //根据id查询节点
+    QhseElementsPojo getElementById(@Param("id")int id);
 
     //th----查询基本数据表，仅启用
     List<QhseElementsPojo> queryQhseElements();

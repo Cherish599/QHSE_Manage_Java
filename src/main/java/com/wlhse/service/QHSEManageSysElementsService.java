@@ -29,7 +29,7 @@ public interface QHSEManageSysElementsService {
     //用于导出excel的查询；
     R queryAllElementsForExcel();
     //th---更新状态
-    R updateElementStatus(QhseElementsPojo rule);
+    R updateElementStatus(int id);
     //th---更新内容
     R updateElementcontent(QhseElementsPojo qhseManageSysElement);
     //th---添加节点内容
