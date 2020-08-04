@@ -56,5 +56,13 @@
         </trim>
         )
     </insert>
-
+    <select id="getAllFilePropagation" resultType="com.wlhse.entity.FilePropagationPOJO">
+        select * from
+        file_propagationplan
+    </select>
+    <delete id="deletePropagationPlan">
+        delete from
+        file_propagationplan
+        where File_PropagationID=#{id}
+    </delete>
 </mapper>

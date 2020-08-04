@@ -6,16 +6,19 @@ import com.wlhse.dto.outDto.FilePropagationDetailDto;
 import com.wlhse.entity.FilePropagationPOJO;
 import com.wlhse.service.FilePropagationPlanService;
 import com.wlhse.util.R;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Description:provide services to implement method
  * Author:Coco
  * create:2020-08-03 12:06 AM
  **/
+@Service
 public class FilePropagationPlanServiceImp implements FilePropagationPlanService {
     @Resource
     FilePropagationDao filePropagationDao;
@@ -24,7 +27,7 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
 
     @Override
     @Transactional
-    public R releasNewFilePropagationPlan(FilePropagationPOJO filePropagationPOJO, HttpServletRequest request) {
+    public R releaseNewFilePropagationPlan(FilePropagationPOJO filePropagationPOJO, HttpServletRequest request) {
 
         //data that only used in api test.
         filePropagationPOJO.setStaffId(1);
@@ -33,16 +36,16 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
       /*  filePropagationPOJO.setStaffId();
         filePropagationPOJO.setStaffName();*/
         filePropagationDao.insertNewFilePropagationPlan(filePropagationPOJO);
-        FilePropagationDetailDto filePropagationDetailDto=new FilePropagationDetailDto();
+       /* FilePropagationDetailDto filePropagationDetailDto=new FilePropagationDetailDto();*/
         //TODO Are these attributes mean release department or receive department?
-        filePropagationDetailDto.setPushCompanyCode(filePropagationPOJO.getCompanyCode());
+/*        filePropagationDetailDto.setPushCompanyCode(filePropagationPOJO.getCompanyCode());
         filePropagationDetailDto.setPushCompanyName(filePropagationPOJO.getCompanyName());
 
-        filePropagationDetailDto.setFilePropagationID(filePropagationPOJO.getFilePropagationID());
+        filePropagationDetailDto.setFilePropagationID(filePropagationPOJO.getFilePropagationID());*/
         //data that only used in test.
-        filePropagationDetailDto.setPushStaffId(2);
-        filePropagationDetailDto.setPushStaffName("采臣");
-        filePropagationDetailDao.addNewDetail(filePropagationDetailDto);
+   /*     filePropagationDetailDto.setPushStaffId(2);
+        filePropagationDetailDto.setPushStaffName("采臣");*/
+       /* filePropagationDetailDao.addNewDetail(filePropagationDetailDto);*/
         return R.ok();
     }
 
@@ -63,4 +66,44 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
         filePropagationDetailDao.updateFilePropagationStatus(detailId,2);
         return R.ok();
     }
+
+    @Override
+    public R getAllFilePropagation() {
+        R r=new R();
+        r.put("data",filePropagationDao.getAllFilePropagation());
+        return r;
+    }
+
+    @Override
+    public R getFilePropagationDetailIdByPropagationId(int filePropagationId) {
+        R r=new R();
+        r.put("data",filePropagationDetailDao.queryAllPropagationDetailIdByFilePropagationId(filePropagationId));
+        return r;
+    }
+
+    @Override
+    @Transactional
+    public R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto) {
+        for (FilePropagationDetailDto filePropagationDetailDto1:filePropagationDetailDto){
+            //data that only used in test.
+            filePropagationDetailDto1.setPushStaffName("采臣");
+            filePropagationDetailDto1.setPushStaffId(2);
+            filePropagationDetailDao.addNewDetail(filePropagationDetailDto1);
+        }
+        return R.ok();
+    }
+
+    @Override
+    public R deleteFilePropagationPlan(int id) {
+        filePropagationDao.deletePropagationPlan(id);
+        return R.ok();
+    }
+
+    @Override
+    public R deleteFilePropagationPlanDetail(int id) {
+        filePropagationDetailDao.deleteFilePropagationPlanDetail(id);
+        return R.ok();
+    }
+
+
 }

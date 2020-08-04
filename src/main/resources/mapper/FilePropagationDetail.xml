@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wlhse.dao.FilePropagationDetailDao">
-    <select id="getFilePropagationByStaffId" resultType="com.wlhse.dto.outDto.FilePropagationDetailDto">
-        select File_PropagationPlanDetailID as filePropagationPlanDetailID,
-        File_PropagationID as filePropagationID,
-        PushCompanyCode as pushCompanyCode,
-        PushCompanyName as pushCompanyName,
-        PushStaffId as pushStaffId,
-        PushStaffName as pushStaffName,
-        Status as status,
-        ReadDate as readDate
-        from file_propagationplandetail
-        where PushStaffId=#{staffId}
+    <select id="getFilePropagationByStaffId" resultType="com.wlhse.dto.outDto.FilePropagationResultDto">
+        select t1.File_PropagationPlanDetailID as filePropagationPlanDetailID,
+        t2.FileName as fileName,
+        t1.Status as status,
+        t2.StaffName as staffName,
+        t2.Description as description,
+        t2.PropagationDate as propagationDate,
+        t1.ReadDate as readTime
+        from file_propagationplandetail t1,file_propagationplan t2
+        where t1.PushStaffId=#{staffId} and t1.File_PropagationID=t2.File_PropagationID
     </select>
     <insert id="addNewDetail">
         insert into file_propagationplandetail
@@ -79,4 +78,16 @@
         where File_PropagationPlanDetailID=#{filePropagationPlanDetailID}
         and PushStaffId=#{staffId}
     </update>
+
+    <select id="queryAllPropagationDetailIdByFilePropagationId" resultType="Integer">
+        select File_PropagationPlanDetailID
+        from file_propagationplandetail
+        where File_PropagationID=#{filePropagationId}
+    </select>
+
+    <delete id="deleteFilePropagationPlanDetail">
+        delete from
+        file_propagationplandetail
+        where File_PropagationPlanDetailID=#{detailId}
+    </delete>
 </mapper>
