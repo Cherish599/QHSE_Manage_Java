@@ -26,6 +26,8 @@ public class ElementEvidenceAttachInDto {
 
     private String approverStaffName;
 
+    private String url;//附件地址前缀
+
     @Override
     public String toString() {
         return "ElementEvidenceAttachInDto{" +
@@ -41,7 +43,16 @@ public class ElementEvidenceAttachInDto {
                 ", checkStaffName='" + checkStaffName + '\'' +
                 ", approverStaffID=" + approverStaffID +
                 ", approverStaffName='" + approverStaffName + '\'' +
+                ", url='" + url + '\'' +
                 '}';
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getId() {
