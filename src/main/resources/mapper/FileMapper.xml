@@ -108,4 +108,44 @@
         delete from file where FileID=#{id}
     </delete>
 
+    <insert id="insertFilePropagationFile">
+        insert into
+        file_propagationfileinfo
+        (
+        id,
+        <if test="propagationId!=null and propagationId!=''">
+            propagationId,
+        </if>
+            filePath,
+            originName
+        )
+        values
+        (
+            #{id},
+        <if test="propagationId!=null and propagationId!=''">
+            #{propagationId},
+        </if>
+            #{filePath},
+            #{originName}
+        )
+    </insert>
+
+    <update id="updateFilePropagationID">
+        update from
+        file_propagationfileinfo
+        set propagationId=#{id}
+        where filePath=#{filePath}
+    </update>
+
+    <select id="getFileInfoByPropagationId" resultType="com.wlhse.dto.inDto.FilePropagationFileInfo">
+        select * from
+        file_propagationfileinfo
+        where propagationId=#{id}
+    </select>
+
+    <select id="getFilePropagationOriginFileName" resultType="String">
+        select originName
+        from file_propagationfileinfo
+        where filePath=#{fileName}
+    </select>
 </mapper>

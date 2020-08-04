@@ -1,5 +1,6 @@
 package com.wlhse.controller;
 
+import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.service.UploadService;
 import com.wlhse.util.*;
 import com.wlhse.util.state_code.CodeDict;
@@ -164,6 +165,29 @@ public class FileUploadUtils {
             String fileName = setFile(file, "ManageSysElements\\");
             String path = System.getProperty("catalina.home") + "\\webapps\\ManageSysElements\\" + fileName;
             return uploadService.uploadQHSEManageSysElements(path);
+        }
+    }
+
+    //upload files for file propagation.
+    @RequestMapping(value = "/propagationFileUpload",method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String uploadFilesForPropagation(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()){
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        }
+        else {
+            FilePropagationFileInfo filePropagationFileInfo=new FilePropagationFileInfo();
+            filePropagationFileInfo.setOriginName(file.getOriginalFilename());
+            String fileName=setFile(file,"FilePropagation\\");
+            filePropagationFileInfo.setFilePath(fileName);
+            IdUtil idUtil=new IdUtil(2,5,3);
+            filePropagationFileInfo.setId(idUtil.getId());
+            boolean b = uploadService.insertFilePropagationFileRecord(filePropagationFileInfo);
+            if (b)
+                 return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            else
+                return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+
         }
     }
 }

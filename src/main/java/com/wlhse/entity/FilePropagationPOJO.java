@@ -6,7 +6,7 @@ package com.wlhse.entity;
  * create:2020-08-02 10:41 PM
  **/
 public class FilePropagationPOJO {
-    private int filePropagationID;
+    private Long filePropagationID;
     private String fileName;
     private String companyCode;
     private String companyName;
@@ -15,11 +15,11 @@ public class FilePropagationPOJO {
     private int staffId;
     private String staffName;
 
-    public int getFilePropagationID() {
+    public Long getFilePropagationID() {
         return filePropagationID;
     }
 
-    public void setFilePropagationID(int filePropagationID) {
+    public void setFilePropagationID(Long filePropagationID) {
         this.filePropagationID = filePropagationID;
     }
 
@@ -77,5 +77,19 @@ public class FilePropagationPOJO {
 
     public void setStaffName(String staffName) {
         this.staffName = staffName;
+    }
+
+    @Override
+    public String toString() {
+        return "FilePropagationPOJO{" +
+                "filePropagationID=" + filePropagationID +
+                ", fileName='" + fileName + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", propagationDate='" + propagationDate + '\'' +
+                ", description='" + description + '\'' +
+                ", staffId=" + staffId +
+                ", staffName='" + staffName + '\'' +
+                '}';
     }
 }

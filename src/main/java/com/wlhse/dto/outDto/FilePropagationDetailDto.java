@@ -7,7 +7,7 @@ package com.wlhse.dto.outDto;
  **/
 public class FilePropagationDetailDto {
    private int filePropagationPlanDetailID;
-   private int filePropagationID;
+   private Long filePropagationID;
    private String pushCompanyCode;
    private String pushCompanyName;
    private int pushStaffId;
@@ -23,11 +23,11 @@ public class FilePropagationDetailDto {
         this.filePropagationPlanDetailID = filePropagationPlanDetailID;
     }
 
-    public int getFilePropagationID() {
+    public Long getFilePropagationID() {
         return filePropagationID;
     }
 
-    public void setFilePropagationID(int filePropagationID) {
+    public void setFilePropagationID(Long filePropagationID) {
         this.filePropagationID = filePropagationID;
     }
 

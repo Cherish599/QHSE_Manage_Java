@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.inDto.FileInDto;
+import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.dto.outDto.CompanyOutDto;
 import com.wlhse.entity.CompanyPojo;
 import com.wlhse.entity.FilePojo;
@@ -24,4 +25,12 @@ public interface FileDao {
 
     int queryTotalByCondition(FileInDto fileInDto);
 
+    //insert file propagation file
+    int insertFilePropagationFile(FilePropagationFileInfo filePropagationFileInfo);
+
+    int updateFilePropagationID(String filePath,Long id);
+
+    List<FilePropagationFileInfo> getFileInfoByPropagationId(Long id);
+
+    String getFilePropagationOriginFileName(String fileName);
 }

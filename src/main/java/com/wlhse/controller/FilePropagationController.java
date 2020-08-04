@@ -2,6 +2,7 @@ package com.wlhse.controller;
 
 import com.wlhse.dto.outDto.FilePropagationDetailDto;
 import com.wlhse.entity.FilePropagationPOJO;
+import com.wlhse.entity.FilePropagationPOJO1;
 import com.wlhse.service.FilePropagationPlanService;
 import com.wlhse.service.impl.FilePropagationPlanServiceImp;
 import com.wlhse.util.R;
@@ -45,7 +46,7 @@ public class FilePropagationController {
     }
 
     @RequestMapping(value = "/insertPropagationPlan",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
-    R insertPropagationPlan(@RequestBody FilePropagationPOJO filePropagationPOJO,HttpServletRequest request){
+    R insertPropagationPlan(@RequestBody FilePropagationPOJO1 filePropagationPOJO, HttpServletRequest request){
         return filePropagationPlanService.releaseNewFilePropagationPlan(filePropagationPOJO,request);
     }
 

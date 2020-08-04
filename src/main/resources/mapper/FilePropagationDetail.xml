@@ -5,10 +5,11 @@
         select t1.File_PropagationPlanDetailID as filePropagationPlanDetailID,
         t2.FileName as fileName,
         t1.Status as status,
-        t2.StaffName as staffName,
+        t1.PushStaffName as staffName,
         t2.Description as description,
         t2.PropagationDate as propagationDate,
-        t1.ReadDate as readTime
+        t1.ReadDate as readTime,
+        t1.File_PropagationID as filePropagationId
         from file_propagationplandetail t1,file_propagationplan t2
         where t1.PushStaffId=#{staffId} and t1.File_PropagationID=t2.File_PropagationID
     </select>

@@ -6,6 +6,9 @@
         file_propagationplan
         (
         <trim suffixOverrides=",">
+            <if test="filePropagationID != null and filePropagationID != ''">
+                File_PropagationID,
+            </if>
             <if test="fileName != null and fileName != ''">
                 FileName,
             </if>
@@ -32,6 +35,9 @@
         values
         (
         <trim suffixOverrides=",">
+            <if test="filePropagationID != null and filePropagationID != ''">
+                #{filePropagationID},
+            </if>
             <if test="fileName != null and fileName != ''">
                 #{fileName},
             </if>
@@ -57,7 +63,16 @@
         )
     </insert>
     <select id="getAllFilePropagation" resultType="com.wlhse.entity.FilePropagationPOJO">
-        select * from
+        select
+        File_PropagationID as filePropagationID,
+        FileName as fileName,
+        CompanyCode as companyCode,
+        CompanyName as companyName,
+        PropagationDate as propagationDate,
+        Description as description,
+        StaffId as  staffId,
+        StaffName as staffName
+        from
         file_propagationplan
     </select>
     <delete id="deletePropagationPlan">

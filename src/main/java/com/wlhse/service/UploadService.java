@@ -1,6 +1,7 @@
 package com.wlhse.service;
 
 
+import com.wlhse.dto.inDto.FilePropagationFileInfo;
 
 public interface UploadService {
 
@@ -12,4 +13,5 @@ public interface UploadService {
 
     String uploadQHSEManageSysElements(String path) throws Exception;//管理要素审核excel录入数据库
 
+    boolean insertFilePropagationFileRecord(FilePropagationFileInfo filePropagationFileInfo);
 }

@@ -1,8 +1,10 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.dao.CheckListDao;
+import com.wlhse.dao.FileDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.*;
+import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.UploadService;
@@ -39,6 +41,8 @@ public class UploadServiceImpl implements UploadService {
 
     private final static String staus = "启用";
 
+    @Resource
+    FileDao fileDao;
 
     @Override
     @Async
@@ -210,6 +214,13 @@ public class UploadServiceImpl implements UploadService {
         }
     }
 
+    @Override
+    public boolean insertFilePropagationFileRecord(FilePropagationFileInfo filePropagationFileInfo) {
+        int i = fileDao.insertFilePropagationFile(filePropagationFileInfo);
+        if (i!=0) return true;
+        return false;
+    }
+
     /**
      * 该方法用于打断分割问题描述，并写入数据库；
      * @param code 审核要素的code
@@ -232,4 +243,6 @@ public class UploadServiceImpl implements UploadService {
             }
         }
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.wlhse.dto.outDto;
 
+import java.util.List;
+
 /**
  * Description:
  * Author:Coco
@@ -13,6 +15,25 @@ public class FilePropagationResultDto {
     private String staffName;
     private String status;
     private String readTime;
+    private Long filePropagationId;
+    private List<String> filePath;
+
+    public Long getFilePropagationId() {
+        return filePropagationId;
+    }
+
+    public void setFilePropagationId(Long filePropagationId) {
+        this.filePropagationId = filePropagationId;
+    }
+
+    public List<String> getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(List<String> filePath) {
+        this.filePath = filePath;
+    }
+
     public String getReadTime() {
         return readTime;
     }
