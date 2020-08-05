@@ -75,9 +75,9 @@
 
     <update id="updateFilePropagationStatus">
         update file_propagationplandetail
-        set Status='已读'
-        where File_PropagationPlanDetailID=#{filePropagationPlanDetailID}
-        and PushStaffId=#{staffId}
+        set Status='已读',ReadDate=now()
+        where File_PropagationPlanDetailID=#{0}
+        and PushStaffId=#{1}
     </update>
 
     <select id="queryAllPropagationDetailIdByFilePropagationId" resultType="Integer">

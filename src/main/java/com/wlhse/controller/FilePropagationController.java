@@ -64,4 +64,9 @@ public class FilePropagationController {
     R deletePropagationDetail(@RequestParam(value = "filePropagationDetailId")int filePropagationDetailId){
         return filePropagationPlanService.deleteFilePropagationPlan(filePropagationDetailId);
     }
+
+    @RequestMapping(value = "/getFilePropagationDetailList/{pageNum}",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+    R getFilePropagationListInPage(@PathVariable(value = "pageNum")int pageNum,HttpServletRequest request){
+        return filePropagationPlanService.getFilePropagationPlanDetailByStaffIdInPage(request,pageNum);
+    }
 }

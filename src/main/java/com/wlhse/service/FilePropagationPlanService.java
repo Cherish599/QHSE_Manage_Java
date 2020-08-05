@@ -24,4 +24,7 @@ public interface FilePropagationPlanService {
     R deleteFilePropagationPlan(int id);
 
     R deleteFilePropagationPlanDetail(int id);
+
+    R getFilePropagationPlanDetailByStaffIdInPage(HttpServletRequest request,int pageNum);
+
 }

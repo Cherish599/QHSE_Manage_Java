@@ -1,5 +1,7 @@
 package com.wlhse.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.FilePropagationDao;
 import com.wlhse.dao.FilePropagationDetailDao;
@@ -147,6 +149,26 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     public R deleteFilePropagationPlanDetail(int id) {
         filePropagationDetailDao.deleteFilePropagationPlanDetail(id);
         return R.ok();
+    }
+
+    @Override
+    public R getFilePropagationPlanDetailByStaffIdInPage(HttpServletRequest request, int pageNum) {
+        R r=new R();
+
+        //data that only used in test.
+        PageHelper.startPage(pageNum,6);
+        List<FilePropagationResultDto> filePropagationByStaffId = filePropagationDetailDao.getFilePropagationByStaffId(2);
+        for (FilePropagationResultDto filePropagationResultDto:filePropagationByStaffId){
+            List<String> filePaths=new ArrayList<>();
+            List<FilePropagationFileInfo> fileInfos= fileDao.getFileInfoByPropagationId(filePropagationResultDto.getFilePropagationId());
+            for (FilePropagationFileInfo file:fileInfos){
+                filePaths.add(file.getFilePath());
+            }
+            filePropagationResultDto.setFilePath(filePaths);
+        }
+        PageInfo<FilePropagationResultDto> filePropagationResultDtoPageInfo = new PageInfo<>(filePropagationByStaffId);
+        r.put("data",filePropagationResultDtoPageInfo);
+        return r;
     }
 
 

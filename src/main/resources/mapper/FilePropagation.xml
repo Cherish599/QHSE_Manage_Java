@@ -18,9 +18,7 @@
             <if test="companyName != null and companyName != ''">
                 CompanyName,
             </if>
-            <if test="propagationDate != null and propagationDate != ''">
                 PropagationDate,
-            </if>
             <if test="description != null and description != ''">
                 Description,
             </if>
@@ -47,9 +45,7 @@
             <if test="companyName != null and companyName != ''">
                 #{companyName},
             </if>
-            <if test="propagationDate != null and propagationDate != ''">
-                #{propagationDate},
-            </if>
+                now(),
             <if test="description != null and description != ''">
                 #{description},
             </if>
