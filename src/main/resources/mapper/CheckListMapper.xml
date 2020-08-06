@@ -156,8 +156,8 @@
         where CheckListCode=#{code}
     </update>
 
-    <select id="querryCheckListCode" resultType="java.lang.String">
-        SELECT CheckListCode FROM CheckList where CheckListCode=#{code}
+    <select id="querryAllCheckListCode" resultType="java.lang.String">
+        SELECT CheckListCode FROM CheckList
     </select>
 
     <update id="updateCheckListByCode" parameterType="com.wlhse.dto.CheckListDto">

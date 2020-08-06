@@ -73,7 +73,7 @@ public class UploadServiceImpl implements UploadService {
      * @throws Exception
      */
     @Override
-    public String uploadCheckList(String path) throws Exception {
+    public R uploadCheckList(String path) throws Exception {
         //String[] strArray = {"checkListCode","checkListName","attribute","parentName","isChildNode","status", "checkContent"};
         Workbook workbook = poiUtil.createWorkbook(path);
         Sheet sheet = workbook.getSheetAt(0);//获取指定表可以改成自动获取
@@ -85,7 +85,7 @@ public class UploadServiceImpl implements UploadService {
             HashMap<String, String> checkListValueMap = new HashMap<>();
             Row row = sheet.getRow(j);//按行取
             checkListValueMap.put("checkListCode",dataFormat.formatCellValue(row.getCell(0)));
-            System.out.println(dataFormat.formatCellValue(row.getCell(0)));
+            //System.out.println(dataFormat.formatCellValue(row.getCell(0)));
             checkListValueMap.put("checkListName",dataFormat.formatCellValue(row.getCell(1)));
             checkListValueMap.put("attribute",dataFormat.formatCellValue(row.getCell(2)));
             checkListValueMap.put("parentName",dataFormat.formatCellValue(row.getCell(3)));
@@ -100,25 +100,26 @@ public class UploadServiceImpl implements UploadService {
         if (beanList.size() > 0) {
             String duplicCode=PoiMSElement.isDuplicelements2(beanList);//判断是否有重复编码
             if (duplicCode== null) {
+                //优化，一次把所有code查询出来放进list，在list中查找code
+                List<String> list=checkListDao.querryAllCheckListCode();
                 for(CheckListDto ele:beanList) {
-                    String ecode = checkListDao.querryCheckListCode(ele.getCheckListCode());
-                    if(ecode == null||"".equals(ecode)) {//--------不存在则插入
-                        if (checkListDao.addCheckList(ele) <= 0)
-                            throw new WLHSException("新增失败");
-                    }
-                    else{//-------编码存在则更新
+                    if(list.contains(ele.getCheckListCode())) {//-------编码存在则更新
                         if (checkListDao.updateCheckListByCode(ele) <= 0)
                             throw new WLHSException("更新失败");
                     }
+                    else{//--------不存在则插入
+                        if (checkListDao.addCheckList(ele) <= 0)
+                            throw new WLHSException("新增失败");
+                    }
                 }
-                return NR.getPoiProblemReturn(CodeDict.SUCCESS, 0);//导入数据库成功
+                return R.ok("文件上传成功");//导入数据库成功
             }
             else {
-                return NR.getPoiReportsReturn(CodeDict.POI_ReportCodeDuplic_ERROR, duplicCode);//提示有重复编码
+                throw new WLHSException("有重复编码"+duplicCode);//提示有重复编码
             }
         }
         else {
-            return NR.getPoiProblemReturn(CodeDict.POI_PROBLEM_EMPTY_FIRST, 0);//list为空，读取excel失败；
+            throw new WLHSException("excel文件为空");//list为空，读取excel失败；
         }
     }
     /**
@@ -129,7 +130,7 @@ public class UploadServiceImpl implements UploadService {
      */
 
     @Override
-    public String uploadQHSEManageSysElements(String path) throws Exception {
+    public R uploadQHSEManageSysElements(String path) throws Exception {
         /*
         思想：创建excel工具类对象，使用该对象对表格进行读写，读写的顺序为一行一行从左往右，每读一行，即一条记录，一个对象；
         然后把存放对象属性值的键值对MAP封装为对象，放进list中；
@@ -169,15 +170,7 @@ public class UploadServiceImpl implements UploadService {
                 QSHEMSElementValueMap.put(key, value);//把列名即属性名，和属性内容放入MAP里
             }
             /*QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
-            QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));
-            QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(2)));
-            QSHEMSElementValueMap.put("basis", dataFormat.formatCellValue(row.getCell(3)));
-            QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(4)));
-            QSHEMSElementValueMap.put("initialScore", dataFormat.formatCellValue(row.getCell(5)));
-            QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(6)));
-            QSHEMSElementValueMap.put("problemDescription", dataFormat.formatCellValue(row.getCell(7)));
-            QSHEMSElementValueMap.put("totalCount", dataFormat.formatCellValue(row.getCell(8)));
-            QSHEMSElementValueMap.put("status", dataFormat.formatCellValue(row.getCell(9)));*/
+            QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));*/
             //使用BeanUtils将封装的属性注入对象
             QSHEMSElementInDto qSHEMSElement=new QSHEMSElementInDto();
             BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
@@ -189,28 +182,26 @@ public class UploadServiceImpl implements UploadService {
         {
             String duplicCode=PoiMSElement.isDuplicelements(beanList);//判断是否有重复编码
             if (duplicCode== null)
-            {
+            { //优化，一次把所有code查询出来放进list，在list中查找code
+                List<String> list=qHSEManageSysElementsDao.queryAllCode();
                 for(QSHEMSElementInDto ele:beanList) {
-                    String ecode = qHSEManageSysElementsDao.querryCode(ele.getCode());
-                    if(ecode == null||"".equals(ecode)) //--------不存在则插入
-                    {
-                        if (qHSEManageSysElementsDao.addExcelQHSEElement(ele) <= 0)
-                            throw new WLHSException("新增失败");
-                    }
-                    else//-------编码存在则更新-
-                    {
+                    if(list.contains(ele.getCode())) {//-------编码存在则更新
                         if (qHSEManageSysElementsDao.updateExcelElement(ele) <= 0)
                             throw new WLHSException("更新失败");
                     }
+                    else {//--------不存在则插入
+                        if (qHSEManageSysElementsDao.addExcelQHSEElement(ele) <= 0)
+                            throw new WLHSException("新增失败");
+                    }
                 }
-                return NR.getPoiProblemReturn(CodeDict.SUCCESS, 0);//导入数据库成功
+                return R.ok("文件上传成功");//导入数据库成功
             }
             else {
-                return NR.getPoiReportsReturn(CodeDict.POI_ReportCodeDuplic_ERROR, duplicCode);//提示有重复编码
+                throw new WLHSException("有重复编码"+duplicCode);//提示有重复编码
             }
         }
         else {
-            return NR.getPoiProblemReturn(CodeDict.POI_PROBLEM_EMPTY_FIRST, 0);//list为空，读取excel失败；
+            throw new WLHSException("excel文件为空");//list为空，读取excel失败；
         }
     }
 
@@ -227,9 +218,34 @@ public class UploadServiceImpl implements UploadService {
      * @param problemDescription 原始的问题描述字段
      */
     public void insertProblemDescription(String code,String problemDescription)  {
-        String[] description=problemDescription.split("([1-9][0-9]{0,1})");//用0-99的数字打断，中间为正则表达式
+        /*
+        思想：算法升级，根据递增序号1，2，3，4....打断，能有效解决：1.占总数的1.5% 2注安占专职人员的比例等于20% 3注安占专职人员的比例在20%以下等格式
+        但弊端是，序号必须是递增的，1，2，2，3就会打断失败。
+         */
         qHSEManageSysElementsDao.deleteByCode(code);//先把该code的问题描述全部删除，再添加。
-        for(int i=0;i<description.length;i++)
+        String description=problemDescription;
+        if(description.startsWith("1") )//判断是不是序号以1开头的；
+        {
+            String[] s=description.split("1",2);
+            String t;
+            for(int i=2;s[1].contains(String.valueOf(i));i++) {
+                description=s[1];
+                s=description.split(String.valueOf(i),2);
+                //得到的s[0]即为插入的问题描述；
+                t=(s[0].startsWith(".")? s[0].substring(1):s[0]);//有".",就去除，没有”."就直接写入
+                if(qHSEManageSysElementsDao.addProblemDescription(code,t)<=0)
+                        throw new WLHSException("新增失败");
+            }
+            t=(s[1].startsWith(".")? s[1].substring(1):s[1]);
+                if(qHSEManageSysElementsDao.addProblemDescription(code, t)<=0)
+                    throw new WLHSException("新增失败");
+        }
+        else{
+            throw new WLHSException("编号不是1开始");
+        }
+        //下列方法以数字打断，能打断序号为88...2...3...56...格式，但不能打断内容中有数字的
+        // String[] description=problemDescription.split("([1-9][0-9]{0,1})");//用0-99的数字打断，中间为正则表达式
+        /*for(int i=0;i<description.length;i++)
         {
             if(i!=0) {//数组第一个必为空字符“ ”；
                 if (".".equals(description[i].substring(0, 1))){//数据格式为：1.问题某某（有“.”符号）
@@ -241,8 +257,6 @@ public class UploadServiceImpl implements UploadService {
                         throw new WLHSException("新增失败");
                 }
             }
-        }
+        }*/
     }
-
-
 }

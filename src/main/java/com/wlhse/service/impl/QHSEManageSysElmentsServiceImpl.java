@@ -228,17 +228,22 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     }
 
     public void updateScoreCount(String code, Integer score, Integer count) {
-        qhseManageSysElementsDao.updateScoreCount(code, score, count);//父母的score count减去
+        if((qhseManageSysElementsDao.updateScoreCount(code, score, count))<=0)//父母的score count减去
+            throw new WLHSException("更新失败");
     }
 
     public void toZero(String code) {
-        qhseManageSysElementsDao.toZero(code);//当前项到叶子节点前一项的所有分数和项数都归零
+       if(( qhseManageSysElementsDao.toZero(code))<=0)//当前项到叶子节点前一项的所有分数和项数都归零
+           throw new WLHSException("更新失败");
     }
 
     public void addScoreCount(List<String> list, Integer score) {//所有父母依次加分 项数加一
+       int j=1;
         for (int i = 0; i < list.size(); i++) {
-            qhseManageSysElementsDao.addScoreCount(list.get(i), score);
+            j*=(qhseManageSysElementsDao.addScoreCount(list.get(i), score));
         }
+        if(j<=0)
+            throw new WLHSException("更新失败");
     }
 
     //-------------------------------------更新区------------------------------------------
@@ -341,7 +346,6 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             }
         }
         return R.ok();
-
     }
 
     /**
@@ -355,11 +359,14 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         思想：不是叶子节点，直接更新。是叶子节点，如果分数变化，还要更新上面所有父节点的分数；
          */
         String code = qhseManageSysElement.getCode();
+        //根据ID查询数据库更新前的节点信息；
+        QhseElementsPojo qhseElementsPojo=qhseManageSysElementsDao.getElementByCode(code);
         Integer len = code.length();
-        String status = qhseManageSysElementsDao.querryStatus(code);
+        String status =qhseElementsPojo.getStatus();
+        //System.out.println(status+" "+code+""+qhseManageSysElement.getQhseManagerSysElementID());
         if ("启用".equals(status)) {
             if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) { //如果是叶子节点，还要更新所有父节点的分数
-                Integer score = qhseManageSysElementsDao.querryScore(code);
+                Integer score = qhseElementsPojo.getInitialScore();
                 Integer newScore = qhseManageSysElement.getInitialScore() - score;//获得新编辑的分数与原来的分数差
                 if (newScore != 0) {//获得所有父节点
                     List<String> parentCode = new ArrayList<String>();
@@ -381,7 +388,6 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return R.ok();
 
     }
-
 
     /**
      * 该方法用于审核要素的新增
@@ -414,7 +420,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     qhseManageSysElement.setTotalCount(0);
                     qhseManageSysElement.setInitialScore(0);
                     String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode); //查找插入那级最大编码
-                    System.out.println(maxCode);
+                    //System.out.println(maxCode);
                     if (maxCode == null || "".equals(maxCode))//如果还没节点，直接生成
                         qhseManageSysElement.setCode(parentCode + "001");
                     else {//否则最大编码加1
@@ -467,7 +473,6 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         R ok = R.ok();
         ok.put("data", qhseManageSysElementsDao.querryDescriptionBycode(code));
         return ok;
-
     }
 
     /**
