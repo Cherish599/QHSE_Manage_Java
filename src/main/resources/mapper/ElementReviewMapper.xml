@@ -89,4 +89,11 @@
           QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID});
     </delete>
 
+    <delete id="deleteNewOriginFile" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        delete from elementinputfileinfo where
+        QHSE_CompanyYearManagerSysElementEvidence_ID=(select QHSE_CompanyYearManagerSysElementEvidence_ID
+         from QHSE_CompanyYearManagerSysElementEvidence where
+          QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID});
+    </delete>
+
 </mapper>
