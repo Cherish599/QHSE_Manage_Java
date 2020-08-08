@@ -23,9 +23,6 @@
             <if test="pushCompanyCode != null and pushCompanyCode != ''">
                 PushCompanyCode,
             </if>
-            <if test="companyName != null and companyName != ''">
-                PushCompanyCode,
-            </if>
             <if test="pushCompanyName != null and pushCompanyName != ''">
                 PushCompanyName,
             </if>
@@ -50,9 +47,6 @@
             </if>
             <if test="pushCompanyCode != null and pushCompanyCode != ''">
                 #{pushCompanyCode},
-            </if>
-            <if test="companyName != null and companyName != ''">
-                #{companyName},
             </if>
             <if test="pushCompanyName != null and pushCompanyName != ''">
                 #{pushCompanyName},
@@ -91,4 +85,15 @@
         file_propagationplandetail
         where File_PropagationPlanDetailID=#{detailId}
     </delete>
+
+    <select id="getReadHistory" resultType="com.wlhse.dto.outDto.ReadHistoryDto">
+        select
+        PushCompanyCode as pushCompanyCode,
+        PushCompanyName as pushCompanyName,
+        PushStaffId as pushStaffId,
+        PushStaffName as pushStaffName,
+        ReadDate as readDate
+        from file_propagationplandetail
+        where Status='已读' and File_PropagationID=#{propagationId}
+    </select>
 </mapper>

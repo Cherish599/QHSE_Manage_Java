@@ -1,13 +1,17 @@
 package com.wlhse.dto.inDto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Description:
  * Author:Coco
  * create:2020-08-04 5:59 PM
  **/
 public class FilePropagationFileInfo {
+    @JsonSerialize(using = com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long id;
-    private int propagationId;
+    @JsonSerialize(using = com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
+    private Long propagationId;
     private String filePath;
     private String originName;
 
@@ -19,11 +23,11 @@ public class FilePropagationFileInfo {
         this.id = id;
     }
 
-    public int getPropagationId() {
+    public Long getPropagationId() {
         return propagationId;
     }
 
-    public void setPropagationId(int propagationId) {
+    public void setPropagationId(Long propagationId) {
         this.propagationId = propagationId;
     }
 
@@ -41,5 +45,15 @@ public class FilePropagationFileInfo {
 
     public void setOriginName(String originName) {
         this.originName = originName;
+    }
+
+    @Override
+    public String toString() {
+        return "FilePropagationFileInfo{" +
+                "id=" + id +
+                ", propagationId=" + propagationId +
+                ", filePath='" + filePath + '\'' +
+                ", originName='" + originName + '\'' +
+                '}';
     }
 }

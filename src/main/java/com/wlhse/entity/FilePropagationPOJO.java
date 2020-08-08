@@ -1,11 +1,14 @@
 package com.wlhse.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Description:package the attributes of file propagation plan
  * Author:Coco
  * create:2020-08-02 10:41 PM
  **/
 public class FilePropagationPOJO {
+    @JsonSerialize(using = com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long filePropagationID;
     private String fileName;
     private String companyCode;

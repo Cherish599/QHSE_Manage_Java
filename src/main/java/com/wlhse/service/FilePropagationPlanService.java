@@ -17,7 +17,7 @@ public interface FilePropagationPlanService {
 
     R getAllFilePropagation();
 
-    R getFilePropagationDetailIdByPropagationId(int filePropagationId);
+    R getFilePropagationDetailIdByPropagationId(Long filePropagationId);
 
     R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto);
 
@@ -26,5 +26,7 @@ public interface FilePropagationPlanService {
     R deleteFilePropagationPlanDetail(int id);
 
     R getFilePropagationPlanDetailByStaffIdInPage(HttpServletRequest request,int pageNum);
+
+    R getReadHistoryByPropagationId(Long propagationId);
 
 }

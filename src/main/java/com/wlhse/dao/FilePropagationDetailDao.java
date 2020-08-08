@@ -2,6 +2,7 @@ package com.wlhse.dao;
 
 import com.wlhse.dto.outDto.FilePropagationDetailDto;
 import com.wlhse.dto.outDto.FilePropagationResultDto;
+import com.wlhse.dto.outDto.ReadHistoryDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +16,9 @@ public interface FilePropagationDetailDao {
 
     int updateFilePropagationStatus(int filePropagationPlanDetailID,int staffId );
 
-    Set<Integer> queryAllPropagationDetailIdByFilePropagationId(int filePropagationId);
+    Set<Integer> queryAllPropagationDetailIdByFilePropagationId(Long filePropagationId);
 
     int deleteFilePropagationPlanDetail(int detailId);
+
+    List<ReadHistoryDto> getReadHistory(Long propagationId);
 }

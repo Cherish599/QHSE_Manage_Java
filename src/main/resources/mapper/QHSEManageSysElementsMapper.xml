@@ -546,10 +546,10 @@
     </select>
 
     <update id="updateConfigStatus">
-        update from qhse_companyyearmanagersyselement
-        set ConfigStatus=#{status}
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
-        and Code=#{code}
+        update  qhse_companyyearmanagersyselement
+        set ConfigStatus=#{2}
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{1}
+        and Code=#{0}
     </update>
 
     <select id="getElementById" resultType="com.wlhse.entity.QhseElementsPojo">
