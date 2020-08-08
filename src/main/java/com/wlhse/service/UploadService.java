@@ -2,6 +2,7 @@ package com.wlhse.service;
 
 
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
+import com.wlhse.util.R;
 
 public interface UploadService {
 
@@ -9,9 +10,9 @@ public interface UploadService {
 
     String uploadReports(String path) throws Exception;
 
-    String uploadCheckList(String path) throws Exception;
+    R uploadCheckList(String path) throws Exception;
 
-    String uploadQHSEManageSysElements(String path) throws Exception;//管理要素审核excel录入数据库
+    R uploadQHSEManageSysElements(String path) throws Exception;//管理要素审核excel录入数据库
 
     boolean insertFilePropagationFileRecord(FilePropagationFileInfo filePropagationFileInfo);
 }

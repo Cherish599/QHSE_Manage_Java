@@ -48,6 +48,8 @@ public interface QHSEManageSysElementsDao {
     Integer addScoreCount(@Param("code") String code,@Param("score") Integer score);
     //根据id查询节点
     QhseElementsPojo getElementById(@Param("id")int id);
+    //根据code查询节点
+    QhseElementsPojo getElementByCode(@Param("code")String code);
 
     //th----查询基本数据表，仅启用
     List<QhseElementsPojo> queryQhseElements();
@@ -58,8 +60,9 @@ public interface QHSEManageSysElementsDao {
     List<QhseElementsPojo> queryQhseChildElements();
     //th----查询所有的数据表
     List<QhseElementsPojo> queryQhseAllElements();
-    //查询编码是否存在
-    String querryCode(@Param("code") String code);
+
+    //查询所有编码
+    List<String> queryAllCode();
     //导入excel问题描述时，根据code删除对应问题描述
     Integer deleteByCode(@Param("code") String code);
     //导入excel问题描述时，根据code添加对应问题描述

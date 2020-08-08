@@ -126,7 +126,7 @@
     </select>
 
     <update id="updateScoreCount">
-        update qhse_managersyselement set InitialScore=InitialScore-#{score},TotalCount=TotalCount-#{count} where code = #{code}
+        update qhse_managersyselement set InitialScore=InitialScore-#{score},TotalCount=TotalCount-#{count} where Code = #{code}
     </update>
     <update id="toZero">
         update qhse_managersyselement set InitialScore=0,TotalCount=0 where Code like concat(#{code},'%') and length(Code)&lt;15
@@ -345,9 +345,6 @@
         where Code=#{code}
     </update>
 
-    <select id="querryCode" resultType="java.lang.String">
-        SELECT Code FROM qhse_managersyselement where Code=#{code}
-    </select>
 
     <select id="queryElementsByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
         select
@@ -555,6 +552,16 @@
     <select id="getElementById" resultType="com.wlhse.entity.QhseElementsPojo">
         select * from qhse_managersyselement
         where QHSE_ManagerSysElement_ID=#{id}
+    </select>
+
+    <select id="getElementByCode" resultType="com.wlhse.entity.QhseElementsPojo">
+        select * from qhse_managersyselement
+        where Code=#{code}
+    </select>
+
+
+    <select id="queryAllCode" resultType="java.lang.String">
+        select Code from qhse_managersyselement
     </select>
 </mapper>
 

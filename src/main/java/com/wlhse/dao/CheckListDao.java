@@ -48,6 +48,7 @@ public interface CheckListDao {
 
     //更改状态
     int updateStatus(@Param("status") String status,@Param("code")String code);
-    //查询编码是否存在
-    String querryCheckListCode(@Param("code") String code);
+
+    //查询所有编码
+    List<String> querryAllCheckListCode();
 }

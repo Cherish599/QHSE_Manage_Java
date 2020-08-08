@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
+import com.wlhse.exception.WLHSException;
 import com.wlhse.service.UploadService;
 import com.wlhse.util.*;
 import com.wlhse.util.state_code.CodeDict;
@@ -109,9 +110,9 @@ public class FileUploadUtils {
     //checklistEXCEL上传
     @RequestMapping(value = "/check_list_excel_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public String uploadCheckList(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+    public R uploadCheckList(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+            return R.error(CodeDict.UPLOAD_EMPTY,"上传文件为空");
         } else {
             String fileName = setFile(file, "CheckList\\");
             String path = System.getProperty("catalina.home") + "\\webapps\\CheckList\\" + fileName;
@@ -158,9 +159,9 @@ public class FileUploadUtils {
     //---------管理要素审核excel录入数据库
     @RequestMapping(value = "/managesyselements_excel_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public String uploadQHSEMSElements(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+    public R uploadQHSEMSElements(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+            return R.error(CodeDict.UPLOAD_EMPTY,"上传文件为空");
         } else {
             String fileName = setFile(file, "ManageSysElements\\");
             String path = System.getProperty("catalina.home") + "\\webapps\\ManageSysElements\\" + fileName;
