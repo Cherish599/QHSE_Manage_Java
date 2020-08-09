@@ -27,7 +27,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             //将附件attach对应id放入elementFileInfo
             String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
-            elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidenceAttach_ID(elementEvidenceAttachInDto.getEvidenceID());
+            elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
             for (String str:strs) {
                 elementInputFileInfo.setNewElementFileName(str);
                 qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
@@ -38,7 +38,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             //将附件attach对应id放入elementFileInfo
             String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
-            elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidenceAttach_ID(elementEvidenceAttachInDto.getEvidenceID());
+            elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
             for (String str:strs) {
                 elementInputFileInfo.setNewElementFileName(str);
                 qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
