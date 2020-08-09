@@ -15,6 +15,7 @@ public class FilePropagationDetailDto {
    private String status;
    private String readDate;
 
+
     public int getFilePropagationPlanDetailID() {
         return filePropagationPlanDetailID;
     }

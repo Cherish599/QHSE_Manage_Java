@@ -109,7 +109,7 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
             filePropagationPOJO1.setPropagationDate(filePropagation.getPropagationDate());
             filePropagationPOJO1.setFileName(filePropagation.getFileName());
             List<FilePropagationFileInfo> fileInfo= fileDao.getFileInfoByPropagationId(filePropagation.getFilePropagationID());
-            System.out.println(fileInfo);
+            System.out.println(fileInfo.toString());
             for (FilePropagationFileInfo file1:fileInfo){
                 filePaths.add(file1.getFilePath());
             }
@@ -121,7 +121,7 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     }
 
     @Override
-    public R getFilePropagationDetailIdByPropagationId(int filePropagationId) {
+    public R getFilePropagationDetailIdByPropagationId(Long filePropagationId) {
         R r=new R();
         r.put("data",filePropagationDetailDao.queryAllPropagationDetailIdByFilePropagationId(filePropagationId));
         return r;
@@ -168,6 +168,13 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
         }
         PageInfo<FilePropagationResultDto> filePropagationResultDtoPageInfo = new PageInfo<>(filePropagationByStaffId);
         r.put("data",filePropagationResultDtoPageInfo);
+        return r;
+    }
+
+    @Override
+    public R getReadHistoryByPropagationId(Long propagationId) {
+        R r=new R();
+        r.put("data",filePropagationDetailDao.getReadHistory(propagationId));
         return r;
     }
 

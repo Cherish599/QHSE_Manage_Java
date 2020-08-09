@@ -14,6 +14,8 @@ import com.wlhse.util.R;
 import com.wlhse.util.SortCodeUtil;
 import com.wlhse.util.TreeUtil;
 import com.wlhse.util.state_code.NR;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     @Resource
     private SortCodeUtil sortCodeUtil;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private TreeUtil treeUtil;
@@ -518,8 +522,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     public R addYearElement(YearElementsDto yearElementsDto) {
         try {
             String[] codes = yearElementsDto.getCodes().split(";");
-            System.out.println(codes);
-            List<YearElementsDto> list = new ArrayList<>();
+           /* List<YearElementsDto> list = new ArrayList<>();*/
             Integer tableId = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
             String companyCode = yearElementsDto.getCompanyCode();
             String companyName = yearElementsDto.getCompanyName();
@@ -533,10 +536,27 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     needToAddElement=new HashMap<>(),
                     openedMap = new HashMap<>(),
                     stoppedMap = new HashMap<>(),
-                    elementNeedToStop=new HashMap<>();
+                    elementNeedToStop=new HashMap<>(),
+                    elementsFromClients1=new HashMap<>();
             //covert codes to Map<code,configStatus>
             for (String code:codes){
                 elementsFromClients.put(code,"启用");
+            }
+            for (Map.Entry<String, String> code : elementsFromClients.entrySet()) {
+                List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code.getKey());
+                for (int i = 0; i < temp.size(); i++) {
+                    if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
+                        temp.get(i).setStatus("未提供");
+                        temp.get(i).setFileCheckStatus("未审核");
+                    }
+                    temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
+                    temp.get(i).setCompanyCode(companyCode);
+                    temp.get(i).setCompanyName(companyName);
+                    temp.get(i).setYear(year);
+                    temp.get(i).setConfigStatus("启用");
+         /*           list.add(temp.get(i));*/
+                    elementsFromClients1.put(temp.get(i).getCode(),"启用");
+                }
             }
             //the following algorithm is very inefficient.
             //please do some optimization.
@@ -544,26 +564,26 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             if (elementCodeAndConfigStatusMap.size()!=0){
             for (Map.Entry<String, String> entry : elementCodeAndConfigStatusMap.entrySet()) {
                 //find elements that have been stopped
-                if (entry.getValue() == "停用") {
+                if (entry.getValue().equals("停用")) {
                     stoppedMap.put(entry.getKey(), entry.getValue());
                 }
                 //find elements that  in open status
-                if(entry.getValue()=="启用"){
+                if(entry.getValue().equals("启用")){
                     openedMap.put(entry.getKey(), entry.getValue());
                 }
             }}
             //find elements need to stop
             if (openedMap.size()!=0){
             for (Map.Entry<String,String> entry:openedMap.entrySet()){
-                if (elementsFromClients.containsKey(entry.getKey())==false){
+                if (elementsFromClients1.containsKey(entry.getKey())==false){
                     elementNeedToStop.put(entry.getKey(),"停用");
                 }
             }
             }
             //find elements need to reopen and add
-            for (Map.Entry<String,String> entry : elementsFromClients.entrySet()){
+            for (Map.Entry<String,String> entry : elementsFromClients1.entrySet()){
                 if (elementCodeAndConfigStatusMap.size()==0){
-                    needToAddElement=elementsFromClients;
+                    needToAddElement=elementsFromClients1;
                     break;
                 }
                 if (elementCodeAndConfigStatusMap.containsKey(entry.getKey())==false){
@@ -573,40 +593,46 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     needToReopenElement.put(entry.getKey(),entry.getValue());
                 }
             }
-            System.out.println("客户端传来的element:"+elementsFromClients);
-            System.out.println("停用的element:"+stoppedMap);
-            System.out.println("需要停用的element:"+elementNeedToStop);
-            System.out.println("启用的element:"+openedMap);
-            System.out.println("新增的element:"+needToAddElement);
-            System.out.println("需要重启的element:"+needToReopenElement);
+            logger.info("数据库中获取到的element:"+elementCodeAndConfigStatusMap);
+            logger.info("-----------------------------------------------");
+            logger.info("客户端传来的element:"+elementsFromClients1);
+            logger.info("-----------------------------------------------");
+            logger.info("停用的element:"+stoppedMap);
+            logger.info("-----------------------------------------------");
+            logger.info("需要停用的element:"+elementNeedToStop);
+            logger.info("-----------------------------------------------");
+            logger.info("启用的element:"+openedMap);
+            logger.info("-----------------------------------------------");
+            logger.info("新增的element:"+needToAddElement);
+            logger.info("-----------------------------------------------");
+            logger.info("需要重启的element:"+needToReopenElement);
             int size = needToAddElement.size();
             int result = 0;
             if (size!=0) {
+                logger.info("-----------------------------------------------");
+                logger.info("新增数据");
                 for (Map.Entry<String, String> code : needToAddElement.entrySet()) {
-                    List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code.getKey());
-                    for (int i = 0; i < temp.size(); i++) {
-                        if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
-                            temp.get(i).setStatus("未提供");
-                            temp.get(i).setFileCheckStatus("未审核");
-                        }
-                        temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
-                        temp.get(i).setCompanyCode(companyCode);
-                        temp.get(i).setCompanyName(companyName);
-                        temp.get(i).setYear(year);
-                        temp.get(i).setConfigStatus("启用");
-                        list.add(temp.get(i));
-                    }
-                }
-                //add new element
-                for (YearElementsDto yearElementsDto1:list){
+                    YearElementsDto yearElementsDto1=new YearElementsDto();
+                    yearElementsDto1.setQhseCompanyYearManagerSysElementTableID(tableId);
+                    yearElementsDto1.setCompanyCode(companyCode);
+                    yearElementsDto1.setCompanyName(companyName);
+                    yearElementsDto1.setYear(year);
+                    yearElementsDto1.setConfigStatus("启用");
+                    yearElementsDto1.setCode(code.getKey());
+                    //add new element
                     qhseManageSysElementsDao.addYearElement(yearElementsDto1);
                 }
+                logger.info("新增完毕");
             }
             //update Manager Sys Element's configStatus
             //when some elements need to stop.
             if (elementNeedToStop.size()!=0){
-                for (Map.Entry<String,String> entry:elementNeedToStop.entrySet())
-                qhseManageSysElementsDao.updateConfigStatus(entry.getKey(),tableId,entry.getValue());
+                logger.info("-----------------------------------------------");
+                logger.info("修改状态");
+                for (Map.Entry<String,String> entry:elementNeedToStop.entrySet()) {
+                    qhseManageSysElementsDao.updateConfigStatus(entry.getKey(), tableId, entry.getValue());
+                    logger.info("修改成功");
+                }
             }
             //when some elements need to reopen
             if (needToReopenElement.size()!=0){

@@ -18,4 +18,11 @@ public class FilePropagationPOJO1 extends FilePropagationPOJO {
     public void setFilePath(List<String> filePath) {
         this.filePath = filePath;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                "filePath=" + filePath +
+                '}';
+    }
 }
