@@ -1,11 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
-import com.wlhse.dto.inDto.ElementEvidenceInDto;
-import com.wlhse.dto.inDto.ElementReviewDto;
-import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementEvidenceDto;
-import com.wlhse.entity.QHSECompanySysElementsPojo;
-import com.wlhse.entity.QHSEManageSysElements;
+import com.wlhse.entity.ElementInputFileInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +26,19 @@ public interface QhseElementsInputDao {
 
     //更改状态
     int updateStatus(Integer id);
+
+    //查询要素附件原始名
+    String queryOriginFileName(@Param("newElementFileName") String newElementFileName);
+
+    //删除要素附件新旧名称
+    int deleteNewOriginFileName(@Param("id") Integer id);
+
+    //插入要素附件新旧名称
+    int insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
+
+    //将对应证据表id存入方便删除
+    int updateNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
+
 
     List<Integer> getCompanyManagerSysElementId(int tableId);
 

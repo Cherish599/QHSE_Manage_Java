@@ -1,14 +1,19 @@
 package com.wlhse.controller;
 
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
-import com.wlhse.exception.WLHSException;
+import com.wlhse.entity.ElementInputFileInfo;
+import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.service.UploadService;
-import com.wlhse.util.*;
+import com.wlhse.util.IdUtil;
+import com.wlhse.util.R;
 import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
 import com.wlhse.util.token.TokenUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -20,6 +25,8 @@ public class FileUploadUtils {
 
     @Resource
     private UploadService uploadService;
+    @Resource
+    private QhseElementsInputService qhseElementsInputService;
 
     public String setFile(MultipartFile file, String str) throws Exception {
 
@@ -151,8 +158,12 @@ public class FileUploadUtils {
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else {
+            ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
+            elementInputFileInfo.setElementOriginFileName(file.getOriginalFilename());
             String fileName = setFile(file, "resources\\QHSEEvidence\\");
-            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            elementInputFileInfo.setNewElementFileName(fileName);
+            qhseElementsInputService.insertNewOriginFileName(elementInputFileInfo);
+           return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
         }
     }
 
