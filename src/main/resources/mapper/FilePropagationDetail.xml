@@ -69,7 +69,7 @@
                 #{readDate},
             </if>
             <if test="department!=null and department!=''">
-                #{department},
+                #{department}
             </if>
         </trim>
         )
