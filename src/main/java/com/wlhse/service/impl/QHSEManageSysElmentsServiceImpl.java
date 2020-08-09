@@ -280,29 +280,18 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         if (tag == 0) //查启用
         {
             R ok = R.ok();
-            ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseElements()));
+            ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()));
             return ok;
         } else if (tag == 1) //查所有
         {
             R ok = R.ok();
-            ok.put("data", treeUtil.getQhseElementTree(qhseManageSysElementsDao.queryQhseAllElements()));
+            ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseAllElements()));
             return ok;
         } else {
             throw new WLHSException("查询失败");
         }
-
     }
 
-    /**
-     * 该方法用于获得审核要素的查询树，并包含的问题描述字段，用于导出excel
-     * @return 返回新增操作成功，失败的消息，为json对象
-     */
-    @Override
-    public R queryAllElementsForExcel() {
-        R ok = R.ok();
-        ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseAllElements()));
-        return ok;
-    }
 
     /**
      * 该方法用于审核要素的状态切换
