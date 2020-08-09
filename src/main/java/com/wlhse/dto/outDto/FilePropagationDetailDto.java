@@ -87,4 +87,19 @@ public class FilePropagationDetailDto {
     public void setReadDate(String readDate) {
         this.readDate = readDate;
     }
+
+    @Override
+    public String toString() {
+        return "FilePropagationDetailDto{" +
+                "filePropagationPlanDetailID=" + filePropagationPlanDetailID +
+                ", filePropagationID=" + filePropagationID +
+                ", pushCompanyCode='" + pushCompanyCode + '\'' +
+                ", pushCompanyName='" + pushCompanyName + '\'' +
+                ", pushStaffId=" + pushStaffId +
+                ", pushStaffName='" + pushStaffName + '\'' +
+                ", status='" + status + '\'' +
+                ", readDate='" + readDate + '\'' +
+                ", department='" + department + '\'' +
+                '}';
+    }
 }

@@ -131,6 +131,8 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     @Transactional
     public R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto) {
         for (FilePropagationDetailDto filePropagationDetailDto1:filePropagationDetailDto){
+            filePropagationDetailDto1.setPushStaffId(2);
+            filePropagationDetailDto1.setPushStaffName("采臣");
             filePropagationDetailDao.addNewDetail(filePropagationDetailDto1);
         }
         return R.ok();

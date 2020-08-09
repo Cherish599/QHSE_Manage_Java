@@ -53,6 +53,7 @@ public class FilePropagationController {
 
     @RequestMapping(value = "/insertPropagationDetail ",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
     R insertNewPropagationDetail(@RequestBody(required = false) List<FilePropagationDetailDto> filePropagationDetailDtos){
+        logger.info("传入的数据:"+filePropagationDetailDtos.toString());
         return filePropagationPlanService.insertNewFilePropagationDetail(filePropagationDetailDtos);
     }
 
