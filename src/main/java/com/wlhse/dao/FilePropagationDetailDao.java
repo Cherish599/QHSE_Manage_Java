@@ -16,7 +16,7 @@ public interface FilePropagationDetailDao {
 
     int updateFilePropagationStatus(int filePropagationPlanDetailID,int staffId );
 
-    Set<Integer> queryAllPropagationDetailIdByFilePropagationId(Long filePropagationId);
+    Set<FilePropagationResultDto> queryAllPropagationDetailIdByFilePropagationId(Long filePropagationId);
 
     int deleteFilePropagationPlanDetail(int detailId);
 

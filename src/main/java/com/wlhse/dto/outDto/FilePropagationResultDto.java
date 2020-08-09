@@ -1,5 +1,7 @@
 package com.wlhse.dto.outDto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.List;
 
 /**
@@ -8,14 +10,45 @@ import java.util.List;
  * create:2020-08-03 1:13 PM
  **/
 public class FilePropagationResultDto {
+
     private int filePropagationPlanDetailID;
+
     private String fileName;
+
     private String propagationDate;
+
     private String description;
+
     private String staffName;
+
     private String status;
+
     private String readTime;
+
+    private String companyName;
+
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    @JsonSerialize(using = com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long filePropagationId;
+
+    private String department;
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
     private List<String> filePath;
 
     public Long getFilePropagationId() {

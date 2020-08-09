@@ -522,7 +522,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     public R addYearElement(YearElementsDto yearElementsDto) {
         try {
             String[] codes = yearElementsDto.getCodes().split(";");
-           /* List<YearElementsDto> list = new ArrayList<>();*/
+            /*List<YearElementsDto> list = new ArrayList<>();*/
             Integer tableId = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
             String companyCode = yearElementsDto.getCompanyCode();
             String companyName = yearElementsDto.getCompanyName();
@@ -538,6 +538,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     stoppedMap = new HashMap<>(),
                     elementNeedToStop=new HashMap<>(),
                     elementsFromClients1=new HashMap<>();
+            Map<String,YearElementsDto> map1=new HashMap<>();
             //covert codes to Map<code,configStatus>
             for (String code:codes){
                 elementsFromClients.put(code,"启用");
@@ -545,16 +546,16 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             for (Map.Entry<String, String> code : elementsFromClients.entrySet()) {
                 List<YearElementsDto> temp = qhseManageSysElementsDao.queryElementsByCode(code.getKey());
                 for (int i = 0; i < temp.size(); i++) {
-                    if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
+              /*      if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
                         temp.get(i).setStatus("未提供");
                         temp.get(i).setFileCheckStatus("未审核");
-                    }
+                    }*/
                     temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
                     temp.get(i).setCompanyCode(companyCode);
                     temp.get(i).setCompanyName(companyName);
                     temp.get(i).setYear(year);
                     temp.get(i).setConfigStatus("启用");
-         /*           list.add(temp.get(i));*/
+                    map1.put(temp.get(i).getCode(),temp.get(i));
                     elementsFromClients1.put(temp.get(i).getCode(),"启用");
                 }
             }
@@ -617,6 +618,18 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     yearElementsDto1.setCompanyCode(companyCode);
                     yearElementsDto1.setCompanyName(companyName);
                     yearElementsDto1.setYear(year);
+                    if (map1.containsKey(code.getKey())){
+                        yearElementsDto1.setName(map1.get(code.getKey()).getName());
+                        yearElementsDto1.setFormula(map1.get(code.getKey()).getFormula());
+                        yearElementsDto1.setAuditMode(map1.get(code.getKey()).getAuditMode());
+                        yearElementsDto1.setContent(map1.get(code.getKey()).getContent());
+                        yearElementsDto1.setInitialScore(map1.get(code.getKey()).getInitialScore());
+                        yearElementsDto1.setTotalCount(map1.get(code.getKey()).getTotalCount());
+                    }
+                    if (len.equals(code.getKey().length())){
+                        yearElementsDto1.setStatus("未提供");
+                        yearElementsDto1.setFileCheckStatus("未审核");
+                    }
                     yearElementsDto1.setConfigStatus("启用");
                     yearElementsDto1.setCode(code.getKey());
                     //add new element

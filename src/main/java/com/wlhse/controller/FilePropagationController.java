@@ -57,13 +57,13 @@ public class FilePropagationController {
     }
 
     @RequestMapping(value = "/deletePropagationPlan ",method = RequestMethod.DELETE,produces = "application/json; charset=utf-8")
-    R deletePropagationPlan(@RequestParam(value = "filePropagationId")int id){
+    R deletePropagationPlan(@RequestParam(value = "filePropagationId")Long id){
         return filePropagationPlanService.deleteFilePropagationPlan(id);
     }
 
     @RequestMapping(value ="/deletePropagationDetail",method =RequestMethod.DELETE,produces = "application/json; charset=utf-8" )
     R deletePropagationDetail(@RequestParam(value = "filePropagationDetailId")int filePropagationDetailId){
-        return filePropagationPlanService.deleteFilePropagationPlan(filePropagationDetailId);
+        return filePropagationPlanService.deleteFilePropagationPlanDetail(filePropagationDetailId);
     }
 
     @RequestMapping(value = "/getFilePropagationDetailList/{pageNum}",method = RequestMethod.GET,produces = "application/json; charset=utf-8")

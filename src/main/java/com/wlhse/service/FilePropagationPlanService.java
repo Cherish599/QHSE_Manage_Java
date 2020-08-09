@@ -21,7 +21,7 @@ public interface FilePropagationPlanService {
 
     R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto);
 
-    R deleteFilePropagationPlan(int id);
+    R deleteFilePropagationPlan(Long id);
 
     R deleteFilePropagationPlanDetail(int id);
 

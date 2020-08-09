@@ -131,16 +131,13 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     @Transactional
     public R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto) {
         for (FilePropagationDetailDto filePropagationDetailDto1:filePropagationDetailDto){
-            //data that only used in test.
-            filePropagationDetailDto1.setPushStaffName("采臣");
-            filePropagationDetailDto1.setPushStaffId(2);
             filePropagationDetailDao.addNewDetail(filePropagationDetailDto1);
         }
         return R.ok();
     }
 
     @Override
-    public R deleteFilePropagationPlan(int id) {
+    public R deleteFilePropagationPlan(Long id) {
         filePropagationDao.deletePropagationPlan(id);
         return R.ok();
     }

@@ -9,7 +9,9 @@
         t2.Description as description,
         t2.PropagationDate as propagationDate,
         t1.ReadDate as readTime,
-        t1.File_PropagationID as filePropagationId
+        t1.File_PropagationID as filePropagationId,
+        t1.department as department,
+        t1.PushCompanyName as companyName
         from file_propagationplandetail t1,file_propagationplan t2
         where t1.PushStaffId=#{staffId} and t1.File_PropagationID=t2.File_PropagationID
     </select>
@@ -38,6 +40,9 @@
             <if test="readDate!=null  and readDate!=''">
                 ReadDate,
             </if>
+            <if test="department!=null and department!=''">
+                department,
+            </if>
         </trim>
         )
         values (
@@ -63,6 +68,9 @@
             <if test="readDate!=null  and readDate!=''">
                 #{readDate},
             </if>
+            <if test="department!=null and department!=''">
+                #{department},
+            </if>
         </trim>
         )
     </insert>
@@ -74,10 +82,19 @@
         and PushStaffId=#{1}
     </update>
 
-    <select id="queryAllPropagationDetailIdByFilePropagationId" resultType="Integer">
-        select File_PropagationPlanDetailID
-        from file_propagationplandetail
-        where File_PropagationID=#{filePropagationId}
+    <select id="queryAllPropagationDetailIdByFilePropagationId" resultType="com.wlhse.dto.outDto.FilePropagationResultDto">
+        select t1.File_PropagationPlanDetailID as filePropagationPlanDetailID,
+        t2.FileName as fileName,
+        t1.Status as status,
+        t1.PushStaffName as staffName,
+        t2.Description as description,
+        t2.PropagationDate as propagationDate,
+        t1.ReadDate as readTime,
+        t1.File_PropagationID as filePropagationId,
+        t1.department as department,
+        t1.PushCompanyName as companyName
+        from file_propagationplandetail t1,file_propagationplan t2
+        where t1.File_PropagationID=#{filePropagationId}
     </select>
 
     <delete id="deleteFilePropagationPlanDetail">
