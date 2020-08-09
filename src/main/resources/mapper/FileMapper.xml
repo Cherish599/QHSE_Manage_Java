@@ -131,10 +131,10 @@
     </insert>
 
     <update id="updateFilePropagationID">
-        update from
+        update
         file_propagationfileinfo
-        set propagationId=#{id}
-        where filePath=#{filePath}
+        set propagationId=#{1}
+        where filePath=#{0}
     </update>
 
     <select id="getFileInfoByPropagationId" resultType="com.wlhse.dto.inDto.FilePropagationFileInfo">

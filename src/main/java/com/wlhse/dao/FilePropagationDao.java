@@ -11,5 +11,5 @@ public interface FilePropagationDao {
 
     List<FilePropagationPOJO> getAllFilePropagation();
 
-    int deletePropagationPlan(int id);
+    int deletePropagationPlan(Long id);
 }

@@ -162,8 +162,8 @@
         t1.Status,
         t1.CompanyCode as companyCode,
         t1.CompanyName as companyName,
-        t1.Year as year,
-        t1.fileCheckStatus
+        t1.Year as `year`,
+        t1.fileCheckStatus as fileCheckStatus
         from QHSE_CompanyYearManagerSysElement as t1
         join QHSE_CompanyYearManagerSysElementTable as t2
         on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
@@ -388,7 +388,7 @@
                 Code,
             </if>
             <if test="name != null and name != ''">
-                name,
+                `name`,
             </if>
             <if test="content != null and content != ''">
                 content,
@@ -543,10 +543,10 @@
     </select>
 
     <update id="updateConfigStatus">
-        update from qhse_companyyearmanagersyselement
-        set ConfigStatus=#{status}
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
-        and Code=#{code}
+        update  qhse_companyyearmanagersyselement
+        set ConfigStatus=#{2}
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{1}
+        and Code=#{0}
     </update>
 
     <select id="getElementById" resultType="com.wlhse.entity.QhseElementsPojo">

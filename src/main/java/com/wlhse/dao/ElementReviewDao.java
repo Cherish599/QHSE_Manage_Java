@@ -1,10 +1,8 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.inDto.ElementReviewDto;
-import com.wlhse.dto.getDto.EmployeeDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,6 +34,8 @@ public interface ElementReviewDao {
     int delete(ElementReviewDto elementReviewDto);
 
     int deleteAttach(ElementReviewDto elementReviewDto);
+
+    int deleteNewOriginFile(ElementReviewDto elementReviewDto);
 
 
 }

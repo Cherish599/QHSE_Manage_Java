@@ -17,14 +17,16 @@ public interface FilePropagationPlanService {
 
     R getAllFilePropagation();
 
-    R getFilePropagationDetailIdByPropagationId(int filePropagationId);
+    R getFilePropagationDetailIdByPropagationId(Long filePropagationId);
 
     R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto);
 
-    R deleteFilePropagationPlan(int id);
+    R deleteFilePropagationPlan(Long id);
 
     R deleteFilePropagationPlanDetail(int id);
 
     R getFilePropagationPlanDetailByStaffIdInPage(HttpServletRequest request,int pageNum);
+
+    R getReadHistoryByPropagationId(Long propagationId);
 
 }

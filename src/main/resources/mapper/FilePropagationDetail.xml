@@ -9,67 +9,68 @@
         t2.Description as description,
         t2.PropagationDate as propagationDate,
         t1.ReadDate as readTime,
-        t1.File_PropagationID as filePropagationId
+        t1.File_PropagationID as filePropagationId,
+        t1.department as department,
+        t1.PushCompanyName as companyName
         from file_propagationplandetail t1,file_propagationplan t2
         where t1.PushStaffId=#{staffId} and t1.File_PropagationID=t2.File_PropagationID
     </select>
     <insert id="addNewDetail">
-        insert into file_propagationplandetail
-        (
+       insert into
+       file_propagationplandetail
+       (
         <trim suffixOverrides=",">
-            <if test="filePropagationID != null and filePropagationID != ''">
-                File_PropagationID,
-            </if>
-            <if test="pushCompanyCode != null and pushCompanyCode != ''">
-                PushCompanyCode,
-            </if>
-            <if test="companyName != null and companyName != ''">
-                PushCompanyCode,
-            </if>
-            <if test="pushCompanyName != null and pushCompanyName != ''">
-                PushCompanyName,
-            </if>
-            <if test="pushStaffId != null and pushStaffId != ''">
-                PushStaffId,
-            </if>
-            <if test="pushStaffName != null and pushStaffName != ''">
-                PushStaffName,
-            </if>
-            <if test="status != null and status !=''">
-                Status,
-            </if>
-            <if test="readDate!=null  and readDate!=''">
-                ReadDate,
-            </if>
+        <if test="filePropagationID!=null and filePropagationID!=''">
+            File_PropagationID,
+        </if>
+        <if test="pushCompanyCode!=null and pushCompanyCode!=''">
+            PushCompanyCode,
+        </if>
+        <if test="pushCompanyName!=null and pushCompanyName !=''">
+            PushCompanyName,
+        </if>
+        <if test="pushStaffId!=null and pushStaffId!=''">
+            PushStaffId,
+        </if>
+        <if test="pushStaffName!=null and pushStaffName!=''">
+            PushStaffName,
+        </if>
+
+            Status,
+        <if test="readDate!=null and readDate!=''">
+            ReadDate,
+        </if>
+        <if test="department!=null and department!=''">
+            department,
+        </if>
         </trim>
-        )
-        values (
+       )
+    values (
         <trim suffixOverrides=",">
-            <if test="filePropagationID != null and filePropagationID != ''">
+            <if test="filePropagationID!=null and filePropagationID!=''">
                 #{filePropagationID},
             </if>
-            <if test="pushCompanyCode != null and pushCompanyCode != ''">
+            <if test="pushCompanyCode!=null and pushCompanyCode!=''">
                 #{pushCompanyCode},
             </if>
-            <if test="companyName != null and companyName != ''">
-                #{companyName},
-            </if>
-            <if test="pushCompanyName != null and pushCompanyName != ''">
+            <if test="pushCompanyName!=null and pushCompanyName !=''">
                 #{pushCompanyName},
             </if>
-            <if test="pushStaffId != null and pushStaffId != ''">
+            <if test="pushStaffId!=null and pushStaffId!=''">
                 #{pushStaffId},
             </if>
-            <if test="pushStaffName != null and pushStaffName != ''">
+            <if test="pushStaffName!=null and pushStaffName!=''">
                 #{pushStaffName},
             </if>
-            <if test="status != null and status !=''">
-                '未读'
-            </if>
-            <if test="readDate!=null  and readDate!=''">
+            '未读',
+            <if test="readDate!=null and readDate!=''">
                 #{readDate},
             </if>
+            <if test="department!=null and department!=''">
+                #{department},
+            </if>
         </trim>
+
         )
     </insert>
 
@@ -80,10 +81,19 @@
         and PushStaffId=#{1}
     </update>
 
-    <select id="queryAllPropagationDetailIdByFilePropagationId" resultType="Integer">
-        select File_PropagationPlanDetailID
-        from file_propagationplandetail
-        where File_PropagationID=#{filePropagationId}
+    <select id="queryAllPropagationDetailIdByFilePropagationId" resultType="com.wlhse.dto.outDto.FilePropagationResultDto">
+        select t1.File_PropagationPlanDetailID as filePropagationPlanDetailID,
+        t2.FileName as fileName,
+        t1.Status as status,
+        t1.PushStaffName as staffName,
+        t2.Description as description,
+        t2.PropagationDate as propagationDate,
+        t1.ReadDate as readTime,
+        t1.File_PropagationID as filePropagationId,
+        t1.department as department,
+        t1.PushCompanyName as companyName
+        from file_propagationplandetail t1,file_propagationplan t2
+        where t1.File_PropagationID=#{filePropagationId}
     </select>
 
     <delete id="deleteFilePropagationPlanDetail">
@@ -91,4 +101,15 @@
         file_propagationplandetail
         where File_PropagationPlanDetailID=#{detailId}
     </delete>
+
+    <select id="getReadHistory" resultType="com.wlhse.dto.outDto.ReadHistoryDto">
+        select
+        PushCompanyCode as pushCompanyCode,
+        PushCompanyName as pushCompanyName,
+        PushStaffId as pushStaffId,
+        PushStaffName as pushStaffName,
+        ReadDate as readDate
+        from file_propagationplandetail
+        where Status='已读' and File_PropagationID=#{propagationId}
+    </select>
 </mapper>

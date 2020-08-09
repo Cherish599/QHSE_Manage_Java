@@ -119,6 +119,49 @@
         where QHSE_CompanyYearManagerSysElement_ID=#{id}
     </update>
 
+    <select id="queryOriginFileName" parameterType="java.lang.String" resultType="java.lang.String">
+        select elementOriginFileName from elementinputfileinfo where newElementFileName=#{newElementFileName}
+    </select>
+
+    <delete id="deleteNewOriginFileName" parameterType="java.lang.Integer" >
+        delete from elementinputfileinfo where QHSE_CompanyYearManagerSysElementEvidence_ID=#{id}
+    </delete>
+
+    <insert id="insertNewOriginFileName" parameterType="com.wlhse.entity.ElementInputFileInfo">
+        insert into elementinputfileinfo
+        (
+        <trim suffixOverrides=",">
+            <if test="QHSE_CompanyYearManagerSysElementEvidence_ID != null and QHSE_CompanyYearManagerSysElementEvidence_ID != ''">
+                QHSE_CompanyYearManagerSysElementEvidence_ID,
+            </if>
+            <if test="newElementFileName != null and newElementFileName != ''">
+                newElementFileName,
+            </if>
+            <if test="elementOriginFileName != null and elementOriginFileName != ''">
+                elementOriginFileName,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="QHSE_CompanyYearManagerSysElementEvidence_ID != null and QHSE_CompanyYearManagerSysElementEvidence_ID != ''">
+                #{QHSE_CompanyYearManagerSysElementEvidence_ID},
+            </if>
+            <if test="newElementFileName != null and newElementFileName != ''">
+                #{newElementFileName},
+            </if>
+            <if test="elementOriginFileName != null and elementOriginFileName != ''">
+                #{elementOriginFileName},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updateNewOriginFileName" parameterType="com.wlhse.entity.ElementInputFileInfo">
+        update elementinputfileinfo set  QHSE_CompanyYearManagerSysElementEvidence_ID=
+        #{QHSE_CompanyYearManagerSysElementEvidence_ID} where newElementFileName=#{newElementFileName}
+    </update>
 
 
 

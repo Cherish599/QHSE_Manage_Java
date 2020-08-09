@@ -137,9 +137,11 @@ public class ElementReviewServiceImpl implements ElementReviewService {
 
     @Override
     public R deletes(ElementReviewDto elementReviewDto) {
+        System.out.println(elementReviewDto);
         int j= elementReviewDao.deleteAttach(elementReviewDto);
+        int k=elementReviewDao.deleteNewOriginFile(elementReviewDto);
        int i= elementReviewDao.delete(elementReviewDto);
-       if(i*j<0) throw new WLHSException("不通过删除附件失败");
+       if(i*j<0||i*k<0||j*k<0) throw new WLHSException("不通过删除附件失败");
         return R.ok();
     }
 
