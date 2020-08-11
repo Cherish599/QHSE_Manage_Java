@@ -108,7 +108,8 @@
         PushCompanyName as pushCompanyName,
         PushStaffId as pushStaffId,
         PushStaffName as pushStaffName,
-        ReadDate as readDate
+        ReadDate as readDate,
+        Status as status
         from file_propagationplandetail
         where Status='已读' and File_PropagationID=#{propagationId}
     </select>

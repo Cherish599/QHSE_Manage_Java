@@ -11,6 +11,15 @@ public class ReadHistoryDto {
     private int pushStaffId;
     private String pushStaffName;
     private String readDate;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getPushCompanyCode() {
         return pushCompanyCode;
@@ -52,5 +61,17 @@ public class ReadHistoryDto {
 
     public void setReadDate(String readDate) {
         this.readDate = readDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ReadHistoryDto{" +
+                "pushCompanyCode=" + pushCompanyCode +
+                ", pushCompanyName='" + pushCompanyName + '\'' +
+                ", pushStaffId=" + pushStaffId +
+                ", pushStaffName='" + pushStaffName + '\'' +
+                ", readDate='" + readDate + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
