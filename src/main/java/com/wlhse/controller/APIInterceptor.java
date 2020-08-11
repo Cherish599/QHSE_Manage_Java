@@ -55,10 +55,14 @@ public class APIInterceptor extends HandlerInterceptorAdapter {
                 return true;
             } else {
                 PrintWriter pw = response.getWriter();
+                logger.info("--------------------");
+                logger.info("无权限");
                 pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
                 return false;
             }
         } catch (Exception e) {
+            logger.info("--------------------");
+            logger.info("验证出错");
             PrintWriter pw = response.getWriter();
             pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
             return false;
