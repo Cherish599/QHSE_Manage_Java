@@ -111,6 +111,6 @@
         ReadDate as readDate,
         Status as status
         from file_propagationplandetail
-        where Status='已读' and File_PropagationID=#{propagationId}
+        where File_PropagationID=#{propagationId}
     </select>
 </mapper>
