@@ -136,38 +136,51 @@ public class UploadServiceImpl implements UploadService {
         然后把存放对象属性值的键值对MAP封装为对象，放进list中；
         然后对数据进行校验，包括是否为空表，读取失败，有重复编码；都没问题再写入，根据code有则更新，无则添加；
          */
+        //创建一个字段数组，用于放入对象的map，一定要对应excel里的列顺序
+        String[] fieldArray = {
+                "code",//编码
+                "name",//名字
+                "content",//内容
+                "auditMode",//审核方式
+                "initialScore",//分数
+                "formula", //计算公式
+                "problemDescription",//问题描述，插入另一个数据库
+                "totalCount",//第五级叶子总数
+                "status"//状态
+        };
+        int INDEX_DESCRIPTION=6;//问题描述在数组中的位置
         Workbook workbook = poiUtil.createWorkbook(path);
         //得到第一张表
         Sheet sheet = workbook.getSheetAt(0);
         // 得到标题行
-        Row titleRow=sheet.getRow(0);
+        // Row titleRow=sheet.getRow(0);
         //创建实体类对象容器
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
         //获取EXCEL中的值
         DataFormatter dataFormat=new DataFormatter();
-        for (int i = 2; i < sheet.getPhysicalNumberOfRows(); i++) {//类似二维数组的读取，外层为行，内层为列；从第3行开始读；
+        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {//类似二维数组的读取，外层为行，内层为列；从第2行开始读；
             HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
             Row row = sheet.getRow(i);
             String rcode=new String();
-            for(int j=0;j<titleRow.getLastCellNum();j++)
+            for(int j=0;j<fieldArray.length;j++)//j可以j<titleRow.getLastCellNum()，但害怕excel错误添加
             {
-                // 得到列名
-                String key = titleRow.getCell(j).getStringCellValue();
-                //得到当前列的值
                 String value=dataFormat.formatCellValue(row.getCell(j));
-                //找到该条记录的code
-                if("code".equals(key)) {
-                    rcode = value;
+                if(j==0){//找到该条记录的code
+                    rcode=value;
+                    if(rcode==null||"".equals(value)||" ".equals(value))//检查code是否为空
+                        throw new WLHSException("存在code为空或有空行");
                 }
-                if("problemDescription".equals(key)) {//对问题描述单独写入
-                    if(value==null||"".equals(value))
+                if(j!=INDEX_DESCRIPTION) {//当不为问题描述时，直接将属性键值对放入map
+                    QSHEMSElementValueMap.put(fieldArray[j], value);//读取第i行第j列；
+                }
+                else {//打断问题描述，写入问题描述数据库
+                    if(value==null||"".equals(value)||" ".equals(value)||"  ".equals(value))//如果不是叶子节点，就为空，直接跳过
                         continue;
                     else {
                         insertProblemDescription(rcode, value);
                         continue;
                     }
                 }
-                QSHEMSElementValueMap.put(key, value);//把列名即属性名，和属性内容放入MAP里
             }
             /*QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));
             QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(1)));*/
