@@ -471,10 +471,11 @@
         <!--values(#{code},#{name},#{content},#{basis},#{auditMode},#{initialScore},#{formula},#{problemDescription},#{totalCount},#{status},#{companyCode},-->
         <!--#{companyName},#{year})-->
     <!--</insert>-->
-    <delete id="deleteByCode">
+
+    <delete id="deleteAllDescription">
         delete from qhse_managersyselementproblemdescription
-        where Code=#{code}
     </delete>
+
 
     <insert id="addProblemDescription" >
         insert into qhse_managersyselementproblemdescription
