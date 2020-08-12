@@ -4,16 +4,10 @@ package com.wlhse.controller;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
-import org.apache.commons.io.FileUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 
 @RestController("QhseElementsInputController")
@@ -38,15 +32,10 @@ public class QhseElementsInputController {
     }
     //melon-要素录入文件下载
     @RequestMapping(value = "/downloadElementFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public ResponseEntity<byte[]> downloadElementFile(@RequestParam(value = "fileName")String fileName, HttpServletRequest request) throws IOException {
-        String path =System.getProperty("catalina.home") + "\\webapps\\" + "\\resources\\"+"QHSEEvidence\\";
-        File file = new File(path + File.separator + fileName);
-        fileName=qhseElementsInputService.queryOriginFileName(fileName);
-        HttpHeaders headers = new HttpHeaders();
-        String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
-        headers.setContentDispositionFormData("attachment", downloadFileName);
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
-                headers, HttpStatus.CREATED);
+    public R downloadElementFile(@RequestParam(value = "fileName")String fileName, HttpServletRequest request) throws IOException {
+         String fileNames=qhseElementsInputService.queryOriginFileName(fileName);
+         R r=new R();
+         r.put("data",fileNames);
+         return r;
     }
 }

@@ -38,15 +38,10 @@ public class QHSEManageSysElementsController {
         return qhseManageSysElementsService.queryChildElement();
     }
 
-    //th---根据是否启用查询节点
+    //th---根据是否启用查询节点，包含问题描述
     @RequestMapping(value = "/querryQhseElements/{tag}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public R querryQhseManagerSysElements(@PathVariable("tag") int tag){
         return qhseManageSysElementsService.queryAllElements(tag);
-    }
-    //用于导出excel，包含问题描述字段的查询接口
-    @RequestMapping(value = "/querryQhseElementsForExcel", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public R querryQhseElementsForExcel(){
-        return qhseManageSysElementsService.queryAllElementsForExcel();
     }
 
     //th---跟新状态
