@@ -81,7 +81,7 @@ public class UploadServiceImpl implements UploadService {
         List<CheckListDto> beanList = new ArrayList<>();
         DataFormatter dataFormat=new DataFormatter();
        // System.out.println(sheet.getPhysicalNumberOfRows());
-        for (int j = 2; j < sheet.getPhysicalNumberOfRows(); j++) {//从第三行读
+        for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {//从第二行读
             HashMap<String, String> checkListValueMap = new HashMap<>();
             Row row = sheet.getRow(j);//按行取
             checkListValueMap.put("checkListCode",dataFormat.formatCellValue(row.getCell(0)));
