@@ -179,7 +179,7 @@ public class UploadServiceImpl implements UploadService {
                             problemDescriptionMap.put(rcode,value);
                             continue;
                         }
-                        else throw new WLHSException("编号不是1开始");
+                        else throw new WLHSException(rcode+"的可能问题序号不是1开始");
                     }
                 }
                 else {//当不为问题描述时，直接将属性键值对放入map
