@@ -11,6 +11,6 @@ public interface CheckListService {
 
     R deleteCheckList(int id);
 
-    R updateCheckList(int id,CheckListAddDto checkListAddDto);
+    R updateCheckList(CheckListAddDto checkListAddDto);
 
 }

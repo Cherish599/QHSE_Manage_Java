@@ -56,7 +56,7 @@ public class CheckListServiceImpl implements CheckListService {
         saveDto.setStatus(checkListAddDto.getStatus());
         int i=1;
         //新增表
-        if("00".equals(parentCode)){//添加第一级code传00，Attribute传表
+        if(parentCode==null||"".equals(parentCode)){//添加第一级code传null，Attribute传表
             System.out.println("新增表");
             //获取数据库所有一级节点
             List<String> list=checkListDao.getAllTableNode();
@@ -164,16 +164,16 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Transactional
     @Override
-    public R updateCheckList(int id,CheckListAddDto checkListAddDto) {
+    public R updateCheckList(CheckListAddDto checkListAddDto) {
         int i=1;
         //原本的值
-        CheckListDto checkListOldDto=checkListDao.getById(id);
+        CheckListDto checkListOldDto=checkListDao.getCheckListOne(checkListAddDto.getCheckListCode());
         //改checkListName，改当前节点及下面的所有节点的parentName
         List<CheckListDto> listDtos=checkListDao.getCurrentAllChild(checkListAddDto.getCheckListCode());
         for (CheckListDto checkListDto:listDtos){
-            if(checkListDto.getCheckListID()==id){//当前节点还要改其他值
+            if(checkListDto.getCheckListID().equals(checkListOldDto.getCheckListID())){//如果是当前节点还要改其他值
                 checkListDto.setCheckListName(checkListAddDto.getCheckListName());//更改名字
-                checkListDto.setStatus(checkListAddDto.getStatus());
+                //checkListDto.setStatus(checkListAddDto.getStatus());
             }else{
                 StringBuffer newParentName=new StringBuffer();
                 String[] oldParentName=checkListDto.getParentName().split("/\\*a5f46saad\\*/");

@@ -28,9 +28,9 @@ public class CheckListController {
     }
 
     //改检查情况，改一级节点下的所有节点
-    @RequestMapping(value = "/updateCheckList/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R updateCheckList(@PathVariable("id") int id,@RequestBody(required = false)CheckListAddDto checkListAddDto) {
-        return checkListService.updateCheckList(id,checkListAddDto);
+    @RequestMapping(value = "/updateCheckList", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R updateCheckList(@RequestBody(required = false)CheckListAddDto checkListAddDto) {
+        return checkListService.updateCheckList(checkListAddDto);
     }
     //更改状态
     @RequestMapping(value = "/deleteCheckList/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
