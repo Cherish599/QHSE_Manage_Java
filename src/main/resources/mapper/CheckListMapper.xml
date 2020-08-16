@@ -92,12 +92,12 @@
     <select id="getCheckListOne" resultType="com.wlhse.dto.CheckListDto">
         select * from CheckList
         where CheckListCode=#{code}
+        and status="启用"
     </select>
 
     <select id="getCurrentChildNodes" resultType="string">
         select CheckListCode from CheckList
         where length(CheckListCode)=length(#{code})+4 and CheckListCode like concat(#{code},'%')
-        and status='启用'
     </select>
 
     <update id="updateIsChild">
@@ -110,7 +110,7 @@
 
     <select id="getAllTableNode" resultType="string">
         select CheckListCode from CheckList
-        where length(CheckListCode)=4 and status="启用"
+        where length(CheckListCode)=4
     </select>
 
     <select id="getById" resultType="com.wlhse.dto.CheckListDto">
@@ -129,7 +129,6 @@
     <select id="getCurrentAllChild" resultType="com.wlhse.dto.CheckListDto">
         select * from checkList
         where checkListCode like concat(#{code},"%")
-        and status="启用"
     </select>
 
     <update id="updateCheckList" parameterType="com.wlhse.dto.CheckListDto">

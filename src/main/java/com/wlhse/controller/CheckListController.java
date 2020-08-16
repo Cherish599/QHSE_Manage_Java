@@ -33,7 +33,7 @@ public class CheckListController {
         return checkListService.updateCheckList(checkListAddDto);
     }
     //更改状态
-    @RequestMapping(value = "/deleteCheckList/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/deleteCheckList/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R deleteCheckList(@PathVariable("id") int id) {
         return checkListService.deleteCheckList(id);
     }
