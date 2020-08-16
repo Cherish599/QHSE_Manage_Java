@@ -40,4 +40,14 @@ public class UserOutDto {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "UserOutDto{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", token='" + token + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

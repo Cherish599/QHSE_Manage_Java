@@ -13,7 +13,6 @@ import com.wlhse.util.DeleteCacheUtil;
 import com.wlhse.util.GetIPUtil;
 import com.wlhse.util.HashUtil;
 import com.wlhse.util.MD5Util;
-import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
 import com.wlhse.util.token.TokenUtil;
 import org.apache.commons.lang.StringUtils;
@@ -48,11 +47,11 @@ public class UserServiceImpl implements UserService {
 
     private final static String newPwd = "123456";
 
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public String login(UserDto userDto, HttpServletRequest request) {
         String ip = GetIPUtil.getIpAddr(request);
-        System.out.println("test----------------");
+        logger.info("------------------------");
         int path = HashUtil.getPath(ip);
         System.out.println(path);
         if (jedisClient.get(ip, path) != null && Integer.parseInt(jedisClient.get(ip, path)) >= 5)
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
         String psw = userDto.getPsw();
         String MD5psw = MD5Util.getMD5(psw);
         userOutDto = userDao.getUserPojo(userName, MD5psw);
-
+        logger.info(userDto.toString());
         if (userOutDto == null)
             throw new WLHSException("密码错误");
         if (!userOutDto.getStatus().equals("启用"))
