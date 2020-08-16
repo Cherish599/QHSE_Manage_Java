@@ -14,6 +14,7 @@
         t1.PushCompanyName as companyName
         from file_propagationplandetail t1,file_propagationplan t2
         where t1.PushStaffId=#{staffId} and t1.File_PropagationID=t2.File_PropagationID
+        order by createTime desc
     </select>
     <insert id="addNewDetail">
        insert into
@@ -43,6 +44,7 @@
         <if test="department!=null and department!=''">
             department,
         </if>
+            createTime,
         </trim>
        )
     values (
@@ -69,6 +71,7 @@
             <if test="department!=null and department!=''">
                 #{department},
             </if>
+                now()
         </trim>
 
         )
@@ -108,8 +111,9 @@
         PushCompanyName as pushCompanyName,
         PushStaffId as pushStaffId,
         PushStaffName as pushStaffName,
-        ReadDate as readDate
+        ReadDate as readDate,
+        Status as status
         from file_propagationplandetail
-        where Status='已读' and File_PropagationID=#{propagationId}
+        where File_PropagationID=#{propagationId}
     </select>
 </mapper>
