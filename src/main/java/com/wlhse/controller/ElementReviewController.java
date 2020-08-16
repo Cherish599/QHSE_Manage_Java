@@ -1,25 +1,15 @@
 package com.wlhse.controller;
 
-import com.wlhse.cache.JedisUtils;
 import com.wlhse.dto.inDto.ElementReviewDto;
-import com.wlhse.dto.getDto.EmployeeDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.service.ElementReviewService;
 import com.wlhse.util.GetCurrentUserIdUtil;
 import com.wlhse.util.R;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
 @RestController("ElementReviewController")
 @RequestMapping("/api/v3")
@@ -64,7 +54,7 @@ public class ElementReviewController {
     //审核人不批准不通过
     @RequestMapping(value = "/no_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
-        elementReviewService.deletes(elementReviewDto);
+        //elementReviewService.deletes(elementReviewDto);不通过删除附件等所有信息
         elementReviewDto.setStatus("不通过");
         return  elementReviewService.updateStatus(elementReviewDto);
     }
