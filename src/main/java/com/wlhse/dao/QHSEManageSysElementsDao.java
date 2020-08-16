@@ -63,8 +63,10 @@ public interface QHSEManageSysElementsDao {
 
     //查询所有编码
     List<String> queryAllCode();
-    //导入excel问题描述时，根据code删除对应问题描述
-    Integer deleteByCode(@Param("code") String code);
+
+    //导入excel问题描述时，先删除所有问题描述
+    Integer deleteAllDescription();
+
     //导入excel问题描述时，根据code添加对应问题描述
     Integer addProblemDescription(@Param("code") String code,@Param("description") String description);
     //根据code查询对应的问题描述
