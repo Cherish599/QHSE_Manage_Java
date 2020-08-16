@@ -108,12 +108,14 @@ public class ElementReviewServiceImpl implements ElementReviewService {
             }
             returnPojo = qhseEvidenceAttatchDtos.get(k);
             //拼接图片
-            String[] urs = returnPojo.getAttach().split(";");
-            String strs = "";
-            for (String str:urs) {
-                strs+=url+str+";";
+            if(returnPojo.getAttach()!=null&&!"".equals(returnPojo.getAttach())) {//修复空指针异常
+                String[] urs = returnPojo.getAttach().split(";");
+                String strs = "";
+                for (String str : urs) {
+                    strs += url + str + ";";
+                }
+                returnPojo.setAttach(strs);
             }
-            returnPojo.setAttach(strs);
         }
         Map<String, Object> map = new HashMap<>();
         map.put("data", returnPojo);
