@@ -8,6 +8,15 @@ public class UserOutDto {
     private String userName;
     private String token;
     private String status;
+    private int employeeId;
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public String getUserName() {
         return userName;

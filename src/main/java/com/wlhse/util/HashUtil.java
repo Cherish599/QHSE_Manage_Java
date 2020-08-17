@@ -1,9 +1,7 @@
 package com.wlhse.util;
 
-import com.wlhse.cache.JedisClient;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,8 +9,6 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class HashUtil {
 
-    @Resource
-    private JedisClient jedisClient;
 
     //计算数据库中的hash值
     public static String hash(String string) {

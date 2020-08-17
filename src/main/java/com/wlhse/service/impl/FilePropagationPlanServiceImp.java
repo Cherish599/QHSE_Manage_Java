@@ -2,6 +2,7 @@ package com.wlhse.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.FilePropagationDao;
 import com.wlhse.dao.FilePropagationDetailDao;
@@ -11,17 +12,18 @@ import com.wlhse.dto.outDto.FilePropagationDetailDto;
 import com.wlhse.dto.outDto.FilePropagationResultDto;
 import com.wlhse.entity.FilePropagationPOJO;
 import com.wlhse.entity.FilePropagationPOJO1;
+import com.wlhse.service.EmployeeManagementService;
 import com.wlhse.service.FilePropagationPlanService;
 import com.wlhse.util.IdUtil;
 import com.wlhse.util.R;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.security.x509.RFC822Name;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description:provide services to implement method
@@ -36,15 +38,21 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     FilePropagationDetailDao filePropagationDetailDao;
 
     @Resource
+    JedisClient jedisClient;
+
+    @Resource
+    EmployeeManagementService employeeManagementService;
+    @Resource
     FileDao fileDao;
     @Override
     @Transactional
     public R releaseNewFilePropagationPlan(FilePropagationPOJO1 filePropagationPOJO, HttpServletRequest request) {
-
-        //data that only used in api test.
-        //TODO use token in request header to get employee information
-        filePropagationPOJO.setStaffId(1);
-        filePropagationPOJO.setStaffName("Cocoo");
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        int employeeId = Integer.valueOf(map.get("employeeId"));
+        filePropagationPOJO.setStaffId(employeeId);
+        String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(employeeId);
+        filePropagationPOJO.setStaffName(employeeName);
         IdUtil idUtil=new IdUtil(6,2,1);
         filePropagationPOJO.setFilePropagationID(idUtil.getId());
         FilePropagationPOJO filePropagationPOJO1=new FilePropagationPOJO();
@@ -66,10 +74,11 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
 
     @Override
     public R getFilePropagationPlanDetailByStaffId(HttpServletRequest request) {
-        //TODO use token in request header to get employee information
-        //data that only used in api test.
         R r=new R();
-        List<FilePropagationResultDto> filePropagationByStaffId = filePropagationDetailDao.getFilePropagationByStaffId(2);
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        String employeeId = map.get("employeeId");
+        List<FilePropagationResultDto> filePropagationByStaffId = filePropagationDetailDao.getFilePropagationByStaffId(Integer.valueOf(employeeId));
         for (FilePropagationResultDto filePropagationResultDto:filePropagationByStaffId){
             List<String> filePaths=new ArrayList<>();
             List<FilePropagationFileInfo> fileInfos= fileDao.getFileInfoByPropagationId(filePropagationResultDto.getFilePropagationId());
@@ -84,10 +93,10 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
 
     @Override
     public R readFilePropagation(HttpServletRequest request, int detailId) {
-        //TODO use token in request header to get employee information
-        //the employee id is used to identify if this detail is belong to the employee
-         //data that only used in api test.
-        filePropagationDetailDao.updateFilePropagationStatus(detailId,2);
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        String employeeId = map.get("employeeId");
+        filePropagationDetailDao.updateFilePropagationStatus(detailId,Integer.valueOf(employeeId));
         return R.ok();
     }
 
@@ -95,7 +104,6 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     public R getAllFilePropagation() {
         R r=new R();
         List<FilePropagationPOJO> allFilePropagation = filePropagationDao.getAllFilePropagation();
-        System.out.println("查询结果:"+allFilePropagation);
         List<FilePropagationPOJO1> filePropagationPOJO1s=new ArrayList<>();
         for (FilePropagationPOJO filePropagation:allFilePropagation){
             List<String> filePaths=new ArrayList<>();
@@ -131,8 +139,6 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     @Transactional
     public R insertNewFilePropagationDetail(List<FilePropagationDetailDto> filePropagationDetailDto) {
         for (FilePropagationDetailDto filePropagationDetailDto1:filePropagationDetailDto){
-            filePropagationDetailDto1.setPushStaffId(2);
-            filePropagationDetailDto1.setPushStaffName("采臣");
             filePropagationDetailDao.addNewDetail(filePropagationDetailDto1);
         }
         return R.ok();

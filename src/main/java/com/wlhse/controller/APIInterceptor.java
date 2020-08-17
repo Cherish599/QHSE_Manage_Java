@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.Map;
 
 //自定义拦截器 AOP
 public class APIInterceptor extends HandlerInterceptorAdapter {
@@ -39,30 +40,31 @@ public class APIInterceptor extends HandlerInterceptorAdapter {
         try {
             String token = request.getHeader("Authorization");
 
-            String userId = "";
+            String employeeId = "";
             if (StringUtils.isNotBlank(token)) {
-                userId = jedisClient.get(token);
+                Map<String, String> map = jedisClient.hGetAll(token);
+                employeeId= map.get("employeeId");
             }
             String servletPath = request.getServletPath();
             String method = request.getMethod();
-            InterfaceModuleInDto interfaceModuleInDto = new InterfaceModuleInDto(Integer.parseInt(userId), sortCodeUtil.getNoNumberString(servletPath), method);
+            InterfaceModuleInDto interfaceModuleInDto = new InterfaceModuleInDto(Integer.parseInt(employeeId), sortCodeUtil.getNoNumberString(servletPath), method);
             int count = moduleDao.getInterfaceCountByEmpId(interfaceModuleInDto);
-            if (StringUtils.isNotBlank(userId) && count >= 1) {
+            if (StringUtils.isNotBlank(employeeId) && count >= 1) {
                 //spring请求的链式执行顺序为Filter-->拦截器-->controller
                 if (!("GET".equals(method))) {
-                    logger.info("userID:" + userId + " url:" + servletPath + " method:" + method);
+                    logger.info("employeeId:" + employeeId + " url:" + servletPath + " method:" + method);
                 }
                 return true;
             } else {
                 PrintWriter pw = response.getWriter();
                 logger.info("--------------------");
-                logger.info("无权限");
+                logger.info(request.getRequestURI()+" 无权限");
                 pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
                 return false;
             }
         } catch (Exception e) {
             logger.info("--------------------");
-            logger.info("验证出错");
+            logger.info(request.getRequestURI()+" 无权限");
             PrintWriter pw = response.getWriter();
             pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
             return false;

@@ -35,7 +35,7 @@ public class HandShake implements HandshakeInterceptor {
             return false;
         }
         try {
-            String uid = jedisClient.get(token);
+            String uid = jedisClient.hGetAll(token).get("employeeId");
             if (StringUtils.isNotBlank(uid)) {
                 attributes.put("uid", Long.parseLong(uid));
             } else {

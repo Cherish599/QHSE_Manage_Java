@@ -55,4 +55,7 @@ public interface EmployeeManagementDao {
     EmployeeDto getEmployeePojo(@Param("employeeId") int employeeId);
 
     int queryEmployeeID(@Param("hash") String hash);
+
+    //get employee name by employee id
+    String queryEmployeeNameByEmployeeId(int employeeId);
 }

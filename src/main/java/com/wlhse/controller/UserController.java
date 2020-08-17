@@ -17,7 +17,6 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public String Login1(@RequestBody(required = false) UserDto userDto, HttpServletRequest request) {
-        System.out.println("登陆测试");
         return service.login(userDto,request);
     }
 

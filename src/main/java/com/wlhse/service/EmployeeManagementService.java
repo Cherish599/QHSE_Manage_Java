@@ -30,4 +30,6 @@ public interface EmployeeManagementService {
 
     EmployeeManagementDto querryRoleById(int id);
 
+    String getEmployeeNameByEmployeeID(int eId);
+
 }

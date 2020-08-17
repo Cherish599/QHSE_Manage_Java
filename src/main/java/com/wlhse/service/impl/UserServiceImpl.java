@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
@@ -67,7 +69,10 @@ public class UserServiceImpl implements UserService {
             throw new WLHSException("账户已停用");
         String token = TokenUtil.generateString();
         //设置15天的token过期，根据客户需求可以在增加时间长度
-        jedisClient.setSeconds(token, String.valueOf(userOutDto.getUserId()), 1296000);
+        Map<String,String> map=new HashMap<>();
+        map.put("userId",String.valueOf(userOutDto.getUserId()));
+        map.put("employeeId",String.valueOf(userOutDto.getEmployeeId()));
+        jedisClient.hset(token,map);
         userOutDto.setToken(token);
         System.out.println("token"+token);
         return NR.r(userOutDto);
