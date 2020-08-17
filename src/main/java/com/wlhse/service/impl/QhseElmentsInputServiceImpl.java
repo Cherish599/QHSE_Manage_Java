@@ -25,22 +25,26 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
         if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
+            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
             String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
             elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
-            for (String str:strs) {
-                elementInputFileInfo.setNewElementFileName(str);
-                qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+                for (String str : strs) {
+                    elementInputFileInfo.setNewElementFileName(str);
+                    qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+                }
             }
             qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
         } else {
             //将附件attach对应id放入elementFileInfo
-            String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
-            ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
-            elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
-            for (String str:strs) {
-                elementInputFileInfo.setNewElementFileName(str);
-                qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
+                String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
+                ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
+                elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
+                for (String str : strs) {
+                    elementInputFileInfo.setNewElementFileName(str);
+                    qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+                }
             }
             int i= qhseElementsInputDao.update(elementEvidenceAttachInDto);
             int j = qhseElementsInputDao.updateAttach(elementEvidenceAttachInDto);
