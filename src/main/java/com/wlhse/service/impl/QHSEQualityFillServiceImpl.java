@@ -1,6 +1,5 @@
 package com.wlhse.service.impl;
 
-import com.wlhse.cache.JedisUtils;
 import com.wlhse.dao.CompanyDao;
 import com.wlhse.dao.QHSEComSysEleStatusDao;
 import com.wlhse.dao.QHSECompanySysElementsDao;

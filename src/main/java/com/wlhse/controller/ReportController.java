@@ -72,7 +72,7 @@ public class ReportController {
     public String reportList(@ModelAttribute ReportDto reportDto,HttpServletRequest request){
         //只能查询登录人的公司和其子公司的信息
         Jedis jedis=jedisUtils.getJedis();
-        Integer id=Integer.parseInt(jedis.get(request.getHeader("Authorization")));
+        Integer id=Integer.parseInt(jedis.hgetAll(request.getHeader("Authorization")).get("employeeId"));
         reportDto.setPersonID(id);
         reportDto.setStart((reportDto.getPageIdx()-1)*reportDto.getPageSize());
         return reportService.reportList(reportDto);
@@ -107,7 +107,7 @@ public class ReportController {
     public String countReports(@ModelAttribute ReportDto reportDto, HttpServletRequest request){
         //只能查询登录人的公司和其子公司的信息
         Jedis jedis=jedisUtils.getJedis();
-        reportDto.setPersonID(Integer.parseInt(jedis.get(request.getHeader("Authorization"))));
+        reportDto.setPersonID(Integer.parseInt(jedis.hgetAll(request.getHeader("Authorization")).get("employeeId")));
         return reportService.countReports(reportDto);
     }
 
@@ -115,7 +115,7 @@ public class ReportController {
     @RequestMapping(value = "/incompeletReportCodes", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String incompeletReportCodes(HttpServletRequest request){
         Jedis jedis=jedisUtils.getJedis();
-        Integer id=Integer.parseInt(jedis.get(request.getHeader("Authorization")));
+        Integer id=Integer.parseInt(jedis.hgetAll(request.getHeader("Authorization")).get("employeeId"));
         return reportService.incompeletReportCodes(id);
     }
 
