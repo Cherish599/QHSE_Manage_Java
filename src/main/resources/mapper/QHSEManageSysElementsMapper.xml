@@ -119,7 +119,7 @@
         update qqhse_managersyselement set TotalCount=TotalCount-1 where Code=#{code};
     </update>
     <select id="sumScore" resultType="java.lang.Integer">
-        select sum(InitialScore) from qhse_managersyselement where Code like concat(#{code},'%') and length(Code)=15
+        select  IFNULL(sum(InitialScore),0) from qhse_managersyselement where Code like concat(#{code},'%') and length(Code)=15
     </select>
     <select id="sumCount" resultType="java.lang.Integer">
         select count(*) from qhse_managersyselement where Code like concat(#{code},'%') and length(Code)=15
