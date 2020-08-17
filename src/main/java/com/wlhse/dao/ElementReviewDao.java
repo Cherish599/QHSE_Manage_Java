@@ -3,6 +3,7 @@ package com.wlhse.dao;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public interface ElementReviewDao {
     int deleteAttach(ElementReviewDto elementReviewDto);
 
     int deleteNewOriginFile(ElementReviewDto elementReviewDto);
+
+    //年度表删除时删除空id和不用NewOriginFile数据
+    int deleteNewOriginFiles(@Param("id") Integer id);
 
 
 }

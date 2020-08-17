@@ -96,4 +96,9 @@
           QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID});
     </delete>
 
+    <delete id="deleteNewOriginFiles" parameterType="java.lang.Integer">
+        DELETE FROM elementinputfileinfo WHERE QHSE_CompanyYearManagerSysElementEvidence_ID
+        is null or QHSE_CompanyYearManagerSysElementEvidence_ID =#{id}
+    </delete>
+
 </mapper>
