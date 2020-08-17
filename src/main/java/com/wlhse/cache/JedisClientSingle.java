@@ -310,4 +310,40 @@ public class JedisClientSingle implements JedisClient {
             jedisUtils.returnResource(jedis);
         }
     }
+
+    @Override
+    public String hset(String key, Map<String, String> map) {
+        Jedis jedis = jedisUtils.getJedis();
+        if (jedis == null) {
+            throw new NullPointerException("Jedis is Null");
+        }
+        try {
+            String string = jedis.hmset(key,map);
+            jedis.expire(key, 1296000);
+            return string;
+        } catch (Exception e) {
+            jedisUtils.returnBrokenResource(jedis);
+            logger.error(e.getMessage(), e);
+        } finally {
+            jedisUtils.returnResource(jedis);
+        }
+        return null;
+    }
+
+    @Override
+    public Map<String, String> hGetAll(String key) {
+        Jedis jedis = jedisUtils.getJedis();
+        if (jedis == null) {
+            throw new NullPointerException("Jedis is Null");
+        }
+        try {
+            return jedis.hgetAll(key);
+        } catch (Exception e) {
+            jedisUtils.returnBrokenResource(jedis);
+            logger.error(e.getMessage(), e);
+        } finally {
+            jedisUtils.returnResource(jedis);
+        }
+        return null;
+    }
 }

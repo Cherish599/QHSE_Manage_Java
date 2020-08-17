@@ -10,6 +10,8 @@ import com.wlhse.util.SortCodeUtil;
 import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,7 @@ public class RoleServiceImpl implements RolesService {
 
     @Resource
     private RoleModuleDao roleModuleDao;
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public String getRolesByCondition(String roleName, int pageIdx, int pageSize, String type) {
         List<RolesPojo> list;
@@ -63,10 +65,11 @@ public class RoleServiceImpl implements RolesService {
     @Transactional
     public String deleteRole(Integer roleID) {
         RolesPojo rolesPojo = rolesDao.queryRoleById(roleID);
-        if (roleModuleDao.deleteSYSRoleModuleByRoleCode(rolesPojo.getRoleCode()) <= 0)
-            throw new WLHSException("删除失败");
-        if (rolesDao.deleteRoles(roleID) <= 0)
-            throw new WLHSException("删除失败");
+        if (roleModuleDao.deleteSYSRoleModuleByRoleCode(rolesPojo.getRoleCode())<0)
+            throw new WLHSException("删除失败，原因1");
+        if (rolesDao.deleteRoles(roleID) <= 0) {
+            throw new WLHSException("删除失败，原因2");
+        }
         return NR.r();
     }
 

@@ -35,4 +35,8 @@ public interface JedisClient {
     Boolean exists(String key);
 
     void delManyCahce(String key, int idx);
+
+    String hset(String key,Map<String,String> map);
+
+    Map<String,String> hGetAll(String key);
 }

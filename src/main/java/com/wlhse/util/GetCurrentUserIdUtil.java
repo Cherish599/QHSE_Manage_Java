@@ -19,7 +19,7 @@ public class GetCurrentUserIdUtil {
             String token = request.getHeader("Authorization");
             if (StringUtils.isNotBlank(token))
                // System.out.println(jedisClient.get(token));
-                return Integer.parseInt(jedisClient.get(token));
+                return Integer.parseInt(jedisClient.hGetAll(token).get("employeeId"));
         } catch (Exception e) {
             e.printStackTrace();
         }

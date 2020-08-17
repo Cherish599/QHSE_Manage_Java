@@ -41,7 +41,7 @@ public class QHSEQualityFillController {
     public String querryQHSEReportElements(@ModelAttribute QHSEQualityFillDto qhseQualityFillDto, HttpServletRequest request){//填表
         if(qhseQualityFillDto.getCompanyCode()==null||"".equals(qhseQualityFillDto.getCompanyCode())){//如果不传companyCode，默认为登录人的公司
             Jedis jedis=jedisUtils.getJedis();
-            Integer id=Integer.parseInt(jedis.get(request.getHeader("Authorization")));
+            Integer id=Integer.parseInt(jedis.hgetAll(request.getHeader("Authorization")).get("employeeId"));
             EmployeeManagementDto employeeManagementDto=employeeManagementService.querryRoleById(id);
             qhseQualityFillDto.setCompanyCode(employeeManagementDto.getCompanyCode());
         }

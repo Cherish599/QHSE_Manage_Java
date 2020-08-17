@@ -408,4 +408,10 @@
     <select id="queryEmployeeID" resultType="java.lang.Integer">
         select employeeID from employee where hash=#{hash}
     </select>
+
+    <select id="queryEmployeeNameByEmployeeId" resultType="String">
+        select Name
+        from employee
+        where EmployeeID=#{0}
+    </select>
 </mapper>

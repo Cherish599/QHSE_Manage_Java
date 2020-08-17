@@ -28,7 +28,7 @@ public class CompanyTreeController {
     public String getCompanyTree(HttpServletRequest request) {
         String token=request.getHeader("Authorization");
         Jedis jedis=jedisUtils.getJedis();
-        String id=jedis.get(token);
+        String id=jedis.hgetAll(token).get("employeeId");
         return companyService.listTreeCompany(Integer.parseInt(id)).toJSONString();
     }
 

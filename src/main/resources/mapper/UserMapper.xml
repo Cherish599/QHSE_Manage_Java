@@ -78,8 +78,9 @@
 
     <select id="getUserPojo" resultType="com.wlhse.dto.outDto.UserOutDto">
         select UName as username,
-        EmployeeID as userId,
-        Status as status
+        SYS_USER_ID as userId,
+        Status as status,
+        EmployeeID as employeeId
         from sys_user
         <where>
             UName = #{0}

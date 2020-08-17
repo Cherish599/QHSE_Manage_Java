@@ -274,4 +274,9 @@ public class EmloyeeManagementServiceImpl implements EmployeeManagementService {
     public EmployeeManagementDto querryRoleById(int id) {
         return employeeDao.queryById(id);
     }
+
+    @Override
+    public String getEmployeeNameByEmployeeID(int eId) {
+        return  employeeDao.queryEmployeeNameByEmployeeId(eId);
+    }
 }
