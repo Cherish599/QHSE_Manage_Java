@@ -4,9 +4,10 @@
 <mapper namespace="com.wlhse.dao.ProblemDescriptionDao">
     <insert id="addProblemDescription" parameterType="com.wlhse.dto.ProblemDescriptionDto" >
         insert into qhse_auditproblemrecord
-        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code)
+        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName)
         values
-        (#{qHSE_FileAudit_ID},#{qHSE_FileAuditRecord_ID},#{problemDescription},#{code})
+        (#{qHSE_FileAudit_ID},#{qHSE_FileAuditRecord_ID},#{problemDescription},#{code},#{companyCode},
+        #{additor},#{companyName})
     </insert>
 
     <delete id="deleteProblemDescription">
