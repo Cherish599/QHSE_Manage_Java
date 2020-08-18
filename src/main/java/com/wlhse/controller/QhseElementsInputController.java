@@ -21,8 +21,6 @@ public class QhseElementsInputController {
     //melon-增加附件所有信息(前端传值code、id、uploadtime不能为空）
     @RequestMapping(value = "/addAll_evidence_attach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public R addElementEvidenceAttachs(@RequestBody(required = false) ElementEvidenceAttachInDto elementEvidenceAttachInDto){
-       //记得将文件最新的id插入进去
-
         return qhseElementsInputService.addElementEvidenceAttach(elementEvidenceAttachInDto) ;
     }
     //melon-查询信息

@@ -25,28 +25,32 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
         if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
+            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
             String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
             elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
-            for (String str:strs) {
-                elementInputFileInfo.setNewElementFileName(str);
-                qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+                for (String str : strs) {
+                    elementInputFileInfo.setNewElementFileName(str);
+                    qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+                }
             }
             qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
-            qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//更改状态审核
         } else {
             //将附件attach对应id放入elementFileInfo
-            String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
-            ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
-            elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
-            for (String str:strs) {
-                elementInputFileInfo.setNewElementFileName(str);
-                qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
+                String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
+                ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
+                elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
+                for (String str : strs) {
+                    elementInputFileInfo.setNewElementFileName(str);
+                    qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
+                }
             }
             int i= qhseElementsInputDao.update(elementEvidenceAttachInDto);
             int j = qhseElementsInputDao.updateAttach(elementEvidenceAttachInDto);
             if (i * j < 0) throw new WLHSException("更新失败");
         }
+        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//更改状态审核
         return R.ok();
     }
 
