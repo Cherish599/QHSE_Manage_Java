@@ -7,7 +7,7 @@
         (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName)
         values
         (#{qHSE_FileAudit_ID},#{qHSE_FileAuditRecord_ID},#{problemDescription},#{code},#{companyCode},
-        #{additor},#{companyName})
+        #{auditor},#{companyName})
     </insert>
 
     <delete id="deleteProblemDescription">

@@ -8,7 +8,7 @@ public class ProblemDescriptionDto {
     private String code;
     private String startDate;
     private String endDate;
-    private String additor;
+    private String auditor;
     private String companyCode;
     private String companyName;
 
@@ -28,12 +28,12 @@ public class ProblemDescriptionDto {
         this.companyCode = companyCode;
     }
 
-    public String getAdditor() {
-        return additor;
+    public String getAuditor() {
+        return auditor;
     }
 
-    public void setAdditor(String additor) {
-        this.additor = additor;
+    public void setAuditor(String auditor) {
+        this.auditor = auditor;
     }
 
     public String getStartDate() {
