@@ -2,6 +2,7 @@ package com.wlhse.service;
 
 
 import com.wlhse.entity.RolesPojo;
+import com.wlhse.util.R;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface RolesService {
     String deleteRole(Integer roleID);
     //更新
     String updateRole(RolesPojo rolesPojo);
+
+    R isExit(String name);
 }

@@ -1,25 +1,38 @@
 package com.wlhse.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dto.DangerRecordDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.DangerRecordService;
+import com.wlhse.service.EmployeeManagementService;
 import com.wlhse.util.R;
 import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DangerRecordServiceImpl implements DangerRecordService {
 
     @Resource
     private DangerRecordDao dangerRecordDao;
-
+    @Resource
+    JedisClient jedisClient;
+    @Resource
+    EmployeeManagementService employeeManagementService;
     @Override
-    public R addDangerRecord(DangerRecordDto dangerRecordDto) {
+    public R addDangerRecord(DangerRecordDto dangerRecordDto, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        int employeeId = Integer.valueOf(map.get("employeeId"));
+        dangerRecordDto.setSafeStaff_ID(employeeId);
+        String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(employeeId);
+        dangerRecordDto.setSafeStaff_Name(employeeName);
         if(dangerRecordDao.addDangerRecord(dangerRecordDto)<=0)
             throw new WLHSException("新增失败");
         return R.ok();

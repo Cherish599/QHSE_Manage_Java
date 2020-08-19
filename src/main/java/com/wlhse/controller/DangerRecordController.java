@@ -7,6 +7,7 @@ import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController("DangerRecordController")
 @RequestMapping("/api/v3")
@@ -16,9 +17,9 @@ public class DangerRecordController {
     private DangerRecordService dangerRecordService;
 
     @RequestMapping(value = "/add_dangerrecord", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public R addDangerRecord(@RequestBody(required = false) DangerRecordDto dangerRecordDto) {
+    public R addDangerRecord(@RequestBody(required = false) DangerRecordDto dangerRecordDto, HttpServletRequest request) {
 
-        return dangerRecordService.addDangerRecord(dangerRecordDto);
+        return dangerRecordService.addDangerRecord(dangerRecordDto,request);
     }
 
     @RequestMapping(value = "/delete_dangerrecord", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
