@@ -9,6 +9,33 @@ public class UserOutDto {
     private String token;
     private String status;
     private int employeeId;
+    private String companyName;
+    private String companyCode;
+    private String employeeName;
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public int getEmployeeId() {
         return employeeId;

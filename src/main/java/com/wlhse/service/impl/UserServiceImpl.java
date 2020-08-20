@@ -1,13 +1,17 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.CompanyDao;
 import com.wlhse.dao.UserDao;
 import com.wlhse.dto.inDto.UserDto;
 import com.wlhse.dao.UserRoleDao;
 import com.wlhse.dto.outDto.UserOutDto;
+import com.wlhse.entity.CompanyPojo;
 import com.wlhse.entity.UserPojo;
 import com.wlhse.entity.UserRolePojo;
 import com.wlhse.exception.WLHSException;
+
+import com.wlhse.service.EmployeeManagementService;
 import com.wlhse.service.UserService;
 import com.wlhse.util.DeleteCacheUtil;
 import com.wlhse.util.GetIPUtil;
@@ -24,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -47,6 +52,12 @@ public class UserServiceImpl implements UserService {
     @Resource
     private DeleteCacheUtil deleteCacheUtil;
 
+    @Resource
+    CompanyDao companyDao;
+
+    @Resource
+    EmployeeManagementService employeeManagementService;
+
     private final static String newPwd = "123456";
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -69,6 +80,11 @@ public class UserServiceImpl implements UserService {
             throw new WLHSException("账户已停用");
         String token = TokenUtil.generateString();
         //设置15天的token过期，根据客户需求可以在增加时间长度
+        List<CompanyPojo> companyPojos = companyDao.queryCompany(userOutDto.getEmployeeId());
+        userOutDto.setCompanyCode(companyPojos.get(0).getCompanyCode());
+        userOutDto.setCompanyName(companyPojos.get(0).getName());
+        String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(userOutDto.getEmployeeId());
+        userOutDto.setEmployeeName(employeeName);
         Map<String,String> map=new HashMap<>();
         map.put("userId",String.valueOf(userOutDto.getUserId()));
         map.put("employeeId",String.valueOf(userOutDto.getEmployeeId()));
