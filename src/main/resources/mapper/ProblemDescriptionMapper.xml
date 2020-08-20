@@ -48,8 +48,8 @@
     <select id="queryProblemDescription" resultType="com.wlhse.dto.ProblemDescriptionDto">
         select *
         from qhse_auditproblemrecord as t1
-        join qhse_fileaudit as t2
-        on t1.QHSE_FileAudit_ID = t2.QHSE_FileAudit_ID
+        join qhse_fileauditrecord as t2
+        on t1.QHSE_FileAuditRecord_ID = t2.QHSE_FileAuditRecord_ID
         <where>
             <if test="startDate != null and startDate  != ''">
                 AND t2.AuditTime>=#{startDate}
@@ -58,10 +58,13 @@
                 AND #{endDate}>=t2.AuditTime
             </if>
             <if test="auditor != null and auditor  != ''">
-                AND t2.Additor=#{auditor}
+                AND t1.Additor=#{auditor}
             </if>
             <if test="companyCode != null and companyCode  != ''">
-                AND t2.CompanyCode=#{companyCode}
+                AND t1.CompanyCode=#{companyCode}
+            </if>
+            <if test="companyName != null and companyName  != ''">
+                AND t1.CompanyName=#{companyName}
             </if>
         </where>
     </select>
