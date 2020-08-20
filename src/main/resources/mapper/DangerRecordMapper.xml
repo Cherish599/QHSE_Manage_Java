@@ -154,7 +154,7 @@
                 #{workItem},
             </if>
             <if test="companyId != null and companyId  != ''">
-                #{companyId},(select name from sys_company where SYS_CompanyID=#{companyId}),
+                #{companyId},(select name from sys_company where CompanyCode=#{companyId}),
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 #{supervisionDate},
@@ -307,7 +307,7 @@
                 workItem=#{workItem},
             </if>
             <if test="companyId != null and companyId  != ''">
-                companyId=#{companyId},companyName=(select name from sys_company where SYS_CompanyID=#{companyId}),
+                companyId=#{companyId},companyName=(select name from sys_company where CompanyCode=#{companyId}),
             </if>
             <if test="supervisionDate != null and supervisionDate  != ''">
                 supervisionDate=#{supervisionDate},
