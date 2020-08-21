@@ -6,7 +6,6 @@ public class FileAuditRecordDto {
     private String code;
     private String codeScore;
     private String pass;
-    private String year;
     private String companyCode;
     private String companyName;
     private String auditTime;
@@ -26,14 +25,6 @@ public class FileAuditRecordDto {
 
     public void setAdditor(String additor) {
         this.additor = additor;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public String getCompanyCode() {

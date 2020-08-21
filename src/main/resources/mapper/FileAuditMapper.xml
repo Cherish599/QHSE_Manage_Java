@@ -141,7 +141,7 @@
                 #{pass},
             </if>
             <if test="additor!=null and additor!=''">
-                #{additor}
+                #{additor},
             </if>
             <if test="auditTime!=null and auditTime!=''">
                 #{auditTime},
@@ -149,12 +149,25 @@
         </trim>
     </sql>
 
-    <insert id="addFileAuditRecord" parameterType="com.wlhse.dto.FileAuditRecordDto" >
+    <insert id="addFileAuditRecord" parameterType="com.wlhse.dto.FileAuditRecordDto">
         insert into qhse_fileauditrecord
-        (<include refid="key1"/>)
+         (<include refid="key1"/>)
         values
-        (<include refid="value2"/>)
+         (<include refid="value2"/>)
     </insert>
+
+    <select id="queryRecordId" resultType="java.lang.Integer">
+        select QHSE_FileAudit_RecordID
+        from qhse_fileauditrecord
+        <where>
+            <if test="code != null and code  != ''">
+                AND QHSE_FileAudit_ID=#{fileAuditId}
+            </if>
+            <if test="code != null and code  != ''">
+                AND Code=#{code}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteFileAuditRecord">
         delete from qhse_fileauditrecord
