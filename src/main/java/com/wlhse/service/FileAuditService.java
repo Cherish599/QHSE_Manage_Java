@@ -16,7 +16,7 @@ public interface FileAuditService {
     //增加文件审核的记录
     R addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto);
     //查询审核记录ID
-    Integer queryRecordId(FileAuditRecordDto fileAuditRecordDto);
+    String queryRecordId(FileAuditRecordDto fileAuditRecordDto);
     //删除文件审核的记录
     R deleteFileAuditRecord(Integer id1);
     //更新文件审核通过与否状态

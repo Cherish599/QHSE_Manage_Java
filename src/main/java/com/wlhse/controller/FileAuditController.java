@@ -55,7 +55,7 @@ public class FileAuditController {
     }
 
     @RequestMapping(value = "/queryRecordId", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public Integer queryRecordId(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
+    public String queryRecordId(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
         return fileAuditService.queryRecordId(fileAuditRecordDto);
     }
 
