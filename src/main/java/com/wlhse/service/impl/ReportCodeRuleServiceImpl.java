@@ -98,9 +98,8 @@ public class ReportCodeRuleServiceImpl implements ReportCodeRuleService {
 
     @Override
     public String querryReportType(int id) {
-        String companyCode = employeeManagementDao.queryCompanyCodeByEmpId(id);
         try{
-            return NR.r(reportCodeRuleDao.querryReportType(companyCode));
+            return NR.r(reportCodeRuleDao.querryReportType());
         }catch (Exception e){
             e.printStackTrace();
             throw new WLHSException("查询失败");

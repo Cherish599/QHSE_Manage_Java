@@ -9,9 +9,9 @@
     <select id="querryRules" parameterType="com.wlhse.dto.ReportCodeRule" resultType="com.wlhse.dto.ReportCodeRule" >
         select * from report_code_rule
         <trim prefix="where" prefixOverrides="and">
-     <!--       <if test="companyCode!=null and companyCode!=''">
+            <if test="companyCode!=null and companyCode!=''">
                 and substring(CompanyCode,1,length(#{companyCode})) = #{companyCode}
-            </if>-->
+            </if>
             <if test="reportType!=null and reportType!=''">
                 and ReportType=#{reportType}
             </if>
@@ -22,11 +22,10 @@
         select * from report_code_rule where ReportCodeRuleID=#{id}
    </select>
 
-    <select id="querryReportType" parameterType="java.lang.String" resultType="java.lang.String">
-        select
-        DISTINCT(ReportType)
+
+    <select id="querryReportType" resultType="String">
+        select distinct (ReportType)
         from report_code_rule
-   /*     where substring(CompanyCode,1,length(#{companyCode})) = #{companyCode}*/
     </select>
 
     <select id="countBusinessType" resultType="java.lang.Integer" parameterType="com.wlhse.dto.ReportCodeRule">

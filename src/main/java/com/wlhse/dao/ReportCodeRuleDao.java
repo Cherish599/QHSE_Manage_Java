@@ -11,6 +11,6 @@ public interface ReportCodeRuleDao {
     public Integer deleteRule(Integer Id);
     public List<ReportCodeRule> querryRules(ReportCodeRule rule);
     public Integer countRules(ReportCodeRule rule);
-    public List<String> querryReportType(String companyCode);
+    public List<String> querryReportType();
     public ReportCodeRule querryRuleByID(Integer id);
 }
