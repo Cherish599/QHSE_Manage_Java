@@ -156,7 +156,7 @@
          (<include refid="value2"/>)
     </insert>
 
-    <select id="queryRecordId" resultType="java.lang.Integer">
+    <select id="queryRecordId" resultType="com.wlhse.dto.FileAuditRecordDto">
         select QHSE_FileAudit_RecordID
         from qhse_fileauditrecord
         <where>

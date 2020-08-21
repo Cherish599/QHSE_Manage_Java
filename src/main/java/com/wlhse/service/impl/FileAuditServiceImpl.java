@@ -54,9 +54,9 @@ public class FileAuditServiceImpl implements FileAuditService {
     }
 
     @Override
-    public Integer queryRecordId(FileAuditRecordDto fileAuditRecordDto) {
-        int id = fileAuditDao.queryRecordId(fileAuditRecordDto);
-        return id;
+    public String queryRecordId(FileAuditRecordDto fileAuditRecordDto) {
+        List<FileAuditRecordDto> list = fileAuditDao.queryRecordId(fileAuditRecordDto);
+        return NR.r(list);
     }
 
     @Override
