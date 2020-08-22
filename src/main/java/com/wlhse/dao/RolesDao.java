@@ -21,4 +21,6 @@ public interface RolesDao {
     RolesPojo queryRoleById(@Param("roleID") Integer roleID);
 
     String queryMaxRoleCode();
+
+    RolesPojo queryRoleByName(String name);
 }

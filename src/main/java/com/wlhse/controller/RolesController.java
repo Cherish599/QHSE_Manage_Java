@@ -2,6 +2,7 @@ package com.wlhse.controller;
 
 import com.wlhse.entity.RolesPojo;
 import com.wlhse.service.RolesService;
+import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,5 +44,10 @@ public class RolesController {
     public String modifyRoles(@PathVariable("id") int id,@RequestBody(required = false) RolesPojo rolesPojo) {
             rolesPojo.setRoleID(id);
             return rolesService.updateRole(rolesPojo);
+    }
+
+    @RequestMapping(value = "/roleExist")
+    public R isExit(@RequestParam(required = false) String name){
+        return rolesService.isExit(name);
     }
 }

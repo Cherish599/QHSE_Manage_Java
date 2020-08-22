@@ -10,7 +10,15 @@ public class ProblemDescriptionDto {
     private String endDate;
     private String auditor;
     private String companyCode;
+    private String companyName;
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getCompanyCode() {
         return companyCode;

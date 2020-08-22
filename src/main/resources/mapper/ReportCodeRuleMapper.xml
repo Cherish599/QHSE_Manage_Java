@@ -22,11 +22,10 @@
         select * from report_code_rule where ReportCodeRuleID=#{id}
    </select>
 
-    <select id="querryReportType" parameterType="java.lang.String" resultType="java.lang.String">
-        select
-        DISTINCT(ReportType)
+
+    <select id="querryReportType" resultType="String">
+        select distinct (ReportType)
         from report_code_rule
-        where substring(CompanyCode,1,length(#{companyCode})) = #{companyCode}
     </select>
 
     <select id="countBusinessType" resultType="java.lang.Integer" parameterType="com.wlhse.dto.ReportCodeRule">

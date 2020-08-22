@@ -6,6 +6,7 @@ import com.wlhse.dao.RolesDao;
 import com.wlhse.entity.RolesPojo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.RolesService;
+import com.wlhse.util.R;
 import com.wlhse.util.SortCodeUtil;
 import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
@@ -56,8 +57,16 @@ public class RoleServiceImpl implements RolesService {
             s = "0001";
         }
         rolesPojo.setRoleCode(s);
-        if (rolesDao.addRoles(rolesPojo) <= 0)
-            throw new WLHSException("新增失败");
+        int i=0;
+        try{
+             i = rolesDao.addRoles(rolesPojo);
+        }
+        catch (Exception e){
+            throw new WLHSException(500,"该角色已存在");
+        }
+        if (i<= 0){
+            return R.error(500,"添加失败").toJSONString();
+        }
         return NR.r();
     }
 
@@ -79,5 +88,13 @@ public class RoleServiceImpl implements RolesService {
         if (rolesDao.updateRoles(rolesPojo) <= 0)
             throw new WLHSException("更新失败");
         return NR.r();
+    }
+
+    @Override
+    public R isExit(String name) {
+        if (rolesDao.queryRoleByName(name)==null){
+         return     R.ok("用户不存在");
+        }
+        return R.error("用户已存在");
     }
 }

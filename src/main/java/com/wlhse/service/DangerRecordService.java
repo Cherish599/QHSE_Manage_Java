@@ -3,9 +3,11 @@ package com.wlhse.service;
 import com.wlhse.dto.DangerRecordDto;
 import com.wlhse.util.R;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface DangerRecordService {
     // 增
-    R addDangerRecord(DangerRecordDto dangerRecordDto);
+    R addDangerRecord(DangerRecordDto dangerRecordDto, HttpServletRequest request);
     //删
     R deleteDangerRecord(DangerRecordDto dangerRecordDto);
     //改

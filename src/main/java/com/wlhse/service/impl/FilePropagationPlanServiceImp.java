@@ -159,10 +159,12 @@ public class FilePropagationPlanServiceImp implements FilePropagationPlanService
     @Override
     public R getFilePropagationPlanDetailByStaffIdInPage(HttpServletRequest request, int pageNum) {
         R r=new R();
-
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        String employeeId = map.get("employeeId");
         //data that only used in test.
         PageHelper.startPage(pageNum,6);
-        List<FilePropagationResultDto> filePropagationByStaffId = filePropagationDetailDao.getFilePropagationByStaffId(2);
+        List<FilePropagationResultDto> filePropagationByStaffId = filePropagationDetailDao.getFilePropagationByStaffId(Integer.valueOf(employeeId));
         for (FilePropagationResultDto filePropagationResultDto:filePropagationByStaffId){
             List<String> filePaths=new ArrayList<>();
             List<FilePropagationFileInfo> fileInfos= fileDao.getFileInfoByPropagationId(filePropagationResultDto.getFilePropagationId());

@@ -237,9 +237,9 @@
             <if test="name != null and name !=''">
                 and e.name = #{name}
             </if>
-            <if test="companyCode != null and companyCode !=''">
+    <!--        <if test="companyCode != null and companyCode !=''">
                 and substring(e.companyCode,1,length(#{companyCode})) = #{companyCode}
-            </if>
+            </if>-->
             <if test="birthday != null and birthday !=''">
                 and e.birthday = #{birthday}
             </if>
@@ -306,9 +306,9 @@
             <if test="name1 != null and name1 !=''">
                 and e1.Name LIKE CONCAT('%','${name1}','%')
             </if>
-            <if test="companyCode != null and companyCode !=''">
+  <!--          <if test="companyCode != null and companyCode !=''">
                 and substring(e1.companyCode,1,length(#{companyCode})) = #{companyCode}
-            </if>
+            </if>-->
         </where>
     </select>
 
@@ -337,9 +337,9 @@
             <if test="name != null and name !=''">
                 and e.name = #{name}
             </if>
-            <if test="companyCode != null and companyCode !=''">
+       <!--     <if test="companyCode != null and companyCode !=''">
                 and substring(e.companyCode,1,length(#{companyCode})) = #{companyCode}
-            </if>
+            </if>-->
 
             <if test="birthday != null and birthday !=''">
                 and e.birthday = #{birthday}

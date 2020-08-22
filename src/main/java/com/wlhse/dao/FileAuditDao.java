@@ -23,6 +23,9 @@ public interface FileAuditDao {
 
     //增加审核记录
     int addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto);
+    //查询审核记录的ID
+    List<FileAuditRecordDto> queryRecordId(FileAuditRecordDto fileAuditRecordDto);
+
     //删除审核历史记录
     int deleteFileAuditRecord(@Param("id1") Integer id1);
 
