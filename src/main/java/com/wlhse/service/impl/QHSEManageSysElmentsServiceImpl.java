@@ -1,6 +1,7 @@
 package com.wlhse.service.impl;
 
-import com.alibaba.fastjson.annotation.JSONType;
+
+import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.inDto.YearElementsDto;
@@ -35,7 +36,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     @Resource
     private TreeUtil treeUtil;
-    private String code;
+    @Resource
+    JedisClient jedisClient;
     private final int QHSEMSETREE_MAX_HEIGHT=5;//定义树的最大层数
     private final int QHSEMSETREE_CODE_BITS=3;//定义树的每级编码位数
 
@@ -583,7 +585,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     needToReopenElement.put(entry.getKey(),entry.getValue());
                 }
             }
-            logger.info("数据库中获取到的element:"+elementCodeAndConfigStatusMap);
+/*            logger.info("数据库中获取到的element:"+elementCodeAndConfigStatusMap);
             logger.info("-----------------------------------------------");
             logger.info("客户端传来的element:"+elementsFromClients1);
             logger.info("-----------------------------------------------");
@@ -595,7 +597,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             logger.info("-----------------------------------------------");
             logger.info("新增的element:"+needToAddElement);
             logger.info("-----------------------------------------------");
-            logger.info("需要重启的element:"+needToReopenElement);
+            logger.info("需要重启的element:"+needToReopenElement);*/
+            int leafCnt=0;
             int size = needToAddElement.size();
             int result = 0;
             if (size!=0) {
@@ -616,6 +619,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                         yearElementsDto1.setTotalCount(map1.get(code.getKey()).getTotalCount());
                     }
                     if (len.equals(code.getKey().length())){
+                        leafCnt++;
                         yearElementsDto1.setStatus("未提供");
                         yearElementsDto1.setFileCheckStatus("未审核");
                     }
@@ -626,6 +630,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 }
                 logger.info("新增完毕");
             }
+            //将叶子结点总数放入缓存中。
+            jedisClient.set("T"+tableId,String.valueOf(leafCnt));
             //update Manager Sys Element's configStatus
             //when some elements need to stop.
             if (elementNeedToStop.size()!=0){
@@ -650,6 +656,25 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         }
         return R.ok();
     }
+
+    @Override
+    public R getTableCheckedProgress(int tableId) {
+        int checkedElementNumber = qhseManageSysElementsDao.getCheckedElementNumber(tableId);
+        String s;
+        s=jedisClient.get("T" + tableId);
+        // no data in redis
+        if (s==null){
+            int allLeafNodeNumber = qhseManageSysElementsDao.getAllLeafNodeNumber(tableId);
+            s=String.valueOf(allLeafNodeNumber);
+            jedisClient.set("T"+tableId,s);
+        }
+        double total=Double.valueOf(s);
+        double progress=(double)checkedElementNumber/total;
+        R r=new R();
+        r.put("data",progress);
+        return r;
+    }
+
     private Map<String,String> getElementCodeAndConfigStatusMap(int tableId){
         Map<String,String> map=new HashMap<>();
         List<ElementAndConfigStatusDto> elementAndConfigStatusDto = qhseManageSysElementsDao.selectCodeAndConfigStatusByTableId(tableId);

@@ -99,4 +99,8 @@ public interface QHSEManageSysElementsDao {
 
     List<ElementAndConfigStatusDto> selectCodeAndConfigStatusByTableId(int tableId);
     int updateConfigStatus(String code,int tableId,String status);
+
+    int getCheckedElementNumber(int tableId);
+
+    int getAllLeafNodeNumber(int table);
 }

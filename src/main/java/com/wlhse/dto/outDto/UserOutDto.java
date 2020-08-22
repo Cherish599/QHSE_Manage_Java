@@ -12,6 +12,15 @@ public class UserOutDto {
     private String companyName;
     private String companyCode;
     private String employeeName;
+    private String group;
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     public String getEmployeeName() {
         return employeeName;
