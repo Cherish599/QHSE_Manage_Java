@@ -147,5 +147,30 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         return R.ok();
     }
 
+    @Override
+    public R shows(ElementReviewDto elementReviewDto) {
+        List<QHSECompanyYearManagerSysElementDto> lists=elementReviewDao.queryCheck(elementReviewDto);
+        List<String> codes = new ArrayList<>() ;
+        if(lists!=null && !lists.isEmpty()){
+            int layer=2,grad=3;//可以抽取方法返回指定层数,grad为树状code梯度
+            for(;grad<3*layer;grad+=3){
+                for (int i=0;i<lists.size();i++)
+                    codes.add(lists.get(i).getCode().substring(0,lists.get(i).getCode().length() - grad));
+           }
+            //去重父节点最高效
+            HashSet<String> hs=new HashSet(codes);
+            codes.clear();
+            codes.addAll(hs);
+            //查询父节点并插入
+            for (String code : codes) {
+              QHSECompanyYearManagerSysElementDto parent=elementReviewDao.queryParents(code,elementReviewDto.getCompanyCode(),elementReviewDto.getYear());
+              lists.add(parent);
+            }
+        }
+        R ok = R.ok();
+        ok.put("data", treeUtil.getCurrentQhseElementTree1(lists));
+        return ok;
+    }
+
 
 }

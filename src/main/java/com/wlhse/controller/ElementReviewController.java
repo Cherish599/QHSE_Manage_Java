@@ -58,4 +58,9 @@ public class ElementReviewController {
         elementReviewDto.setStatus("不通过");
         return  elementReviewService.updateStatus(elementReviewDto);
     }
+    //查询已审核或已审批
+    @RequestMapping(value = "/show_approve_check", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R elementReviewer4( ElementReviewDto elementReviewDto) {
+        return  elementReviewService.shows(elementReviewDto);
+    }
 }

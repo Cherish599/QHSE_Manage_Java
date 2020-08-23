@@ -25,7 +25,7 @@ public interface ElementReviewDao {
 
     //查父节点
     List<QHSECompanyYearManagerSysElementDto> queryParent(String code);
-
+    QHSECompanyYearManagerSysElementDto queryParents(String code,String companyCode,String year);
     //添加审核人
     int updateCheck(ElementReviewDto elementReviewDto);
 
@@ -41,5 +41,7 @@ public interface ElementReviewDao {
     //年度表删除时删除空id和不用NewOriginFile数据
     int deleteNewOriginFiles(@Param("id") Integer id);
 
+    //查询已审核
+    List<QHSECompanyYearManagerSysElementDto> queryCheck(ElementReviewDto elementReviewDto);
 
 }

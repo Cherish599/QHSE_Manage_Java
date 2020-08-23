@@ -169,7 +169,7 @@
         on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
         <where>
             <if test="companyCode !=null and companyCode!=''">
-                AND t1.CompanyCode like concat(#{companyCode},'%')
+                AND t1.CompanyCode=#{companyCode}
             </if>
             <if test="year !=null and year!=''">
                 AND t1.Year=#{year}
