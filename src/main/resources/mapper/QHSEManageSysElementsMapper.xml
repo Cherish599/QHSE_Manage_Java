@@ -566,14 +566,14 @@
     </select>
 
     <select id="getCheckedElementNumber" resultType="Integer">
-        select nullif (count (*),0)
+        select ifnull (count (*),0)
         from qhse_companyyearmanagersyselement
         where `Status` ='备案待查'
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
     </select>
 
     <select id="getAllLeafNodeNumber" resultType="Integer">
-        select nullif(count (*),0)
+        select ifnull(count (*),0)
         from qhse_companyyearmanagersyselement
         where Status is not null
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}

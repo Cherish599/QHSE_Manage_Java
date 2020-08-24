@@ -19,7 +19,7 @@ public class FileAuditController {
     @Resource
     QHSEManageSysElementsService qhseManageSysElementsService;
     @RequestMapping(value = "/getFileAuditProgress",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
-    public  R getProgress(@RequestParam(value = "tableId")Integer tableId){
+    public  R getProgress(@RequestParam(value = "tableId",required = false)Integer tableId){
         return qhseManageSysElementsService.getTableCheckedProgress(tableId);
     }
     @RequestMapping(value = "/add_fileaduit", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
