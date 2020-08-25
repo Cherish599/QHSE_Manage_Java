@@ -41,10 +41,10 @@ public interface QHSEManageSysElementsDao {
     Integer setOn(@Param("status") String status,@Param("code") String code);
     Integer getScore(@Param("code") String code);
     //Integer subSoreCount(@Param("code") String code,@Param("score") Integer score);
-    Integer sumScore(@Param("code") String code);
-    Integer sumCount(@Param("code") String code);
+    Integer sumScore(@Param("code") String code,@Param("max_len") Integer max_len);
+    Integer sumCount(@Param("code") String code,@Param("max_len") Integer max_len);
     Integer updateScoreCount(@Param("code") String code,@Param("score") Integer score,@Param("count") Integer count);
-    Integer toZero(@Param("code") String code);
+    Integer toZero(@Param("code") String code,@Param("max_len") Integer max_len);
     Integer addScoreCount(@Param("code") String code,@Param("score") Integer score);
     //根据id查询节点
     QhseElementsPojo getElementById(@Param("id")int id);

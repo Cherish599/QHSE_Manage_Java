@@ -373,14 +373,13 @@ public class TreeUtil {
             QhseElementsOutDto qhseElementsOutDto = new QhseElementsOutDto();
             qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
             qhseElementsOutDto.setCode(pojo.getCode());
-            qhseElementsOutDto.setContent(pojo.getContent());
             qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
             qhseElementsOutDto.setFormula(pojo.getFormula());
             qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
             qhseElementsOutDto.setName(pojo.getName());
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
-            if(pojo.getCode().length()==15)//加入问题描述字段
+            if(pojo.getCode().length()==18)//加入问题描述字段
             {
                 qhseElementsOutDto.setProblemDescription(discriptionMap.get(pojo.getCode()));
                 //System.out.println(pojo.getCode()+"-----"+discriptionMap.get(pojo.getCode()));

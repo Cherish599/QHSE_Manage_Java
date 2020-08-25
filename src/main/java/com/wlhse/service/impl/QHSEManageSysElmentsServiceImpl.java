@@ -38,8 +38,9 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     private TreeUtil treeUtil;
     @Resource
     JedisClient jedisClient;
-    private final int QHSEMSETREE_MAX_HEIGHT=5;//定义树的最大层数
+    private final int QHSEMSETREE_MAX_HEIGHT=6;//定义树的最大层数
     private final int QHSEMSETREE_CODE_BITS=3;//定义树的每级编码位数
+    private final int QHSEMSETREE_CODE_MAXLEN=QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS;//叶子节点长度
 
     @Override
     public String querryAllRules(Integer status) {
@@ -226,11 +227,11 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 //        qhseManageSysElementsDao.subSoreCount(code,score);//父节点减去分数score和项数1
 //    }
     public int sumScore(String code) {
-        return qhseManageSysElementsDao.sumScore(code);//当前所有叶子节点的分数之和
+        return qhseManageSysElementsDao.sumScore(code,QHSEMSETREE_CODE_MAXLEN);//当前所有叶子节点的分数之和
     }
 
     public int sumCount(String code) {
-        return qhseManageSysElementsDao.sumCount(code);//当前所有叶子节点的项数之和
+        return qhseManageSysElementsDao.sumCount(code,QHSEMSETREE_CODE_MAXLEN);//当前所有叶子节点的项数之和
     }
 
     public void updateScoreCount(String code, Integer score, Integer count) {
@@ -239,7 +240,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     }
 
     public void toZero(String code) {
-       if(( qhseManageSysElementsDao.toZero(code))<=0)//当前项到叶子节点前一项的所有分数和项数都归零
+       if(( qhseManageSysElementsDao.toZero(code,QHSEMSETREE_CODE_MAXLEN))<=0)//当前项到叶子节点前一项的所有分数和项数都归零
            throw new WLHSException("更新失败");
     }
 
@@ -317,13 +318,13 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         List<String> list = getParent(code);//得到所有的父节点
         if (status.equals("启用")) {//如果原来状态是启用，就停用；
             setOff("停用", code);//本人及其孩子改成停用
-            if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) {//如果是叶子节点，修改上面父节点的分数和节点数；
+            if (len == (QHSEMSETREE_CODE_MAXLEN)) {//如果是叶子节点，修改上面父节点的分数和节点数；
                 int score = getScore(code);
                 for (int i = 0; i < list.size(); i++) {
                     updateScoreCount(list.get(i), score, 1);
                 }
             } else {//不是叶子节点，先统计本节点的总分，和叶节点数；
-                Integer score = sumScore(code); //score: null
+                Integer score = sumScore(code); //score: 0
                 Integer count = sumCount(code);//count: 0
                 toZero(code);//将当前项和子项的分数和项数都归零
                 for (int i = 0; i < list.size(); i++) {//该节点所有分母依次减分减项数
@@ -335,7 +336,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 setOn("启用", list.get(i));
             }
             setOn("启用", code);//本节点设为启用
-            if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) {//如果是叶子节点，更新所有父节点的分数，cout;
+            if (len == (QHSEMSETREE_CODE_MAXLEN)) {//如果是叶子节点，更新所有父节点的分数，cout;
                 int score = getScore(code);
                 addScoreCount(list, score);
             }
@@ -360,7 +361,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         String status =qhseElementsPojo.getStatus();
         //System.out.println(status+" "+code+""+qhseManageSysElement.getQhseManagerSysElementID());
         if ("启用".equals(status)) {
-            if (len == (QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)) { //如果是叶子节点，还要更新所有父节点的分数
+            if (len == (QHSEMSETREE_CODE_MAXLEN)) { //如果是叶子节点，还要更新所有父节点的分数
                 Integer score = qhseElementsPojo.getInitialScore();
                 Integer newScore = qhseManageSysElement.getInitialScore() - score;//获得新编辑的分数与原来的分数差
                 if (newScore != 0) {//获得所有父节点
@@ -411,7 +412,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 qhseManageSysElement.setInitialScore(0);//设置分数
             } else {
                 Integer len = parentCode.length();
-                if (len < (QHSEMSETREE_MAX_HEIGHT-1)*QHSEMSETREE_CODE_BITS) {    //如果插入是非第一级和最后一级,len<12
+                if (len < (QHSEMSETREE_MAX_HEIGHT-1)*QHSEMSETREE_CODE_BITS) {    //如果插入是非第一级和最后一级,len<15
                     qhseManageSysElement.setTotalCount(0);
                     qhseManageSysElement.setInitialScore(0);
                     String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode); //查找插入那级最大编码
@@ -421,7 +422,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                     else {//否则最大编码加1
                         qhseManageSysElement.setCode(sortCodeUtil.getMaxCodeString(maxCode));
                     }
-                } else if (len == (QHSEMSETREE_MAX_HEIGHT-1)*QHSEMSETREE_CODE_BITS) {  //插入是叶子节点,len==12
+                } else if (len == (QHSEMSETREE_MAX_HEIGHT-1)*QHSEMSETREE_CODE_BITS) {  //插入是叶子节点,len==15
                     qhseManageSysElement.setTotalCount(1);
                     String maxCode = qhseManageSysElementsDao.querryLastQHSEChildCode2(parentCode);//查找插入那级最大编码
                     if (maxCode == null || "".equals(maxCode))
