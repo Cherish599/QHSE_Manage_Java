@@ -1,6 +1,5 @@
 package com.wlhse.service.impl;
 
-
 import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -265,8 +263,16 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     //th-查询年度要素
     @Override
     public R queryYearElement(YearElementsDto yearElementsDto) {
+        List<YearElementsDto> lists=qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto);
+        for (YearElementsDto yearElement:lists) {
+            int sums=qhseManageSysElementsDao.querySchedule(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num=qhseManageSysElementsDao.querySchdules(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num1=sums-num;
+            if(yearElement.getCode().length()!=QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)//树的最大编码
+            yearElement.setSchedule(num1+"/"+sums);
+        }
         R ok = R.ok();
-        ok.put("data", treeUtil.getQhseYearElementTree(qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto)));
+        ok.put("data", treeUtil.getQhseYearElementTree(lists));
         return ok;
     }
 
