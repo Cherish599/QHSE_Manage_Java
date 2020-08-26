@@ -47,7 +47,7 @@ public class RolesController {
     }
 
     @RequestMapping(value = "/roleExist")
-    public R isExit(@RequestParam(required = false) String name){
+    public R isExit(@RequestParam(required = false,value = "name") String name){
         return rolesService.isExit(name);
     }
 }

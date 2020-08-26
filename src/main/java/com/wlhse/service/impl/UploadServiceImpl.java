@@ -140,7 +140,7 @@ public class UploadServiceImpl implements UploadService {
         String[] fieldArray = {
                 "code",//编码
                 "name",//名字
-                "content",//内容
+                //"content",//内容
                 "auditMode",//审核方式
                 "initialScore",//分数
                 "formula", //计算公式

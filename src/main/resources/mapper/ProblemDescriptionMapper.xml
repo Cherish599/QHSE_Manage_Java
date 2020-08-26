@@ -49,7 +49,7 @@
         select *
         from qhse_auditproblemrecord as t1
         join qhse_fileauditrecord as t2
-        on t1.QHSE_FileAuditRecord_ID = t2.QHSE_FileAuditRecord_ID
+        on t1.QHSE_FileAuditRecord_ID = t2.QHSE_FileAudit_RecordID
         <where>
             <if test="startDate != null and startDate  != ''">
                 AND t2.AuditTime>=#{startDate}
