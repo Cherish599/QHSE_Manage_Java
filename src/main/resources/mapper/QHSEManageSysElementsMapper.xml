@@ -564,5 +564,14 @@
     <select id="queryAllCode" resultType="java.lang.String">
         select Code from qhse_managersyselement
     </select>
+
+    <select id="querySchedule" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from qhse_companyyearmanagersyselement where code like concat(#{param1},'%') and
+         companyCode=#{param2} and `year`=#{param3} and length(code)=18
+    </select>
+    <select id="querySchdules" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from qhse_companyyearmanagersyselement where code like concat(#{param1},'%') and
+         companyCode=#{param2} and `year`=#{param3} and length(code)=18 and (status="未提供"or status="不通过")
+    </select>
 </mapper>
 

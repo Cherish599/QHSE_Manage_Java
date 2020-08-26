@@ -7,8 +7,6 @@ import com.wlhse.dto.*;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
-import org.apache.ibatis.annotations.Param;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -471,6 +469,7 @@ public class TreeUtil {
             qhseElementsOutDto.setCompanyName(pojo.getCompanyName());
             qhseElementsOutDto.setYear(pojo.getYear());
             qhseElementsOutDto.setFileCheckStatus(pojo.getFileCheckStatus());
+            qhseElementsOutDto.setSchedule(pojo.getSchedule());
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样

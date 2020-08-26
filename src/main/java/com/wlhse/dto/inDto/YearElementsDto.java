@@ -17,6 +17,15 @@ public class YearElementsDto {
     private String year;
     private String fileCheckStatus;
     private String configStatus;
+    private String  schedule;
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
 
     public String getConfigStatus() {
         return configStatus;
