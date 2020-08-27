@@ -32,4 +32,7 @@ public interface ElementReviewService {
 
     //查询已审核
     R shows(ElementReviewDto elementReviewDto);
+
+    //查询全要素
+    R queryAllElement(ElementReviewDto elementReviewDto);
 }

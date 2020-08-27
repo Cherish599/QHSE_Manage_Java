@@ -1,6 +1,7 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.dao.ElementReviewDao;
+import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
@@ -8,6 +9,7 @@ import com.wlhse.exception.WLHSException;
 import com.wlhse.service.ElementReviewService;
 import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import java.util.*;
 public class ElementReviewServiceImpl implements ElementReviewService {
     @Resource
     private ElementReviewDao elementReviewDao;
+    @Autowired
+    private QHSEManageSysElementsDao qHSEManageSysElementsDao;
 
     @Resource
     private TreeUtil treeUtil;
@@ -172,5 +176,12 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         return ok;
     }
 
+    @Override
+    public R queryAllElement(ElementReviewDto elementReviewDto) {
+        R r=new R();
+        r.put("AllElement",elementReviewDao.queryAllElement(elementReviewDto));
+        r.put("NotInput",qHSEManageSysElementsDao.querySchdules(null,elementReviewDto.getCompanyCode(),elementReviewDto.getYear()));
+        return r;
+    }
 
 }
