@@ -12,7 +12,15 @@
             <if test="year != null and year  != ''">
                 AND year=#{year}
             </if>
-            and ConfigStatus="启用" and status="未审核"
+            and ConfigStatus="启用"
+            and status="未审核"
+            and QHSE_CompanyYearManagerSysElementTable_ID in
+            (
+                select Table_ID
+                from qhse_task
+                where CompanyCode=#{companyCode}
+                and Status='审核中'
+            )
         </where>
     </select>
 

@@ -49,4 +49,7 @@ public interface QhseElementsInputDao {
     int deleteFromCompanyYearManagerSysElementEvidence(int elementId);
 
     int deleteFromCompanyYearManagerSysElementEvidenceAttach(int evidenceId);
+
+    //根据证据信息获取TableId
+    int getQHSEYearManagerTableIdByElementId(int id);
 }

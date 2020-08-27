@@ -637,8 +637,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 }
                 logger.info("新增完毕");
             }
-            //将叶子结点总数放入缓存中。
-            jedisClient.set("T"+tableId,String.valueOf(leafCnt));
+
             //update Manager Sys Element's configStatus
             //when some elements need to stop.
             if (elementNeedToStop.size()!=0){
@@ -652,9 +651,12 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             //when some elements need to reopen
             if (needToReopenElement.size()!=0){
              for (Map.Entry<String,String> entry:needToReopenElement.entrySet()){
+                 leafCnt++;
                  qhseManageSysElementsDao.updateConfigStatus(entry.getKey(),tableId,entry.getValue());
              }
             }
+            //将叶子结点总数放入缓存中。
+            jedisClient.set("T"+tableId,String.valueOf(leafCnt));
             if (result < 0)
                 throw new WLHSException("新增失败");
         }catch (Exception e) {

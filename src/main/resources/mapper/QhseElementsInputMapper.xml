@@ -225,4 +225,10 @@
         delete from QHSE_CompanyYearManagerSysElementEvidenceAttach
         where QHSE_CompanyYearManagerSysElementEvidence_ID=#{evidenceId}
     </delete>
+    
+    <select id="getQHSEYearManagerTableIdByElementId" resultType="Integer">
+        select QHSE_CompanyYearManagerSysElementTable_ID
+        from qhse_companyyearmanagersyselement
+        where QHSE_CompanyYearManagerSysElement_ID=#{0}
+    </select>
 </mapper>

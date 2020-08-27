@@ -129,6 +129,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
 
     @Override
     public int updateCheck(ElementReviewDto elementReviewDto) {
+        //TODO 比对审核个数和叶子结点总数，若审核个数和叶子节点总数相等，将任务状态改为批准中
         return  elementReviewDao.updateCheck(elementReviewDto);
     }
 
