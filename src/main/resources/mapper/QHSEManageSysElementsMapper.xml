@@ -167,6 +167,7 @@
         from QHSE_CompanyYearManagerSysElement as t1
         join QHSE_CompanyYearManagerSysElementTable as t2
         on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
+        on
         <where>
             <if test="companyCode !=null and companyCode!=''">
                 AND t1.CompanyCode=#{companyCode}
@@ -175,6 +176,12 @@
                 AND t1.Year=#{year}
             </if>
             AND t1.ConfigStatus="启用"
+            AND t1.QHSE_CompanyYearManagerSysElementTable_ID IN (
+            SELECT Table_ID
+            FROM qhse_task
+            WHERE Status='录入证据中'
+            AND CompanyCode=#{companyCode}
+            )
         </where>
     </select>
 
@@ -566,14 +573,14 @@
     </select>
 
     <select id="getCheckedElementNumber" resultType="Integer">
-        select ifnull (count (*),0)
+        select count (*)
         from qhse_companyyearmanagersyselement
         where `Status` ='备案待查'
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
     </select>
 
     <select id="getAllLeafNodeNumber" resultType="Integer">
-        select ifnull(count (*),0)
+        select count (*)
         from qhse_companyyearmanagersyselement
         where Status is not null
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
