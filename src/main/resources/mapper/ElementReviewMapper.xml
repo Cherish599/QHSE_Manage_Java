@@ -35,6 +35,13 @@
             AND year=#{year}
         </if>
         and ConfigStatus="启用" and status="未批准"
+            and QHSE_CompanyYearManagerSysElementTable_ID in
+            (
+            select Table_ID
+            from qhse_task
+            where CompanyCode=#{companyCode}
+            and Status='批准中'
+            )
         </where>
     </select>
 

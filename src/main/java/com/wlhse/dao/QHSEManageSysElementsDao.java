@@ -104,4 +104,6 @@ public interface QHSEManageSysElementsDao {
     int getCheckedElementNumber(int tableId);
 
     int getAllLeafNodeNumber(int table);
+
+    List<YearElementsDto> queryYearElement(YearElementsDto yearElementsDto);
 }

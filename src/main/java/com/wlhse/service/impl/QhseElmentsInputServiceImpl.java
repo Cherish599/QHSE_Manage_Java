@@ -61,6 +61,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             if (i * j < 0) throw new WLHSException("更新失败");
         }
         qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//更改状态审核
+        //TODO 修改以应对同一个要素多次录入证据的情况。
         //获取tableId
         int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
         //是录入第一个证据

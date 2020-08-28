@@ -6,6 +6,8 @@ import com.wlhse.dto.TaskDto;
 import com.wlhse.dto.outDto.TaskOutDto;
 import com.wlhse.service.TaskService;
 import com.wlhse.util.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,7 @@ import java.util.Map;
  **/
 @Service
 public class TaskServiceImp implements TaskService {
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     QHSETaskDao taskDao;
     @Resource
@@ -39,6 +41,7 @@ public class TaskServiceImp implements TaskService {
         String token = request.getHeader("Authorization");
         Map<String, String> map = jedisClient.hGetAll(token);
         int employeeId = Integer.valueOf(map.get("employeeId"));
+        logger.info("员工ID"+employeeId);
         List<TaskOutDto> allTaskByEmployeeId = taskDao.getAllTaskByEmployeeId(employeeId);
         r.put("data",allTaskByEmployeeId);
         return r;

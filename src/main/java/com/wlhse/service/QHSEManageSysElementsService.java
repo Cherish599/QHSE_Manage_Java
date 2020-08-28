@@ -45,4 +45,6 @@ public interface QHSEManageSysElementsService {
     R addYearElement(YearElementsDto yearElementsDto);
 
     R getTableCheckedProgress(int tableId);
+
+    R queryYearElements(YearElementsDto yearElementsDto);
 }

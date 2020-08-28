@@ -4,7 +4,7 @@
 
     <insert id="insertNewTask">
         insert into qhse_task
-        (CompanyCode,CompanyName,TaskName,IssuedID,IssuedName,IssuedDate,ReceiveID,ReceiveName,ReceiveDate,PlanDate
+        (CompanyCode,CompanyName,TaskName,IssuedID,IssuedName,IssuedDate,ReceiveID,ReceiveName,ReceiveDate,PlanDate,
         TrueDate,Table_ID,Status)
         values (
         #{companyCode},#{companyName},#{taskName},#{issuedID},#{issuedName},now(),#{receiveID},#{receiveName},#{receiveDate},
@@ -22,18 +22,21 @@
         PlanDate as planDate,
         TrueDate as trueDate
         from qhse_task
-        where IssuedID=#{0}
+        where ReceiveID=#{0}
      </select>
 
     <update id="updateTaskStatusByTableId">
         update qhse_task
         set Status=#{1}
+        <if test= "status=='任务完成'">
+            ,TrueDate=now()
+        </if>
         where Table_ID=#{0}
     </update>
 
     <update id="receiveTask">
         update qhse_task
         set Status='录入证据中',ReceiveDate=now()
-        where QHSE_Task_ID={0}
+        where QHSE_Task_ID=#{0}
     </update>
 </mapper>

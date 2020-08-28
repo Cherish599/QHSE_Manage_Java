@@ -684,6 +684,21 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return r;
     }
 
+    @Override
+    public R queryYearElements(YearElementsDto yearElementsDto) {
+        List<YearElementsDto> lists=qhseManageSysElementsDao.queryYearElement(yearElementsDto);
+        for (YearElementsDto yearElement:lists) {
+            int sums=qhseManageSysElementsDao.querySchedule(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num=qhseManageSysElementsDao.querySchdules(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num1=sums-num;
+            if(yearElement.getCode().length()!=QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)//树的最大编码
+                yearElement.setSchedule(num1+"/"+sums);
+        }
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseYearElementTree(lists));
+        return ok;
+    }
+
     private Map<String,String> getElementCodeAndConfigStatusMap(int tableId){
         Map<String,String> map=new HashMap<>();
         List<ElementAndConfigStatusDto> elementAndConfigStatusDto = qhseManageSysElementsDao.selectCodeAndConfigStatusByTableId(tableId);
