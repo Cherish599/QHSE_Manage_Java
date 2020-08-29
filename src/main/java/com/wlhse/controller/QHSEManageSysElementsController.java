@@ -31,6 +31,10 @@ public class QHSEManageSysElementsController {
     public R querryQhseYearElement(@ModelAttribute YearElementsDto yearElementsDto){
         return qhseManageSysElementsService.queryYearElement(yearElementsDto);
     }
+    @RequestMapping(value = "/queryYearElement",method = RequestMethod.GET,produces =  {"application/json;charset=utf-8"})
+    public  R queryYearElement(@ModelAttribute YearElementsDto yearElementsDto){
+        return qhseManageSysElementsService.queryYearElements(yearElementsDto);
+    }
 
     //th---查询QHSE_ManagerSysElement基本表两级
     @RequestMapping(value = "/querryQhseChildElement", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})

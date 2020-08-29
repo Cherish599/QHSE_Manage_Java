@@ -165,8 +165,6 @@
         t1.Year as `year`,
         t1.fileCheckStatus as fileCheckStatus
         from QHSE_CompanyYearManagerSysElement as t1
-        join QHSE_CompanyYearManagerSysElementTable as t2
-        on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
         <where>
             <if test="companyCode !=null and companyCode!=''">
                 AND t1.CompanyCode=#{companyCode}
@@ -175,6 +173,12 @@
                 AND t1.Year=#{year}
             </if>
             AND t1.ConfigStatus="启用"
+            AND t1.QHSE_CompanyYearManagerSysElementTable_ID IN (
+            SELECT Table_ID
+            FROM qhse_task
+            WHERE Status='录入证据中'
+            AND CompanyCode=#{companyCode}
+            )
         </where>
     </select>
 
@@ -619,17 +623,54 @@
     </select>
 
     <select id="getCheckedElementNumber" resultType="Integer">
-        select ifnull (count (*),0)
+        select count (*)
         from qhse_companyyearmanagersyselement
         where `Status` ='备案待查'
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
     </select>
 
     <select id="getAllLeafNodeNumber" resultType="Integer">
-        select ifnull(count (*),0)
+        select count (*)
         from qhse_companyyearmanagersyselement
         where Status is not null
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </select>
+    <select id="querySchedule" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from qhse_companyyearmanagersyselement where `Code` like CONCAT(#{param1},"%")
+        and (status is not null or status!="") and `year`=#{param3} and companyCode=#{param2}
+    </select>
+    <select id="querySchdules" resultType="java.lang.Integer" parameterType="java.lang.String">
+         select count(*) from qhse_companyyearmanagersyselement where `Code` like CONCAT(#{param1},"%")
+          and `year`=#{param3} and companyCode=#{param2} and (status="未提供" or status="未通过")
+    </select>
+
+    <select id="queryYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select t1.QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        t1.QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
+        t1.Code,
+        t1.Name,
+        t1.Content,
+        t1.AuditMode,
+        t1.InitialScore,
+        t1.Formula,
+        t1.TotalCount,
+        t1.Status,
+        t1.CompanyCode as companyCode,
+        t1.CompanyName as companyName,
+        t1.Year as `year`,
+        t1.fileCheckStatus as fileCheckStatus
+        from QHSE_CompanyYearManagerSysElement as t1
+        join QHSE_CompanyYearManagerSysElementTable as t2
+        on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
+        <where>
+            <if test="companyCode !=null and companyCode!=''">
+                AND t1.CompanyCode=#{companyCode}
+            </if>
+            <if test="year !=null and year!=''">
+                AND t1.Year=#{year}
+            </if>
+            AND t1.ConfigStatus="启用"
+        </where>
     </select>
 </mapper>
 

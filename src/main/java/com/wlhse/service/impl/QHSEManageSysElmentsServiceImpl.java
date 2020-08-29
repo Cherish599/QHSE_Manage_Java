@@ -1,6 +1,5 @@
 package com.wlhse.service.impl;
 
-
 import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -265,8 +263,16 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     //th-查询年度要素
     @Override
     public R queryYearElement(YearElementsDto yearElementsDto) {
+        List<YearElementsDto> lists=qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto);
+        for (YearElementsDto yearElement:lists) {
+            int sums=qhseManageSysElementsDao.querySchedule(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num=qhseManageSysElementsDao.querySchdules(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num1=sums-num;
+            if(yearElement.getCode().length()!=QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)//树的最大编码
+            yearElement.setSchedule(num1+"/"+sums);
+        }
         R ok = R.ok();
-        ok.put("data", treeUtil.getQhseYearElementTree(qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto)));
+        ok.put("data", treeUtil.getQhseYearElementTree(lists));
         return ok;
     }
 
@@ -631,8 +637,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
                 }
                 logger.info("新增完毕");
             }
-            //将叶子结点总数放入缓存中。
-            jedisClient.set("T"+tableId,String.valueOf(leafCnt));
+
             //update Manager Sys Element's configStatus
             //when some elements need to stop.
             if (elementNeedToStop.size()!=0){
@@ -646,9 +651,12 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             //when some elements need to reopen
             if (needToReopenElement.size()!=0){
              for (Map.Entry<String,String> entry:needToReopenElement.entrySet()){
+                 leafCnt++;
                  qhseManageSysElementsDao.updateConfigStatus(entry.getKey(),tableId,entry.getValue());
              }
             }
+            //将叶子结点总数放入缓存中。
+            jedisClient.set("T"+tableId,String.valueOf(leafCnt));
             if (result < 0)
                 throw new WLHSException("新增失败");
         }catch (Exception e) {
@@ -674,6 +682,21 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         R r=new R();
         r.put("data",progress);
         return r;
+    }
+
+    @Override
+    public R queryYearElements(YearElementsDto yearElementsDto) {
+        List<YearElementsDto> lists=qhseManageSysElementsDao.queryYearElement(yearElementsDto);
+        for (YearElementsDto yearElement:lists) {
+            int sums=qhseManageSysElementsDao.querySchedule(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num=qhseManageSysElementsDao.querySchdules(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
+            int num1=sums-num;
+            if(yearElement.getCode().length()!=QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)//树的最大编码
+                yearElement.setSchedule(num1+"/"+sums);
+        }
+        R ok = R.ok();
+        ok.put("data", treeUtil.getQhseYearElementTree(lists));
+        return ok;
     }
 
     private Map<String,String> getElementCodeAndConfigStatusMap(int tableId){

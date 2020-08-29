@@ -1,6 +1,10 @@
 package com.wlhse.service.impl;
 
+import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.ElementReviewDao;
+import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dao.QHSETaskDao;
+import com.wlhse.dao.QhseElementsInputDao;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
@@ -27,7 +31,14 @@ public class ElementReviewServiceImpl implements ElementReviewService {
 
     @Value("${RESOURCES_QHSE_ElementInput_Evidence_URL}")
     private String url;
-
+    @Resource
+    JedisClient jedisClient;
+    @Resource
+    QhseElementsInputDao qhseElementsInputDao;
+    @Resource
+    QHSEManageSysElementsDao elementsDao;
+    @Resource
+    QHSETaskDao taskDao;
     @Override
     public R query(ElementReviewDto elementReviewDto) {
     List<QHSECompanyYearManagerSysElementDto> lists=elementReviewDao.query(elementReviewDto);
@@ -129,17 +140,54 @@ public class ElementReviewServiceImpl implements ElementReviewService {
 
     @Override
     public int updateCheck(ElementReviewDto elementReviewDto) {
+        // 比对审核个数和叶子结点总数，若审核个数和叶子节点总数相等，将任务状态改为批准中
+        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
+        //第一次对表中元素进行检查
+        if(jedisClient.get("TCheck" + tableId)==null){
+            jedisClient.set("TCheck"+tableId,String.valueOf(1));
+        }
+        else{
+            jedisClient.set("TCheck"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TCheck"+tableId))+1));
+        }
+        if (jedisClient.get("T"+tableId)==null){
+            int allLeafNodeNumber = elementsDao.getAllLeafNodeNumber(tableId);
+            jedisClient.set("T"+tableId,String.valueOf(allLeafNodeNumber));
+        }
+        else {
+            //全部审核完毕
+            if (jedisClient.get("TCheck" + tableId).equals(jedisClient.get("T" + tableId))) {
+                taskDao.updateTaskStatusByTableId(tableId,"批准中");
+            }
+        }
         return  elementReviewDao.updateCheck(elementReviewDto);
     }
 
     @Override
     public int updateApprove(ElementReviewDto elementReviewDto) {
+        // 比对批准个数和叶子结点总数，若批准个数和叶子节点总数相等，将任务状态改为任务完成
+        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
+        //第一次对表中元素进行批准
+        if(jedisClient.get("TApprove" + tableId)==null){
+            jedisClient.set("TApprove"+tableId,String.valueOf(1));
+        }
+        else{
+            jedisClient.set("TApprove"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TApprove"+tableId))+1));
+        }
+        if (jedisClient.get("T"+tableId)==null){
+            int allLeafNodeNumber = elementsDao.getAllLeafNodeNumber(tableId);
+            jedisClient.set("T"+tableId,String.valueOf(allLeafNodeNumber));
+        }
+        else {
+            //全部批准完毕
+            if (jedisClient.get("TApprove" + tableId).equals(jedisClient.get("T" + tableId))) {
+                taskDao.updateTaskStatusByTableId(tableId,"任务完成");
+            }
+        }
         return  elementReviewDao.updateApprove(elementReviewDto);
     }
 
     @Override
     public R deletes(ElementReviewDto elementReviewDto) {
-        System.out.println(elementReviewDto);
         int j= elementReviewDao.deleteAttach(elementReviewDto);
         int k=elementReviewDao.deleteNewOriginFile(elementReviewDto);
        int i= elementReviewDao.delete(elementReviewDto);

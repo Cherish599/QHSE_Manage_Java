@@ -6,7 +6,6 @@ import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.FilePropagationDao;
 import com.wlhse.dao.FilePropagationDetailDao;
-import com.wlhse.dto.inDto.FileInDto;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.dto.outDto.FilePropagationDetailDto;
 import com.wlhse.dto.outDto.FilePropagationResultDto;

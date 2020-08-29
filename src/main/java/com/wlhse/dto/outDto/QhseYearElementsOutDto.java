@@ -36,8 +36,17 @@ public class QhseYearElementsOutDto {
     private String year;
 
     private String fileCheckStatus;
-
+    private String  schedule;
     private List<QhseYearElementsOutDto> childNode = new LinkedList<>();
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
 
     public Integer getId() {
         return id;

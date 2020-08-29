@@ -1,5 +1,9 @@
 package com.wlhse.service.impl;
 
+
+import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dao.QHSETaskDao;
 import com.wlhse.dao.QhseElementsInputDao;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.entity.ElementInputFileInfo;
@@ -19,6 +23,12 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Value("${RESOURCES_QHSE_ElementInput_Evidence_URL}")
     private String url;
 
+    @Resource
+    JedisClient jedisClient;
+    @Resource
+    QHSEManageSysElementsDao elementsDao;
+    @Resource
+    QHSETaskDao taskDao;
 
     @Override
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
@@ -51,6 +61,26 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             if (i * j < 0) throw new WLHSException("更新失败");
         }
         qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//更改状态审核
+        //TODO 修改以应对同一个要素多次录入证据的情况。
+        //获取tableId
+        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
+        //是录入第一个证据
+        if (jedisClient.get("TInput"+tableId)==null){
+            jedisClient.set("TInput"+tableId,String.valueOf(1));
+        }
+        else {
+            jedisClient.set("TInput"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TInput"+tableId))+1));
+        }
+        if (jedisClient.get("T"+tableId)==null){
+            int allLeafNodeNumber = elementsDao.getAllLeafNodeNumber(tableId);
+            jedisClient.set("T"+tableId,String.valueOf(allLeafNodeNumber));
+        }
+        else {
+            if (jedisClient.get("TInput"+tableId).equals(jedisClient.get("T"+tableId))){
+                //所有要素证据录入完成，更改任务状态
+                taskDao.updateTaskStatusByTableId(tableId,"审核中");
+            }
+        }
         return R.ok();
     }
 

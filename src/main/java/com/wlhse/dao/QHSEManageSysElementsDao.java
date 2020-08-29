@@ -4,7 +4,6 @@ import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
-import com.wlhse.dto.outDto.QhseElementsOutDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
@@ -56,7 +55,9 @@ public interface QHSEManageSysElementsDao {
     List<QhseElementsPojo> queryQhseElements();
     //查询年度要素表
     List<YearElementsDto> queryQhseYearElements(YearElementsDto yearElementsDto);
-
+    //melon查询进度
+    int querySchedule(String code,String companyCode,String year);
+    int querySchdules(String code,String companyCode,String year);
     //th----查询基本数据表两级
     List<QhseElementsPojo> queryQhseChildElements();
     //th----查询所有的数据表
@@ -104,4 +105,6 @@ public interface QHSEManageSysElementsDao {
     int getCheckedElementNumber(int tableId);
 
     int getAllLeafNodeNumber(int table);
+
+    List<YearElementsDto> queryYearElement(YearElementsDto yearElementsDto);
 }
