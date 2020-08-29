@@ -17,4 +17,6 @@ public interface QHSETaskDao {
     int updateTaskStatusByTableId(int tableId,String status);
 
     int receiveTask(int taskId);
+
+    List<TaskDto> getOrderedTask(int employeeId);
 }

@@ -41,7 +41,6 @@ public class TaskServiceImp implements TaskService {
         String token = request.getHeader("Authorization");
         Map<String, String> map = jedisClient.hGetAll(token);
         int employeeId = Integer.valueOf(map.get("employeeId"));
-        logger.info("员工ID"+employeeId);
         List<TaskOutDto> allTaskByEmployeeId = taskDao.getAllTaskByEmployeeId(employeeId);
         r.put("data",allTaskByEmployeeId);
         return r;
@@ -55,4 +54,34 @@ public class TaskServiceImp implements TaskService {
         }
         return R.error("接收失败");
     }
+
+    @Override
+    public R getOrderedTask(HttpServletRequest request) {
+        R r=new R();
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        int employeeId = Integer.valueOf(map.get("employeeId"));
+        List<TaskDto> orderedTask = taskDao.getOrderedTask(employeeId);
+        r.put("data",orderedTask);
+        return r;
+    }
+
+    @Override
+    public R getTaskDetails(int tableId, String status) {
+        R r=new R();
+        String total = jedisClient.get("T" + tableId);
+        String finishedNum="0";
+        switch (status){
+            case "录入证据中":finishedNum=jedisClient.get("TInput"+tableId); break;
+            case "审核中":finishedNum=jedisClient.get("TCheck"+tableId);break;
+            case "批准中":finishedNum=jedisClient.get("TApprove"+tableId);
+        }
+        String result="{" +
+                "total='" + total + '\'' +
+                ", finishedNum='" + finishedNum + '\'' +
+                '}';
+        r.put("data",result);
+        return r;
+    }
+
 }
