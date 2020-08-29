@@ -115,6 +115,10 @@
          select * from qhse_companyyearmanagersyselement where  code=#{0} and companyCode=#{1}
          and `year`=#{2}
     </select>
+    <select id="queryAllElement" resultType="java.lang.Integer" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        select count(*) from qhse_companyyearmanagersyselement where companyCode=#{companyCode} and `year`=#{year}
+        and (status is not null or status!="")
+    </select>
 
 
     <delete id="delete" parameterType="com.wlhse.dto.inDto.ElementReviewDto">

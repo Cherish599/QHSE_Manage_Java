@@ -63,4 +63,9 @@ public class ElementReviewController {
     public R elementReviewer4( ElementReviewDto elementReviewDto) {
         return  elementReviewService.shows(elementReviewDto);
     }
+    //查询全要素
+    @RequestMapping(value = "/showAllElement", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R elementReviewer5( ElementReviewDto elementReviewDto) {
+        return  elementReviewService.queryAllElement(elementReviewDto);
+    }
 }

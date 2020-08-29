@@ -44,4 +44,6 @@ public interface ElementReviewDao {
     //查询已审核
     List<QHSECompanyYearManagerSysElementDto> queryCheck(ElementReviewDto elementReviewDto);
 
+    //查询全要素个数
+    int queryAllElement(ElementReviewDto elementReviewDto);
 }
