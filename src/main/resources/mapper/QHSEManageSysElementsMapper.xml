@@ -165,9 +165,6 @@
         t1.Year as `year`,
         t1.fileCheckStatus as fileCheckStatus
         from QHSE_CompanyYearManagerSysElement as t1
-        join QHSE_CompanyYearManagerSysElementTable as t2
-        on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
-        on
         <where>
             <if test="companyCode !=null and companyCode!=''">
                 AND t1.CompanyCode=#{companyCode}
@@ -293,6 +290,59 @@
     </insert>
 
     <insert id="addExcelQHSEElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
+        insert into qhse_managersyselement
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="name != null and name != ''">
+                Name,
+            </if>
+            <if test="content != null and content != ''">
+                Content,
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                AuditMode,
+            </if>
+            InitialScore,
+            <if test="formula != null and formula != ''">
+                Formula,
+            </if>
+            TotalCount,
+            <if test="status != null and status != ''">
+                Status,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                #{auditMode},
+            </if>
+            #{initialScore},
+            <if test="formula != null and formula != ''">
+                #{formula},
+            </if>
+            #{totalCount},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <insert id="addExcelQHSEElemenForInerPople" parameterType="com.wlhse.dto.outDto.QhseElementsOutDto">
         insert into qhse_managersyselement
         (
         <trim suffixOverrides=",">
@@ -606,6 +656,35 @@
                  and companyCode=#{param2}
                  and (status="未提供" or status="不通过")
          </where>
+    </select>
+
+    <select id="queryYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto" resultType="com.wlhse.dto.inDto.YearElementsDto">
+        select t1.QHSE_CompanyYearManagerSysElement_ID as qhseCompanyYearManagerSysElementID,
+        t1.QHSE_CompanyYearManagerSysElementTable_ID as qhseCompanyYearManagerSysElementTableID,
+        t1.Code,
+        t1.Name,
+        t1.Content,
+        t1.AuditMode,
+        t1.InitialScore,
+        t1.Formula,
+        t1.TotalCount,
+        t1.Status,
+        t1.CompanyCode as companyCode,
+        t1.CompanyName as companyName,
+        t1.Year as `year`,
+        t1.fileCheckStatus as fileCheckStatus
+        from QHSE_CompanyYearManagerSysElement as t1
+        join QHSE_CompanyYearManagerSysElementTable as t2
+        on  t1.QHSE_CompanyYearManagerSysElementTable_ID=t2.QHSE_CompanyYearManagerSysElementTable_ID
+        <where>
+            <if test="companyCode !=null and companyCode!=''">
+                AND t1.CompanyCode=#{companyCode}
+            </if>
+            <if test="year !=null and year!=''">
+                AND t1.Year=#{year}
+            </if>
+            AND t1.ConfigStatus="启用"
+        </where>
     </select>
 </mapper>
 

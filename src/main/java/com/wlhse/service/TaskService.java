@@ -13,4 +13,8 @@ public interface TaskService {
     R getTaskByEmployeeId(HttpServletRequest request);
 
     R receiveTask(int taskId);
+
+    R getOrderedTask(HttpServletRequest request);
+
+    R getTaskDetails(int tableId, String status);
 }

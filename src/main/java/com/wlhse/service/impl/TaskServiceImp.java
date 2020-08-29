@@ -6,6 +6,8 @@ import com.wlhse.dto.TaskDto;
 import com.wlhse.dto.outDto.TaskOutDto;
 import com.wlhse.service.TaskService;
 import com.wlhse.util.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,7 @@ import java.util.Map;
  **/
 @Service
 public class TaskServiceImp implements TaskService {
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     QHSETaskDao taskDao;
     @Resource
@@ -52,4 +54,34 @@ public class TaskServiceImp implements TaskService {
         }
         return R.error("接收失败");
     }
+
+    @Override
+    public R getOrderedTask(HttpServletRequest request) {
+        R r=new R();
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        int employeeId = Integer.valueOf(map.get("employeeId"));
+        List<TaskDto> orderedTask = taskDao.getOrderedTask(employeeId);
+        r.put("data",orderedTask);
+        return r;
+    }
+
+    @Override
+    public R getTaskDetails(int tableId, String status) {
+        R r=new R();
+        String total = jedisClient.get("T" + tableId);
+        String finishedNum="0";
+        switch (status){
+            case "录入证据中":finishedNum=jedisClient.get("TInput"+tableId); break;
+            case "审核中":finishedNum=jedisClient.get("TCheck"+tableId);break;
+            case "批准中":finishedNum=jedisClient.get("TApprove"+tableId);
+        }
+        String result="{" +
+                "total='" + total + '\'' +
+                ", finishedNum='" + finishedNum + '\'' +
+                '}';
+        r.put("data",result);
+        return r;
+    }
+
 }

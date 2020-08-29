@@ -45,6 +45,24 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
                 }
             }
             qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
+            //获取tableId
+            int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
+            if (jedisClient.get("TInput"+tableId)==null){
+                jedisClient.set("TInput"+tableId,String.valueOf(1));
+            }
+            else {
+                jedisClient.set("TInput"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TInput"+tableId))+1));
+            }
+            if (jedisClient.get("T"+tableId)==null){
+                int allLeafNodeNumber = elementsDao.getAllLeafNodeNumber(tableId);
+                jedisClient.set("T"+tableId,String.valueOf(allLeafNodeNumber));
+            }
+            else {
+                if (jedisClient.get("TInput"+tableId).equals(jedisClient.get("T"+tableId))){
+                    //所有要素证据录入完成，更改任务状态
+                    taskDao.updateTaskStatusByTableId(tableId,"审核中");
+                }
+            }
         } else {
             //将附件attach对应id放入elementFileInfo
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
@@ -61,25 +79,6 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             if (i * j < 0) throw new WLHSException("更新失败");
         }
         qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//更改状态审核
-        //获取tableId
-        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
-        //是录入第一个证据
-        if (jedisClient.get("TInput"+tableId)==null){
-            jedisClient.set("TInput"+tableId,String.valueOf(1));
-        }
-        else {
-            jedisClient.set("TInput"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TInput"+tableId))+1));
-        }
-        if (jedisClient.get("T"+tableId)==null){
-            int allLeafNodeNumber = elementsDao.getAllLeafNodeNumber(tableId);
-            jedisClient.set("T"+tableId,String.valueOf(allLeafNodeNumber));
-        }
-        else {
-            if (jedisClient.get("TInput"+tableId).equals(jedisClient.get("T"+tableId))){
-                //所有要素证据录入完成，更改任务状态
-                taskDao.updateTaskStatusByTableId(tableId,"审核中");
-            }
-        }
         return R.ok();
     }
 
