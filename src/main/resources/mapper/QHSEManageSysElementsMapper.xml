@@ -342,6 +342,59 @@
         )
     </insert>
 
+    <insert id="addExcelQHSEElemenForInerPople" parameterType="com.wlhse.dto.outDto.QhseElementsOutDto">
+        insert into qhse_managersyselement
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="name != null and name != ''">
+                Name,
+            </if>
+            <if test="content != null and content != ''">
+                Content,
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                AuditMode,
+            </if>
+            InitialScore,
+            <if test="formula != null and formula != ''">
+                Formula,
+            </if>
+            TotalCount,
+            <if test="status != null and status != ''">
+                Status,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="auditMode != null and auditMode != ''">
+                #{auditMode},
+            </if>
+            #{initialScore},
+            <if test="formula != null and formula != ''">
+                #{formula},
+            </if>
+            #{totalCount},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+        </trim>
+        )
+    </insert>
+
     <update id="updateExcelElement" parameterType="com.wlhse.dto.inDto.QSHEMSElementInDto">
         update qhse_managersyselement
         set Name=#{name},Content=#{content},AuditMode=#{auditMode},InitialScore=#{initialScore},

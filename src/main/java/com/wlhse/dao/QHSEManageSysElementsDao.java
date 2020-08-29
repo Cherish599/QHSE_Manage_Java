@@ -18,6 +18,7 @@ public interface QHSEManageSysElementsDao {
     Integer addQHSERule(QHSEManageSysElements rule);
     Integer addQHSEElement(QhseElementsPojo element);//换类型重写
     Integer addExcelQHSEElement(QSHEMSElementInDto element);//excel文件添加节点
+    Integer addExcelQHSEElemenForInerPople(QhseElementsOutDto element);
 
 
     List<QHSECompanySysElementsPojo> querryQHSEReportElements(@Param("status") String status);
