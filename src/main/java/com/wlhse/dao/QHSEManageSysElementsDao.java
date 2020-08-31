@@ -4,6 +4,7 @@ import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
+import com.wlhse.dto.outDto.QhseElementsOutDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;

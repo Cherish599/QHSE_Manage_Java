@@ -99,6 +99,9 @@ public class Test {
         }
     }
 
+
+    //---------读取审核要素原表excel算法，自动生成记录，自动生成编码，自动分级，自动统计分数，节点数，自动分解问题描述，分别写入数据库-----
+    //---对excel有格式要求，运行直接写入数据库，仅限算法作者使用。
     @org.junit.Test
     public void readComplexExcel() throws Exception {
         Workbook workbook;
@@ -249,7 +252,6 @@ public class Test {
                 }
                 continue;
             }
-
             if (pattern.matcher(value.charAt(0) + "").matches()) {
                 //生成code
                 f1Code = sortCodeUtil.getMaxCodeString(f1Code);
@@ -333,6 +335,15 @@ public class Test {
                 qSHEMSElement = new QSHEMSElementInDto();
                 BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
                 beanList.add(qSHEMSElement);
+                String problemTemp2=dataFormat.formatCellValue(row.getCell(rowNUmber+4)).replace("\n","");
+                if(problemTemp2!=null||!("".equals(problemTemp2)))
+                {
+                    if(problemTemp2.startsWith("1")) {//检查是不是以序号1开头
+                        problemDescriptionMap.put(f1Code, problemTemp2);
+                    }
+                }
+                else
+                    throw new Exception(f1Code+"的可能问题序号不是1开始");
             }
         }
         result.put("elementList",beanList);
@@ -365,11 +376,6 @@ public class Test {
         return result;
     }
 
-    /**
-     * 该方法用于把查询出来的list里的对象，封装为一棵树；
-     * @param qhseElementsPojos 该参数为List<QhseElementsPojo>集合，为数据库查询出的结果
-     * @return 一棵树
-     */
     public List<QhseElementsOutDto> getQhseElementTree(List<QSHEMSElementInDto> qhseElementsPojos) {
         /*
         思想，把list里的对象逐个遍历；QhseElementsPojo赋值给QhseElementsOutDto，
@@ -404,7 +410,6 @@ public class Test {
                     score+=getScore(ele);
                 }
                 hseElementsOutDto.setInitialScore(score);
-
             }
         }
         return hseElementsOutDto.getInitialScore();
@@ -420,7 +425,6 @@ public class Test {
                     count+=getCount(ele);
                 }
                 hseElementsOutDto.setTotalCount(count);
-
             }
         }
         return hseElementsOutDto.getTotalCount();
