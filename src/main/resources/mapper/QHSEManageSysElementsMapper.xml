@@ -636,12 +636,26 @@
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
     </select>
     <select id="querySchedule" resultType="java.lang.Integer" parameterType="java.lang.String">
-        select count(*) from qhse_companyyearmanagersyselement where `Code` like CONCAT(#{param1},"%")
-        and (status is not null or status!="") and `year`=#{param3} and companyCode=#{param2}
+        select count(*) from qhse_companyyearmanagersyselement
+         <where>
+            <if test="code!=null and code !='' ">
+              AND  `Code` like CONCAT(#{code},"%")
+            </if>
+                and (status is not null or status!="")
+                and `year`=#{param3}
+                and companyCode=#{param2}
+         </where>
     </select>
     <select id="querySchdules" resultType="java.lang.Integer" parameterType="java.lang.String">
-         select count(*) from qhse_companyyearmanagersyselement where `Code` like CONCAT(#{param1},"%")
-          and `year`=#{param3} and companyCode=#{param2} and (status="未提供" or status="未通过")
+         select count(*) from qhse_companyyearmanagersyselement
+         <where>
+             <if test="code!=null and code !='' ">
+                 AND  `Code` like CONCAT(#{code},"%")
+             </if>
+                 and `year`=#{param3}
+                 and companyCode=#{param2}
+                 and (status="未提供" or status="不通过")
+         </where>
     </select>
 
     <select id="queryYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto" resultType="com.wlhse.dto.inDto.YearElementsDto">

@@ -26,6 +26,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     @Resource
     private ElementReviewDao elementReviewDao;
 
+
     @Resource
     private TreeUtil treeUtil;
 
@@ -220,5 +221,12 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         return ok;
     }
 
+    @Override
+    public R queryAllElement(ElementReviewDto elementReviewDto) {
+        R r=new R();
+        r.put("AllElement",elementReviewDao.queryAllElement(elementReviewDto));
+        r.put("NotInput",elementsDao.querySchdules(null,elementReviewDto.getCompanyCode(),elementReviewDto.getYear()));
+        return r;
+    }
 
 }

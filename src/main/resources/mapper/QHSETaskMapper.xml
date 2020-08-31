@@ -39,4 +39,10 @@
         set Status='录入证据中',ReceiveDate=now()
         where QHSE_Task_ID=#{0}
     </update>
+
+    <select id="getOrderedTask" resultType="com.wlhse.dto.TaskDto">
+        select *
+        from qhse_task
+        where IssuedID=#{0}
+    </select>
 </mapper>
