@@ -41,7 +41,11 @@
     </update>
 
     <select id="getOrderedTask" resultType="com.wlhse.dto.TaskDto">
-        select *
+        select QHSE_Task_ID as  qHSETaskID,
+        CompanyCode as companyCode,
+        CompanyName as companyName,
+        TaskName,IssuedID,IssuedName,IssuedDate,ReceiveID,ReceiveName,ReceiveDate,
+        PlanDate,TrueDate,Table_ID as tableID,Status
         from qhse_task
         where IssuedID=#{0}
     </select>

@@ -4,6 +4,8 @@ package com.wlhse.controller;
 import com.wlhse.dto.TaskDto;
 import com.wlhse.service.TaskService;
 import com.wlhse.util.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ public class TaskController {
 
     @Resource
     TaskService taskService;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/createNewTask",method = RequestMethod.POST)
     public R createNewTask(@RequestBody(required = false) TaskDto taskDto){

@@ -630,7 +630,7 @@
     </select>
 
     <select id="getAllLeafNodeNumber" resultType="Integer">
-        select count (*)
+        select count(*)
         from qhse_companyyearmanagersyselement
         where Status is not null
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
