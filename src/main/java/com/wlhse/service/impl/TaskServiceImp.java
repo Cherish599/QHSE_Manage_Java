@@ -1,7 +1,9 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QHSETaskDao;
+import com.wlhse.dto.ProgressDto;
 import com.wlhse.dto.TaskDto;
 import com.wlhse.dto.outDto.TaskOutDto;
 import com.wlhse.service.TaskService;
@@ -26,6 +28,8 @@ public class TaskServiceImp implements TaskService {
     QHSETaskDao taskDao;
     @Resource
     JedisClient jedisClient;
+    @Resource
+    QHSEManageSysElementsDao qhseManageSysElementsDao;
     @Override
     public R createNewTask(TaskDto taskDto) {
         int i = taskDao.insertNewTask(taskDto);
@@ -70,17 +74,21 @@ public class TaskServiceImp implements TaskService {
     public R getTaskDetails(int tableId, String status) {
         R r=new R();
         String total = jedisClient.get("T" + tableId);
+        if (total==null){
+            int allLeafNodeNumber = qhseManageSysElementsDao.getAllLeafNodeNumber(tableId);
+            total=String.valueOf(allLeafNodeNumber);
+            jedisClient.set("T"+tableId,total);
+        }
+        ProgressDto progressDto=new ProgressDto();
         String finishedNum="0";
         switch (status){
             case "录入证据中":finishedNum=jedisClient.get("TInput"+tableId); break;
             case "审核中":finishedNum=jedisClient.get("TCheck"+tableId);break;
             case "批准中":finishedNum=jedisClient.get("TApprove"+tableId);
         }
-        String result="{" +
-                "total='" + total + '\'' +
-                ", finishedNum='" + finishedNum + '\'' +
-                '}';
-        r.put("data",result);
+        progressDto.setTotal(total);
+        progressDto.setFinishedNum(finishedNum);
+        r.put("data",progressDto);
         return r;
     }
 
