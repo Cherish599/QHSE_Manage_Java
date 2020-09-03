@@ -5,13 +5,16 @@ import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QHSETaskDao;
 import com.wlhse.dao.QhseElementsInputDao;
+import com.wlhse.dto.TaskStatusDto;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
+import org.apache.poi.hssf.record.DVALRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -31,7 +34,11 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     QHSETaskDao taskDao;
 
     @Override
+    @Transactional
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
+        //第一次录入
+        //获取tableId
+        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
         if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
@@ -45,8 +52,6 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
                 }
             }
             qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
-            //获取tableId
-            int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
             if (jedisClient.get("TInput"+tableId)==null){
                 jedisClient.set("TInput"+tableId,String.valueOf(1));
             }
@@ -60,11 +65,21 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             else {
                 if (jedisClient.get("TInput"+tableId).equals(jedisClient.get("T"+tableId))){
                     //所有要素证据录入完成，更改任务状态
-                    taskDao.updateTaskStatusByTableId(tableId,"审核中");
+                    TaskStatusDto taskStatusDto=new TaskStatusDto(tableId,"审核中");
+                    taskDao.updateTaskStatusByTableId(taskStatusDto);
                 }
             }
         } else {
+            //打回后重新录入
             //将附件attach对应id放入elementFileInfo
+            String s = jedisClient.get("TNoInput" + tableId);
+            jedisClient.set("TNoInput"+tableId,Integer.valueOf(s)-1+"");
+            if(Integer.valueOf(s)-1==0){
+                //打回的元素全部重新录入完毕
+                taskDao.updateCheckStatus(tableId,null);
+                //清除缓存
+                jedisClient.delManyCahce("TNoInput"+tableId,0);
+            }
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
                 String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
                 ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();

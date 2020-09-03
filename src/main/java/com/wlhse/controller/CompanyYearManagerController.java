@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 
+import com.wlhse.dto.CompanyYearManagerDtoWithEmployeeId;
 import com.wlhse.dto.inDto.CompanyYearManagerDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
@@ -19,8 +20,8 @@ public class CompanyYearManagerController {
     private CompanyYearManagerService companyYearManagerService;
     //显示管理表信息
     @RequestMapping(value = "/show_companyYearManager", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R show(@ModelAttribute CompanyYearManagerDto companyYearManagerDto) {
-        return companyYearManagerService.queryAll(companyYearManagerDto);
+    public R show(@ModelAttribute CompanyYearManagerDtoWithEmployeeId companyYearManagerDto, HttpServletRequest request) {
+        return companyYearManagerService.queryAll(companyYearManagerDto,request);
     }
     //状态修改
     @RequestMapping(value = "/approval_companyYearManager/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")

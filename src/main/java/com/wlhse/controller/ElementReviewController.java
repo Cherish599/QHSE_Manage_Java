@@ -52,6 +52,7 @@ public class ElementReviewController {
         return  elementReviewService.queryAll(qhseEvidenceAttatchDto);
     }
     //审核人不批准不通过
+    //TODO 添加tag判读为不批准还是不通过
     @RequestMapping(value = "/no_elementReviewer", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
         //elementReviewService.deletes(elementReviewDto);不通过删除附件等所有信息

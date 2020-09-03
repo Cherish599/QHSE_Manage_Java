@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.TaskDto;
+import com.wlhse.dto.TaskStatusDto;
 import com.wlhse.dto.outDto.TaskOutDto;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +15,13 @@ public interface QHSETaskDao {
 
     List<TaskOutDto> getAllTaskByEmployeeId(int employeeId);
 
-    int updateTaskStatusByTableId(int tableId,String status);
+    int updateTaskStatusByTableId(TaskStatusDto taskStatusDto);
 
     int receiveTask(int taskId);
 
     List<TaskDto> getOrderedTask(int employeeId);
+
+    int updateCheckStatus(int tableID,String status);
+
+    int deleteTask(int tableId);
 }

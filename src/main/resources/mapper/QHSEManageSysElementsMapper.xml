@@ -176,7 +176,7 @@
             AND t1.QHSE_CompanyYearManagerSysElementTable_ID IN (
             SELECT Table_ID
             FROM qhse_task
-            WHERE Status='录入证据中'
+            WHERE (Status='录入证据中' OR CheckStatus='重新录入')
             AND CompanyCode=#{companyCode}
             )
         </where>
@@ -634,6 +634,7 @@
         from qhse_companyyearmanagersyselement
         where Status is not null
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+        and ConfigStatus='启用'
     </select>
     <select id="querySchedule" resultType="java.lang.Integer" parameterType="java.lang.String">
         select count(*) from qhse_companyyearmanagersyselement

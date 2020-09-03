@@ -12,7 +12,12 @@
             <if test="year != null and year  != ''">
                 AND year=#{year}
             </if>
-
+            AND CompanyCode IN
+            (
+                SELECT CompanyCode From
+                qhse_task
+                where IssuedID=#{employeeId}
+            )
         </where>
     </select>
 
