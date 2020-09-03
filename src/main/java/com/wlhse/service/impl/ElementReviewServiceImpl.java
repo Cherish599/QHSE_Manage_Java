@@ -5,6 +5,7 @@ import com.wlhse.dao.ElementReviewDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QHSETaskDao;
 import com.wlhse.dao.QhseElementsInputDao;
+import com.wlhse.dto.TaskStatusDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
@@ -14,6 +15,7 @@ import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -90,7 +92,23 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     }
 
     @Override
+    @Transactional
     public R updateStatus(ElementReviewDto elementReviewDto) {
+        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
+        String status = elementReviewDto.getStatus();
+        //TODO 添加不批准的逻辑
+        if (status.equals("不通过")){
+            String s = jedisClient.get("TNoInput" + tableId);
+            if (s==null){
+                jedisClient.set("TNoInput"+tableId,String.valueOf(1));
+            }
+            else
+            {
+                jedisClient.set("TNoInput"+tableId,String.valueOf(Integer.valueOf(s)+1));
+            }
+            // 更新状态
+            taskDao.updateCheckStatus(tableId,"重新录入");
+        }
         if (elementReviewDao.update(elementReviewDto) <= 0)
             throw new WLHSException("更新失败");
         return R.ok();
@@ -157,7 +175,8 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         else {
             //全部审核完毕
             if (jedisClient.get("TCheck" + tableId).equals(jedisClient.get("T" + tableId))) {
-                taskDao.updateTaskStatusByTableId(tableId,"批准中");
+                TaskStatusDto taskStatusDto=new TaskStatusDto(tableId,"批准中");
+                taskDao.updateTaskStatusByTableId(taskStatusDto);
             }
         }
         return  elementReviewDao.updateCheck(elementReviewDto);
@@ -181,7 +200,8 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         else {
             //全部批准完毕
             if (jedisClient.get("TApprove" + tableId).equals(jedisClient.get("T" + tableId))) {
-                taskDao.updateTaskStatusByTableId(tableId,"任务完成");
+                TaskStatusDto taskStatusDto=new TaskStatusDto(tableId,"任务完成");
+                taskDao.updateTaskStatusByTableId(taskStatusDto);
             }
         }
         return  elementReviewDao.updateApprove(elementReviewDto);
