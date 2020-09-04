@@ -11,7 +11,8 @@
         QHSE_CompanyYearManagerSysElementEvidenceAttach_ID as attachId,
         AttachDescrption as attachDescrption,
         Attach as attach,
-        uploadTime
+        uploadTime,
+        negativeOpinion
         from QHSE_CompanyYearManagerSysElementEvidence t1,QHSE_CompanyYearManagerSysElementEvidenceAttach t2
         where t1.QHSE_CompanyYearManagerSysElementEvidence_ID=t2.QHSE_CompanyYearManagerSysElementEvidence_ID
         and t1.QHSE_CompanyYearManagerSysElement_ID=#{id}

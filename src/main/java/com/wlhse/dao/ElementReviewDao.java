@@ -19,6 +19,7 @@ public interface ElementReviewDao {
 
     //修改审核人状态
     int update(ElementReviewDto elementReviewDto);
+    int updateAddvice(ElementReviewDto elementReviewDto);
 
     //查询证据
     List<QhseEvidenceAttatchDto> queryAll(QhseEvidenceAttatchDto qhseEvidenceAttatchDto);

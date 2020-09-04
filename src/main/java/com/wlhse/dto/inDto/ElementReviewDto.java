@@ -12,6 +12,12 @@ public class ElementReviewDto {
     private String status;
     private Integer checkStaffID;
     private Integer approverStaffID;
+    private String negativeOpinion;//不通过意见
+
+    public void setNegativeOpinion(String negativeOpinion) {
+        this.negativeOpinion = negativeOpinion;
+    }
+
 
     public String getCompanyCode() {
         return companyCode;
@@ -83,10 +89,12 @@ public class ElementReviewDto {
                 "qHSE_CompanyYearManagerSysElement_ID=" + qHSE_CompanyYearManagerSysElement_ID +
                 ", code='" + code + '\'' +
                 ", companyName='" + companyName + '\'' +
+                ", companyCode='" + companyCode + '\'' +
                 ", year='" + year + '\'' +
                 ", status='" + status + '\'' +
-                ", checkStaffID='" + checkStaffID + '\'' +
-                ", approverStaffID='" + approverStaffID + '\'' +
+                ", checkStaffID=" + checkStaffID +
+                ", approverStaffID=" + approverStaffID +
+                ", negativeOpinion=" + negativeOpinion +
                 '}';
     }
 }

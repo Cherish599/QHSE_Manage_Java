@@ -109,7 +109,9 @@ public class ElementReviewServiceImpl implements ElementReviewService {
             // 更新状态
             taskDao.updateCheckStatus(tableId,"重新录入");
         }
-        if (elementReviewDao.update(elementReviewDto) <= 0)
+        int i=elementReviewDao.update(elementReviewDto);
+        int j=elementReviewDao.updateAddvice(elementReviewDto);
+        if (i*j <= 0)
             throw new WLHSException("更新失败");
         return R.ok();
     }

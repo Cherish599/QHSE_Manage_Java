@@ -27,6 +27,15 @@ public class ElementEvidenceAttachInDto {
     private String approverStaffName;
 
     private String url;//附件地址前缀
+    private String negativeOpinion;
+
+    public String getNegativeOpinion() {
+        return negativeOpinion;
+    }
+
+    public void setNegativeOpinion(String negativeOpinion) {
+        this.negativeOpinion = negativeOpinion;
+    }
 
     @Override
     public String toString() {
