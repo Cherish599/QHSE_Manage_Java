@@ -35,8 +35,8 @@ public class CompanyYearManagerController {
     }
     //新增检查表
     @RequestMapping(value = "/companyYearManager", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public R addCompanyYearManager(@RequestBody CompanyYearManagerDto companyYearManagerDto) {
-        return companyYearManagerService.addCompanyYearManager(companyYearManagerDto);
+    public R addCompanyYearManager(@RequestBody CompanyYearManagerDtoWithEmployeeId companyYearManagerDto,HttpServletRequest request) {
+        return companyYearManagerService.addCompanyYearManager(companyYearManagerDto,request);
     }
 
 }

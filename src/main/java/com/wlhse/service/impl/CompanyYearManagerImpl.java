@@ -49,27 +49,8 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
     @Transactional
     public R deleteALL(int id) {
         //Should use transactions to delete data from those tables.Ensure the atomicity of database transactions.
-        //TODO Use transactions.
         try {
             companyYearManagerDao.deleteAll(id);
-            taskDao.deleteTask(id);
-            List<Integer> companyManagerSysElementId = qhseElementsInputDao.getCompanyManagerSysElementId(id);
-            qhseElementsInputDao.deleteFromCompanyManagerSysElement(id);
-            Iterator<Integer> iterator = companyManagerSysElementId.iterator();
-            Iterator<Integer> iterator1=iterator;
-            List<List<Integer>> companyYearManagerSysElementEvidenceId=new ArrayList<>();
-            while (iterator.hasNext()){
-                companyYearManagerSysElementEvidenceId.add(qhseElementsInputDao.getCompanyYearManagerSysElementEvidenceId(iterator.next()));
-            }
-            while (iterator1.hasNext()){
-                qhseElementsInputDao.deleteFromCompanyYearManagerSysElementEvidence(iterator1.next());
-            }
-            while (companyYearManagerSysElementEvidenceId.iterator().hasNext()){
-                while (companyYearManagerSysElementEvidenceId.iterator().next().iterator().hasNext()){
-                    qhseElementsInputDao.deleteFromCompanyYearManagerSysElementEvidenceAttach(companyYearManagerSysElementEvidenceId.iterator()
-                            .next().iterator().next());
-                }
-            }
         }
         catch (Exception e) {
             throw new WLHSException("删除失败");
@@ -77,7 +58,11 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
         return R.ok();
     }
     @Override
-    public R addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto) {
+    public R addCompanyYearManager(CompanyYearManagerDtoWithEmployeeId companyYearManagerDto,HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        Map<String, String> map1 = jedisClient.hGetAll(token);
+        int employeeId = Integer.valueOf(map1.get("employeeId"));
+        companyYearManagerDto.setEmployeeId(employeeId);
         if(companyYearManagerDao.addCompanyYearManager(companyYearManagerDto)<=0)
             throw new WLHSException("新增失败");
         return R.ok();

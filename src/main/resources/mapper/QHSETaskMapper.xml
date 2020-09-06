@@ -59,6 +59,6 @@
     <delete id="deleteTask">
         delete from
         qhse_task
-        where Table_ID=@{0}
+        where Table_ID=#{0}
     </delete>
 </mapper>

@@ -15,5 +15,5 @@ public interface CompanyYearManagerService {
     //删除信息
     R deleteALL(int id);
     //新增年度检查表
-    R addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto);
+    R addCompanyYearManager(CompanyYearManagerDtoWithEmployeeId companyYearManagerDto,HttpServletRequest request);
 }

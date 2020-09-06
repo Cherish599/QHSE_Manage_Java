@@ -3,7 +3,7 @@
 <mapper namespace="com.wlhse.dao.CompanyYearManagerDao">
 
     <select id="queryAll" parameterType="com.wlhse.dto.inDto.CompanyYearManagerDto"
-            resultType="com.wlhse.dto.inDto.CompanyYearManagerDto">
+            resultType="com.wlhse.dto.CompanyYearManagerDtoWithEmployeeId">
         select * from qhse_companyyearmanagersyselementtable
         <where>
             <if test="companyName != null and companyName  != ''">
@@ -12,12 +12,7 @@
             <if test="year != null and year  != ''">
                 AND year=#{year}
             </if>
-            AND CompanyCode IN
-            (
-                SELECT CompanyCode From
-                qhse_task
-                where IssuedID=#{employeeId}
-            )
+            AND IssuedID=#{employeeId}
         </where>
     </select>
 
@@ -51,6 +46,7 @@
             <if test="status!=null and status!=''">
                 Status,
             </if>
+            IssuedID
         </trim>
         )
         values
@@ -69,8 +65,9 @@
                 #{elementTableName},
             </if>
             <if test="status!=null and status!=''">
-                #{status}
+                #{status},
             </if>
+            #{employeeId}
         </trim>
         )
   </insert>

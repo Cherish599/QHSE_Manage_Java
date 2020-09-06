@@ -7,6 +7,8 @@ public class CompanyYearManagerDto {
     private String year;
     private String elementTableName;
     private String status;
+    private String issuedID;
+
 
     public String getQHSE_CompanyYearManagerSysElementTable_ID() {
         return qHSE_CompanyYearManagerSysElementTable_ID;

@@ -19,7 +19,7 @@
                 select Table_ID
                 from qhse_task
                 where CompanyCode=#{companyCode}
-                and Status='审核中'
+                and (Status='审核中' OR Status='批准中')
             )
         </where>
     </select>
