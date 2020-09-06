@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.MonitorPlanDao">
+    <insert id="createNewMonitorPlan">
+        insert into monitorplan
+        (StartDate,EndDate,PlanDate,PlanName,PlanPersonID,PlanPersonName)
+        values (
+        #{startDate},#{endDate},#{pladnDate},#{planName},#{planPersonID},#{planPersonName}
+        )
+    </insert>
+
+    <select id="getMonitorPlanByPlanPersonId" resultType="com.wlhse.dto.MonitorPlan">
+        select * from
+        monitorplan
+        where PlanPersonID=#{0}
+    </select>
+
+    <delete id="deletePlan">
+        delete from
+        monitorplan
+        where MonitorPlanID=#{0}
+    </delete>
+
+</mapper>
