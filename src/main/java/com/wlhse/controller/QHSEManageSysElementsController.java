@@ -102,7 +102,7 @@ public class QHSEManageSysElementsController {
 
 
     //---------------旧代码区----------------------------------------
-    @RequestMapping(value = "/querryQHSEChildRules/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    /*@RequestMapping(value = "/querryQHSEChildRules/{status}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public String querryQHSEChildRules(@PathVariable("status") int status){
         return qhseManageSysElementsService.querryAllRules(status);
     }
@@ -121,7 +121,7 @@ public class QHSEManageSysElementsController {
     @RequestMapping(value = "/updateQHSERule", method = RequestMethod.PUT, produces = {"application/json;charset=utf-8"})
     public String updateQHSERule(@RequestBody(required = false) QHSEManageSysElements qhseManageSysElements){
         return qhseManageSysElementsService.updateQHSERule(qhseManageSysElements);
-    }
+    }*/
 
 
 }
