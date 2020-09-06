@@ -62,6 +62,14 @@
         ApproverStaffID=#{approverStaffID},ApproverStaffName=(select Name from employee where EmployeeID=#{approverStaffID})
         where QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
     </update>
+    <update id="updateAddvice" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+        update qhse_companyyearmanagersyselementevidence
+        set
+            <if test="negativeOpinion!='' and negativeOpinion!=null ">
+                negativeOpinion=#{negativeOpinion}
+            </if>
+        where  QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </update>
 
     <sql id = "element_evidence_key">
         t1.qHSE_CompanyYearManagerSysElementEvidence_ID,
