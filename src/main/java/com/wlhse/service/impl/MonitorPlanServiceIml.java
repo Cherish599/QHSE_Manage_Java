@@ -1,10 +1,12 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.MonitorInputCheckDao;
 import com.wlhse.dao.MonitorPlanDao;
 import com.wlhse.dao.MonitorPlanDetailDao;
 import com.wlhse.dto.MonitorPlan;
 import com.wlhse.dto.MonitorPlanDetail;
+import com.wlhse.entity.MonitorInputCheckRecord;
 import com.wlhse.service.EmployeeManagementService;
 import com.wlhse.service.MonitorPlanService;
 import com.wlhse.util.R;
@@ -25,6 +27,8 @@ public class MonitorPlanServiceIml implements MonitorPlanService {
     EmployeeManagementService employeeManagementService;
     @Resource
     MonitorPlanDetailDao monitorPlanDetailDao;
+    @Resource
+    MonitorInputCheckDao monitorInputCheckDao;
     @Override
     public R createNewMonitorPlan(MonitorPlan monitorPlan, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
@@ -72,5 +76,49 @@ public class MonitorPlanServiceIml implements MonitorPlanService {
         R r=new R();
         r.put("data",monitorPlanDetailDao.getDetailByPlanId(planId));
         return r;
+    }
+
+    @Override
+    public R createNewDetailPlan(MonitorPlanDetail monitorPlanDetail) {
+        monitorPlanDetailDao.createNewPlanDetail(monitorPlanDetail);
+        return R.ok();
+    }
+
+    @Override
+    public R insertNewInputRecord(MonitorInputCheckRecord monitorInputCheckRecord, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        Map<String, String> map = jedisClient.hGetAll(token);
+        int employeeId = Integer.valueOf(map.get("employeeId"));
+        String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(employeeId);
+        monitorInputCheckRecord.setInputPersonID(employeeId);
+        monitorInputCheckRecord.setInputPersonName(employeeName);
+        monitorInputCheckDao.insertNewInputRecord(monitorInputCheckRecord);
+        return R.ok();
+    }
+
+    @Override
+    public R updateInputtedRecord(MonitorInputCheckRecord monitorInputCheckRecord) {
+        monitorInputCheckDao.updateInputRecord(monitorInputCheckRecord);
+        return R.ok();
+    }
+
+    @Override
+    public R getRecordDetail(int detailId) {
+        R r=new R();
+        r.put("data",monitorInputCheckDao.getRecordDetail(detailId));
+        return r;
+    }
+
+    @Override
+    public R getNeedToCheckRecords(int planId) {
+        R r=new R();
+        r.put("data",monitorInputCheckDao.getCheckMonitor(planId));
+        return r;
+    }
+
+    @Override
+    public R deleteInputtedRecord(int detailId) {
+        monitorInputCheckDao.deleteInputRecord(detailId);
+        return R.ok();
     }
 }

@@ -18,6 +18,7 @@
         <property name="initialPoolSize" value="${jdbc.initialPoolSize}"></property>
         <property name="minPoolSize" value="${jdbc.minPoolSize}"></property>
         <property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+        <property name="autoCommitOnClose" value="false"></property>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

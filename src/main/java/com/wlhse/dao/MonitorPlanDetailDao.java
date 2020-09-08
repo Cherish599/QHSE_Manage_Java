@@ -15,4 +15,7 @@ public interface MonitorPlanDetailDao {
     int deletePlanDetail(int id);
 
     List<MonitorPlanDetail> getDetailByPlanId(int planId);
+
+    int  createNewPlanDetail(MonitorPlanDetail monitorPlanDetail);
+
 }

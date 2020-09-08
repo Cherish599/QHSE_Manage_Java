@@ -3,7 +3,6 @@ package com.wlhse.controller;
 
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.inDto.YearElementsDto;
-import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.service.QHSEManageSysElementsService;
 import com.wlhse.util.R;
