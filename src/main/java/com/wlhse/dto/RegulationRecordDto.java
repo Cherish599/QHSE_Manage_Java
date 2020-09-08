@@ -7,6 +7,8 @@ public class RegulationRecordDto extends BaseGetDto {
     private Integer checkId;
     private Integer safeStaff_ID;
     private String safeStaff_Name;
+    private Integer regulationID;
+    private String regulationName;
     private String workItem;
     private String companyId;
     private String companyName;
@@ -14,7 +16,6 @@ public class RegulationRecordDto extends BaseGetDto {
     private String type;
     private String description;
     private String punish;
-    private String punishID;
     private Integer approve;
     private Integer ok;
     private Integer consequenceID;
@@ -25,13 +26,11 @@ public class RegulationRecordDto extends BaseGetDto {
     private String updateTime;
     private String recordDate;
     private Float score;
-    private Integer punish1;
     private String employeeCharacter;
     private String workSeniority;
     private String position;
     private String regulationCharacter;
     private String factorSource;
-    private String professionID;
     private String profession;
     private String factorHSE;
     private String factorDepartment;
@@ -61,6 +60,22 @@ public class RegulationRecordDto extends BaseGetDto {
 
     public void setRegulationSource(String regulationSource) {
         this.regulationSource = regulationSource;
+    }
+
+    public Integer getRegulationID() {
+        return regulationID;
+    }
+
+    public void setRegulationID(Integer regulationID) {
+        this.regulationID = regulationID;
+    }
+
+    public String getRegulationName() {
+        return regulationName;
+    }
+
+    public void setRegulationName(String regulationName) {
+        this.regulationName = regulationName;
     }
 
     public String getStartDate() {
@@ -167,13 +182,6 @@ public class RegulationRecordDto extends BaseGetDto {
         this.punish = punish;
     }
 
-    public String getPunishID() {
-        return punishID;
-    }
-
-    public void setPunishID(String punishID) {
-        this.punishID = punishID;
-    }
 
     public Integer getApprove() {
         return approve;
@@ -255,13 +263,6 @@ public class RegulationRecordDto extends BaseGetDto {
         this.score = score;
     }
 
-    public Integer getPunish1() {
-        return punish1;
-    }
-
-    public void setPunish1(Integer punish1) {
-        this.punish1 = punish1;
-    }
 
     public String getEmployeeCharacter() {
         return employeeCharacter;
@@ -391,13 +392,6 @@ public class RegulationRecordDto extends BaseGetDto {
         this.keyID = keyID;
     }
 
-    public String getProfessionID() {
-        return professionID;
-    }
-
-    public void setProfessionID(String professionID) {
-        this.professionID = professionID;
-    }
 
     public String getqHSE_CheckType() {
         return qHSE_CheckType;

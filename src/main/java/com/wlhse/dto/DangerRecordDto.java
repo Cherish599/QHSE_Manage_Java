@@ -33,7 +33,6 @@ public class DangerRecordDto extends BaseGetDto {
     private String recordDate;
     private String rank;
     private String factorSource;
-    private String professionID;
     private String profession;
     private String factorHSE;
     private String factorDepartment;
@@ -318,13 +317,6 @@ public class DangerRecordDto extends BaseGetDto {
         this.factorSource = factorSource;
     }
 
-    public String getProfessionID() {
-        return professionID;
-    }
-
-    public void setProfessionID(String professionID) {
-        this.professionID = professionID;
-    }
 
     public String getProfession() {
         return profession;
