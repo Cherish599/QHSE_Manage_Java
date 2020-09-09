@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
-@JSONType(orders = {"checkListID","checkListName","checkListCode","attribute","parentName","isChildNode","status","children"})
+@JSONType(orders = {"checkListID","checkListName","checkListCode","attribute","parentName","isChildNode","status"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CheckListTreeDto  implements Cloneable{
+public class QualityCheckListTreeDto implements Cloneable{
     private Integer checkListID;
     private String checkListName;
     private String checkListCode;
@@ -17,9 +18,7 @@ public class CheckListTreeDto  implements Cloneable{
     private String isChildNode;
     private String status;
 
-
-
-    private List<CheckListTreeDto> children;//=new LinkedList<>()
+    private List<QualityCheckListTreeDto> children;//=new LinkedList<>()
 
     public Integer getCheckListID() {
         return checkListID;
@@ -78,11 +77,11 @@ public class CheckListTreeDto  implements Cloneable{
     }
 
 
-    public List<CheckListTreeDto> getChildren() {
+    public List<QualityCheckListTreeDto> getChildren() {
         return children;
     }
 
-    public void setChildren(List<CheckListTreeDto> children) {
+    public void setChildren(List<QualityCheckListTreeDto> children) {
         this.children = children;
     }
 

@@ -1,14 +1,6 @@
 package com.wlhse.dto;
 
-import com.alibaba.fastjson.annotation.JSONType;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-@Component
-@JSONType(orders = {"checkListID","checkListName","checkListCode","attribute","parentName","isChildNode","status","children"})
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class CheckListTreeDto  implements Cloneable{
+public class QualityCheckListDto {
     private Integer checkListID;
     private String checkListName;
     private String checkListCode;
@@ -19,7 +11,6 @@ public class CheckListTreeDto  implements Cloneable{
 
 
 
-    private List<CheckListTreeDto> children;//=new LinkedList<>()
 
     public Integer getCheckListID() {
         return checkListID;
@@ -77,16 +68,16 @@ public class CheckListTreeDto  implements Cloneable{
         this.status = status;
     }
 
-
-    public List<CheckListTreeDto> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<CheckListTreeDto> children) {
-        this.children = children;
-    }
-
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
+    @Override
+    public String toString() {
+        return "CheckListDto{" +
+                "checkListID=" + checkListID +
+                ", checkListName='" + checkListName + '\'' +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", isChildNode='" + isChildNode + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

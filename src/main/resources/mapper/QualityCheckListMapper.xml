@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.QualityCheckListDao">
+    <select id="getTreeDto" resultType="com.wlhse.dto.QualityCheckListDto">
+        select * from quality_checklist
+        where status="启用"
+    </select>
+
+    <select id="getAllTreeDto" resultType="com.wlhse.dto.QualityCheckListDto">
+        select * from quality_checklist
+    </select>
+
+    <select id="getAllTableNode" resultType="String">
+        select CheckListCode
+        from quality_checklist
+        where length(CheckListCode)=4
+    </select>
+
+    <select id="getCurrentChildNodes" resultType="String">
+        select  CheckListCode
+        from quality_checklist
+        where length(CheckListCode)=length(#{code})+4 and CheckListCode like concat(#{code},'%')
+    </select>
+
+    <select id="getCheckListOne" resultType="com.wlhse.dto.QualityCheckListDto">
+        select * from quality_checklist
+        where CheckListCode=#{code}
+        and status="启用"
+    </select>
+    <update id="updateIsChild">
+        update quality_checklist
+        <set>
+            IsChildNode=#{status}
+        </set>
+        where CheckListCode=#{code}
+    </update>
+
+    <insert id="addCheckList" parameterType="com.wlhse.dto.QualityCheckListDto" useGeneratedKeys="true" keyProperty="checkListID">
+        insert into quality_checklist
+        (
+        <trim suffixOverrides=",">
+            <if test="checkListName != null and checkListName != ''">
+                CheckListName,
+            </if>
+            <if test="checkListCode != null and checkListCode != ''">
+                checkListCode,
+            </if>
+            <if test="attribute != null and attribute != ''">
+                attribute,
+            </if>
+            <if test="parentName != null and parentName != ''">
+                parentName,
+            </if>
+            <if test="isChildNode != null and isChildNode != ''">
+                isChildNode,
+            </if>
+            <if test="status != null and status != ''">
+                status,
+            </if>
+
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="checkListName != null and checkListName != ''">
+                #{checkListName},
+            </if>
+            <if test="checkListCode != null and checkListCode != ''">
+                #{checkListCode},
+            </if>
+            <if test="attribute != null and attribute != ''">
+                #{attribute},
+            </if>
+            <if test="parentName != null and parentName != ''">
+                #{parentName},
+            </if>
+            <if test="isChildNode != null and isChildNode != ''">
+                #{isChildNode},
+            </if>
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <select id="getCurrentAllChild" resultType="com.wlhse.dto.QualityCheckListDto">
+        select * from quality_checklist
+        where checkListCode like concat(#{code},"%")
+    </select>
+
+    <update id="updateCheckList" parameterType="com.wlhse.dto.QualityCheckListDto">
+        update quality_checklist
+        <set>
+            <if test="checkListName != null and checkListName  != ''">
+                checkListName=#{checkListName},
+            </if>
+            <if test="status != null and status  != ''">
+                status=#{status},
+            </if>
+            <if test="parentName != null and parentName  != ''">
+                parentName=#{parentName},
+            </if>
+        </set>
+        where CheckListID=#{checkListID}
+    </update>
+
+    <select id="getById" resultType="com.wlhse.dto.QualityCheckListDto">
+        select * from quality_checklist
+        where CheckListID=#{id}
+    </select>
+
+    <update id="updateAllChildStatus">
+        update quality_checklist
+        <set>
+            status="停用"
+        </set>
+        where CheckListCode like concat(#{code},"%")
+    </update>
+
+    <update id="updateStatus" >
+        update quality_checklist
+        <set>
+            Status=#{status}
+        </set>
+        where CheckListCode=#{code}
+    </update>
+
+
+
+</mapper>
