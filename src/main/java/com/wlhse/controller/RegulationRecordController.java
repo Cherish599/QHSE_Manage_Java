@@ -17,7 +17,6 @@ public class RegulationRecordController {
 
     @RequestMapping(value = "/add_regulationrecord", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addDangerRecord(@RequestBody(required = false) RegulationRecordDto regulationRecordDto) {
-
         return regulationRecordService.addRegulationRecord(regulationRecordDto);
     }
 
