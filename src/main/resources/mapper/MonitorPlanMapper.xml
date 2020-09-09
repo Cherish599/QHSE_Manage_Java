@@ -3,9 +3,9 @@
 <mapper namespace="com.wlhse.dao.MonitorPlanDao">
     <insert id="createNewMonitorPlan">
         insert into monitorplan
-        (StartDate,EndDate,PlanDate,PlanName,PlanPersonID,PlanPersonName)
+        (StartDate,EndDate,PlanName,PlanPersonID,PlanPersonName)
         values (
-        #{startDate},#{endDate},#{pladnDate},#{planName},#{planPersonID},#{planPersonName}
+        #{startDate},#{endDate},#{planName},#{planPersonID},#{planPersonName}
         )
     </insert>
 
