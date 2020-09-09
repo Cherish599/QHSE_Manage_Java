@@ -14,7 +14,7 @@
                 SafeStaff_ID,SafeStaff_Name,
             </if>
             <if test="regulationID != null and regulationID  != ''">
-                regulationID,regulationName,
+                RegulationID,RegulationName,
             </if>
             <if test="workItem != null and workItem  != ''">
                 WorkItem,
