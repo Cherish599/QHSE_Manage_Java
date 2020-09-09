@@ -13,6 +13,9 @@
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 SafeStaff_ID,SafeStaff_Name,
             </if>
+            <if test="regulationID != null and regulationID  != ''">
+                regulationID,regulationName,
+            </if>
             <if test="workItem != null and workItem  != ''">
                 WorkItem,
             </if>
@@ -28,8 +31,8 @@
             <if test="description != null and description  != ''">
                 Description,
             </if>
-            <if test="punishID != null and punishID  != ''">
-                PunishID,Punish,
+            <if test="punish != null and punish  != ''">
+                Punish,
             </if>
 
             <if test="approve != null and approve  != ''">
@@ -62,9 +65,6 @@
             <if test="score != null and score  != ''">
                 Score,
             </if>
-            <if test="punish1 != null and punish1  != ''">
-                Punish1,
-            </if>
             <if test="employeeCharacter != null and employeeCharacter  != ''">
                 EmployeeCharacter,
             </if>
@@ -80,8 +80,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 FactorSource,
             </if>
-            <if test="professionID != null and professionID  != ''">
-                ProfessionID,Profession,
+            <if test="profession != null and profession  != ''">
+                Profession,
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 FactorHSE,
@@ -142,6 +142,9 @@
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 #{safeStaff_ID},(select Name from employee where EmployeeID=#{safeStaff_ID}),
             </if>
+            <if test="regulationID != null and regulationID  != ''">
+                #{regulationID},(select Name from employee where EmployeeID=#{regulationID}),
+            </if>
             <if test="workItem != null and workItem  != ''">
                 #{workItem},
             </if>
@@ -157,8 +160,8 @@
             <if test="description != null and description  != ''">
                 #{description},
             </if>
-            <if test="punishID != null and punishID  != ''">
-                #{punishID},(select Name from employee where EmployeeID=#{punishID}),
+            <if test="punish != null and punish  != ''">
+                #{punish},
             </if>
             <if test="approve != null and approve  != ''">
                 #{approve},
@@ -190,9 +193,6 @@
             <if test="score != null and score  != ''">
                 #{score},
             </if>
-            <if test="punish1 != null and punish1  != ''">
-                #{punish1},
-            </if>
             <if test="employeeCharacter != null and employeeCharacter  != ''">
                 #{employeeCharacter},
             </if>
@@ -208,8 +208,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 #{factorSource},
             </if>
-            <if test="professionID != null and professionID  != ''">
-                #{professionID},(select Name from employee where EmployeeID=#{professionID}),
+            <if test="profession != null and profession  != ''">
+                #{profession},
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 #{factorHSE},
@@ -286,6 +286,9 @@
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 safeStaff_ID=#{safeStaff_ID},safeStaff_Name=(select Name from employee where EmployeeID=#{safeStaff_ID}),
             </if>
+            <if test="regulationID != null and regulationID  != ''">
+                regulationID=#{regulationID},regulationID=(select Name from employee where EmployeeID=#{regulationID}),
+            </if>
             <if test="workItem != null and workItem  != ''">
                 workItem=#{workItem},
             </if>
@@ -301,8 +304,8 @@
             <if test="description != null and description  != ''">
                 description=#{description},
             </if>
-            <if test="punishID != null and punishID  != ''">
-                punishID=#{punishID},punish=(select Name from employee where EmployeeID=#{punishID}),
+            <if test="punish != null and punishID  != ''">
+                punish=#{punish},
             </if>
             <if test="approve != null and approve  != ''">
                 approve=#{approve},
@@ -334,9 +337,6 @@
             <if test="score != null and score  != ''">
                 score=#{score},
             </if>
-            <if test="punish1 != null and punish1  != ''">
-                punish1=#{punish1},
-            </if>
             <if test="employeeCharacter != null and employeeCharacter  != ''">
                 employeeCharacter=#{employeeCharacter},
             </if>
@@ -352,8 +352,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 factorSource=#{factorSource},
             </if>
-            <if test="professionID != null and professionID  != ''">
-                professionID=#{professionID},profession=(select Name from employee where EmployeeID=#{professionID}),
+            <if test="profession != null and profession  != ''">
+                profession=#{profession},
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 factorHSE=#{factorHSE},
@@ -421,6 +421,12 @@
             <if test="safeStaff_Name != null and safeStaff_Name  != ''">
                 AND safeStaff_Name=#{safeStaff_Name}
             </if>
+            <if test="regulationID != null and regulationID  != ''">
+                AND regulationID=#{regulationID}
+            </if>
+            <if test="regulationName != null and regulationName  != ''">
+                AND regulationName=#{regulationName}
+            </if>
             <if test="companyId != null and companyId  != ''">
                 AND companyId=#{companyId}
             </if>
@@ -432,18 +438,6 @@
             </if>
             <if test="endDate != null and endDate  != ''">
                 AND #{endDate} >= supervisionDate
-            </if>
-            <if test="punishID != null and punishID  != ''">
-                AND punishID=#{punishID}
-            </if>
-            <if test="punish != null and punish  != ''">
-                AND punish=#{punish}
-            </if>
-            <if test="professionID != null and professionID  != ''">
-                AND professionID=#{professionID}
-            </if>
-            <if test="profession != null and profession  != ''">
-                AND profession=#{profession}
             </if>
             <if test="location != null and location  != ''">
                 AND location LIKE CONCAT(CONCAT('%',#{location},'%'))
@@ -460,6 +454,12 @@
             <if test="safeStaff_Name != null and safeStaff_Name  != ''">
                 AND safeStaff_Name=#{safeStaff_Name}
             </if>
+            <if test="regulationID != null and regulationID  != ''">
+                AND regulationID=#{regulationID}
+            </if>
+            <if test="regulationName != null and regulationName  != ''">
+                AND regulationName=#{regulationName}
+            </if>
             <if test="companyId != null and companyId  != ''">
                 AND companyId=#{companyId}
             </if>
@@ -471,18 +471,6 @@
             </if>
             <if test="endDate != null and endDate  != ''">
                 AND #{endDate} >= supervisionDate
-            </if>
-            <if test="punishID != null and punishID  != ''">
-                AND punishID=#{punishID}
-            </if>
-            <if test="punish != null and punish  != ''">
-                AND punish=#{punish}
-            </if>
-            <if test="professionID != null and professionID  != ''">
-                AND professionID=#{professionID}
-            </if>
-            <if test="profession != null and profession  != ''">
-                AND profession=#{profession}
             </if>
             <if test="location != null and location  != ''">
                 AND location LIKE CONCAT(CONCAT('%',#{location},'%'))

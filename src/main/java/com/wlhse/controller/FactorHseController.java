@@ -2,6 +2,8 @@ package com.wlhse.controller;
 
 
 import com.wlhse.service.FactorHseService;
+import com.wlhse.util.R;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,11 @@ public class FactorHseController {
     public String getAll()
     {
         return factorHseService.getAll();
+    }
+
+    @RequestMapping(value = "/factor_hse_bycode/{factorCode}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getFactorHse(@PathVariable String factorCode) {
+        return factorHseService.getFactorHse(factorCode);
     }
 
 }

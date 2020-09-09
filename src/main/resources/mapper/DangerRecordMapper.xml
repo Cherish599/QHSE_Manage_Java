@@ -85,8 +85,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 FactorSource,
             </if>
-            <if test="professionID != null and professionID  != ''">
-                ProfessionID,Profession,
+            <if test="profession != null and profession  != ''">
+                Profession,
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 FactorHSE,
@@ -222,8 +222,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 #{factorSource},
             </if>
-            <if test="professionID != null and professionID  != ''">
-                #{professionID},(select Name from employee where EmployeeID=#{professionID}),
+            <if test="profession != null and profession  != ''">
+                #{profession},
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 #{factorHSE},
@@ -375,8 +375,8 @@
             <if test="factorSource != null and factorSource  != ''">
                 factorSource=#{factorSource},
             </if>
-            <if test="professionID != null and professionID  != ''">
-                professionID=#{professionID},profession=(select Name from employee where EmployeeID=#{professionID}),
+            <if test="profession != null and profession  != ''">
+                profession=#{professionID},
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 factorHSE=#{factorHSE},
@@ -463,9 +463,6 @@
             <if test="reformPerson != null and reformPerson  != ''">
                 AND reformPerson=#{reformPerson}
             </if>
-            <if test="professionID != null and professionID  != ''">
-                AND professionID=#{professionID}
-            </if>
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}
             </if>
@@ -499,9 +496,6 @@
             </if>
             <if test="reformPerson != null and reformPerson  != ''">
                 AND reformPerson=#{reformPerson}
-            </if>
-            <if test="professionID != null and professionID  != ''">
-                AND professionID=#{professionID}
             </if>
             <if test="profession != null and profession  != ''">
                 AND profession=#{profession}

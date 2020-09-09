@@ -4,6 +4,19 @@
 <mapper namespace="com.wlhse.dao.FactorHseDao">
     <select id="getAll" resultType="com.wlhse.dto.FactorHseDto">
         select * from factorhse
+
+    </select>
+
+    <select id="getFactorHseCode" resultType="java.lang.String">
+        select FactorHseCode
+        from factor
+        where factorCode = #{factorCode}
+    </select>
+
+    <select id="getFactorHse" resultType="com.wlhse.dto.FactorHseDto">
+        select *
+        from factorhse
+        where FactorHseCode2 = #{factorHseCode2}
     </select>
 
 </mapper>

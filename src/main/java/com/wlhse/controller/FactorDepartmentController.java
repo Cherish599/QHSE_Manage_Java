@@ -19,4 +19,9 @@ public class FactorDepartmentController {
         return factorDepartmentService.queryFactorDepartment();
     }
 
+    @RequestMapping(value = "/factor_department_bycode/{factorCode}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getFactorDepartment(@PathVariable String factorCode) {
+        return factorDepartmentService.getFactorDepartment(factorCode);
+    }
+
 }
