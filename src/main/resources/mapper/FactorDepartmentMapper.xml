@@ -2,8 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wlhse.dao.FactorDepartmentDao">
+
     <select id="findAll" resultType="com.wlhse.dto.outDto.FactorDepartmentOutDto">
         select *
         from FactorDepartment
     </select>
+
+
+    <select id="getFactorDepartmentCode" resultType="java.lang.String">
+        select FactorDepartmentCode
+        from factor
+        where factorCode = #{factorCode}
+    </select>
+
+    <select id="getFactorDepartment" resultType="com.wlhse.dto.outDto.FactorDepartmentOutDto">
+        select *
+        from factordepartment
+        where FactorDepartmentID = #{factorDepartmentID}
+    </select>
+
 </mapper>

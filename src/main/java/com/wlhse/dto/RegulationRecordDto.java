@@ -456,4 +456,5 @@ public class RegulationRecordDto extends BaseGetDto {
     public void setRank(String rank) {
         this.rank = rank;
     }
+
 }
