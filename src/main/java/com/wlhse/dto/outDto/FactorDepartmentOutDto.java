@@ -8,6 +8,16 @@ public class FactorDepartmentOutDto {
 
     private String factorDepartmentName;
 
+    private String factorDepartmentID;
+
+    public String getFactorDepartmentID() {
+        return factorDepartmentID;
+    }
+
+    public void setFactorDepartmentID(String factorDepartmentID) {
+        this.factorDepartmentID = factorDepartmentID;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -38,6 +48,7 @@ public class FactorDepartmentOutDto {
                 "id=" + id +
                 ", factorDepartmentCode='" + factorDepartmentCode + '\'' +
                 ", factorDepartmentName='" + factorDepartmentName + '\'' +
+                ", factorDepartmentID='" + factorDepartmentID + '\'' +
                 '}';
     }
 }

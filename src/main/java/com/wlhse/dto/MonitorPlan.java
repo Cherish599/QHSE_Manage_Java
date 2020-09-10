@@ -8,6 +8,16 @@ public class MonitorPlan {
     private String planName;
     private int planPersonID;
     private String planPersonName;
+    private String companyCode;
+
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public int getMonitorPlanID() {
         return monitorPlanID;
@@ -57,15 +67,5 @@ public class MonitorPlan {
         this.planPersonName = planPersonName;
     }
 
-    @Override
-    public String toString() {
-        return "MonitorPlan{" +
-                "monitorPlanID=" + monitorPlanID +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", planName='" + planName + '\'' +
-                ", planPersonID='" + planPersonID + '\'' +
-                ", planPersonName='" + planPersonName + '\'' +
-                '}';
-    }
+
 }

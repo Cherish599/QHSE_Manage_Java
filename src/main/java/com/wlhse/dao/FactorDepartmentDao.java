@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface FactorDepartmentDao {
 
-
     List<FactorDepartmentOutDto> findAll();
+    String getFactorDepartmentCode(@Param("factorCode") String factorCode);
+    FactorDepartmentOutDto getFactorDepartment(@Param("factorDepartmentID") String factorDepartmentID);
 }

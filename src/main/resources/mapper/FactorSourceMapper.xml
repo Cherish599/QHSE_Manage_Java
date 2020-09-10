@@ -6,4 +6,16 @@
         select * from factorsource
     </select>
 
+    <select id="getFactorSourceCode" resultType="java.lang.String">
+        select FactorSourceCode
+        from factor
+        where factorCode = #{factorCode}
+    </select>
+
+    <select id="getFactorSource" resultType="com.wlhse.dto.FactorSourceDto">
+        select *
+        from factorsource
+        where FactorSourceCode = #{factorSourceCode}
+    </select>
+
 </mapper>

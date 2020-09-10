@@ -6,4 +6,16 @@
         select * from factorobserver
     </select>
 
+    <select id="getFactorObserverCode" resultType="java.lang.String">
+        select FactorObserverCode
+        from factor
+        where factorCode = #{factorCode}
+    </select>
+
+    <select id="getFactorObserver" resultType="com.wlhse.dto.FactorObserverDto">
+        select *
+        from factorobserver
+        where FactorObserverCode2 = #{factorObserverCode2}
+    </select>
+
 </mapper>

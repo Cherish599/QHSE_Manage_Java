@@ -1,9 +1,11 @@
 package com.wlhse.service.impl;
 
 import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.EmployeeManagementDao;
 import com.wlhse.dao.MonitorInputCheckDao;
 import com.wlhse.dao.MonitorPlanDao;
 import com.wlhse.dao.MonitorPlanDetailDao;
+import com.wlhse.dto.EmployeeManagementDto;
 import com.wlhse.dto.MonitorPlan;
 import com.wlhse.dto.MonitorPlanDetail;
 import com.wlhse.entity.MonitorInputCheckRecord;
@@ -29,6 +31,8 @@ public class MonitorPlanServiceIml implements MonitorPlanService {
     MonitorPlanDetailDao monitorPlanDetailDao;
     @Resource
     MonitorInputCheckDao monitorInputCheckDao;
+    @Resource
+    EmployeeManagementDao employeeManagementDao;
     @Override
     public R createNewMonitorPlan(MonitorPlan monitorPlan, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
@@ -44,11 +48,11 @@ public class MonitorPlanServiceIml implements MonitorPlanService {
     @Override
     public R getMonitorPlanByPersonId(HttpServletRequest request) {
         R r=new R();
-        //TODO 目前是按照任务下达人的信息获取监控任务列表
         String token = request.getHeader("Authorization");
         Map<String, String> map = jedisClient.hGetAll(token);
         int employeeId = Integer.valueOf(map.get("employeeId"));
-        List<MonitorPlan> monitorPlanByPlanPersonId = monitorPlanDao.getMonitorPlanByPlanPersonId(employeeId);
+        EmployeeManagementDto employeeManagementDto = employeeManagementDao.queryById(employeeId);
+        List<MonitorPlan> monitorPlanByPlanPersonId = monitorPlanDao.getMonitorPlanByPlanCompanyCode(employeeManagementDto.getCompanyCode());
         r.put("data",monitorPlanByPlanPersonId);
         return r;
     }
