@@ -15,4 +15,6 @@ public interface UploadService {
     R uploadQHSEManageSysElements(String path) throws Exception;//管理要素审核excel录入数据库
 
     boolean insertFilePropagationFileRecord(FilePropagationFileInfo filePropagationFileInfo);
+
+    R uploadQualityCheck(String path) throws Exception;
 }

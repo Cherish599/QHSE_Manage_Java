@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.CheckListDto;
+import com.wlhse.dto.MonitorPlanDetail;
 import com.wlhse.dto.QualityCheckListDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,8 @@ public interface QualityCheckListDao {
     QualityCheckListDto getById(@Param("id") int id);
     int updateAllChildStatus(@Param("code") String code);
     int updateStatus(@Param("status") String status,@Param("code")String code);
+    int clearTable();
+    int batchInsertRecord(List<MonitorPlanDetail> monitorPlanDetails);
 
 
 }

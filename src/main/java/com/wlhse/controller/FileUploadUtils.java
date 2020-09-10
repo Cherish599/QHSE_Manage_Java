@@ -202,4 +202,16 @@ public class FileUploadUtils {
 
         }
     }
+
+    @RequestMapping(value = "/QualityCheck_excel_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public R uploadQuality_Check(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return R.error(CodeDict.UPLOAD_EMPTY,"上传文件为空");
+        } else {
+            String fileName = setFile(file, "CheckList\\");
+            String path = System.getProperty("catalina.home") + "\\webapps\\CheckList\\" + fileName;
+            return uploadService.uploadQualityCheck(path);
+        }
+    }
 }

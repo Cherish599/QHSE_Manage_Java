@@ -127,6 +127,12 @@
         where CheckListCode=#{code}
     </update>
 
+    <delete id="clearTable">
+        delete from quality_checklist
+    </delete>
+
+
+
 
 
 </mapper>
