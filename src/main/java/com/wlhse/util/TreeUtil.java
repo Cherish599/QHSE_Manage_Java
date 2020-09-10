@@ -219,7 +219,6 @@ public class TreeUtil {
                     treeDto.setChildren(tmp);
                 } else {
                     //找到节点中长度最长的那一个
-                    CheckListTreeDto value = entry.getValue();
                     treeDto.getChildren().add(entry.getValue());
                 }
             }
@@ -656,5 +655,51 @@ public class TreeUtil {
                 code.add(pojo.getFactorCode().length());
         }
         return returnFactoryTree(map1, code);
+    }
+
+    //th---QualityCheckListTree
+    public List<QualityCheckListTreeDto> returnQualityCheckList(Map<String, QualityCheckListTreeDto> map, List<Integer> code) {
+        List<QualityCheckListTreeDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityCheckListTreeDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QualityCheckListTreeDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildren()) {
+                    List<QualityCheckListTreeDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildren(tmp);
+                } else {
+                    //找到节点中长度最长的那一个
+                    treeDto.getChildren().add(entry.getValue());
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<QualityCheckListTreeDto> getQualityCheckListTree(List<QualityCheckListDto> QualityCheckListDtos) {
+        Map<String, QualityCheckListTreeDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityCheckListDto pojo : QualityCheckListDtos) {
+            QualityCheckListTreeDto qualityCheckListTreeDto = new QualityCheckListTreeDto();
+            qualityCheckListTreeDto.setCheckListID(pojo.getCheckListID());
+            qualityCheckListTreeDto.setCheckListCode(pojo.getCheckListCode());
+            qualityCheckListTreeDto.setCheckListName(pojo.getCheckListName());
+            qualityCheckListTreeDto.setAttribute(pojo.getAttribute());
+            qualityCheckListTreeDto.setParentName(pojo.getParentName());
+            qualityCheckListTreeDto.setIsChildNode(pojo.getIsChildNode());
+            qualityCheckListTreeDto.setStatus(pojo.getStatus());
+            map1.put(qualityCheckListTreeDto.getCheckListCode(), qualityCheckListTreeDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCheckListCode().length()) == -1)
+                code.add(pojo.getCheckListCode().length());
+        }
+        return returnQualityCheckList(map1, code);
     }
 }
