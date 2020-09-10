@@ -1,11 +1,15 @@
 package com.wlhse.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.wlhse.dao.CompanyDao;
+import com.wlhse.dao.MesSumDataDao;
 import com.wlhse.dao.MonitorPlanDetailDao;
 import com.wlhse.dto.MonitorPlan;
 import com.wlhse.dto.MonitorPlanDetail;
+import com.wlhse.entity.MesSumData;
 import com.wlhse.entity.MonitorInputCheckRecord;
 import com.wlhse.service.MonitorPlanService;
+import com.wlhse.util.MesDataListener;
 import com.wlhse.util.MonitorDataListener;
 import com.wlhse.util.R;
 
@@ -25,6 +29,12 @@ public class MonitorController {
 
     @Resource
     MonitorPlanService monitorPlanService;
+
+    @Resource
+    CompanyDao companyDao;
+
+    @Resource
+    MesSumDataDao mesSumDataDao;
 
     //批量上传远程监控计划详情
     @RequestMapping(value = "/uploadMonitorPlanExcel",method = RequestMethod.POST)
@@ -100,6 +110,15 @@ public class MonitorController {
     @RequestMapping(value = "/getCheckDetail/{planId}",method = RequestMethod.GET)
     R getNeedToCheckRecords(@PathVariable("planId")Integer planId){
         return monitorPlanService.getNeedToCheckRecords(planId);
+    }
+
+    //上传
+    @RequestMapping(value = "/uploadMesSumDataExcel",method = RequestMethod.POST)
+    R uploadMesSumDataExcel(@RequestParam(value = "file",required = false) MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), MesSumData.class,
+                new MesDataListener(mesSumDataDao,companyDao)).
+                sheet().doRead();
+        return R.ok();
     }
 
 }

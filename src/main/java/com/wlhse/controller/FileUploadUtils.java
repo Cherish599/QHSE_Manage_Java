@@ -154,12 +154,12 @@ public class FileUploadUtils {
     //要素证据上传
     @RequestMapping(value = "/evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+    public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("fileName")String originName) throws Exception {
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else {
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
-            elementInputFileInfo.setElementOriginFileName(file.getOriginalFilename());
+            elementInputFileInfo.setElementOriginFileName(originName);
             String fileName = setFile(file, "resources\\QHSEEvidence\\");
             elementInputFileInfo.setNewElementFileName(fileName);
             qhseElementsInputService.insertNewOriginFileName(elementInputFileInfo);

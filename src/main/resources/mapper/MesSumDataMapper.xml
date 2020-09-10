@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.MesSumDataDao">
+    <insert id="batchInsertNewSumData">
+        insert into
+        (SumDate,CompanyCode,CompanyName,WorkNum,DayReportNum,RecordDeviceNum,PowerOnNum,BackNum,
+        CoverageRate,UseRate,AvaiRate)
+        values (
+        <foreach collection="list" separator="," item="item">
+            #{item.sumDate},#{item.companyCode}.#{item.companyName},#{item.workNum},#{
+            item.dayReportNum},#{item.recordDeviceNum},#{item.powerOnNum},#{item.backNum},#{item.coverageNum},#{
+            item.useRate},#{item.availableRate}
+            }
+            }
+        </foreach>
+        )
+    </insert>
+</mapper>
