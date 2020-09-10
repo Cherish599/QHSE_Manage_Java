@@ -3,6 +3,7 @@ package com.wlhse.service.impl;
 import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dao.QualityCheckListDao;
 import com.wlhse.dto.*;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
@@ -36,8 +37,13 @@ public class UploadServiceImpl implements UploadService {
 
     @Resource
     private CheckListDao checkListDao;
+
     @Resource
     private QHSEManageSysElementsDao qHSEManageSysElementsDao;
+
+    @Resource
+    private QualityCheckListDao qualityCheckListDao;
+
 
     private final static String staus = "启用";
 
@@ -227,12 +233,13 @@ public class UploadServiceImpl implements UploadService {
         return false;
     }
 
+    @Transactional
     @Override
     public R uploadQualityCheck(String path) throws Exception {
         Workbook workbook = poiUtil.createWorkbook(path);
         Sheet sheet = workbook.getSheetAt(0);//获取指定表可以改成自动获取
         //获取EXCEL中CheckList的值
-        List<CheckListDto> beanList = new ArrayList<>();
+        List<QualityCheckListDto> beanList = new ArrayList<>();
         DataFormatter dataFormat=new DataFormatter();
         // System.out.println(sheet.getPhysicalNumberOfRows());
         for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {//从第二行读
@@ -245,16 +252,21 @@ public class UploadServiceImpl implements UploadService {
             checkListValueMap.put("isChildNode",dataFormat.formatCellValue(row.getCell(4)));
             checkListValueMap.put("status",dataFormat.formatCellValue(row.getCell(5)));
             //使用BeanUtils将封装的属性注入对象
-            CheckListDto checkListDto=new CheckListDto();
-            BeanUtils.populate(checkListDto, checkListValueMap);
-            beanList.add(checkListDto);
+            QualityCheckListDto qualityCheckListDto=new QualityCheckListDto();
+            BeanUtils.populate(qualityCheckListDto, checkListValueMap);
+            //System.out.println(qualityCheckListDto);
+            beanList.add(qualityCheckListDto);
+
         }
         workbook.close();
         if (beanList.size() > 0) {
-            String duplicateCode=PoiMSElement.isDuplicelements2(beanList);//判断是否有重复编码
+            String duplicateCode=PoiMSElement.isDuplicelements3(beanList);//判断是否有重复编码
             if (duplicateCode== null) {
                 //采用先删除库，再批量插入，增加速度。
-
+                if(qualityCheckListDao.clearTable()<0)
+                    throw new WLHSException("删除失败");
+                if((qualityCheckListDao.batchInsertRecord(beanList))<0)
+                    throw new WLHSException("插入失败");
                 return R.ok("文件上传成功");//导入数据库成功
             }
             else {

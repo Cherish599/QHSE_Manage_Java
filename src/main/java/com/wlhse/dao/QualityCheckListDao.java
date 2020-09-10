@@ -23,7 +23,7 @@ public interface QualityCheckListDao {
     int updateAllChildStatus(@Param("code") String code);
     int updateStatus(@Param("status") String status,@Param("code")String code);
     int clearTable();
-    int batchInsertRecord(List<MonitorPlanDetail> monitorPlanDetails);
+    int batchInsertRecord(List<QualityCheckListDto> QualityCheckListDtos);
 
 
 }
