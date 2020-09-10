@@ -10,7 +10,7 @@ public interface MonitorPlanDao {
 
     int createNewMonitorPlan(MonitorPlan monitorPlan);
 
-    List<MonitorPlan> getMonitorPlanByPlanPersonId(int id);
+    List<MonitorPlan> getMonitorPlanByPlanCompanyCode(String companyCode);
 
     int deletePlan(int planId);
 

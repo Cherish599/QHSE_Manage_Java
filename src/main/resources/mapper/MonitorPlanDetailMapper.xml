@@ -5,7 +5,7 @@
         insert into monitorplandetail
         (MonitorPlanID,`No`,DeviceNo,MyNo,ProjectName,Charger,Tel)
         values
-        <foreach collection="monitorPlanDetails" item="detail" separator=",">
+        <foreach collection="list" item="detail" separator=",">
             (
                 #{detail.monitorPlanID},#{detail.no},#{detail.deviceNo},
                 #{detail.myNo},#{detail.projectName},#{detail.charger},#{detail.tel}
