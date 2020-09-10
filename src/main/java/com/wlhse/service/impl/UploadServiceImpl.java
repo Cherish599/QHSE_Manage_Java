@@ -3,6 +3,7 @@ package com.wlhse.service.impl;
 import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dao.QualityCheckListDao;
 import com.wlhse.dto.*;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
@@ -36,8 +37,13 @@ public class UploadServiceImpl implements UploadService {
 
     @Resource
     private CheckListDao checkListDao;
+
     @Resource
     private QHSEManageSysElementsDao qHSEManageSysElementsDao;
+
+    @Resource
+    private QualityCheckListDao qualityCheckListDao;
+
 
     private final static String staus = "启用";
 
@@ -98,8 +104,8 @@ public class UploadServiceImpl implements UploadService {
         }
         workbook.close();
         if (beanList.size() > 0) {
-            String duplicCode=PoiMSElement.isDuplicelements2(beanList);//判断是否有重复编码
-            if (duplicCode== null) {
+            String duplicateCodeCode=PoiMSElement.isDuplicelements2(beanList);//判断是否有重复编码
+            if (duplicateCodeCode== null) {
                 //优化，一次把所有code查询出来放进list，在list中查找code
                 List<String> list=checkListDao.querryAllCheckListCode();
                 for(CheckListDto ele:beanList) {
@@ -115,7 +121,7 @@ public class UploadServiceImpl implements UploadService {
                 return R.ok("文件上传成功");//导入数据库成功
             }
             else {
-                throw new WLHSException("有重复编码"+duplicCode);//提示有重复编码
+                throw new WLHSException("有重复编码"+duplicateCodeCode);//提示有重复编码
             }
         }
         else {
@@ -227,6 +233,51 @@ public class UploadServiceImpl implements UploadService {
         return false;
     }
 
+    @Transactional
+    @Override
+    public R uploadQualityCheck(String path) throws Exception {
+        Workbook workbook = poiUtil.createWorkbook(path);
+        Sheet sheet = workbook.getSheetAt(0);//获取指定表可以改成自动获取
+        //获取EXCEL中CheckList的值
+        List<QualityCheckListDto> beanList = new ArrayList<>();
+        DataFormatter dataFormat=new DataFormatter();
+        // System.out.println(sheet.getPhysicalNumberOfRows());
+        for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {//从第二行读
+            HashMap<String, String> checkListValueMap = new HashMap<>();
+            Row row = sheet.getRow(j);//按行取
+            checkListValueMap.put("checkListCode",dataFormat.formatCellValue(row.getCell(0)));
+            checkListValueMap.put("checkListName",dataFormat.formatCellValue(row.getCell(1)));
+            checkListValueMap.put("attribute",dataFormat.formatCellValue(row.getCell(2)));
+            checkListValueMap.put("parentName",dataFormat.formatCellValue(row.getCell(3)));
+            checkListValueMap.put("isChildNode",dataFormat.formatCellValue(row.getCell(4)));
+            checkListValueMap.put("status",dataFormat.formatCellValue(row.getCell(5)));
+            //使用BeanUtils将封装的属性注入对象
+            QualityCheckListDto qualityCheckListDto=new QualityCheckListDto();
+            BeanUtils.populate(qualityCheckListDto, checkListValueMap);
+            //System.out.println(qualityCheckListDto);
+            beanList.add(qualityCheckListDto);
+
+        }
+        workbook.close();
+        if (beanList.size() > 0) {
+            String duplicateCode=PoiMSElement.isDuplicelements3(beanList);//判断是否有重复编码
+            if (duplicateCode== null) {
+                //采用先删除库，再批量插入，增加速度。
+                if(qualityCheckListDao.clearTable()<0)
+                    throw new WLHSException("删除失败");
+                if((qualityCheckListDao.batchInsertRecord(beanList))<0)
+                    throw new WLHSException("插入失败");
+                return R.ok("文件上传成功");//导入数据库成功
+            }
+            else {
+                throw new WLHSException("有重复编码"+duplicateCode);//提示有重复编码
+            }
+        }
+        else {
+            throw new WLHSException("excel文件为空");//list为空，读取excel失败；
+        }
+    }
+
     /**
      * 该方法用于问题描述的插入
      * @param problemDescription Map<String, String>型，存放的是问题描述的code,problemDescription键值对；
@@ -258,20 +309,5 @@ public class UploadServiceImpl implements UploadService {
                 throw new WLHSException("新增失败");
         }
 
-        //下列方法以数字打断，能打断序号为88...2...3...56...格式，但不能打断内容中有数字的
-        // String[] description=problemDescription.split("([1-9][0-9]{0,1})");//用0-99的数字打断，中间为正则表达式
-        /*for(int i=0;i<description.length;i++)
-        {
-            if(i!=0) {//数组第一个必为空字符“ ”；
-                if (".".equals(description[i].substring(0, 1))){//数据格式为：1.问题某某（有“.”符号）
-                    if(qHSEManageSysElementsDao.addProblemDescription(code, description[i].substring(1))<=0)
-                        throw new WLHSException("新增失败");
-                }
-                else{//数据格式为：1问题某某（无“.”符号），增加兼容性。
-                    if(qHSEManageSysElementsDao.addProblemDescription(code, description[i])<=0)
-                        throw new WLHSException("新增失败");
-                }
-            }
-        }*/
     }
 }
