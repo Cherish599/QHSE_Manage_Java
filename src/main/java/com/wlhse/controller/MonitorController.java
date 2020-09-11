@@ -8,6 +8,7 @@ import com.wlhse.dto.MonitorPlan;
 import com.wlhse.dto.MonitorPlanDetail;
 import com.wlhse.entity.MesSumData;
 import com.wlhse.entity.MonitorInputCheckRecord;
+import com.wlhse.service.MesSumDataService;
 import com.wlhse.service.MonitorPlanService;
 import com.wlhse.util.MesDataListener;
 import com.wlhse.util.MonitorDataListener;
@@ -36,6 +37,8 @@ public class MonitorController {
     @Resource
     MesSumDataDao mesSumDataDao;
 
+    @Resource
+    MesSumDataService mesSumDataService;
     //批量上传远程监控计划详情
     @RequestMapping(value = "/uploadMonitorPlanExcel",method = RequestMethod.POST)
     R addDetailsForMonitorPlan(@RequestParam(value = "file",required = false) MultipartFile file,@RequestParam(value = "planId",required = false)Integer planId) throws IOException {
@@ -121,4 +124,21 @@ public class MonitorController {
         return R.ok();
     }
 
+
+    //查找视图，获取所有记录在案的日期
+    @RequestMapping(value = "/getAllSumDate",method = RequestMethod.GET)
+    R getAllSumDate(){
+        return mesSumDataService.getAllSumDate();
+    }
+
+    //根据日期获取当日所登记的统计信息
+    @RequestMapping(value = "/getStatisticsInfoByDate",method = RequestMethod.GET)
+    R getStatisticsInfoByDate(@RequestParam("date")String date){
+        return mesSumDataService.getMesCheckDataByDate(date);
+    }
+
+    @RequestMapping(value = "/deleteSumData",method = RequestMethod.DELETE)
+    R  deleteSumData(@RequestParam("sumDataId")Integer sumDataId){
+        return mesSumDataService.deleteSumData(sumDataId);
+    }
 }

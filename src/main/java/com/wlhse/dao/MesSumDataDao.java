@@ -9,4 +9,10 @@ import java.util.List;
 public interface MesSumDataDao {
 
     int batchInsertNewSumData(List<MesSumData> mesSumDataList);
+
+    String getAllSumDate();
+
+    List<MesSumData> getSumDataByDate(String date);
+
+    int deleteSumData(int id);
 }
