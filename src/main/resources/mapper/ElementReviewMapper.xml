@@ -64,10 +64,11 @@
     </update>
     <update id="updateAddvice" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
         update qhse_companyyearmanagersyselementevidence
-        set
+        <set>
             <if test="negativeOpinion!='' and negativeOpinion!=null ">
                 negativeOpinion=#{negativeOpinion}
             </if>
+        </set>
         where  QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
     </update>
 
