@@ -137,7 +137,7 @@
         values
         <foreach collection="list" item="detail" separator=",">
             (
-            #{detail.checkListName},#{detail.checkListCode},#{detail.attribute},
+            #{detail.checkListCode},#{detail.checkListName},#{detail.attribute},
             #{detail.parentName},#{detail.isChildNode},#{detail.status}
             )
         </foreach>
