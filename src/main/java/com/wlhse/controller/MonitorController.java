@@ -14,6 +14,8 @@ import com.wlhse.util.MesDataListener;
 import com.wlhse.util.MonitorDataListener;
 import com.wlhse.util.R;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,9 +41,12 @@ public class MonitorController {
 
     @Resource
     MesSumDataService mesSumDataService;
+
+    private Logger log= LoggerFactory.getLogger(this.getClass());
     //批量上传远程监控计划详情
     @RequestMapping(value = "/uploadMonitorPlanExcel",method = RequestMethod.POST)
     R addDetailsForMonitorPlan(@RequestParam(value = "file",required = false) MultipartFile file,@RequestParam(value = "planId",required = false)Integer planId) throws IOException {
+        log.info("传入的文件名："+(file==null?"未传入文件":file.getOriginalFilename()));
         EasyExcel.read(file.getInputStream(), MonitorPlanDetail.class,
                 new MonitorDataListener(monitorPlanDetailDao,planId)).
                 sheet().doRead();

@@ -9,6 +9,8 @@ import com.wlhse.util.R;
 import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
 import com.wlhse.util.token.TokenUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 
 @RequestMapping("/api/v3")
@@ -27,7 +30,7 @@ public class FileUploadUtils {
     private UploadService uploadService;
     @Resource
     private QhseElementsInputService qhseElementsInputService;
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     public String setFile(MultipartFile file, String str) throws Exception {
 
         String rootPath = System.getProperty("catalina.home") + "\\webapps\\" + str;
@@ -154,7 +157,10 @@ public class FileUploadUtils {
     //要素证据上传
     @RequestMapping(value = "/evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("fileName")String originName) throws Exception {
+    public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws Exception {
+        String originName="";
+        originName=request.getParameter("fileName");
+        logger.info("fileName:"+originName);
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else {

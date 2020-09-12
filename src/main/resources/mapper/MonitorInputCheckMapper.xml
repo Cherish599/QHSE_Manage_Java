@@ -3,19 +3,20 @@
 <mapper namespace="com.wlhse.dao.MonitorInputCheckDao">
 
     <insert id="insertNewInputRecord">
-        insert into monitorinputcheckrecord
-        (MonitorPlanID,MonitorPlanDetailID,Condition,Description,PicNo,Dispose_In,Close_In,
-        InputPersonID,InputPersonName,InputDate)
+        insert into
+        monitorinputcheckrecord
+        (MonitorPlanID,MonitorPlanDetailID,`Condition`,Description,PicNo,Dispose_In,Close_In,InputPersonID,InputPersonName,InputDate)
         values (
-            #{monitorPlanID},#{monitorPlanDetailID},#{condition},#{description},#{picNo},#{disposeIn},#{closeIn},
-            #{inputPersonID},#{inputPersonName},curdate()
+        #{monitorPlanID},#{monitorPlanDetailID},#{condition},#{description},#{picNo},#{disposeIn},#{closeIn},#{inputPersonID},#{inputPersonName},
+        current_date
         )
+
     </insert>
 
     <update id="updateInputRecord">
         update monitorinputcheckrecord
         <if test="condition!=null and condition!=''">
-            set Condition=#{condition},
+            set `Condition`=#{condition},
         </if>
         <if test="description!=null and description!=''">
             set Description=#{description},
@@ -67,12 +68,12 @@
         t1.ProjectName as projectName,
         t1.Charger as charger,
         t1.Tel as tel,
-        t1.Condition as condition,
         t2.Description as description,
         t2.PicNo as picNo,
         t2.Dispose_In as disposeIn,
         t2.Close_In as closeIn,
         t2.Check as `check`,
+        t2.Condition as `condition`,
         t2.dispose_Check as disposeCheck,
         t2.Close_Check as closeCheck,
         t2.InputPersonID as inputPersonID,
@@ -84,12 +85,12 @@
         from monitorplandetail t1
         left join monitorinputcheckrecord t2
         on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
-        where MonitorPlanDetailID=#{0}
-        and Inpudate=curdate()
+        where t1.MonitorPlanDetailID=#{0}
+        and Inputdate=curdate()
     </select>
 
     <select id="getCheckMonitor" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
-                select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
+     select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
         t2.MonitorPlanID as monitorInputCheckRecordID,
         t2.MonitorPlanDetailID as monitorInputCheckRecordID,
         t1.No as `no`,
@@ -98,7 +99,7 @@
         t1.ProjectName as projectName,
         t1.Charger as charger,
         t1.Tel as tel,
-        t1.Condition as condition,
+        `t1.Condition` as condition,
         t2.Description as description,
         t2.PicNo as picNo,
         t2.Dispose_In as disposeIn,
@@ -117,7 +118,6 @@
         on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
         where t2.MonitorPlanID=#{0}
         and t2.Condition='备用'
-        --获取前一天录入的情况
         and t2.InputDate=date_sub(curdate(),interval 1 day)
     </select>
 </mapper>
