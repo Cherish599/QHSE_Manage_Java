@@ -1,6 +1,7 @@
 package com.wlhse.entity;
 
 public class MonitorInputCheckRecord {
+
     private int monitorInputCheckRecordID;
     private int monitorPlanID;
     private int monitorPlanDetailID;

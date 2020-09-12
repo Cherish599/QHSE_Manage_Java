@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MonitorPlanServiceIml implements MonitorPlanService {
+public class MonitorPlanServiceImp implements MonitorPlanService {
     @Resource
     MonitorPlanDao monitorPlanDao;
     @Resource

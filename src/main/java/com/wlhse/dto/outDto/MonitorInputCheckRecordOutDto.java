@@ -1,6 +1,5 @@
 package com.wlhse.dto.outDto;
 
-import com.alibaba.excel.annotation.ExcelProperty;
 
 public class MonitorInputCheckRecordOutDto {
     private int monitorInputCheckRecordID;
