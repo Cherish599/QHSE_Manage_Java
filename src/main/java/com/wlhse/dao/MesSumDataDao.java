@@ -10,7 +10,7 @@ public interface MesSumDataDao {
 
     int batchInsertNewSumData(List<MesSumData> mesSumDataList);
 
-    String getAllSumDate();
+    List<String> getAllSumDate();
 
     List<MesSumData> getSumDataByDate(String date);
 
