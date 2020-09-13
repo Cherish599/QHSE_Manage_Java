@@ -38,7 +38,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         String token = request.getHeader("Authorization");
         Map<String, String> map = jedisClient.hGetAll(token);
         int employeeId = Integer.valueOf(map.get("employeeId"));
-        String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(employeeId);
+        String employeeName = employeeManagementDao.queryEmployeeNameByEmployeeId(employeeId);
         monitorPlan.setPlanPersonName(employeeName);
         monitorPlan.setPlanPersonID(employeeId);
         monitorPlanDao.createNewMonitorPlan(monitorPlan);
@@ -93,7 +93,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         String token = request.getHeader("Authorization");
         Map<String, String> map = jedisClient.hGetAll(token);
         int employeeId = Integer.valueOf(map.get("employeeId"));
-        String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(employeeId);
+        String employeeName = employeeManagementDao.queryEmployeeNameByEmployeeId(employeeId);
         monitorInputCheckRecord.setInputPersonID(employeeId);
         monitorInputCheckRecord.setInputPersonName(employeeName);
         monitorInputCheckDao.insertNewInputRecord(monitorInputCheckRecord);
