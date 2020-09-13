@@ -14,4 +14,6 @@ public interface MonitorPlanDao {
 
     int deletePlan(int planId);
 
+    MonitorPlan getBeginAndEndDate(int planId);
+
 }

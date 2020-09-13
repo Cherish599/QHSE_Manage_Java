@@ -6,6 +6,7 @@ import com.wlhse.entity.MonitorInputCheckRecord;
 import com.wlhse.util.R;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 public interface MonitorPlanService {
 
@@ -29,7 +30,9 @@ public interface MonitorPlanService {
 
     R getRecordDetail(int detailId);
 
-    R getNeedToCheckRecords(int planId);
+    R getNeedToCheckRecords(int planId,String date);
+
+    R getInputDatesByPlanId(int planId) throws ParseException;
 
     //我发现这个似乎没什么用
     R deleteInputtedRecord(int detailId);

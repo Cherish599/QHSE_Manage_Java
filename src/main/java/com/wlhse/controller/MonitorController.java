@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/api/v3")
@@ -115,9 +116,9 @@ public class MonitorController {
         return monitorPlanService.updateInputtedRecord(monitorInputCheckRecord);
     }
     //获取需要核查的远程监控记录详情
-    @RequestMapping(value = "/getCheckDetail/{planId}",method = RequestMethod.GET)
-    R getNeedToCheckRecords(@PathVariable("planId")Integer planId){
-        return monitorPlanService.getNeedToCheckRecords(planId);
+    @RequestMapping(value = "/getCheckDetail",method = RequestMethod.GET)
+    R getNeedToCheckRecords(@RequestParam("planId") Integer planId,@RequestParam("date")String date){
+        return monitorPlanService.getNeedToCheckRecords(planId,date);
     }
 
     //上传
@@ -151,4 +152,10 @@ public class MonitorController {
     R deleteSumDataByDate(@RequestParam("date")String date){
         return mesSumDataService.deleteByDate(date);
     }
+
+    @RequestMapping(value = "/getInputDates/{planId}",method = RequestMethod.GET)
+    R getInputDatesByPlanId(@PathVariable("planId")Integer planId) throws ParseException {
+        return monitorPlanService.getInputDatesByPlanId(planId);
+    }
+
 }

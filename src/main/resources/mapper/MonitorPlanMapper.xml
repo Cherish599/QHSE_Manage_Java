@@ -21,4 +21,10 @@
         where MonitorPlanID=#{0}
     </delete>
 
+    <select id="getBeginAndEndDate" resultType="com.wlhse.dto.MonitorPlan">
+        select StartDate as startDate,
+        EndDate as  endDate
+        from monitorplan
+        where MonitorPlanID=#{0}
+    </select>
 </mapper>

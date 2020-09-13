@@ -117,7 +117,6 @@
         left join monitorinputcheckrecord t2
         on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
         where t2.MonitorPlanID=#{0}
-        and t2.Condition='备用'
-        and t2.InputDate=date_sub(curdate(),interval 1 day)
+        and t2.InputDate={1}
     </select>
 </mapper>

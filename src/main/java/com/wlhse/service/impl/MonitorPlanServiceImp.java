@@ -11,12 +11,15 @@ import com.wlhse.dto.MonitorPlanDetail;
 import com.wlhse.entity.MonitorInputCheckRecord;
 import com.wlhse.service.MonitorPlanService;
 import com.wlhse.util.R;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class MonitorPlanServiceImp implements MonitorPlanService {
@@ -111,9 +114,27 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     }
 
     @Override
-    public R getNeedToCheckRecords(int planId) {
+    public R getNeedToCheckRecords(int planId,String date) {
         R r=new R();
-        r.put("data",monitorInputCheckDao.getCheckMonitor(planId));
+        r.put("data",monitorInputCheckDao.getCheckMonitor(planId,date));
+        return r;
+    }
+
+    @Override
+    public R getInputDatesByPlanId(int planId) throws ParseException {
+        MonitorPlan monitorPlan = monitorPlanDao.getBeginAndEndDate(planId);
+        DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd");
+        Date beginD=fmt.parse(monitorPlan.getStartDate());
+        Date endD=fmt.parse(monitorPlan.getEndDate());
+        List lDate = new ArrayList();
+        lDate.add(fmt.format(beginD));
+        Calendar calBegin=Calendar.getInstance();
+        while (endD.after(calBegin.getTime())){
+            calBegin.add(Calendar.DAY_OF_MONTH,1);
+            lDate.add(fmt.format(calBegin.getTime()));
+        }
+        R r=new R();
+        r.put("data",lDate);
         return r;
     }
 
