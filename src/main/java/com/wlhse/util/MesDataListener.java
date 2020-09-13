@@ -31,11 +31,20 @@ public class MesDataListener extends AnalysisEventListener<MesSumData> {
     public void invoke(MesSumData mesSumData, AnalysisContext analysisContext) {
         //将读取到的记录保存至list中
         //配备记录仪数量/日报数量
-        mesSumData.setCoverageRate((float)mesSumData.getRecordDeviceNum()/(float)mesSumData.getDayReportNum());
+        if (mesSumData.getDayReportNum()!=0)
+            mesSumData.setCoverageRate((float)mesSumData.getRecordDeviceNum()/(float)mesSumData.getDayReportNum());
+        else
+            mesSumData.setCoverageRate(0);
         //利用率=出库数/配备记录仪数
-        mesSumData.setAvailableRate((float)mesSumData.getOutStockNum()/(float)mesSumData.getRecordDeviceNum());
+        if (mesSumData.getRecordDeviceNum()!=0)
+            mesSumData.setAvailableRate((float)mesSumData.getOutStockNum()/(float)mesSumData.getRecordDeviceNum());
+        else
+            mesSumData.setAvailableRate(0);
         //使用率=备用数量/出库数量
-        mesSumData.setUseRate((float)mesSumData.getBackNum()/(float)mesSumData.getOutStockNum());
+        if (mesSumData.getOutStockNum()!=0)
+            mesSumData.setUseRate((float)mesSumData.getBackNum()/(float)mesSumData.getOutStockNum());
+        else
+            mesSumData.setUseRate(0);
         mesSumData.setCompanyCode(companyDao.queryByCompanyName(mesSumData.getCompanyName()));
         list.add(mesSumData);
         //list中保存的记录达到10条，进行入库操作，入库完成后清理list

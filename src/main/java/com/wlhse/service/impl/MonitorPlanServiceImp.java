@@ -9,7 +9,6 @@ import com.wlhse.dto.EmployeeManagementDto;
 import com.wlhse.dto.MonitorPlan;
 import com.wlhse.dto.MonitorPlanDetail;
 import com.wlhse.entity.MonitorInputCheckRecord;
-import com.wlhse.service.EmployeeManagementService;
 import com.wlhse.service.MonitorPlanService;
 import com.wlhse.util.R;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,6 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     MonitorPlanDao monitorPlanDao;
     @Resource
     JedisClient jedisClient;
-    @Resource
-    EmployeeManagementService employeeManagementService;
     @Resource
     MonitorPlanDetailDao monitorPlanDetailDao;
     @Resource

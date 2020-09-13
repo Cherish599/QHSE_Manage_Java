@@ -32,4 +32,11 @@ public class MesSumDataServiceImp implements MesSumDataService {
         mesSumDataDao.deleteSumData(id);
         return R.ok();
     }
+
+    @Override
+    public R deleteByDate(String date) {
+        mesSumDataDao.deleteByDate(date);
+        return R.ok();
+    }
+
 }

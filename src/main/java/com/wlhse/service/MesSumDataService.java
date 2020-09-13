@@ -8,4 +8,6 @@ public interface MesSumDataService {
     R getMesCheckDataByDate(String date);
 
     R deleteSumData(int id);
+
+    R deleteByDate(String date);
 }

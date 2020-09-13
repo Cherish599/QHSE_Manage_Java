@@ -146,4 +146,9 @@ public class MonitorController {
     R  deleteSumData(@RequestParam("sumDataId")Integer sumDataId){
         return mesSumDataService.deleteSumData(sumDataId);
     }
+
+    @RequestMapping(value = "/deleteSumDataByDate",method = RequestMethod.DELETE)
+    R deleteSumDataByDate(@RequestParam("date")String date){
+        return mesSumDataService.deleteByDate(date);
+    }
 }

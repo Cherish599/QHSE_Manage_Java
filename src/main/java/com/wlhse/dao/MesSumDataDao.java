@@ -15,4 +15,6 @@ public interface MesSumDataDao {
     List<MesSumData> getSumDataByDate(String date);
 
     int deleteSumData(int id);
+
+    int deleteByDate(String date);
 }
