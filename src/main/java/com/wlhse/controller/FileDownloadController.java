@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 
+import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dao.FileDao;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +39,36 @@ public class FileDownloadController {
         HttpHeaders headers = new HttpHeaders();
         //Solve the garbled problem
         String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/downloadDangerFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public ResponseEntity<byte[]> downloadDangerFile(@RequestParam(value = "filename")String filename, HttpServletRequest request) throws IOException {
+        String path =System.getProperty("catalina.home") +"\\webapps\\" + "\\resources\\" + "QHSEDanger\\" + "photoes\\";
+        File file = new File(path + File.separator + filename);
+        System.out.println(file.getPath());
+        HttpHeaders headers = new HttpHeaders();
+        //Solve the garbled problem
+        String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/downloadRegulationFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public ResponseEntity<byte[]> downloadRegulationFile(@RequestParam(value = "filename")String filename, HttpServletRequest request) throws IOException {
+        String path =System.getProperty("catalina.home") +"\\webapps\\" + "\\resources\\" + "QHSERegulation\\" + "photoes\\";
+        File file = new File(path + File.separator + filename);
+        System.out.println(file.getPath());
+        HttpHeaders headers = new HttpHeaders();
+        //Solve the garbled problem
+        String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
         headers.setContentDispositionFormData("attachment", downloadFileName);
         //application/octet-stream ： 二进制流数据（最常见的文件下载）。
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
