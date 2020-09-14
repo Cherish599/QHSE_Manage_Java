@@ -139,17 +139,17 @@ public class MonitorController {
 
     //根据日期获取当日所登记的统计信息
     @RequestMapping(value = "/getStatisticsInfoByDate",method = RequestMethod.GET)
-    R getStatisticsInfoByDate(@RequestParam("date")String date){
+    R getStatisticsInfoByDate(@RequestParam(value = "date",required = false)String date){
         return mesSumDataService.getMesCheckDataByDate(date);
     }
 
     @RequestMapping(value = "/deleteSumData",method = RequestMethod.DELETE)
-    R  deleteSumData(@RequestParam("sumDataId")Integer sumDataId){
+    R  deleteSumData(@RequestParam(value = "sumDataId",required = false)Integer sumDataId){
         return mesSumDataService.deleteSumData(sumDataId);
     }
 
     @RequestMapping(value = "/deleteSumDataByDate",method = RequestMethod.DELETE)
-    R deleteSumDataByDate(@RequestParam("date")String date){
+    R deleteSumDataByDate(@RequestParam(value = "date",required = false)String date){
         return mesSumDataService.deleteByDate(date);
     }
 

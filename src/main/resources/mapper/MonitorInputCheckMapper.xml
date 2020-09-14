@@ -99,7 +99,7 @@
         t1.ProjectName as projectName,
         t1.Charger as charger,
         t1.Tel as tel,
-        `t1.Condition` as condition,
+        t1.Condition as `condition`,
         t2.Description as description,
         t2.PicNo as picNo,
         t2.Dispose_In as disposeIn,
@@ -117,6 +117,6 @@
         left join monitorinputcheckrecord t2
         on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
         where t2.MonitorPlanID=#{0}
-        and t2.InputDate={1}
+        and t2.InputDate=#{1}
     </select>
 </mapper>
