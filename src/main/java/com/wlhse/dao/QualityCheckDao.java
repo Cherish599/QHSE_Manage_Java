@@ -12,6 +12,6 @@ public interface QualityCheckDao {
     Integer updateQualityCheck(QualityCheckDto qualityCheckDto);
     String queryCheckListCodeById(Integer id);//code 可能不只一个，用';'分隔
     List<QualityCheckDto> queryAllTable();
-    List<QualityCheckDto> queryTableByDate(QualityCheckDto qualityCheckDto);
+    List<QualityCheckDto> queryTableByDate(String company,String beginDate,String endDate);
     Integer pushTable(Integer qualityCheckID);
 }

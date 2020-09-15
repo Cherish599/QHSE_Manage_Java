@@ -270,8 +270,8 @@
         CheckListCode as checkListCode,
         CheckListName as checkListName
         from quality_check
-        where CheckedCompanyCode=#{checkedCompanyCode}
-        and CheckDate=#{checkDate}
+        where CheckedCompanyCode=#{0}
+        and CheckDate between #{1} and #{2}
     </select>
 
     <update id="pushTable" >

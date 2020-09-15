@@ -78,8 +78,10 @@ public class QualityCheckServiceImpl implements QualityCheckService {
 
     @Override
     public R queryTableByYearAndCom(QualityCheckDto qualityCheckDto) {
+
         R ok = R.ok();
-        ok.put("data",qualityCheckDao.queryTableByDate(qualityCheckDto));
+        String[] dates=qualityCheckDto.getCheckDate().split(";");
+        ok.put("data",qualityCheckDao.queryTableByDate(qualityCheckDto.getCheckedCompanyCode(),dates[0],dates[1]));
         return ok;
     }
 
