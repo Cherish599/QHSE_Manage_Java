@@ -120,7 +120,40 @@
         where t2.MonitorPlanID=#{0}
         and t2.InputDate=#{1}
     </select>
-
+    <select id="getNeedToCheckPlanDetails" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
+SELECT
+	t2.MonitorInputCheckRecordID AS monitorInputCheckRecordID,
+	t2.MonitorPlanID AS monitorPlanID,
+	t2.MonitorPlanDetailID AS monitorPlanDetailID,
+	t1.NO AS `no`,
+	t1.DeviceNo AS deviceNo,
+	t1.myNo AS myNo,
+	t1.ProjectName AS projectName,
+	t1.Charger AS charger,
+	t1.Tel AS tel,
+	t2.Description AS description,
+	t2.PicNo AS picNo,
+	t2.Dispose_In AS disposeIn,
+	t2.Close_In AS closeIn,
+	t2.CHECK AS `check`,
+	t2.CONDITION AS `condition`,
+	t2.dispose_Check AS disposeCheck,
+	t2.Close_Check AS closeCheck,
+	t2.InputPersonID AS inputPersonID,
+	t2.InputPersonName AS inputPersonName,
+	t2.InputDate AS inputDate,
+	t2.CheckPersonID AS checkPersonID,
+	t2.CheckPersonName AS checkPersonName,
+	t2.CheckDate AS checkDate
+FROM
+	monitorplandetail t1,
+	monitorinputcheckrecord t2
+WHERE
+	t1.MonitorPlanID = t2.MonitorPlanID
+	AND t1.MonitorPlanID = #{0}
+	AND Inputdate = #{1}
+	AND t2.`Condition`='备用'
+    </select>
     <select id="getRecordDetailByDate" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
        select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
         t2.MonitorPlanID as monitorPlanID,
@@ -147,8 +180,8 @@
         t2.CheckDate as checkDate
         from monitorplandetail t1
         left join monitorinputcheckrecord t2
-        on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
-        where t1.MonitorPlanDetailID=#{0}
+        on t1.MonitorPlanID=t2.MonitorPlanID
+        where t1.MonitorPlanID=#{0}
         and Inputdate=#{1}
     </select>
 </mapper>

@@ -24,4 +24,6 @@ public interface MonitorInputCheckDao {
 
     MonitorInputCheckRecordOutDto getRecordDetailByDate(int detailId,String date);
 
+    List<MonitorInputCheckRecordOutDto> getNeedToCheckPlanDetails(int planId,String date);
+
 }

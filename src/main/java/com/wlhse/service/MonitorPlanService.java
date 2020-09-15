@@ -38,4 +38,6 @@ public interface MonitorPlanService {
     R deleteInputtedRecord(int detailId);
 
     R getRecordDetailByDate(int detailId,String date);
+
+    R getNeedToCheckPlanDetails(int planId,String date);
 }

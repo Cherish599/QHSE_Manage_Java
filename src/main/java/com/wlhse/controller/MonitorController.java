@@ -159,7 +159,12 @@ public class MonitorController {
     }
 
     @RequestMapping(value = "/getInputtedRecordDetailByDate",method = RequestMethod.GET)
-    R getInputtedRecordDetailByDate(@RequestParam("detailId")Integer detailId,@RequestParam("date")String date){
+    R getInputtedRecordDetailByDate(@RequestParam(value = "detailId",required = false)Integer detailId,@RequestParam(value = "date",required = false)String date){
         return monitorPlanService.getRecordDetailByDate(detailId,date);
+    }
+
+    @RequestMapping(value = "/getNeedToCheckedDetails",method = RequestMethod.GET)
+    R getNeedToCheckedDetails(@RequestParam(value = "planId",required = false)Integer planId,@RequestParam(value = "date",required = false)String date){
+        return monitorPlanService.getNeedToCheckPlanDetails(planId,date);
     }
 }
