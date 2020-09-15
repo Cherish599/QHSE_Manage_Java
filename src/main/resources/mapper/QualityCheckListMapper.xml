@@ -142,6 +142,14 @@
             )
         </foreach>
     </insert>
+    <select id="findTreeByCode" resultType="com.wlhse.dto.QualityCheckTableRecordDto">
+        select
+        CheckListCode as checkListCode,
+        CheckListName as qualityCheckName
+        from quality_checklist
+        where CheckListCode like concat(#{0},'%')
+        and Status='启用'
+    </select>
 
 
 </mapper>
