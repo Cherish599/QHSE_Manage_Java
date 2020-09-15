@@ -42,7 +42,7 @@ public class MesDataListener extends AnalysisEventListener<MesSumData> {
             mesSumData.setAvailableRate(0);
         //使用率=备用数量/出库数量
         if (mesSumData.getOutStockNum()!=0)
-            mesSumData.setUseRate((float)mesSumData.getBackNum()/(float)mesSumData.getOutStockNum());
+            mesSumData.setUseRate((float)mesSumData.getPowerOnNum()/(float)mesSumData.getOutStockNum());
         else
             mesSumData.setUseRate(0);
         mesSumData.setCompanyCode(companyDao.queryByCompanyName(mesSumData.getCompanyName()));
