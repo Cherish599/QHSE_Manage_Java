@@ -15,40 +15,41 @@
 
     <update id="updateInputRecord">
         update monitorinputcheckrecord
-        <if test="condition!=null and condition!=''">
-            set `Condition`=#{condition},
-        </if>
-        <if test="description!=null and description!=''">
-            set Description=#{description},
-        </if>
-        <if test="picNo!=null and picNo!=''">
-            set PicNo!=picNo,
-        </if>
-        <if test="disposeIn!=null and disposeIn!=''">
-            set Dispose_In=#{disposeIn},
-        </if>
-        <if test="closeIn!=null and closeIn!=''">
-            set Close_In=#{closeIn},
-        </if>
-        <if test="check!=null and check!=''">
-            set `Check`=#{check},
-        </if>
-        <if test="disposeCheck!=null and disposeCheck!=''">
-            set Dispose_Check=#{disposeCheck},
-        </if>
-
-        <if test="closeCheck!=null and closeCheck!=''">
-            set Close_Check=#{closeCheck},
-        </if>
-        <if test="checkPersonID!=null and checkPersonID!=''">
-            set CheckPersonID=#{checkPersonID},
-        </if>
-        <if test="checkPersonName!=null and checkPersonName!=''">
-            set CheckPersonName=#{checkPersonName},
-        </if>
-        <if test="check！=null and check!=''">
-            set CheckDate=curdate()
-        </if>
+        <trim suffixOverrides=",">
+            <if test="condition!=null and condition!=''">
+                set `Condition`=#{condition},
+            </if>
+            <if test="description!=null and description!=''">
+                Description=#{description},
+            </if>
+            <if test="picNo!=null and picNo!=''">
+                PicNo=#{picNo},
+            </if>
+            <if test="disposeIn!=null and disposeIn!=''">
+                Dispose_In=#{disposeIn},
+            </if>
+            <if test="closeIn!=null and closeIn!=''">
+                Close_In=#{closeIn},
+            </if>
+            <if test="checkPersonID!=null and checkPersonID!=''">
+                `Check`=#{check},
+            </if>
+            <if test="disposeCheck!=null and disposeCheck!=''">
+                Dispose_Check=#{disposeCheck},
+            </if>
+            <if test="closeCheck!=null and closeCheck!=''">
+                Close_Check=#{closeCheck},
+            </if>
+            <if test="checkPersonID!=null and checkPersonID!=''">
+                CheckPersonID=#{checkPersonID},
+            </if>
+            <if test="checkPersonName!=null and checkPersonName!=''">
+                CheckPersonName=#{checkPersonName},
+            </if>
+            <if test="checkPersonName!=null and checkPersonName!=''">
+                CheckDate=curdate()
+            </if>
+        </trim>
         where MonitorInputCheckRecordID=#{monitorInputCheckRecordID}
     </update>
 
