@@ -100,7 +100,7 @@ public class MonitorController {
 
     //录入当天的详情内容
     @RequestMapping(value = "/inputDetail",method = RequestMethod.POST)
-    R inputDetail(MonitorInputCheckRecord monitorInputCheckRecord,HttpServletRequest request){
+    R inputDetail(@RequestBody(required = false) MonitorInputCheckRecord monitorInputCheckRecord,HttpServletRequest request){
         return monitorPlanService.insertNewInputRecord(monitorInputCheckRecord,request);
     }
 
