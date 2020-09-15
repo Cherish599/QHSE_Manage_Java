@@ -143,4 +143,11 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         monitorInputCheckDao.deleteInputRecord(detailId);
         return R.ok();
     }
+
+    @Override
+    public R getRecordDetailByDate(int detailId, String date) {
+        R r=new R();
+        r.put("data",monitorInputCheckDao.getRecordDetailByDate(detailId,date));
+        return r;
+    }
 }

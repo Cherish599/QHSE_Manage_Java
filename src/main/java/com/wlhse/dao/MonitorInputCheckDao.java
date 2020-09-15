@@ -22,6 +22,6 @@ public interface MonitorInputCheckDao {
     //获取备用状态的录入记录
     List<MonitorInputCheckRecordOutDto> getCheckMonitor(int planId,String date);
 
-
+    MonitorInputCheckRecord getRecordDetailByDate(int detailId,String date);
 
 }

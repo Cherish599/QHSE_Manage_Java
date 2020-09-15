@@ -158,4 +158,8 @@ public class MonitorController {
         return monitorPlanService.getInputDatesByPlanId(planId);
     }
 
+    @RequestMapping(value = "/getInputtedRecordDetailByDate",method = RequestMethod.GET)
+    R getInputtedRecordDetailByDate(@RequestParam("detailId")Integer detailId,@RequestParam("date")String date){
+        return monitorPlanService.getRecordDetailByDate(detailId,date);
+    }
 }

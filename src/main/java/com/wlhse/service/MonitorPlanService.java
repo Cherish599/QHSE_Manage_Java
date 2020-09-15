@@ -36,4 +36,6 @@ public interface MonitorPlanService {
 
     //我发现这个似乎没什么用
     R deleteInputtedRecord(int detailId);
+
+    R getRecordDetailByDate(int detailId,String date);
 }
