@@ -60,8 +60,8 @@
 
     <select id="getRecordDetail" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
         select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
-        t2.MonitorPlanID as monitorInputCheckRecordID,
-        t2.MonitorPlanDetailID as monitorInputCheckRecordID,
+        t2.MonitorPlanID as monitorPlanID,
+        t2.MonitorPlanDetailID as monitorPlanDetailID,
         t1.No as `no`,
         t1.DeviceNo as deviceNo,
         t1.myNo as myNo,
@@ -121,9 +121,9 @@
     </select>
 
     <select id="getRecordDetailByDate" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
-        select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
-        t2.MonitorPlanID as monitorInputCheckRecordID,
-        t2.MonitorPlanDetailID as monitorInputCheckRecordID,
+       select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
+        t2.MonitorPlanID as monitorPlanID,
+        t2.MonitorPlanDetailID as monitorPlanDetailID,
         t1.No as `no`,
         t1.DeviceNo as deviceNo,
         t1.myNo as myNo,
