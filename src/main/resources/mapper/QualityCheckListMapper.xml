@@ -151,5 +151,12 @@
         and Status='启用'
     </select>
 
+    <select id="getTableNode" resultType="com.wlhse.dto.QualityCheckListDto">
+        select CheckListCode as checkListCode,
+        CheckListName as checkListName
+        from quality_checklist
+        where length(CheckListCode)=4
+    </select>
+
 
 </mapper>

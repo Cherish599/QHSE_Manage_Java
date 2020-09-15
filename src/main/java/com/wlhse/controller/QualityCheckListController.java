@@ -21,6 +21,11 @@ public class QualityCheckListController {
     public R getQualityCheckTree(@PathVariable("tag") int tag) {
         return qualityCheckListService.getTreeDto(tag);
     }
+    //只查一级节点表
+    @RequestMapping(value = "/Quality_Check_List", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getQualityCheckTree() {
+        return qualityCheckListService.getList();
+    }
     //添加
     @RequestMapping(value = "/addQuality_Check", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addQuality_Check(@RequestBody(required = false) QualityCheckInDto qualityCheckInDto) {

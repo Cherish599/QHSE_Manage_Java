@@ -183,6 +183,14 @@ public class QualityCheckListServiceImpl implements QualityCheckListService {
         }
         return R.ok();
     }
+
+    @Override
+    public R getList() {
+        R ok = R.ok();
+        ok.put("data",qualityCheckListDao.getTableNode());
+        return ok;
+    }
+
     public List<String> getParentByCode(String code) //获得所有父节点，不包括本人
     {
         List<String> list = new ArrayList<String>();
