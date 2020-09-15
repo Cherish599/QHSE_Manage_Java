@@ -129,6 +129,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         List lDate = new ArrayList();
         lDate.add(fmt.format(beginD));
         Calendar calBegin=Calendar.getInstance();
+        calBegin.setTime(beginD);
         while (endD.after(calBegin.getTime())){
             calBegin.add(Calendar.DAY_OF_MONTH,1);
             lDate.add(fmt.format(calBegin.getTime()));
