@@ -23,6 +23,7 @@ public interface QualityCheckListDao {
     int clearTable();
     int batchInsertRecord(List<QualityCheckListDto> QualityCheckListDtos);
     List<QualityCheckTableRecordDto> findTreeByCode(String code);
+    List<QualityCheckListDto> getTableNode();
 
 
 }

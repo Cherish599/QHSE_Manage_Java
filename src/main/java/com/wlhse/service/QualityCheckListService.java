@@ -11,4 +11,6 @@ public interface QualityCheckListService {
     R updateQualityCheck(QualityCheckInDto qualityCheckInDto);
 
     R deleteQualityCheck(int id);
+
+    R getList();
 }
