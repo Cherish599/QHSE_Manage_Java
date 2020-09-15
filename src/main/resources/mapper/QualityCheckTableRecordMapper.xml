@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wlhse.dao.QualityCheckTableRecordDao">
+    <insert id="batchInsertTree">
+        insert into quality_checktablerecord
+        (Qulity_CheckID,CheckListCode,CheckStatus,CheckResult,Attach,Pic,Description,Quality_CheckName)
+        values
+        <foreach collection="list" item="detail" separator=",">
+            (
+            #{detail.qualityCheckID},#{detail.checkListCode},#{detail.checkStatus},
+            #{detail.checkResult},#{detail.attach},#{detail.pic},#{detail.description},
+            #{detail.qualityCheckName}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteChickList">
+        delete from quality_checktablerecord
+        where Qulity_CheckID=#{0}
+    </delete>
+</mapper>
