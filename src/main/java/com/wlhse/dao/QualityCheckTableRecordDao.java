@@ -9,5 +9,6 @@ import java.util.List;
 public interface QualityCheckTableRecordDao {
     Integer batchInsertTree(List<QualityCheckTableRecordDto> QualityCheckLists);
     Integer deleteChickList(Integer qualityCheckID);
+    List<QualityCheckTableRecordDto> queryCheckTreeByID(Integer qualityCheckID);
 
 }

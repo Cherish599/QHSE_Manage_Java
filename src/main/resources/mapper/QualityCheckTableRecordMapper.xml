@@ -3,13 +3,12 @@
 <mapper namespace="com.wlhse.dao.QualityCheckTableRecordDao">
     <insert id="batchInsertTree">
         insert into quality_checktablerecord
-        (Qulity_CheckID,CheckListCode,CheckStatus,CheckResult,Attach,Pic,Description,Quality_CheckName)
+        (Qulity_CheckID,CheckListCode,CheckResult,Attach,Pic,Description,Quality_CheckName)
         values
         <foreach collection="list" item="detail" separator=",">
             (
-            #{detail.qualityCheckID},#{detail.checkListCode},#{detail.checkStatus},
-            #{detail.checkResult},#{detail.attach},#{detail.pic},#{detail.description},
-            #{detail.qualityCheckName}
+            #{detail.qualityCheckID},#{detail.checkListCode},#{detail.checkResult},
+            #{detail.attach},#{detail.pic},#{detail.description},#{detail.qualityCheckName}
             )
         </foreach>
     </insert>
@@ -18,4 +17,17 @@
         delete from quality_checktablerecord
         where Qulity_CheckID=#{0}
     </delete>
+
+    <select id="queryCheckTreeByID" resultType="com.wlhse.dto.QualityCheckTableRecordDto">
+        select Qulity_CheckTableRecordID as qualityCheckTableRecordID,
+        Qulity_CheckID as qualityCheckID,
+        CheckListCode as checkListCode,
+        CheckResult as checkResult,
+        Attach as attach,
+        Pic as pic,
+        Description as description,
+        Quality_CheckName as qualityCheckName
+        from quality_checktablerecord
+        where Qulity_CheckID=#{0}
+    </select>
 </mapper>

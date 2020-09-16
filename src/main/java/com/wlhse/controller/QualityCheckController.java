@@ -15,16 +15,21 @@ public class QualityCheckController {
     @Resource
     private QualityCheckService qualityCheckService;
 
-    //查询
+    //查询所有
     @RequestMapping(value = "/queryAllTable", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryAllTable() {
         return qualityCheckService.queryAllTable();
     }
 
-    //查询
+    //查询+条件
     @RequestMapping(value = "/queryTableByYearAndCom", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryTableByYearAndCom(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
         return qualityCheckService.queryTableByYearAndCom(qualityCheckDto);
+    }
+    //查询已推送+条件
+    @RequestMapping(value = "/queryTableByYearAndComAndPush", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R queryTableByYearAndComAndPush(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
+        return qualityCheckService.queryTableByYearAndComAndPush(qualityCheckDto);
     }
     //添加
     @RequestMapping(value = "/addQualityCheck", method = RequestMethod.POST, produces = "application/json; charset=utf-8")

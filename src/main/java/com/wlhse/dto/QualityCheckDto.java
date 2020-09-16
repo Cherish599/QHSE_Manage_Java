@@ -24,14 +24,6 @@ public class QualityCheckDto {
     String isPush;
     String checkListName;
 
-    public String getCheckListName() {
-        return checkListName;
-    }
-
-    public void setCheckListName(String checkListName) {
-        checkListName = checkListName;
-    }
-
     public Integer getQualityCheckID() {
         return qualityCheckID;
     }
@@ -198,6 +190,14 @@ public class QualityCheckDto {
 
     public void setIsPush(String isPush) {
         this.isPush = isPush;
+    }
+
+    public String getCheckListName() {
+        return checkListName;
+    }
+
+    public void setCheckListName(String checkListName) {
+        this.checkListName = checkListName;
     }
 
     @Override

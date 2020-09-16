@@ -702,4 +702,48 @@ public class TreeUtil {
         }
         return returnQualityCheckList(map1, code);
     }
+
+    public List<QualityCheckTableRecordTreeDto> returnQualityCheckTree(Map<String, QualityCheckTableRecordTreeDto> map, List<Integer> code) {
+        List<QualityCheckTableRecordTreeDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityCheckTableRecordTreeDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QualityCheckTableRecordTreeDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildren()) {
+                    List<QualityCheckTableRecordTreeDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildren(tmp);
+                } else {
+                    treeDto.getChildren().add(entry.getValue());
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<QualityCheckTableRecordTreeDto> getQualityCheckRecordTree(List<QualityCheckTableRecordDto> qualityCheckTableRecordDtos){
+        Map<String, QualityCheckTableRecordTreeDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityCheckTableRecordDto pojo : qualityCheckTableRecordDtos) {
+            QualityCheckTableRecordTreeDto qualityCheckTableRecord = new QualityCheckTableRecordTreeDto();
+            qualityCheckTableRecord.setQualityCheckTableRecordID(pojo.getQualityCheckTableRecordID());
+            qualityCheckTableRecord.setQualityCheckID(pojo.getQualityCheckID());
+            qualityCheckTableRecord.setCheckListCode(pojo.getCheckListCode());
+            qualityCheckTableRecord.setQualityCheckName(pojo.getQualityCheckName());
+            qualityCheckTableRecord.setCheckResult(pojo.getCheckResult());
+            qualityCheckTableRecord.setAttach(pojo.getAttach());
+            qualityCheckTableRecord.setDescription(pojo.getDescription());
+            qualityCheckTableRecord.setPic(pojo.getPic());
+            map1.put(qualityCheckTableRecord.getCheckListCode(), qualityCheckTableRecord);
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCheckListCode().length()) == -1)
+                code.add(pojo.getCheckListCode().length());
+        }
+        return returnQualityCheckTree(map1, code);
+    }
 }

@@ -67,7 +67,7 @@
                 IsPush,
             </if>
             <if test="checkListName != null and checkListName != ''">
-                CheckListName,
+                CheckListName
             </if>
 
         </trim>
@@ -136,7 +136,7 @@
                 #{isPush},
             </if>
             <if test="checkListName != null and checkListName != ''">
-                #{checkListName},
+                #{checkListName}
             </if>
         </trim>
         )
@@ -281,6 +281,35 @@
         </set>
         where Qulity_CheckID=#{0}
     </update>
+
+    <select id="queryTableByDateAndPush" resultType="com.wlhse.dto.QualityCheckDto">
+        select Qulity_CheckID as qualityCheckID,
+        TaskType as taskType,
+        CheckedCompanyName as checkedCompanyName,
+        CheckedCompanyCode as checkedCompanyCode,
+        `Group` as `group`,
+        WorkProject as workProject,
+        ResponsiCompanyName as responsiCompanyName,
+        ResponsiCompanyCode as responsiCompanyCode,
+        ResponsePersonID as responsePersonID,
+        ResponsePersonName as responsePersonName,
+        CheckDate as checkDate,
+        CheckPersonID as checkPersonID,
+        CheckPerson as checkPerson,
+        CheckBasis as checkBasis,
+        Contractor as contractor,
+        Owner as owner,
+        ProjectName as projectName,
+        CheckProject as checkProject,
+        ExecStd as execStd,
+        IsPush as isPush,
+        CheckListCode as checkListCode,
+        CheckListName as checkListName
+        from quality_check
+        where CheckedCompanyCode=#{0}
+        and CheckDate between #{1} and #{2}
+        and isPush='已推送'
+    </select>
 
 
 

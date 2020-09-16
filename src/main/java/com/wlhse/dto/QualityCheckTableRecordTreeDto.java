@@ -1,6 +1,8 @@
 package com.wlhse.dto;
 
-public class QualityCheckTableRecordDto {
+import java.util.List;
+
+public class QualityCheckTableRecordTreeDto {
     private Integer qualityCheckTableRecordID;
     private Integer qualityCheckID;
     private String qualityCheckName;
@@ -9,6 +11,7 @@ public class QualityCheckTableRecordDto {
     private String checkResult;
     private String attach;
     private String pic;
+    private List<QualityCheckTableRecordTreeDto> children;
 
     public Integer getQualityCheckTableRecordID() {
         return qualityCheckTableRecordID;
@@ -74,9 +77,17 @@ public class QualityCheckTableRecordDto {
         this.pic = pic;
     }
 
+    public List<QualityCheckTableRecordTreeDto> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<QualityCheckTableRecordTreeDto> children) {
+        this.children = children;
+    }
+
     @Override
     public String toString() {
-        return "QualityCheckTableRecordDto{" +
+        return "QualityCheckTableRecordTreeDto{" +
                 "qualityCheckTableRecordID=" + qualityCheckTableRecordID +
                 ", qualityCheckID=" + qualityCheckID +
                 ", qualityCheckName='" + qualityCheckName + '\'' +
@@ -85,6 +96,7 @@ public class QualityCheckTableRecordDto {
                 ", checkResult='" + checkResult + '\'' +
                 ", attach='" + attach + '\'' +
                 ", pic='" + pic + '\'' +
+                ", children=" + children +
                 '}';
     }
 }
