@@ -10,6 +10,7 @@ import com.wlhse.entity.MesSumData;
 import com.wlhse.entity.MonitorInputCheckRecord;
 import com.wlhse.service.MesSumDataService;
 import com.wlhse.service.MonitorPlanService;
+import com.wlhse.util.GetCurrentUserIdUtil;
 import com.wlhse.util.MesDataListener;
 import com.wlhse.util.MonitorDataListener;
 import com.wlhse.util.R;
@@ -42,7 +43,8 @@ public class MonitorController {
 
     @Resource
     MesSumDataService mesSumDataService;
-
+    @Resource
+    GetCurrentUserIdUtil currentUserIdUtil;
     private Logger log= LoggerFactory.getLogger(this.getClass());
     //批量上传远程监控计划详情
     @RequestMapping(value = "/uploadMonitorPlanExcel",method = RequestMethod.POST)
@@ -112,7 +114,9 @@ public class MonitorController {
 
     //当天的详情信息已经录入，需要更新录入的信息（输入核查信息也要使用该接口）
     @RequestMapping(value = "/updateInputtedDetailInfo",method = RequestMethod.PUT)
-    R updateInputtedDetailInfo(@RequestBody(required = false)MonitorInputCheckRecord monitorInputCheckRecord){
+    R updateInputtedDetailInfo(@RequestBody(required = false)MonitorInputCheckRecord monitorInputCheckRecord,HttpServletRequest request){
+        Integer userId = currentUserIdUtil.getUserId(request);
+        monitorInputCheckRecord.setCheckPersonID(userId.toString());
         return monitorPlanService.updateInputtedRecord(monitorInputCheckRecord);
     }
     //获取需要核查的远程监控记录详情

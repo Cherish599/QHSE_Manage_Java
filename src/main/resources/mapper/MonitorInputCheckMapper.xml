@@ -121,38 +121,30 @@
         and t2.InputDate=#{1}
     </select>
     <select id="getNeedToCheckPlanDetails" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
-SELECT
-	t2.MonitorInputCheckRecordID AS monitorInputCheckRecordID,
-	t2.MonitorPlanID AS monitorPlanID,
-	t2.MonitorPlanDetailID AS monitorPlanDetailID,
-	t1.NO AS `no`,
-	t1.DeviceNo AS deviceNo,
-	t1.myNo AS myNo,
-	t1.ProjectName AS projectName,
-	t1.Charger AS charger,
-	t1.Tel AS tel,
-	t2.Description AS description,
-	t2.PicNo AS picNo,
-	t2.Dispose_In AS disposeIn,
-	t2.Close_In AS closeIn,
-	t2.CHECK AS `check`,
-	t2.CONDITION AS `condition`,
-	t2.dispose_Check AS disposeCheck,
-	t2.Close_Check AS closeCheck,
-	t2.InputPersonID AS inputPersonID,
-	t2.InputPersonName AS inputPersonName,
-	t2.InputDate AS inputDate,
-	t2.CheckPersonID AS checkPersonID,
-	t2.CheckPersonName AS checkPersonName,
-	t2.CheckDate AS checkDate
-FROM
-	monitorplandetail t1,
-	monitorinputcheckrecord t2
-WHERE
-	t1.MonitorPlanID = t2.MonitorPlanID
-	AND t1.MonitorPlanID = #{0}
-	AND Inputdate = #{1}
-	AND t2.`Condition`='备用'
+        SELECT t1.MonitorInputCheckRecordID as monitorInputCheckRecord,
+        t1.MonitorPlanID as monitorPlanID,
+        t1.MonitorPlanDetailID as monitorPlanDetailID,
+        t1.`Condition` as `condition`,
+        t1.Description as description,
+        t1.PicNo as picNo,
+        t1.Dispose_In as disposeIn,
+        t1.Close_In as closeIn,
+        t1.`Check` as `check`,
+        t1.Dispose_Check as disposeCheck,
+        t1.Close_Check as closeCheck,
+        t2.`No` as `no`,
+        t2.DeviceNo as deviceNo,
+        t2.MyNo as myNo,
+        t2.ProjectName as projectName,
+        t2.Charger as charger,
+        t2.Tel as tel
+        FROM monitorinputcheckrecord t1
+        INNER JOIN monitorplandetail t2
+        ON t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
+        WHERE t1.`Condition`='备用'
+        AND t1.InputDate='2020-09-15'
+        AND t1.MonitorPlanID=12
+
     </select>
     <select id="getRecordDetailByDate" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
        select t2.MonitorInputCheckRecordID as monitorInputCheckRecordID,
