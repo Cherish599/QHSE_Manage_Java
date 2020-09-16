@@ -151,4 +151,11 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         r.put("data",monitorInputCheckDao.getRecordDetailByDate(detailId,date));
         return r;
     }
+
+    @Override
+    public R getNeedToCheckPlanDetails(int planId,String date){
+        R r=new R();
+        r.put("data",monitorInputCheckDao.getNeedToCheckPlanDetails(planId,date));
+        return r;
+    }
 }
