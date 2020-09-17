@@ -1,9 +1,12 @@
 package com.wlhse.controller;
 
 import com.wlhse.dao.MonitorFileDao;
+import com.wlhse.dto.QualityCheckTableRecordAttachInfoDto;
+import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.service.QhseElementsInputService;
+import com.wlhse.service.QualityCheckTableRecordService;
 import com.wlhse.service.UploadService;
 import com.wlhse.util.IdUtil;
 import com.wlhse.util.R;
@@ -20,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/api/v3")
 @Controller("FileUploadUtils")
@@ -29,6 +34,10 @@ public class FileUploadUtils {
     private UploadService uploadService;
     @Resource
     private QhseElementsInputService qhseElementsInputService;
+
+    @Resource
+    private QualityCheckTableRecordService qualityCheckTableRecordService;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
@@ -272,5 +281,36 @@ public class FileUploadUtils {
         }
     }
 
+    @RequestMapping(value = "/addQualityInformAndAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public R addQualityInformAndAttach(@RequestParam(value = "file", required = false) MultipartFile file[],QualityCheckTableRecordDto qualityCheckTableRecordDto) throws Exception {
+        if (file != null) {
+            String attachFilePath = "";
+            String picFilePath = "";
+            List<QualityCheckTableRecordAttachInfoDto> Plist = new ArrayList<>();
+            for (int i = 0; i < file.length; i++) {
+                if (!file[i].isEmpty()) {
+                    String OriginalFilename = file[i].getOriginalFilename();
+                    QualityCheckTableRecordAttachInfoDto AttachInfoDto = new QualityCheckTableRecordAttachInfoDto();
+                    AttachInfoDto.setAttachOriginName(OriginalFilename);
+                    String FilePath = setFile(file[i], "resources\\QualityCheck");
+                    AttachInfoDto.setAttachFilePath(FilePath);
+                    if ("jpg".equals(OriginalFilename.split("\\.")[1].toLowerCase()) || "png".equals(OriginalFilename.split("\\.")[1].toLowerCase()) ||
+                            "bmp".equals(OriginalFilename.split("\\.")[1].toLowerCase())) {
+                        picFilePath += (FilePath + ";");
+                    } else {
+                        attachFilePath += (FilePath + ";");
+                    }
+                    Plist.add(AttachInfoDto);
+                }
+            }
+            if(!attachFilePath.equals(""))
+            qualityCheckTableRecordDto.setAttach(attachFilePath.substring(0, attachFilePath.length() - 1));
+            if(!picFilePath.equals(""))
+            qualityCheckTableRecordDto.setPic(picFilePath.substring(0, picFilePath.length() - 1));
+            //System.out.println(qualityCheckTableRecordDto);
+            return qualityCheckTableRecordService.addInformAndAttach(qualityCheckTableRecordDto,Plist);
+        }
+        else return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
+    }
 }
-

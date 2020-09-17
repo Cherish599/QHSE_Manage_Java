@@ -148,4 +148,21 @@
         from file_propagationfileinfo
         where filePath=#{fileName}
     </select>
+
+    <insert id="batchInsertQualityAttachInfo">
+        insert into quality_checktablerecordattachinfo
+        (AttachFilePath,AttachOriginName)
+        values
+        <foreach collection="list" item="detail" separator=",">
+            (
+            #{detail.attachFilePath},#{detail.attachOriginName}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getQualityAttachOriginFileName" resultType="String">
+        select AttachOriginName
+        from quality_checktablerecordattachinfo
+        where AttachFilePath=#{0}
+    </select>
 </mapper>

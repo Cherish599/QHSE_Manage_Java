@@ -79,7 +79,8 @@ public class QualityCheckServiceImpl implements QualityCheckService {
     @Override
     public R queryTableByYearAndCom(QualityCheckDto qualityCheckDto) {
         R ok = R.ok();
-        ok.put("data",qualityCheckDao.queryTableByDate(qualityCheckDto));
+        String[] dates=qualityCheckDto.getCheckDate().split(";");
+        ok.put("data",qualityCheckDao.queryTableByDate(qualityCheckDto.getCheckedCompanyCode(),dates[0],dates[1]));
         return ok;
     }
 
@@ -88,6 +89,14 @@ public class QualityCheckServiceImpl implements QualityCheckService {
        if(qualityCheckDao.pushTable(qualityCheckID)<0)
            throw new WLHSException("更新失败");
         return R.ok();
+    }
+
+    @Override
+    public R queryTableByYearAndComAndPush(QualityCheckDto qualityCheckDto) {
+        R ok = R.ok();
+        String[] dates=qualityCheckDto.getCheckDate().split(";");
+        ok.put("data",qualityCheckDao.queryTableByDateAndPush(qualityCheckDto.getCheckedCompanyCode(),dates[0],dates[1]));
+        return ok;
     }
 
     public List<QualityCheckTableRecordDto> getCheckTree(Integer qualityCheckID,String checkCode)

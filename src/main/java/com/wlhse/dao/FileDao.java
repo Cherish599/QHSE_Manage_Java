@@ -1,9 +1,9 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.QualityCheckTableRecordAttachInfoDto;
 import com.wlhse.dto.inDto.FileInDto;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
-import com.wlhse.dto.outDto.CompanyOutDto;
-import com.wlhse.entity.CompanyPojo;
+
 import com.wlhse.entity.FilePojo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -33,4 +33,8 @@ public interface FileDao {
     List<FilePropagationFileInfo> getFileInfoByPropagationId(Long id);
 
     String getFilePropagationOriginFileName(String fileName);
+
+    Integer batchInsertQualityAttachInfo(List<QualityCheckTableRecordAttachInfoDto> Plist);
+
+    String getQualityAttachOriginFileName(String fileName);
 }

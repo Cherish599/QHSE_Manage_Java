@@ -10,4 +10,5 @@ public interface QualityCheckService {
     R queryAllTable();
     R queryTableByYearAndCom(QualityCheckDto qualityCheckDto);
     R pushTable(Integer qualityCheckID);
+    R queryTableByYearAndComAndPush(QualityCheckDto qualityCheckDto);
 }
