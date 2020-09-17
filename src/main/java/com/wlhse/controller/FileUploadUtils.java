@@ -1,5 +1,6 @@
 package com.wlhse.controller;
 
+import com.wlhse.dao.MonitorFileDao;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.service.QhseElementsInputService;
@@ -9,13 +10,11 @@ import com.wlhse.util.R;
 import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
 import com.wlhse.util.token.TokenUtil;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -31,6 +30,9 @@ public class FileUploadUtils {
     @Resource
     private QhseElementsInputService qhseElementsInputService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    MonitorFileDao monitorFileDao;
     public String setFile(MultipartFile file, String str) throws Exception {
 
         String rootPath = System.getProperty("catalina.home") + "\\webapps\\" + str;
@@ -250,4 +252,25 @@ public class FileUploadUtils {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
     }
+
+    //上传远程监控截图,直接将截图下载链接放置于响应结果中
+    @RequestMapping(value = "/uploadScreenShot",method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadScreenShot(@RequestParam(value = "file",required = false)MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+            String originFileName=file.getOriginalFilename();
+            String fileName = setFile(file, "RemoteMonitor\\screenShot");
+            monitorFileDao.insertNewFile(fileName,originFileName);
+            //拼接生成图片下载链接链接
+            String downloadLink="/screenShotDownload?fileName="+fileName;
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
+        } else {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
+        }
+    }
+
 }
+
