@@ -10,5 +10,6 @@ public interface QualityCheckTableRecordDao {
     Integer batchInsertTree(List<QualityCheckTableRecordDto> QualityCheckLists);
     Integer deleteChickList(Integer qualityCheckID);
     List<QualityCheckTableRecordDto> queryCheckTreeByID(Integer qualityCheckID);
+    Integer addInformAndAttach(QualityCheckTableRecordDto qualityCheckTableRecordDto);
 
 }

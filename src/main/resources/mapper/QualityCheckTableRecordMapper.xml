@@ -30,4 +30,23 @@
         from quality_checktablerecord
         where Qulity_CheckID=#{0}
     </select>
+
+    <update id="addInformAndAttach" parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+        update quality_checktablerecord
+        <set>
+            <if test="description != null and description != ''">
+                Description=#{description},
+            </if>
+            <if test="checkResult != null and checkResult != ''">
+                CheckResult=#{checkResult},
+            </if>
+            <if test="attach != null and attach != ''">
+                Attach=#{attach},
+            </if>
+            <if test="pic != null and pic != ''">
+                Pic=#{pic},
+            </if>
+        </set>
+        where Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
+    </update>
 </mapper>

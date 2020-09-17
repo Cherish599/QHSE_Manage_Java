@@ -75,4 +75,21 @@ public class FileDownloadController {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
                 headers, HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/downloadQualityAttach", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public ResponseEntity<byte[]> downloadQualityAttach(@RequestParam(value = "fileName")String fileName,HttpServletRequest request) throws IOException {
+        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck\\";
+        File file = new File(path + File.separator + fileName);
+        System.out.println(file.getPath());
+        fileName=fileDao.getQualityAttachOriginFileName(fileName);
+        System.out.println("原文件名: "+fileName);
+        HttpHeaders headers = new HttpHeaders();
+        //Solve the garbled problem
+        String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
 }
