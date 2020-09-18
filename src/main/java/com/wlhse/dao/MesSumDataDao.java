@@ -17,4 +17,8 @@ public interface MesSumDataDao {
     int deleteSumData(int id);
 
     int deleteByDate(String date);
+
+    int updateMesData(MesSumData mesSumData);
+
+    MesSumData getMesDataById(int id);
 }

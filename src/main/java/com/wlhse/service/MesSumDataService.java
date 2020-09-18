@@ -1,5 +1,6 @@
 package com.wlhse.service;
 
+import com.wlhse.entity.MesSumData;
 import com.wlhse.util.R;
 
 public interface MesSumDataService {
@@ -10,4 +11,8 @@ public interface MesSumDataService {
     R deleteSumData(int id);
 
     R deleteByDate(String date);
+
+    R updateData(MesSumData mesSumData);
+
+    R getSumDataById(int id);
 }

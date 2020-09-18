@@ -32,17 +32,17 @@ public class MesDataListener extends AnalysisEventListener<MesSumData> {
         //将读取到的记录保存至list中
         //配备记录仪数量/日报数量
         if (mesSumData.getDayReportNum()!=0)
-            mesSumData.setCoverageRate((float)mesSumData.getRecordDeviceNum()/(float)mesSumData.getDayReportNum());
+            mesSumData.setCoverageRate((float)mesSumData.getRecordDeviceNum()/(float)mesSumData.getDayReportNum()*100);
         else
             mesSumData.setCoverageRate(0);
         //利用率=出库数/配备记录仪数
         if (mesSumData.getRecordDeviceNum()!=0)
-            mesSumData.setAvailableRate((float)mesSumData.getOutStockNum()/(float)mesSumData.getRecordDeviceNum());
+            mesSumData.setAvailableRate((float)mesSumData.getOutStockNum()/(float)mesSumData.getRecordDeviceNum()*100);
         else
             mesSumData.setAvailableRate(0);
         //使用率=备用数量/出库数量
         if (mesSumData.getOutStockNum()!=0)
-            mesSumData.setUseRate((float)mesSumData.getPowerOnNum()/(float)mesSumData.getOutStockNum());
+            mesSumData.setUseRate((float)mesSumData.getPowerOnNum()/(float)mesSumData.getOutStockNum()*100);
         else
             mesSumData.setUseRate(0);
         mesSumData.setCompanyCode(companyDao.queryByCompanyName(mesSumData.getCompanyName()));

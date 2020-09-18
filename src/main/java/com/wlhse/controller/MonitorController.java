@@ -171,4 +171,14 @@ public class MonitorController {
     R getNeedToCheckedDetails(@RequestParam(value = "planId",required = false)Integer planId,@RequestParam(value = "date",required = false)String date){
         return monitorPlanService.getNeedToCheckPlanDetails(planId,date);
     }
+
+    @RequestMapping(value = "/updateMesData",method = RequestMethod.PUT)
+    R updateMesData(@RequestBody(required = false)MesSumData mesSumData){
+        return mesSumDataService.updateData(mesSumData);
+    }
+
+    @RequestMapping(value = "/getSumDataById",method = RequestMethod.GET)
+    R getSumDataById(@RequestParam(value = "mesDataId",required = false)Integer id){
+        return mesSumDataService.getSumDataById(id);
+    }
 }

@@ -35,4 +35,23 @@
         delete from meschecksumdata
         where Sumdate=#{0}
     </delete>
+
+    <update id="updateMesData">
+        update meschecksumdata
+        set WorkNum=#{workNum},
+        DayReportNum=#{dayReportNum},
+        RecordDeviceNum=#{recordDeviceNum},
+        PowerOnNum=#{powerOnNum},
+        BackNum=#{backNum},
+        CoverageRate=#{coverageRate},
+        AvaiRate=#{availableRate},
+        UseRate=#{useRate}
+        where MesCheckSumDataID=#{mesCheckSumDataID}
+    </update>
+
+    <select id="getMesDataById">
+        select *
+        from meschecksumdata
+        where MesCheckSumDataID=#{0}
+    </select>
 </mapper>

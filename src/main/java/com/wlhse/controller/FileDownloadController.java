@@ -98,7 +98,7 @@ public class FileDownloadController {
         File file = new File(path + File.separator + fileName);
         fileName=monitorFileDao.getOriginName(fileName);
         //将文件原名保存在响应头
-        response.setHeader("fileName",new String(fileName.getBytes("gb2312"),"ISO8859-1"));
+        response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
         FileInputStream fis=new FileInputStream(file);
         byte[] b=new byte[fis.available()];
         fis.read(b);
@@ -113,6 +113,22 @@ public class FileDownloadController {
         System.out.println(file.getPath());
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
         System.out.println("原文件名: "+fileName);
+        HttpHeaders headers = new HttpHeaders();
+        //Solve the garbled problem
+        String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
+    //下载远程监控计划详情的数据导入模板
+    @RequestMapping(value = "/downloadMonitorDetailExcelTemplate",method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadMonitorDetailExcelTemplate() throws IOException {
+        String path =System.getProperty("catalina.home") + "\\webapps\\"+"MonitorTemplate";
+        File file = new File(path + File.separator + "详情导入模板.xlsx");
+        String fileName="远程监控计划详情导入模板.xlsx";
         HttpHeaders headers = new HttpHeaders();
         //Solve the garbled problem
         String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
