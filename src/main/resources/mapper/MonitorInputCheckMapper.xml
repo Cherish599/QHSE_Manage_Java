@@ -8,7 +8,7 @@
         (MonitorPlanID,MonitorPlanDetailID,`Condition`,Description,PicNo,Dispose_In,Close_In,InputPersonID,InputPersonName,InputDate)
         values (
         #{monitorPlanID},#{monitorPlanDetailID},#{condition},#{description},#{picNo},#{disposeIn},#{closeIn},#{inputPersonID},#{inputPersonName},
-        current_date
+        now()
         )
 
     </insert>
