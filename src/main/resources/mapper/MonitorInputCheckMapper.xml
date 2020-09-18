@@ -13,6 +13,11 @@
 
     </insert>
 
+
+
+
+
+
     <update id="updateInputRecord">
         update monitorinputcheckrecord
         <trim suffixOverrides=",">
