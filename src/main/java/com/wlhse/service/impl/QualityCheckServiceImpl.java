@@ -26,7 +26,6 @@ public class QualityCheckServiceImpl implements QualityCheckService {
 
     @Resource
     private QualityCheckTableRecordDao qualityCheckTableRecordDao;
-
     @Transactional
     @Override
     public R addQualityCheck(QualityCheckDto qualityCheckDto) {
