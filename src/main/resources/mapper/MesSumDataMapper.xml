@@ -49,9 +49,15 @@
         where MesCheckSumDataID=#{mesCheckSumDataID}
     </update>
 
-    <select id="getMesDataById">
+    <select id="getMesDataById" resultType="com.wlhse.entity.MesSumData">
         select *
         from meschecksumdata
         where MesCheckSumDataID=#{0}
+    </select>
+
+    <select id="getSumDataInTimePeriod" resultType="com.wlhse.entity.MesSumData">
+        select *
+        from meschecksumdata
+        where SumDate between #{0} and #{1}
     </select>
 </mapper>

@@ -21,4 +21,6 @@ public interface MesSumDataDao {
     int updateMesData(MesSumData mesSumData);
 
     MesSumData getMesDataById(int id);
+
+    List<MesSumData> getSumDataInTimePeriod(String startTime, String endTime);
 }
