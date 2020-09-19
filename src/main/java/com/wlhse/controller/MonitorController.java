@@ -134,7 +134,6 @@ public class MonitorController {
         return R.ok();
     }
 
-
     //查找视图，获取所有记录在案的日期
     @RequestMapping(value = "/getAllSumDate",method = RequestMethod.GET)
     R getAllSumDate(){

@@ -138,4 +138,20 @@ public class FileDownloadController {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
                 headers, HttpStatus.CREATED);
     }
+
+    //下载统计数据导入模板
+    @RequestMapping(value = "/downloadStatisticsTemplate",method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadStatisticsTemplate() throws IOException {
+        String path =System.getProperty("catalina.home") + "\\webapps\\"+"MonitorTemplate";
+        File file = new File(path + File.separator + "统计数据导入模板.xlsx");
+        String fileName="统计数据导入模板.xlsx";
+        HttpHeaders headers = new HttpHeaders();
+        //Solve the garbled problem
+        String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
 }
