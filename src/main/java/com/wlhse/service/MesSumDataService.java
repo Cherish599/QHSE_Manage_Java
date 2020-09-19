@@ -15,4 +15,7 @@ public interface MesSumDataService {
     R updateData(MesSumData mesSumData);
 
     R getSumDataById(int id);
+
+    R getSumDataInTimePeriod(String startTime, String endTime);
+
 }

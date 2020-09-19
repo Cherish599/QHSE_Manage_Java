@@ -68,4 +68,11 @@ public class MesSumDataServiceImp implements MesSumDataService {
         return r;
     }
 
+    @Override
+    public R getSumDataInTimePeriod(String startTime, String endTime) {
+        R r=new R();
+        r.put("data",mesSumDataDao.getSumDataInTimePeriod(startTime,endTime));
+        return null;
+    }
+
 }

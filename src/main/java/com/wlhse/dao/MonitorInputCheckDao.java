@@ -17,7 +17,7 @@ public interface MonitorInputCheckDao {
     //清除当日记录
     int deleteInputRecord(int detailId);
 
-    MonitorInputCheckRecordOutDto getRecordDetail(int detailId);
+    List<MonitorInputCheckRecordOutDto> getRecordDetail(int detailId);
 
     //获取备用状态的录入记录
     List<MonitorInputCheckRecordOutDto> getCheckMonitor(int planId,String date);

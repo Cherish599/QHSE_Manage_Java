@@ -106,7 +106,7 @@ public class MonitorController {
         return monitorPlanService.insertNewInputRecord(monitorInputCheckRecord,request);
     }
 
-    //获取当天录入的内容,有内容则代表当天已录入，无内容则代表当天未录入
+    //获取当天录入的内容
     @RequestMapping(value = "/getInputtedDetailInfo/{detailId}",method = RequestMethod.GET)
     R getInputtedDetailInfo(@PathVariable("detailId")Integer detailId){
         return monitorPlanService.getRecordDetail(detailId);
@@ -179,5 +179,10 @@ public class MonitorController {
     @RequestMapping(value = "/getSumDataById",method = RequestMethod.GET)
     R getSumDataById(@RequestParam(value = "mesDataId",required = false)Integer id){
         return mesSumDataService.getSumDataById(id);
+    }
+
+    @RequestMapping(value = "/getSumDataInTimePeriod",method = RequestMethod.GET)
+    R getSumDataInTimePeriod(@RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime){
+        return mesSumDataService.getSumDataInTimePeriod(startTime,endTime);
     }
 }
