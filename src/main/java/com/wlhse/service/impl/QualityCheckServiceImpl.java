@@ -80,12 +80,12 @@ public class QualityCheckServiceImpl implements QualityCheckService {
         R ok = R.ok();
         String Date=qualityCheckDto.getCheckDate();
         String CheckedCompanyCode=qualityCheckDto.getCheckedCompanyCode();
-        if(("".equals(Date)||Date==null)&&("".equals(CheckedCompanyCode)||CheckedCompanyCode==null)){
+        if(("".equals(Date)||Date==null)&&("".equals(CheckedCompanyCode)||CheckedCompanyCode==null||"null".equals(CheckedCompanyCode))){
             ok.put("data",qualityCheckDao.queryAllTable());
             return ok;
         }
         else{
-            if ("".equals(CheckedCompanyCode)||CheckedCompanyCode==null){
+            if ("null".equals(CheckedCompanyCode)||"".equals(CheckedCompanyCode)||CheckedCompanyCode==null){
                 String[] dates=qualityCheckDto.getCheckDate().split(";");
                 ok.put("data",qualityCheckDao.queryTableByDate(dates[0],dates[1]));
                 return ok;
