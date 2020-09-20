@@ -246,7 +246,7 @@
     </select>
 
 
-    <select id="queryTableByDate" resultType="com.wlhse.dto.QualityCheckDto">
+    <select id="queryTableByDateCom" resultType="com.wlhse.dto.QualityCheckDto">
         select Qulity_CheckID as qualityCheckID,
         TaskType as taskType,
         CheckedCompanyName as checkedCompanyName,
@@ -272,6 +272,60 @@
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
+    </select>
+
+    <select id="queryTableByDate" resultType="com.wlhse.dto.QualityCheckDto">
+        select Qulity_CheckID as qualityCheckID,
+        TaskType as taskType,
+        CheckedCompanyName as checkedCompanyName,
+        CheckedCompanyCode as checkedCompanyCode,
+        `Group` as `group`,
+        WorkProject as workProject,
+        ResponsiCompanyName as responsiCompanyName,
+        ResponsiCompanyCode as responsiCompanyCode,
+        ResponsePersonID as responsePersonID,
+        ResponsePersonName as responsePersonName,
+        CheckDate as checkDate,
+        CheckPersonID as checkPersonID,
+        CheckPerson as checkPerson,
+        CheckBasis as checkBasis,
+        Contractor as contractor,
+        Owner as owner,
+        ProjectName as projectName,
+        CheckProject as checkProject,
+        ExecStd as execStd,
+        IsPush as isPush,
+        CheckListCode as checkListCode,
+        CheckListName as checkListName
+        from quality_check
+        where CheckDate between #{0} and #{1}
+    </select>
+
+    <select id="queryTableByCom" resultType="com.wlhse.dto.QualityCheckDto">
+        select Qulity_CheckID as qualityCheckID,
+        TaskType as taskType,
+        CheckedCompanyName as checkedCompanyName,
+        CheckedCompanyCode as checkedCompanyCode,
+        `Group` as `group`,
+        WorkProject as workProject,
+        ResponsiCompanyName as responsiCompanyName,
+        ResponsiCompanyCode as responsiCompanyCode,
+        ResponsePersonID as responsePersonID,
+        ResponsePersonName as responsePersonName,
+        CheckDate as checkDate,
+        CheckPersonID as checkPersonID,
+        CheckPerson as checkPerson,
+        CheckBasis as checkBasis,
+        Contractor as contractor,
+        Owner as owner,
+        ProjectName as projectName,
+        CheckProject as checkProject,
+        ExecStd as execStd,
+        IsPush as isPush,
+        CheckListCode as checkListCode,
+        CheckListName as checkListName
+        from quality_check
+        where CheckedCompanyCode=#{0}
     </select>
 
     <update id="pushTable" >

@@ -28,6 +28,7 @@ public class QualityCheckController {
     //查询+条件
     @RequestMapping(value = "/queryTableByYearAndCom", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryTableByYearAndCom(@ModelAttribute QualityCheckDto qualityCheckDto) {
+        System.out.println(qualityCheckDto);
         return qualityCheckService.queryTableByYearAndCom(qualityCheckDto);
     }
     //查询已推送+条件
