@@ -5,10 +5,10 @@
     <insert id="insertNewInputRecord">
         insert into
         monitorinputcheckrecord
-        (MonitorPlanID,MonitorPlanDetailID,`Condition`,Description,PicNo,Dispose_In,Close_In,InputPersonID,InputPersonName,InputDate)
+        (MonitorPlanID,MonitorPlanDetailID,`Condition`,Description,PicNo,Dispose_In,Close_In,InputPersonID,InputPersonName,InputDate,picLink)
         values (
         #{monitorPlanID},#{monitorPlanDetailID},#{condition},#{description},#{picNo},#{disposeIn},#{closeIn},#{inputPersonID},#{inputPersonName},
-        now()
+        now(),#{picLink}
         )
 
     </insert>
@@ -71,6 +71,7 @@
         t2.InputPersonID as inputPersonID,
         t2.InputPersonName as inputPersonName,
         t2.InputDate as inputDate,
+        t2.picLink as picLink
         from monitorplandetail t1
         left join monitorinputcheckrecord t2
         on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
@@ -100,7 +101,8 @@
         t2.InputDate as inputDate,
         t2.CheckPersonID as  checkPersonID,
         t2.CheckPersonName as checkPersonName,
-        t2.CheckDate as checkDate
+        t2.CheckDate as checkDate,
+        t2.picLink as picLink
         from monitorplandetail t1
         left join monitorinputcheckrecord t2
         on t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
@@ -156,7 +158,8 @@
         t2.InputDate as inputDate,
         t2.CheckPersonID as  checkPersonID,
         t2.CheckPersonName as checkPersonName,
-        t2.CheckDate as checkDate
+        t2.CheckDate as checkDate,
+        t2.picLink as picLink
         from monitorplandetail t1
         left join monitorinputcheckrecord t2
         on t1.MonitorPlanID=t2.MonitorPlanID

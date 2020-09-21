@@ -25,6 +25,15 @@ public class MonitorInputCheckRecordOutDto {
     private String projectName;
     private String charger;
     private String tel;
+    private String picLink;
+
+    public String getPicLink() {
+        return picLink;
+    }
+
+    public void setPicLink(String picLink) {
+        this.picLink = picLink;
+    }
 
     public int getMonitorInputCheckRecordID() {
         return monitorInputCheckRecordID;

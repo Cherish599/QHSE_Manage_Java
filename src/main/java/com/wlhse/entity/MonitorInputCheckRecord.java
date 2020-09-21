@@ -19,6 +19,15 @@ public class MonitorInputCheckRecord {
     private String checkPersonID;
     private String checkPersonName;
     private String checkDate;
+    private String picLink;
+
+    public String getPicLink() {
+        return picLink;
+    }
+
+    public void setPicLink(String picLink) {
+        this.picLink = picLink;
+    }
 
     public int getMonitorInputCheckRecordID() {
         return monitorInputCheckRecordID;
