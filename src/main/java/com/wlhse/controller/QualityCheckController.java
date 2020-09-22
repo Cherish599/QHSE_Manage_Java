@@ -45,8 +45,8 @@ public class QualityCheckController {
     }
 
     //改
-    @RequestMapping(value = "/updateQualityCheck", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-    public R updateQualityCheck(@RequestBody(required = false)QualityCheckDto qualityCheckDto) {
+    @RequestMapping(value = "/updateQualityCheck/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R updateQualityCheck(@PathVariable("id") int id,@RequestBody(required = false)QualityCheckDto qualityCheckDto) {
         return qualityCheckService.updateQualityCheck(qualityCheckDto);
     }
     //

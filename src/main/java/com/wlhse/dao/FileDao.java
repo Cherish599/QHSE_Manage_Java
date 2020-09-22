@@ -34,7 +34,7 @@ public interface FileDao {
 
     String getFilePropagationOriginFileName(String fileName);
 
-    Integer batchInsertQualityAttachInfo(List<QualityCheckTableRecordAttachInfoDto> Plist);
+    Integer InsertQualityAttachInfo(QualityCheckTableRecordAttachInfoDto qualityCheckTableRecordAttachInfoDto);
 
     String getQualityAttachOriginFileName(String fileName);
 }

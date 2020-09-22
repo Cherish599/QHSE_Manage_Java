@@ -233,6 +233,13 @@ public class UploadServiceImpl implements UploadService {
         return false;
     }
 
+    @Override
+    public boolean insertAttachInfoDto(QualityCheckTableRecordAttachInfoDto qualityCheckTableRecordAttachInfoDto) {
+        int i = fileDao.InsertQualityAttachInfo(qualityCheckTableRecordAttachInfoDto);
+        if (i!=0) return true;
+        return false;
+    }
+
     @Transactional
     @Override
     public R uploadQualityCheck(String path) throws Exception {

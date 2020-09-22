@@ -149,15 +149,26 @@
         where filePath=#{fileName}
     </select>
 
-    <insert id="batchInsertQualityAttachInfo">
-        insert into quality_checktablerecordattachinfo
-        (AttachFilePath,AttachOriginName)
+    <insert id="InsertQualityAttachInfo">
+        insert into
+        quality_checktablerecordattachinfo
+        (
+        <if test="attachFilePath!=null and attachOriginName!=''">
+            AttachFilePath,
+        </if>
+        <if test="attachOriginName!=null and attachOriginName!=''">
+            AttachOriginName
+        </if>
+        )
         values
-        <foreach collection="list" item="detail" separator=",">
-            (
-            #{detail.attachFilePath},#{detail.attachOriginName}
-            )
-        </foreach>
+        (
+        <if test="attachFilePath!=null and attachOriginName!=''">
+            #{attachFilePath},
+        </if>
+        <if test="attachOriginName!=null and attachOriginName!=''">
+            #{attachOriginName}
+        </if>
+        )
     </insert>
 
     <select id="getQualityAttachOriginFileName" resultType="String">
