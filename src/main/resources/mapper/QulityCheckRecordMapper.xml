@@ -356,4 +356,8 @@
     <select id="queryQulityCheckRecordByCheckId" resultMap="qulityCheckRecordPojoResultMap">
         SELECT * FROM quality_checkrecord WHERE Qulity_CheckID = #{checkId}
     </select>
+
+    <select id="queryQualityCheckRecordById" resultType="com.wlhse.entity.QulityCheckRecordPojo">
+        SELECT * FROM quality_checkrecord WHERE Qulity_CheckRecordID = #{id}
+    </select>
 </mapper>

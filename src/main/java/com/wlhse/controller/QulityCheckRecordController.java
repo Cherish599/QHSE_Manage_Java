@@ -26,6 +26,12 @@ public class QulityCheckRecordController {
         return this.qulityCheckRecordService.addQulityCheckRecord(qulityCheckRecordPojo);
     }
 
+    // 根据质量检查记录id，查询质量检查记录id
+    @RequestMapping(value = "/qulity_check_record_query_by_id/{id}", method = RequestMethod.GET)
+    public R queryQulityCheckRecordById(@PathVariable("id")String id) {
+        return this.qulityCheckRecordService.queryQulityCheckRecordById(id);
+    }
+
     // 查询所有质量检查记录
     @RequestMapping(value = "/qulity_check_record_query", method = RequestMethod.GET)
     public R queryQulityCheckRecordAll() {

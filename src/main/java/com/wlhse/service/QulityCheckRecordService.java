@@ -16,4 +16,6 @@ public interface QulityCheckRecordService {
     R updateQulityCheckRecord(Integer id, QulityCheckRecordPojo qulityCheckRecordPojo);
 
     R queryQulityCheckRecordByCheckId(String checkId);
+
+    R queryQulityCheckRecordById(String id);
 }

@@ -25,4 +25,7 @@ public interface QulityCheckRecordDao {
 
     // 根据质量检查checkId查询质量检查记录
     List<QulityCheckRecordPojo> queryQulityCheckRecordByCheckId(String checkId);
+
+    // 根据id查询质量检查记录
+    QulityCheckRecordPojo queryQualityCheckRecordById(String id);
 }
