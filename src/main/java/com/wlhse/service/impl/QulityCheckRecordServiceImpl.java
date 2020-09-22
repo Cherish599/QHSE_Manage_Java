@@ -108,4 +108,15 @@ public class QulityCheckRecordServiceImpl implements QulityCheckRecordService {
         res.put("data", recordPojoList);
         return R.ok(res);
     }
+
+    @Override
+    public R queryQulityCheckRecordById(String id) {
+        if (id == null) {
+            return R.error("参数不合法");
+        }
+        QulityCheckRecordPojo recordPojo = qulityCheckRecordDao.queryQualityCheckRecordById(id);
+        Map<String, Object> res = new HashMap<>();
+        res.put("data", recordPojo);
+        return R.ok(res);
+    }
 }
