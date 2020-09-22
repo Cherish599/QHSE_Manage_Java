@@ -182,7 +182,14 @@ public class MonitorController {
     }
 
     @RequestMapping(value = "/getSumDataInTimePeriod",method = RequestMethod.GET)
-    R getSumDataInTimePeriod(@RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime){
+    R getSumDataInTimePeriod(@RequestParam(value = "startTime",required = false)String startTime,@RequestParam(value = "endTime",required = false)String endTime){
         return mesSumDataService.getSumDataInTimePeriod(startTime,endTime);
+    }
+
+
+    //导出录入日报
+    @RequestMapping(value = "/getDayReport",method = RequestMethod.GET)
+    R getDayReport(@RequestParam(value = "date",required = false)String date,@RequestParam(value = "planId")Integer planId){
+        return monitorPlanService.getDayReport(planId,date);
     }
 }

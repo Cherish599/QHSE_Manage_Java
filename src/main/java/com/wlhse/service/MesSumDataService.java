@@ -18,4 +18,6 @@ public interface MesSumDataService {
 
     R getSumDataInTimePeriod(String startTime, String endTime);
 
+
+
 }
