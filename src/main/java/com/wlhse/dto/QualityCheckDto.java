@@ -23,6 +23,7 @@ public class QualityCheckDto {
     String execStd;
     String isPush;
     String checkListName;
+    String issued;
 
     public Integer getQualityCheckID() {
         return qualityCheckID;
@@ -200,6 +201,14 @@ public class QualityCheckDto {
         this.checkListName = checkListName;
     }
 
+    public String getIssued() {
+        return issued;
+    }
+
+    public void setIssued(String issued) {
+        this.issued = issued;
+    }
+
     @Override
     public String toString() {
         return "QualityCheckDto{" +
@@ -225,6 +234,7 @@ public class QualityCheckDto {
                 ", execStd='" + execStd + '\'' +
                 ", isPush='" + isPush + '\'' +
                 ", checkListName='" + checkListName + '\'' +
+                ", issued='" + issued + '\'' +
                 '}';
     }
 }

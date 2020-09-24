@@ -67,9 +67,11 @@
                 IsPush,
             </if>
             <if test="checkListName != null and checkListName != ''">
-                CheckListName
+                CheckListName,
             </if>
-
+            <if test="issued != null and issued != ''">
+                Issued
+            </if>
         </trim>
         )
         values
@@ -136,7 +138,10 @@
                 #{isPush},
             </if>
             <if test="checkListName != null and checkListName != ''">
-                #{checkListName}
+                #{checkListName},
+            </if>
+            <if test="issued != null and issued != ''">
+                #{issued}
             </if>
         </trim>
         )
@@ -207,7 +212,7 @@
                 ExecStd=#{execStd},
             </if>
             <if test="checkListName != null and checkListName != ''">
-                CheckListName=#{checkListName},
+                CheckListName=#{checkListName}
             </if>
         </set>
         where Qulity_CheckID=#{qualityCheckID}
@@ -241,7 +246,8 @@
         ExecStd as execStd,
         IsPush as isPush,
         CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        Issued as issued
         from quality_check
     </select>
 
@@ -268,7 +274,8 @@
         ExecStd as execStd,
         IsPush as isPush,
         CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        Issued as issued
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
@@ -296,7 +303,8 @@
         ExecStd as execStd,
         IsPush as isPush,
         CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        Issued as issued
         from quality_check
         where CheckDate between #{0} and #{1}
     </select>
@@ -323,7 +331,8 @@
         ExecStd as execStd,
         IsPush as isPush,
         CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        Issued as issued
         from quality_check
         where CheckedCompanyCode=#{0}
     </select>
@@ -358,14 +367,96 @@
         ExecStd as execStd,
         IsPush as isPush,
         CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        Issued as issued
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
-        and isPush='已推送'
+        and IsPush='已推送'
+        and Issued='未下达'
     </select>
+    <update id="issuedTable" >
+        update quality_check
+        <set>
+            Issued='已下达'
+        </set>
+        where Qulity_CheckID=#{0}
+    </update>
+    <select id="queryTableByDateAndIssue" resultType="com.wlhse.dto.QualityCheckDto">
+        select Qulity_CheckID as qualityCheckID,
+        TaskType as taskType,
+        CheckedCompanyName as checkedCompanyName,
+        CheckedCompanyCode as checkedCompanyCode,
+        `Group` as `group`,
+        WorkProject as workProject,
+        ResponsiCompanyName as responsiCompanyName,
+        ResponsiCompanyCode as responsiCompanyCode,
+        ResponsePersonID as responsePersonID,
+        ResponsePersonName as responsePersonName,
+        CheckDate as checkDate,
+        CheckPersonID as checkPersonID,
+        CheckPerson as checkPerson,
+        CheckBasis as checkBasis,
+        Contractor as contractor,
+        Owner as owner,
+        ProjectName as projectName,
+        CheckProject as checkProject,
+        ExecStd as execStd,
+        CheckListCode as checkListCode,
+        CheckListName as checkListName,
+        IsPush as isPush,
+        Issued as issued
+        from quality_check
+        where CheckedCompanyCode=#{0}
+        and CheckDate between #{1} and #{2}
+        and IsPush='已推送'
+        and Issued='已下达'
+    </select>
+    <update id="passTable" >
+        update quality_check
+        <set>
+            IsPush='通过'
+        </set>
+        where Qulity_CheckID=#{0}
+    </update>
 
-
+    <update id="modifyPush" >
+        update quality_check
+        <set>
+            Issued='已整改'
+        </set>
+        where Qulity_CheckID=#{0}
+    </update>
+    <select id="queryByYearComAndModify" resultType="com.wlhse.dto.QualityCheckDto">
+        select Qulity_CheckID as qualityCheckID,
+        TaskType as taskType,
+        CheckedCompanyName as checkedCompanyName,
+        CheckedCompanyCode as checkedCompanyCode,
+        `Group` as `group`,
+        WorkProject as workProject,
+        ResponsiCompanyName as responsiCompanyName,
+        ResponsiCompanyCode as responsiCompanyCode,
+        ResponsePersonID as responsePersonID,
+        ResponsePersonName as responsePersonName,
+        CheckDate as checkDate,
+        CheckPersonID as checkPersonID,
+        CheckPerson as checkPerson,
+        CheckBasis as checkBasis,
+        Contractor as contractor,
+        Owner as owner,
+        ProjectName as projectName,
+        CheckProject as checkProject,
+        ExecStd as execStd,
+        CheckListCode as checkListCode,
+        CheckListName as checkListName,
+        IsPush as isPush,
+        Issued as issued
+        from quality_check
+        where CheckedCompanyCode=#{0}
+        and CheckDate between #{1} and #{2}
+        and IsPush='已推送'
+        and Issued='已整改'
+    </select>
 
 
 </mapper>

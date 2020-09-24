@@ -112,7 +112,7 @@ public class FileDownloadController {
         File file = new File(path + File.separator + fileName);
         System.out.println(file.getPath());
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
-        System.out.println("原文件名: "+fileName);
+       //System.out.println("原文件名: "+fileName);
         HttpHeaders headers = new HttpHeaders();
         //Solve the garbled problem
         String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
