@@ -20,5 +20,6 @@ public interface DangerRecordDao {
     //条件查询隐患记录
     int queryTotal(DangerRecordDto dangerRecordDto);
     List<DangerRecordDto> queryDangerRecord(DangerRecordDto dangerRecordDto);
-
+    //问题整改
+    int problemVerification(DangerRecordDto dangerRecordDto);
 }
