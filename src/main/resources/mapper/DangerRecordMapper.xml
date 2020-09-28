@@ -506,5 +506,21 @@
         </where>
     </select>
 
+    <sql id="value2">
+        <trim prefix="set" suffixOverrides=",">
+            <if test="receptionDate != null and receptionDate  != ''">
+                ReceptionDate=#{receptionDate},
+            </if>
+            <if test="reformCase != null and reformCase  != ''">
+                reformCase=#{reformCase},
+            </if>
+        </trim>
+    </sql>
+
+    <update id="problemVerification">
+        update dangerrecord
+        <include refid="value2"/>
+        where ID = #{id}
+    </update>
 
 </mapper>
