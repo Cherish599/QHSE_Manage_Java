@@ -9,5 +9,5 @@ import java.util.List;
 public interface QualityCheckTableRecordService {
     R queryCheckTreeByID(Integer qualityCheckID);
 
-    R addInformAndAttach(QualityCheckTableRecordDto qualityCheckTableRecordDto, List<QualityCheckTableRecordAttachInfoDto> Plist);
+    R addInformAndAttach(QualityCheckTableRecordDto qualityCheckTableRecordDto);
 }

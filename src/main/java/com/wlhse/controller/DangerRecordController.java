@@ -46,4 +46,10 @@ public class DangerRecordController {
 
         return dangerRecordService.queryDangerRecord(dangerRecordDto);
     }
+
+    @RequestMapping(value = "/problemverification/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R problemVerification(@PathVariable int id, @RequestBody(required = false) DangerRecordDto dangerRecordDto) {
+        dangerRecordDto.setId(id);
+        return dangerRecordService.problemVerification(dangerRecordDto);
+    }
 }

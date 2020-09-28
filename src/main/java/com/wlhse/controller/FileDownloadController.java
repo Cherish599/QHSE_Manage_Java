@@ -60,33 +60,35 @@ public class FileDownloadController {
     }
 
     @RequestMapping(value = "/downloadDangerFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public ResponseEntity<byte[]> downloadDangerFile(@RequestParam(value = "filename")String filename, HttpServletRequest request) throws IOException {
+    public void downloadDangerFile(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
+                                       HttpServletResponse response)throws IOException{
         String path =System.getProperty("catalina.home") +"\\webapps\\" + "\\resources\\" + "QHSEDanger\\" + "photoes\\";
-        File file = new File(path + File.separator + filename);
-        System.out.println(file.getPath());
-        HttpHeaders headers = new HttpHeaders();
-        //Solve the garbled problem
-        String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
-        headers.setContentDispositionFormData("attachment", downloadFileName);
-        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
-                headers, HttpStatus.CREATED);
+        File file = new File(path + File.separator + fileName);
+        fileName = monitorFileDao.getOriginName(fileName);
+        //将文件原名保存在响应头
+        response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
+        FileInputStream fis=new FileInputStream(file);
+        byte[] b=new byte[fis.available()];
+        fis.read(b);
+        OutputStream outputStream = response.getOutputStream();
+        outputStream.write(b);
+
     }
 
     @RequestMapping(value = "/downloadRegulationFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public ResponseEntity<byte[]> downloadRegulationFile(@RequestParam(value = "filename")String filename, HttpServletRequest request) throws IOException {
+    public void downloadRegulationFile(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
+                                                  HttpServletResponse response)throws IOException{
         String path =System.getProperty("catalina.home") +"\\webapps\\" + "\\resources\\" + "QHSERegulation\\" + "photoes\\";
-        File file = new File(path + File.separator + filename);
-        System.out.println(file.getPath());
-        HttpHeaders headers = new HttpHeaders();
-        //Solve the garbled problem
-        String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
-        headers.setContentDispositionFormData("attachment", downloadFileName);
-        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
-                headers, HttpStatus.CREATED);
+        File file = new File(path + File.separator + fileName);
+        fileName = monitorFileDao.getOriginName(fileName);
+        //将文件原名保存在响应头
+        response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
+        FileInputStream fis=new FileInputStream(file);
+        byte[] b=new byte[fis.available()];
+        fis.read(b);
+        OutputStream outputStream = response.getOutputStream();
+        outputStream.write(b);
+
     }
 
 
@@ -106,13 +108,29 @@ public class FileDownloadController {
         outputStream.write(b);
     }
 
+    //回显图片1
+    @RequestMapping(value = "/pictureDownload",method = RequestMethod.GET)
+    public void pictureDownload(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
+                                   HttpServletResponse response) throws IOException {
+        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck\\";
+        File file = new File(path + File.separator + fileName);
+        fileName=fileDao.getQualityAttachOriginFileName(fileName);
+        //将文件原名保存在响应头
+        response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
+        FileInputStream fis=new FileInputStream(file);
+        byte[] b=new byte[fis.available()];
+        fis.read(b);
+        OutputStream outputStream = response.getOutputStream();
+        outputStream.write(b);
+    }
+
     @RequestMapping(value = "/downloadQualityAttach", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public ResponseEntity<byte[]> downloadQualityAttach(@RequestParam(value = "fileName")String fileName,HttpServletRequest request) throws IOException {
         String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck\\";
         File file = new File(path + File.separator + fileName);
         System.out.println(file.getPath());
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
-        System.out.println("原文件名: "+fileName);
+       //System.out.println("原文件名: "+fileName);
         HttpHeaders headers = new HttpHeaders();
         //Solve the garbled problem
         String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");

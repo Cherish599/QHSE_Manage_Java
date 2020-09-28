@@ -156,6 +156,7 @@
         CheckListName as checkListName
         from quality_checklist
         where length(CheckListCode)=4
+        and Status='启用'
     </select>
 
 

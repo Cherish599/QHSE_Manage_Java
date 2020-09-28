@@ -41,6 +41,7 @@
      <mvc:exclude-mapping path="/api/v3/downloadStatisticsTemplate"/>
             <mvc:exclude-mapping path="/api/v3/downloadMonitorDetailExcelTemplate"/>
             <mvc:exclude-mapping path="/api/v3/screenShotDownload"/>
+            <mvc:exclude-mapping path="/api/v3/selectModule/"/>
             <!-- 发送消息-->
      <mvc:exclude-mapping path="/api/v3/produce"/>
      <mvc:exclude-mapping path="/api/v3/message"/>

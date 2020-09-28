@@ -240,8 +240,12 @@ public class FileUploadUtils {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+            String originFileName=file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSEDanger\\photoes");
-            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            monitorFileDao.insertNewFile(fileName,originFileName);
+            //拼接生成图片下载链接链接
+            String downloadLink="/downloadDangerFile?fileName="+fileName;
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
         } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
@@ -250,13 +254,16 @@ public class FileUploadUtils {
     @RequestMapping(value = "/uploadregulation", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String uploadregulation(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
-        //上传图片
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+            String originFileName=file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSERegulation\\photoes");
-            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            monitorFileDao.insertNewFile(fileName,originFileName);
+            //拼接生成图片下载链接链接
+            String downloadLink="/downloadRegulationFile?fileName="+fileName;
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
         } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
@@ -281,37 +288,23 @@ public class FileUploadUtils {
         }
     }
 
-    @RequestMapping(value = "/addQualityInformAndAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "/addQualityAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public R addQualityInformAndAttach(@RequestParam(value = "file", required = false) MultipartFile file[],QualityCheckTableRecordDto qualityCheckTableRecordDto) throws Exception {
-        if (file != null) {
-            String attachFilePath = "";
-            String picFilePath = "";
-            List<QualityCheckTableRecordAttachInfoDto> Plist = new ArrayList<>();
-            for (int i = 0; i < file.length; i++) {
-                if (!file[i].isEmpty()) {
-                    String OriginalFilename = file[i].getOriginalFilename();
-                    QualityCheckTableRecordAttachInfoDto AttachInfoDto = new QualityCheckTableRecordAttachInfoDto();
-                    AttachInfoDto.setAttachOriginName(OriginalFilename);
-                    String FilePath = setFile(file[i], "resources\\QualityCheck");
-                    AttachInfoDto.setAttachFilePath(FilePath);
-                    if ("jpg".equals(OriginalFilename.split("\\.")[1].toLowerCase()) || "png".equals(OriginalFilename.split("\\.")[1].toLowerCase()) ||
-                            "bmp".equals(OriginalFilename.split("\\.")[1].toLowerCase())) {
-                        picFilePath += (FilePath + ";");
-                    } else {
-                        attachFilePath += (FilePath + ";");
-                    }
-                    Plist.add(AttachInfoDto);
-                }
+    public String addQualityAttach(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+            if (file.isEmpty()) {
+                return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
             }
-            if(!attachFilePath.equals(""))
-                System.out.println(attachFilePath);
-            qualityCheckTableRecordDto.setAttach(attachFilePath.substring(0, attachFilePath.length() - 1));
-            if(!picFilePath.equals(""))
-            qualityCheckTableRecordDto.setPic(picFilePath.substring(0, picFilePath.length() - 1));
-            //System.out.println(qualityCheckTableRecordDto);
-            return qualityCheckTableRecordService.addInformAndAttach(qualityCheckTableRecordDto,Plist);
-        }
-        else return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
+            else {
+                String OriginalFilename = file.getOriginalFilename();
+                QualityCheckTableRecordAttachInfoDto attachInfoDto = new QualityCheckTableRecordAttachInfoDto();
+                attachInfoDto.setAttachOriginName(OriginalFilename);
+                String FilePath = setFile(file, "resources\\QualityCheck");
+                attachInfoDto.setAttachFilePath(FilePath);
+                boolean b = uploadService.insertAttachInfoDto(attachInfoDto);
+                if (b)
+                    return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, FilePath, null, 0, 0);
+                else
+                    return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+            }
     }
 }

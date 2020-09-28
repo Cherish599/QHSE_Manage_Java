@@ -66,4 +66,13 @@ public class DangerRecordServiceImpl implements DangerRecordService {
         List<DangerRecordDto> list = dangerRecordDao.queryDangerRecord(dangerRecordDto);
         return NR.r(list, total, pageIdx);
     }
+
+    @Override
+    public R problemVerification(DangerRecordDto dangerRecordDto) {
+        if(dangerRecordDao.problemVerification(dangerRecordDto)<=0)
+            throw new WLHSException("修改失败");
+        return R.ok();
+    }
+
+
 }

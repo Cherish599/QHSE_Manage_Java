@@ -1,11 +1,9 @@
 package com.wlhse.controller;
 
+import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.service.QualityCheckTableRecordService;
 import com.wlhse.util.R;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -19,4 +17,11 @@ public class QualityCheckTableRecordController {
     public R queryAllTable(@PathVariable("id") int id) {
         return qualityCheckTableRecordService.queryCheckTreeByID(id);
     }
+
+    @RequestMapping(value = "/addQualityInform", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public R addQualityInform(@RequestBody(required = false) QualityCheckTableRecordDto qualityCheckTableRecordDto) {
+        return qualityCheckTableRecordService.addInformAndAttach(qualityCheckTableRecordDto);
+    }
+
+
 }
