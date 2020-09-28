@@ -9,6 +9,15 @@ public class QualityCheckTableRecordDto {
     private String checkResult;
     private String attach;
     private String pic;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public Integer getQualityCheckTableRecordID() {
         return qualityCheckTableRecordID;

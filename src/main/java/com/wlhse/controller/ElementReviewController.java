@@ -1,5 +1,7 @@
 package com.wlhse.controller;
 
+import com.wlhse.dao.ElementReviewDao;
+import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.service.ElementReviewService;
@@ -19,6 +21,9 @@ public class ElementReviewController {
 
     @Resource
     private GetCurrentUserIdUtil getCurrentUserIdUtil;
+
+    @Resource
+    private  ElementReviewDao elementReviewDao;
 
     //查询审核要素
     @RequestMapping(value = "/query_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
@@ -68,5 +73,28 @@ public class ElementReviewController {
     @RequestMapping(value = "/showAllElement", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R elementReviewer5( ElementReviewDto elementReviewDto) {
         return  elementReviewService.queryAllElement(elementReviewDto);
+    }
+
+
+    //    -----------------------------质量部分审核审批-------------------------------  //
+    //    录入查询代码复用queryCheckTreeByID/{id}
+
+    //    查询单个叶子节点证据审核内容
+    @RequestMapping(value = "/show_quality_envidence", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R showQualityEnvidence( QualityCheckTableRecordDto qualityCheckTableRecordDto) {
+        QualityCheckTableRecordDto qualityCheckTableRecordDtos=elementReviewDao.queryQuality(qualityCheckTableRecordDto);
+       if(qualityCheckTableRecordDtos!=null)
+        qualityCheckTableRecordDtos.setUrl("http://39.98.173.131:7000/resources/QualityCheck");//文件地址路径
+        System.out.println(qualityCheckTableRecordDtos);
+        return  R.ok().put("data",qualityCheckTableRecordDtos);
+    }
+    //审核人批准人批准
+    @RequestMapping(value = "/pass_quality/{tag}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R showQualityEnvidence1( @RequestBody(required = false) QualityCheckTableRecordDto qualityCheckTableRecordDto,@PathVariable("tag") Integer tag)  {
+        System.out.println(tag);
+        if(tag==0) qualityCheckTableRecordDto.setCheckResult("不符合");
+            else qualityCheckTableRecordDto.setCheckResult("符合");
+        elementReviewDao.updateQuality(qualityCheckTableRecordDto);
+        return  R.ok();
     }
 }

@@ -305,6 +305,7 @@ public class FileUploadUtils {
                 }
             }
             if(!attachFilePath.equals(""))
+                System.out.println(attachFilePath);
             qualityCheckTableRecordDto.setAttach(attachFilePath.substring(0, attachFilePath.length() - 1));
             if(!picFilePath.equals(""))
             qualityCheckTableRecordDto.setPic(picFilePath.substring(0, picFilePath.length() - 1));
