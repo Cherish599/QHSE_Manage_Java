@@ -1,5 +1,6 @@
 package com.wlhse.controller;
 
+import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.MonitorFileDao;
 import com.wlhse.dto.QualityCheckTableRecordAttachInfoDto;
 import com.wlhse.dto.QualityCheckTableRecordDto;
@@ -44,6 +45,10 @@ public class FileUploadUtils {
 
     @Resource
     MonitorFileDao monitorFileDao;
+
+    @Resource
+    DrFileDao drFileDao;
+
     public String setFile(MultipartFile file, String str) throws Exception {
 
         String rootPath = System.getProperty("catalina.home") + "\\webapps\\" + str;
@@ -242,7 +247,7 @@ public class FileUploadUtils {
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
             String originFileName=file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSEDanger\\photoes");
-            monitorFileDao.insertNewFile(fileName,originFileName);
+            drFileDao.insertNewFile(fileName,originFileName);
             //拼接生成图片下载链接链接
             String downloadLink="/downloadDangerFile?fileName="+fileName;
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
@@ -260,7 +265,7 @@ public class FileUploadUtils {
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
             String originFileName=file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSERegulation\\photoes");
-            monitorFileDao.insertNewFile(fileName,originFileName);
+            drFileDao.insertNewFile(fileName,originFileName);
             //拼接生成图片下载链接链接
             String downloadLink="/downloadRegulationFile?fileName="+fileName;
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
