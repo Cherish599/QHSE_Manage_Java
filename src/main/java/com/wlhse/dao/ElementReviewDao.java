@@ -52,6 +52,6 @@ public interface ElementReviewDao {
     //质量审核部分：
     //查询叶子证据
     QualityCheckTableRecordDto queryQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
-    //审核人、批准人通过
+    //审核人通过
     int updateQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
 }

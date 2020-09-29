@@ -11,7 +11,6 @@ import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
-import org.apache.poi.hssf.record.DVALRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,7 +92,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             int j = qhseElementsInputDao.updateAttach(elementEvidenceAttachInDto);
             if (i * j < 0) throw new WLHSException("更新失败");
         }
-        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//更改状态审核
+        //qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//需求改为提交后状态变为审核
         return R.ok();
     }
 
