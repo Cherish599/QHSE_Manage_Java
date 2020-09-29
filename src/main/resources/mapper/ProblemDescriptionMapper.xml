@@ -4,37 +4,21 @@
 <mapper namespace="com.wlhse.dao.ProblemDescriptionDao">
     <insert id="addProblemDescription" parameterType="com.wlhse.dto.ProblemDescriptionDto" >
         insert into qhse_auditproblemrecord
-        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName)
+        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName,Status)
         values
         (#{qHSE_FileAudit_ID},#{qHSE_FileAuditRecord_ID},#{problemDescription},#{code},#{companyCode},
-        #{auditor},#{companyName})
+        #{auditor},#{companyName},#{status})
     </insert>
 
     <delete id="deleteProblemDescription">
         delete from qhse_auditproblemrecord
-        <where>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                AND QHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
-            </if>
-            <if test="code != null and code  != ''">
-                AND Code=#{code}
-            </if>
-        </where>
+        where QHSE_AuditProblemRecord_ID = #{id}
     </delete>
 
     <sql id="value1">
         <trim prefix="set" suffixOverrides=",">
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                QHSE_FileAudit_ID=#{qHSE_FileAudit_ID},
-            </if>
-            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
-                QHSE_FileAuditRecord_ID=#{qHSE_FileAuditRecord_ID},
-            </if>
-            <if test="problemDescription != null and problemDescription  != ''">
-                ProblemDescription=#{problemDescription},
-            </if>
-            <if test="code != null and code  != ''">
-                Code=#{code},
+            <if test="situation != null and situation  != ''">
+                Situation=#{situation},
             </if>
         </trim>
     </sql>

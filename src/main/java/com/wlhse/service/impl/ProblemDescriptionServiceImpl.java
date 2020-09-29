@@ -26,8 +26,8 @@ public class ProblemDescriptionServiceImpl implements ProblemDescriptionService 
     }
 
     @Override
-    public R deleteProblemDescription(ProblemDescriptionDto problemDescriptionDto) {
-        if(problemDescriptionDao.deleteProblemDescription(problemDescriptionDto)<=0)
+    public R deleteProblemDescription(int id) {
+        if(problemDescriptionDao.deleteProblemDescription(id)<=0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
