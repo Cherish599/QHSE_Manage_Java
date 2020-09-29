@@ -35,7 +35,7 @@ public class ProblemDescriptionController {
         return problemDescriptionService.updateProblemDescription(problemDescriptionDto);
     }
 
-        @RequestMapping(value = "/query_problemDescription", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/query_problemDescription", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String queryProblemDescription(@ModelAttribute ProblemDescriptionDto problemDescriptionDto) {
         return problemDescriptionService.queryProblemDescription(problemDescriptionDto);
     }

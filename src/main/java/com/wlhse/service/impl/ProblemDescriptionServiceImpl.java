@@ -41,7 +41,6 @@ public class ProblemDescriptionServiceImpl implements ProblemDescriptionService 
 
     @Override
     public String queryProblemDescription(ProblemDescriptionDto problemDescriptionDto) {
-
         List<ProblemDescriptionDto> list = problemDescriptionDao.queryProblemDescription(problemDescriptionDto);
         return NR.r(list);
     }
