@@ -89,6 +89,9 @@
             <if test="factorDepartment != null and factorDepartment  != ''">
                 FactorDepartment,
             </if>
+            <if test="factorObserver != null and factorObserver  != ''">
+                FactorObserver,
+            </if>
             <if test="location != null and location  != ''">
                 Location,
             </if>
@@ -216,6 +219,9 @@
             </if>
             <if test="factorDepartment != null and factorDepartment  != ''">
                 #{factorDepartment},
+            </if>
+            <if test="factorObserver != null and factorObserver  != ''">
+                #{factorObserver},
             </if>
             <if test="location != null and location  != ''">
                 #{location},
