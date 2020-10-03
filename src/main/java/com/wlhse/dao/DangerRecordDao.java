@@ -15,8 +15,12 @@ public interface DangerRecordDao {
     int deleteDangerRecord(DangerRecordDto dangerRecordDto);
     //修改隐患记录
     int updateDangerRecord(DangerRecordDto dangerRecordDto);
+
     //按ID查询隐患记录
-    List<DangerRecordDto> queryDangerRecordById(@Param("id") Integer id);
+    default List<DangerRecordDto> queryDangerRecordById(@Param("id") Integer id) {
+        return null;
+    }
+
     //条件查询隐患记录
     int queryTotal(DangerRecordDto dangerRecordDto);
     List<DangerRecordDto> queryDangerRecord(DangerRecordDto dangerRecordDto);
