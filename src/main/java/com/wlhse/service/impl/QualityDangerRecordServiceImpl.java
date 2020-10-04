@@ -90,4 +90,12 @@ public class QualityDangerRecordServiceImpl implements Quality_DangerRecordServi
         List<QualityDangerRecordDto> list = qualityDangerRecordDao.queryDangerRecord(dangerRecordDto);
         return NR.r(list, total, pageIdx);
     }
+
+    @Override
+    public R problemVerification(QualityDangerRecordDto dangerRecordDto) {
+        if (qualityDangerRecordDao.problemVerification(dangerRecordDto) <= 0)
+            throw new WLHSException("修改失败");
+        return R.ok();
+    }
+
 }

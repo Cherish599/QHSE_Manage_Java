@@ -11,6 +11,8 @@ public class QualityProblemDescriptionDto {
     private String auditor;
     private String companyCode;
     private String companyName;
+    private String status;
+    private String situation;
 
     public String getCompanyName() {
         return companyName;
@@ -90,5 +92,21 @@ public class QualityProblemDescriptionDto {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getSituation() {
+        return situation;
+    }
+
+    public void setSituation(String situation) {
+        this.situation = situation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

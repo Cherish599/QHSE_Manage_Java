@@ -16,4 +16,6 @@ public interface Quality_DangerRecordService {
     String queryDangerRecordById(Integer id);
     //查询
     String queryDangerRecord(QualityDangerRecordDto dangerRecordDto);
+    //问题验证
+    R problemVerification(QualityDangerRecordDto dangerRecordDto);
 }

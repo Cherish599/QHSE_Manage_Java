@@ -57,4 +57,13 @@ public class QualityDangerRecordController {
     public String queryDangerRecord(@ModelAttribute QualityDangerRecordDto qualityDangerRecordDto) {
         return qualityDangerRecordService.queryDangerRecord(qualityDangerRecordDto);
     }
+
+    // 隐患问题验证
+    // 简单测试通过
+    @RequestMapping(value = "/quality_problemverification/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R problemVerification(@PathVariable int id, @RequestBody(required = false) QualityDangerRecordDto dangerRecordDto) {
+        dangerRecordDto.setId(id);
+        return qualityDangerRecordService.problemVerification(dangerRecordDto);
+    }
+
 }
