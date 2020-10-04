@@ -7,7 +7,7 @@ public interface ProblemDescriptionService {
     //增
     R addProblemDescription(ProblemDescriptionDto problemDescriptionDto);
     //删
-    R deleteProblemDescription(ProblemDescriptionDto problemDescriptionDto);
+    R deleteProblemDescription(int id);
     //改
     R updateProblemDescription(ProblemDescriptionDto problemDescriptionDto);
     //条件查询

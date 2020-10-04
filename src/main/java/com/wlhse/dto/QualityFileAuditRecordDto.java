@@ -1,7 +1,7 @@
 package com.wlhse.dto;
 
-public class FileAuditRecordDto {
-    private Integer quality_FileAudit_RecordID;
+public class QualityFileAuditRecordDto {
+    private Integer qualityFileAuditRecordID;
     private Integer fileAuditId;
     private String code;
     private String codeScore;
@@ -43,12 +43,12 @@ public class FileAuditRecordDto {
         this.companyName = companyName;
     }
 
-    public Integer getquality_FileAudit_RecordID() {
-        return quality_FileAudit_RecordID;
+    public Integer getQualityFileAuditRecordID() {
+        return qualityFileAuditRecordID;
     }
 
-    public void setquality_FileAudit_RecordID(Integer qHSE_FileAudit_RecordID) {
-        this.quality_FileAudit_RecordID = qHSE_FileAudit_RecordID;
+    public void setQualityFileAuditRecordID(Integer qualityFileAuditRecordID) {
+        this.qualityFileAuditRecordID = qualityFileAuditRecordID;
     }
 
     public Integer getFileAuditId() {
