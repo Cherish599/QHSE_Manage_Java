@@ -39,11 +39,15 @@ public class QhseElementsInputController {
          r.put("data",fileNames);
          return r;
     }
-    //要素提交
-    @RequestMapping(value = "/elementCommit/{id}", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-    public R elementCommit(@PathVariable("id")Integer id) {
-        qhseElementsInputDao.updateStatus(id);
-        return R.ok();
-    }
+//    //要素提交
+//    @RequestMapping(value = "/elementCommit/{id}", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+//    public R elementCommit(@PathVariable("id")Integer id) {
+//        qhseElementsInputDao.updateStatus(id);
+//        return R.ok();
+//    }
 
+    @RequestMapping(value = "/submitInputResult",method = RequestMethod.POST)
+    public R submitInputResult(@RequestParam(value = "tableId")Integer tableId){
+        return qhseElementsInputService.submitInputResult(tableId);
+    }
 }

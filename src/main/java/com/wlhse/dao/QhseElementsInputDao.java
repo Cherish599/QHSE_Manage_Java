@@ -52,4 +52,9 @@ public interface QhseElementsInputDao {
 
     //根据证据信息获取TableId
     int getQHSEYearManagerTableIdByElementId(int id);
+
+    //修改CheckStatus状态
+    int updateCheckStatus(int tableId,int status);
+
+    int updateCheckStatusByElementId(int elementId,int status);
 }

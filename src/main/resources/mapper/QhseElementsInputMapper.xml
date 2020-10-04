@@ -232,4 +232,16 @@
         from qhse_companyyearmanagersyselement
         where QHSE_CompanyYearManagerSysElement_ID=#{0}
     </select>
+
+    <update id="updateCheckStatus">
+        update QHSE_CompanyYearManagerSysElement
+        set CheckStatus=#{1}
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </update>
+
+    <update id="updateCheckStatusByElementId">
+      update QHSE_CompanyYearManagerSysElement
+        set CheckStatus=#{1}
+        where QHSE_CompanyYearManagerSysElement_ID=#{0}
+    </update>
 </mapper>

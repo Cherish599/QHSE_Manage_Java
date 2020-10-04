@@ -12,5 +12,5 @@ public interface QhseElementsInputService {
     String queryOriginFileName (String newElementFileName);
     void insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
   //  void updateNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
-
+    R submitInputResult(int tableId);
 }
