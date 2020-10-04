@@ -9,6 +9,16 @@ public class QualityCheckTableRecordDto {
     private String checkResult;
     private String attach;
     private String pic;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     private String url;
 
     public String getUrl() {

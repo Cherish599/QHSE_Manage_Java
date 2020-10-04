@@ -72,13 +72,16 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             //打回后重新录入
             //将附件attach对应id放入elementFileInfo
             String s = jedisClient.get("TNoInput" + tableId);
-            jedisClient.set("TNoInput"+tableId,Integer.valueOf(s)-1+"");
-            if(Integer.valueOf(s)-1==0){
-                //打回的元素全部重新录入完毕
-                taskDao.updateCheckStatus(tableId,null);
-                //清除缓存
-                jedisClient.delManyCahce("TNoInput"+tableId,0);
+            if(s!=null&&!"".equals(s)){
+                jedisClient.set("TNoInput"+tableId,Integer.valueOf(s)-1+"");
+                if(Integer.valueOf(s)-1==0){
+                    //打回的元素全部重新录入完毕
+                    taskDao.updateCheckStatus(tableId,null);
+                    //清除缓存
+                    jedisClient.delManyCahce("TNoInput"+tableId,0);
+                }
             }
+
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
                 String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
                 ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();

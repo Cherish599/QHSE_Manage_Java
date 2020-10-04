@@ -54,4 +54,5 @@ public interface ElementReviewDao {
     QualityCheckTableRecordDto queryQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
     //审核人通过
     int updateQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
+    int qualityInput(QualityCheckTableRecordDto qualityCheckTableRecordDto);
 }

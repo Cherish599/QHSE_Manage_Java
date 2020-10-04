@@ -75,6 +75,13 @@
         update  quality_checktablerecord set CheckResult=#{checkResult}
         where CheckListCode=#{checkListCode} and Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
     </update>
+    <update id="qualityInput"  parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+         update  quality_checktablerecord
+         <set>
+
+         </set>
+            where CheckListCode=#{checkListCode} and Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
+    </update>
 
     <sql id = "element_evidence_key">
         t1.qHSE_CompanyYearManagerSysElementEvidence_ID,
