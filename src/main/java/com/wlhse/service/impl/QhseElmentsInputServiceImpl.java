@@ -5,7 +5,6 @@ import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QHSETaskDao;
 import com.wlhse.dao.QhseElementsInputDao;
-import com.wlhse.dto.TaskStatusDto;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.exception.WLHSException;
@@ -35,7 +34,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     @Transactional
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
-        //第一次录入
+        //首次录入数据
         //获取tableId
         int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
         if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
@@ -50,6 +49,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
                     qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
                 }
             }
+            //增加统计数据
             qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
             if (jedisClient.get("TInput"+tableId)==null){
                 jedisClient.set("TInput"+tableId,String.valueOf(1));
@@ -57,31 +57,9 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             else {
                 jedisClient.set("TInput"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TInput"+tableId))+1));
             }
-            if (jedisClient.get("T"+tableId)==null){
-                int allLeafNodeNumber = elementsDao.getAllLeafNodeNumber(tableId);
-                jedisClient.set("T"+tableId,String.valueOf(allLeafNodeNumber));
-            }
-            else {
-                if (jedisClient.get("TInput"+tableId).equals(jedisClient.get("T"+tableId))){
-                    //所有要素证据录入完成，更改任务状态
-                    TaskStatusDto taskStatusDto=new TaskStatusDto(tableId,"审核中");
-                    taskDao.updateTaskStatusByTableId(taskStatusDto);
-                }
-            }
         } else {
-            //打回后重新录入
+            //再次录入数据
             //将附件attach对应id放入elementFileInfo
-            String s = jedisClient.get("TNoInput" + tableId);
-            if(s!=null&&!"".equals(s)){
-                jedisClient.set("TNoInput"+tableId,Integer.valueOf(s)-1+"");
-                if(Integer.valueOf(s)-1==0){
-                    //打回的元素全部重新录入完毕
-                    taskDao.updateCheckStatus(tableId,null);
-                    //清除缓存
-                    jedisClient.delManyCahce("TNoInput"+tableId,0);
-                }
-            }
-
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
                 String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
                 ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
@@ -95,7 +73,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             int j = qhseElementsInputDao.updateAttach(elementEvidenceAttachInDto);
             if (i * j < 0) throw new WLHSException("更新失败");
         }
-        //qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//需求改为提交后状态变为审核
+        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//需求改为提交后状态变为审核
         return R.ok();
     }
 
@@ -117,6 +95,12 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     public void insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo) {
        qhseElementsInputDao.insertNewOriginFileName(elementInputFileInfo);
+    }
+
+    @Override
+    public R submitInputResult(int tableId) {
+        qhseElementsInputDao.updateCheckStatus(tableId,1);
+        return R.ok();
     }
 
 

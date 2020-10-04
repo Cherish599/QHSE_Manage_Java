@@ -179,6 +179,7 @@
             WHERE (Status='录入证据中' OR CheckStatus='重新录入')
             AND CompanyCode=#{companyCode}
             )
+            AND t1.CheckStatus=0
         </where>
     </select>
 
@@ -687,5 +688,7 @@
             AND t1.ConfigStatus="启用"
         </where>
     </select>
+
+
 </mapper>
 
