@@ -22,8 +22,11 @@ public class MesSumData {
     private int powerOnNum;
     @ExcelProperty("备用数量")
     private int backNum;
+    @ExcelProperty("覆盖率")
     private float coverageRate;
+    @ExcelProperty("利用率")
     private float availableRate;
+    @ExcelProperty("使用率")
     private float useRate;
 
     public int getMesCheckSumDataID() {

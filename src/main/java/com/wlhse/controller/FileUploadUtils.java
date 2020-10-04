@@ -1,5 +1,6 @@
 package com.wlhse.controller;
 
+import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.MonitorFileDao;
 import com.wlhse.dto.QualityCheckTableRecordAttachInfoDto;
 import com.wlhse.dto.QualityCheckTableRecordDto;
@@ -13,11 +14,13 @@ import com.wlhse.util.R;
 import com.wlhse.util.state_code.CodeDict;
 import com.wlhse.util.state_code.NR;
 import com.wlhse.util.token.TokenUtil;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -42,6 +45,10 @@ public class FileUploadUtils {
 
     @Resource
     MonitorFileDao monitorFileDao;
+
+    @Resource
+    DrFileDao drFileDao;
+
     public String setFile(MultipartFile file, String str) throws Exception {
 
         String rootPath = System.getProperty("catalina.home") + "\\webapps\\" + str;
@@ -169,9 +176,7 @@ public class FileUploadUtils {
     @RequestMapping(value = "/evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws Exception {
-        String originName="";
-        originName=request.getParameter("fileName");
-        logger.info("fileName:"+originName);
+        String originName=file.getOriginalFilename();
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else {
@@ -240,8 +245,12 @@ public class FileUploadUtils {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+            String originFileName=file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSEDanger\\photoes");
-            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            drFileDao.insertNewFile(fileName,originFileName);
+            //拼接生成图片下载链接链接
+            String downloadLink="/downloadDangerFile?fileName="+fileName;
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
         } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
@@ -250,13 +259,16 @@ public class FileUploadUtils {
     @RequestMapping(value = "/uploadregulation", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String uploadregulation(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
-        //上传图片
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+            String originFileName=file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSERegulation\\photoes");
-            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            drFileDao.insertNewFile(fileName,originFileName);
+            //拼接生成图片下载链接链接
+            String downloadLink="/downloadRegulationFile?fileName="+fileName;
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
         } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }

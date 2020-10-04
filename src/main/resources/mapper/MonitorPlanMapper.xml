@@ -13,7 +13,7 @@
         select * from
         monitorplan
         where CompanyCode=#{0}
-        order by createTime desc
+        order by MonitorPlanID desc
     </select>
 
     <delete id="deletePlan">

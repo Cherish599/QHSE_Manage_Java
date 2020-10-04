@@ -12,7 +12,7 @@ public interface ProblemDescriptionDao {
 
     int addProblemDescription(ProblemDescriptionDto problemDescriptionDto);
 
-    int deleteProblemDescription(ProblemDescriptionDto problemDescriptionDto);
+    int deleteProblemDescription(@Param("id") int id);
 
     int updateProblemDescription(ProblemDescriptionDto problemDescriptionDto);
 

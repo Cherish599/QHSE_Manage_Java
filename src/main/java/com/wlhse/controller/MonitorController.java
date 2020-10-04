@@ -106,7 +106,7 @@ public class MonitorController {
         return monitorPlanService.insertNewInputRecord(monitorInputCheckRecord,request);
     }
 
-    //获取当天录入的内容,有内容则代表当天已录入，无内容则代表当天未录入
+    //获取当天录入的内容
     @RequestMapping(value = "/getInputtedDetailInfo/{detailId}",method = RequestMethod.GET)
     R getInputtedDetailInfo(@PathVariable("detailId")Integer detailId){
         return monitorPlanService.getRecordDetail(detailId);
@@ -133,7 +133,6 @@ public class MonitorController {
                 sheet().doRead();
         return R.ok();
     }
-
 
     //查找视图，获取所有记录在案的日期
     @RequestMapping(value = "/getAllSumDate",method = RequestMethod.GET)
@@ -180,5 +179,17 @@ public class MonitorController {
     @RequestMapping(value = "/getSumDataById",method = RequestMethod.GET)
     R getSumDataById(@RequestParam(value = "mesDataId",required = false)Integer id){
         return mesSumDataService.getSumDataById(id);
+    }
+
+    @RequestMapping(value = "/getSumDataInTimePeriod",method = RequestMethod.GET)
+    R getSumDataInTimePeriod(@RequestParam(value = "startTime",required = false)String startTime,@RequestParam(value = "endTime",required = false)String endTime){
+        return mesSumDataService.getSumDataInTimePeriod(startTime,endTime);
+    }
+
+
+    //导出录入日报
+    @RequestMapping(value = "/getDayReport",method = RequestMethod.GET)
+    R getDayReport(@RequestParam(value = "date",required = false)String date,@RequestParam(value = "planId")Integer planId){
+        return monitorPlanService.getDayReport(planId,date);
     }
 }

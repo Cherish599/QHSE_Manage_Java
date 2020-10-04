@@ -4,6 +4,8 @@ import com.wlhse.dto.QualityCheckDto;
 import com.wlhse.dto.inDto.QualityCheckInDto;
 import com.wlhse.service.QualityCheckService;
 import com.wlhse.util.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,6 +17,8 @@ public class QualityCheckController {
     @Resource
     private QualityCheckService qualityCheckService;
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     //查询所有
     @RequestMapping(value = "/queryAllTable", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryAllTable() {
@@ -23,17 +27,20 @@ public class QualityCheckController {
 
     //查询+条件
     @RequestMapping(value = "/queryTableByYearAndCom", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R queryTableByYearAndCom(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
+    public R queryTableByYearAndCom(@ModelAttribute QualityCheckDto qualityCheckDto) {
+        logger.info("传入的数据:"+qualityCheckDto.toString());
         return qualityCheckService.queryTableByYearAndCom(qualityCheckDto);
     }
     //查询已推送+条件
     @RequestMapping(value = "/queryTableByYearAndComAndPush", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R queryTableByYearAndComAndPush(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
+    public R queryTableByYearAndComAndPush(@ModelAttribute QualityCheckDto qualityCheckDto) {
+        logger.info("传入的数据:"+qualityCheckDto.toString());
         return qualityCheckService.queryTableByYearAndComAndPush(qualityCheckDto);
     }
     //添加
     @RequestMapping(value = "/addQualityCheck", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addQualityCheck(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
+        logger.info("传入的数据:"+qualityCheckDto.toString());
         return qualityCheckService.addQualityCheck(qualityCheckDto);
     }
 
