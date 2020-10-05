@@ -1,9 +1,6 @@
 package com.wlhse.entity;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class QhseElementsPojo {
+public class QualityElementsPojo {
 
     private Integer qhseManagerSysElementID;
 
@@ -23,6 +20,8 @@ public class QhseElementsPojo {
     private Integer totalCount;
 
     private String status;
+
+    private String scoreShows;
 
     public Integer getQhseManagerSysElementID() {
         return qhseManagerSysElementID;
@@ -56,7 +55,6 @@ public class QhseElementsPojo {
         this.content = content;
     }
 
-
     public String getAuditMode() {
         return auditMode;
     }
@@ -81,7 +79,6 @@ public class QhseElementsPojo {
         this.formula = formula;
     }
 
-
     public Integer getTotalCount() {
         return totalCount;
     }
@@ -98,4 +95,11 @@ public class QhseElementsPojo {
         this.status = status;
     }
 
+    public String getScoreShows() {
+        return scoreShows;
+    }
+
+    public void setScoreShows(String scoreShows) {
+        this.scoreShows = scoreShows;
+    }
 }
