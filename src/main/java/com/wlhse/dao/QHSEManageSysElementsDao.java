@@ -59,6 +59,9 @@ public interface QHSEManageSysElementsDao {
     //melon查询进度
     int querySchedule(@Param("code") String code,String companyCode,String year);
     int querySchdules(@Param("code") String code,String companyCode,String year);
+    //melon质量查询进度
+    int querySchedule1(@Param("code") String code,String companyCode,String year);
+    int querySchdules1(@Param("code") String code,String companyCode,String year);
     //th----查询基本数据表两级
     List<QhseElementsPojo> queryQhseChildElements();
     //th----查询所有的数据表

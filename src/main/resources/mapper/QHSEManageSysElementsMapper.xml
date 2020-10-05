@@ -681,6 +681,28 @@
             AND t1.ConfigStatus="启用"
         </where>
     </select>
+    <select id="querySchedule1" resultType="java.lang.Integer">
+        select count(*) from quality_companyyearmanagersyselement
+        <where>
+            <if test="code!=null and code !='' ">
+                AND  `Code` like CONCAT(#{code},"%")
+            </if>
+            and (status is not null or status!="")
+            and `year`=#{param3}
+            and companyCode=#{param2}
+        </where>
+    </select>
+    <select id="querySchdules1" resultType="java.lang.Integer">
+        select count(*) from quality_companyyearmanagersyselement
+        <where>
+            <if test="code!=null and code !='' ">
+                AND  `Code` like CONCAT(#{code},"%")
+            </if>
+            and `year`=#{param3}
+            and companyCode=#{param2}
+            and (status="未提供" or status="不通过")
+        </where>
+    </select>
 
 
 </mapper>
