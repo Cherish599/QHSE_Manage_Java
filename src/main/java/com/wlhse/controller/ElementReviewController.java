@@ -70,7 +70,6 @@ public class ElementReviewController {
         elementReviewDto.setStatus("不通过");
         qhseElementsInputDao.updateCheckStatusByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID(),0);
         int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
-        qhseTaskDao.updateCheckStatus(tableId,"重新录入");
         return  elementReviewService.updateStatus(elementReviewDto);
     }
     //查询已审核或已审批

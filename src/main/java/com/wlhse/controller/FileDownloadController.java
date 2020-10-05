@@ -1,7 +1,6 @@
 package com.wlhse.controller;
 
 
-import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -116,7 +114,7 @@ public class FileDownloadController {
     @RequestMapping(value = "/pictureDownload",method = RequestMethod.GET)
     public void pictureDownload(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
                                    HttpServletResponse response) throws IOException {
-        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck\\";
+        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck";
         File file = new File(path + File.separator + fileName);
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
         //将文件原名保存在响应头

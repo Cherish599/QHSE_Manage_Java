@@ -3,6 +3,8 @@ package com.wlhse.dao;
 
 import com.wlhse.dto.QualityFileAuditDto;
 import com.wlhse.dto.QualityFileAuditRecordDto;
+
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -43,5 +45,5 @@ public interface QualityFileAuditDao {
     List<QualityFileAuditRecordDto> getStatus(QualityFileAuditRecordDto qualityFileAuditRecordDto);
 
     //更改要素表中的审核状态
-    int updateCheckStatus(YearElementsDto yearElementsDto);
+    int updateCheckStatus(QualityYearElementsDto yearElementsDto);
 }
