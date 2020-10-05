@@ -2,6 +2,7 @@ package com.wlhse.controller;
 
 
 import com.wlhse.dao.DangerRecordDao;
+import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
 import org.apache.commons.io.FileUtils;
@@ -41,6 +42,9 @@ public class FileDownloadController {
     FileDao fileDao;
     @Resource
     MonitorFileDao monitorFileDao;
+    @Resource
+    DrFileDao drFileDao;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @RequestMapping(value = "/downloadFilePropagationFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
         public ResponseEntity<byte[]> downloadFile(@RequestParam(value = "fileName")String fileName, HttpServletRequest request) throws IOException {
@@ -64,7 +68,7 @@ public class FileDownloadController {
                                        HttpServletResponse response)throws IOException{
         String path =System.getProperty("catalina.home") +"\\webapps\\" + "\\resources\\" + "QHSEDanger\\" + "photoes\\";
         File file = new File(path + File.separator + fileName);
-        fileName = monitorFileDao.getOriginName(fileName);
+        fileName = drFileDao.getOriginName(fileName);
         //将文件原名保存在响应头
         response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
         FileInputStream fis=new FileInputStream(file);
@@ -80,7 +84,7 @@ public class FileDownloadController {
                                                   HttpServletResponse response)throws IOException{
         String path =System.getProperty("catalina.home") +"\\webapps\\" + "\\resources\\" + "QHSERegulation\\" + "photoes\\";
         File file = new File(path + File.separator + fileName);
-        fileName = monitorFileDao.getOriginName(fileName);
+        fileName = drFileDao.getOriginName(fileName);
         //将文件原名保存在响应头
         response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
         FileInputStream fis=new FileInputStream(file);

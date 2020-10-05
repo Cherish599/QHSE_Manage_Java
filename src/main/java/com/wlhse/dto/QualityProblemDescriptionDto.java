@@ -1,9 +1,9 @@
 package com.wlhse.dto;
 
-public class ProblemDescriptionDto {
-    private Integer qHSE_AuditProblemRecord_ID;
-    private Integer qHSE_FileAudit_ID;
-    private Integer qHSE_FileAuditRecord_ID;
+public class QualityProblemDescriptionDto {
+    private Integer qquality_AuditProblemRecord_ID;
+    private Integer qquality_FileAudit_ID;
+    private Integer qquality_FileAuditRecord_ID;
     private String problemDescription;
     private String code;
     private String startDate;
@@ -13,22 +13,6 @@ public class ProblemDescriptionDto {
     private String companyName;
     private String status;
     private String situation;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSituation() {
-        return situation;
-    }
-
-    public void setSituation(String situation) {
-        this.situation = situation;
-    }
 
     public String getCompanyName() {
         return companyName;
@@ -70,28 +54,28 @@ public class ProblemDescriptionDto {
         this.endDate = endDate;
     }
 
-    public Integer getqHSE_AuditProblemRecord_ID() {
-        return qHSE_AuditProblemRecord_ID;
+    public Integer getQquality_AuditProblemRecord_ID() {
+        return qquality_AuditProblemRecord_ID;
     }
 
-    public void setqHSE_AuditProblemRecord_ID(Integer qHSE_AuditProblemRecord_ID) {
-        this.qHSE_AuditProblemRecord_ID = qHSE_AuditProblemRecord_ID;
+    public void setQquality_AuditProblemRecord_ID(Integer qquality_AuditProblemRecord_ID) {
+        this.qquality_AuditProblemRecord_ID = qquality_AuditProblemRecord_ID;
     }
 
-    public Integer getqHSE_FileAudit_ID() {
-        return qHSE_FileAudit_ID;
+    public Integer getQquality_FileAudit_ID() {
+        return qquality_FileAudit_ID;
     }
 
-    public void setqHSE_FileAudit_ID(Integer qHSE_FileAudit_ID) {
-        this.qHSE_FileAudit_ID = qHSE_FileAudit_ID;
+    public void setQquality_FileAudit_ID(Integer qquality_FileAudit_ID) {
+        this.qquality_FileAudit_ID = qquality_FileAudit_ID;
     }
 
-    public Integer getqHSE_FileAuditRecord_ID() {
-        return qHSE_FileAuditRecord_ID;
+    public Integer getQquality_FileAuditRecord_ID() {
+        return qquality_FileAuditRecord_ID;
     }
 
-    public void setqHSE_FileAuditRecord_ID(Integer qHSE_FileAuditRecord_ID) {
-        this.qHSE_FileAuditRecord_ID = qHSE_FileAuditRecord_ID;
+    public void setQquality_FileAuditRecord_ID(Integer qquality_FileAuditRecord_ID) {
+        this.qquality_FileAuditRecord_ID = qquality_FileAuditRecord_ID;
     }
 
     public String getProblemDescription() {
@@ -108,5 +92,21 @@ public class ProblemDescriptionDto {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getSituation() {
+        return situation;
+    }
+
+    public void setSituation(String situation) {
+        this.situation = situation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

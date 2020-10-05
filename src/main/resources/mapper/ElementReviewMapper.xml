@@ -21,6 +21,7 @@
                 where CompanyCode=#{companyCode}
                 and (Status='审核中' OR Status='批准中')
             )
+            and CheckStatus=1
         </where>
     </select>
 
@@ -42,6 +43,7 @@
             where CompanyCode=#{companyCode}
             and Status='批准中'
             )
+            and CheckStatus=1
         </where>
     </select>
 
@@ -70,6 +72,17 @@
             </if>
         </set>
         where  QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </update>
+    <update id="updateQuality" parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+        update  quality_checktablerecord set CheckResult=#{checkResult}
+        where CheckListCode=#{checkListCode} and Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
+    </update>
+    <update id="qualityInput"  parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+         update  quality_checktablerecord
+         <set>
+
+         </set>
+            where CheckListCode=#{checkListCode} and Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
     </update>
 
     <sql id = "element_evidence_key">
@@ -127,6 +140,18 @@
     <select id="queryAllElement" resultType="java.lang.Integer" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
         select count(*) from qhse_companyyearmanagersyselement where companyCode=#{companyCode} and `year`=#{year}
         and (status is not null or status!="")
+    </select>
+    <select id="queryQuality" resultType="com.wlhse.dto.QualityCheckTableRecordDto" parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+        select Qulity_CheckTableRecordID as qualityCheckTableRecordID,
+        Qulity_CheckID as qualityCheckID,
+        CheckListCode as checkListCode,
+        CheckResult as checkResult,
+        Attach as attach,
+        Pic as pic,
+        Description as description,
+        Quality_CheckName as qualityCheckName
+        from quality_checktablerecord
+        where CheckListCode=#{checkListCode} and Qulity_CheckID=#{qualityCheckID}
     </select>
 
 

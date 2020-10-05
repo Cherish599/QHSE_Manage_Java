@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wlhse.dao.RegulationRecordDao">
+<mapper namespace="com.wlhse.dao.QualityRegulationRecordDao">
     <sql id="key">
         <trim suffixOverrides=",">
             <if test="id != null and id  != ''">
@@ -89,9 +89,6 @@
             <if test="factorDepartment != null and factorDepartment  != ''">
                 FactorDepartment,
             </if>
-            <if test="factorObserver != null and factorObserver  != ''">
-                FactorObserver,
-            </if>
             <if test="location != null and location  != ''">
                 Location,
             </if>
@@ -113,17 +110,17 @@
             <if test="keyID != null and keyID  != ''">
                 KeyID,
             </if>
-            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
-                QHSE_CheckType,
+            <if test="quality_CheckType != null and quality_CheckType  != ''">
+                Quality_CheckType,
             </if>
-            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
-                QHSE_CheckCategory,
+            <if test="quality_CheckCategory != null and quality_CheckCategory  != ''">
+                Quality_CheckCategory,
             </if>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                QHSE_FileAudit_ID,
+            <if test="quality_FileAudit_ID != null and quality_FileAudit_ID  != ''">
+                Quality_FileAudit_ID,
             </if>
-            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
-                QHSE_FileAuditRecord_ID,
+            <if test="quality_FileAuditRecord_ID != null and quality_FileAuditRecord_ID  != ''">
+                Quality_FileAuditRecord_ID,
             </if>
             <if test="code != null and code  != ''">
                 Code,
@@ -220,9 +217,6 @@
             <if test="factorDepartment != null and factorDepartment  != ''">
                 #{factorDepartment},
             </if>
-            <if test="factorObserver != null and factorObserver  != ''">
-                #{factorObserver},
-            </if>
             <if test="location != null and location  != ''">
                 #{location},
             </if>
@@ -244,17 +238,17 @@
             <if test="keyID != null and keyID  != ''">
                 #{keyID},
             </if>
-            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
-                #{qHSE_CheckType},
+            <if test="quality_CheckType != null and quality_CheckType  != ''">
+                #{quality_CheckType},
             </if>
-            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
-                #{qHSE_CheckCategory},
+            <if test="quality_CheckCategory != null and quality_CheckCategory  != ''">
+                #{quality_CheckCategory},
             </if>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                #{qHSE_FileAudit_ID},
+            <if test="quality_FileAudit_ID != null and quality_FileAudit_ID  != ''">
+                #{quality_FileAudit_ID},
             </if>
-            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
-                #{qHSE_FileAuditRecord_ID},
+            <if test="quality_FileAuditRecord_ID != null and quality_FileAuditRecord_ID  != ''">
+                #{quality_FileAuditRecord_ID},
             </if>
             <if test="code != null and code  != ''">
                 #{code},
@@ -266,17 +260,17 @@
     </sql>
 
     <insert id="addRegulationRecord" parameterType="com.wlhse.dto.RegulationRecordDto" >
-        insert into regulationrecord
+        insert into quality_regulationrecord
         (<include refid="key"/>)
         values
         (<include refid="value"/>)
     </insert>
 
     <delete id="deleteRegulationRecord">
-        delete from regulationrecord
+        delete from quality_regulationrecord
         <where>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                AND QHSE_FileAudit_ID=#{qHSE_FileAudit_ID}
+            <if test="quality_FileAudit_ID != null and quality_FileAudit_ID  != ''">
+                AND Quality_FileAudit_ID=#{quality_FileAudit_ID}
             </if>
             <if test="code != null and code  != ''">
                 AND Code=#{code}
@@ -293,7 +287,7 @@
                 safeStaff_ID=#{safeStaff_ID},safeStaff_Name=(select Name from employee where EmployeeID=#{safeStaff_ID}),
             </if>
             <if test="regulationID != null and regulationID  != ''">
-                regulationID=#{regulationID},regulationID=(select Name from employee where EmployeeID=#{regulationID}),
+                regulationID=#{regulationID},regulationName=(select Name from employee where EmployeeID=#{regulationID}),
             </if>
             <if test="workItem != null and workItem  != ''">
                 workItem=#{workItem},
@@ -388,17 +382,17 @@
             <if test="keyID != null and keyID  != ''">
                 keyID=#{keyID},
             </if>
-            <if test="qHSE_CheckType != null and qHSE_CheckType  != ''">
-                qHSE_CheckType=#{qHSE_CheckType},
+            <if test="quality_CheckType != null and quality_CheckType  != ''">
+                quality_CheckType=#{quality_CheckType},
             </if>
-            <if test="qHSE_CheckCategory != null and qHSE_CheckCategory  != ''">
-                qHSE_CheckCategory=#{qHSE_CheckCategory},
+            <if test="quality_CheckCategory != null and quality_CheckCategory  != ''">
+                quality_CheckCategory=#{quality_CheckCategory},
             </if>
-            <if test="qHSE_FileAudit_ID != null and qHSE_FileAudit_ID  != ''">
-                qHSE_FileAudit_ID=#{qHSE_FileAudit_ID},
+            <if test="quality_FileAudit_ID != null and quality_FileAudit_ID  != ''">
+                quality_FileAudit_ID=#{quality_FileAudit_ID},
             </if>
-            <if test="qHSE_FileAuditRecord_ID != null and qHSE_FileAuditRecord_ID  != ''">
-                qHSE_FileAuditRecord_ID=#{qHSE_FileAuditRecord_ID},
+            <if test="quality_FileAuditRecord_ID != null and quality_FileAuditRecord_ID  != ''">
+                quality_FileAuditRecord_ID=#{quality_FileAuditRecord_ID},
             </if>
             <if test="code != null and code  != ''">
                 code=#{code},
@@ -407,19 +401,19 @@
     </sql>
 
     <update id="updateRegulationRecord">
-        update regulationrecord
+        update quality_regulationrecord
         <include refid="value1"/>
         where ID = #{id}
     </update>
 
     <select id="queryRegulationRecordById" resultType="com.wlhse.dto.RegulationRecordDto">
-        select * from regulationrecord
+        select * from quality_regulationrecord
         where ID=#{id}
     </select>
 
     <select id="queryTotal" resultType="java.lang.Integer">
         select count(*)
-        from regulationrecord
+        from quality_regulationrecord
         <where>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 AND safeStaff_ID=#{safeStaff_ID}
@@ -452,7 +446,7 @@
     </select>
 
     <select id="queryRegulationRecord" resultType="com.wlhse.dto.RegulationRecordDto">
-        select * from regulationrecord
+        select * from quality_regulationrecord
         <where>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
                 AND safeStaff_ID=#{safeStaff_ID}

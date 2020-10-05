@@ -1,5 +1,6 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
@@ -47,4 +48,11 @@ public interface ElementReviewDao {
 
     //查询全要素个数
     int queryAllElement(ElementReviewDto elementReviewDto);
+
+    //质量审核部分：
+    //查询叶子证据
+    QualityCheckTableRecordDto queryQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
+    //审核人通过
+    int updateQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
+    int qualityInput(QualityCheckTableRecordDto qualityCheckTableRecordDto);
 }
