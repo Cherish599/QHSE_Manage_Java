@@ -2,6 +2,7 @@ package com.wlhse.service;
 
 import com.wlhse.dto.QualityFileAuditDto;
 import com.wlhse.dto.QualityFileAuditRecordDto;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.util.R;
 
@@ -28,7 +29,6 @@ public interface QualityFileAuditService {
     //获取结点审核状态
     String getStatus(QualityFileAuditRecordDto qualityFileAuditRecordDto);
     //更改要素表中的审核状态
-    // TODO 表没改
-    String updateCheckStatus(YearElementsDto yearElementsDto);
+    String updateCheckStatus(QualityYearElementsDto yearElementsDto);
 
 }

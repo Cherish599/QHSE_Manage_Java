@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.wlhse.dao.QualityFileAuditDao;
 import com.wlhse.dto.QualityFileAuditDto;
 import com.wlhse.dto.QualityFileAuditRecordDto;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QualityFileAuditService;
@@ -93,7 +94,7 @@ public class QualityFileAuditServiceImpl implements QualityFileAuditService {
     }
 
     @Override
-    public String updateCheckStatus(YearElementsDto yearElementsDto) {
+    public String updateCheckStatus(QualityYearElementsDto yearElementsDto) {
         if(qualityfileAuditDao.updateCheckStatus(yearElementsDto)<=0)
             throw new WLHSException("更新失败");
         return NR.r();
