@@ -395,4 +395,18 @@ public class FileUploadUtils {
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
         }
     }
+
+    //---------质量要素excel录入数据库
+    @RequestMapping(value = "/uploadQualityElements", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public R uploadQualityElements(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
+        } else {
+            String fileName = setFile(file, "QualityManagerSysElement\\");
+            String path = System.getProperty("catalina.home") + "\\webapps\\QualityManagerSysElement\\" + fileName;
+            return uploadService.uploadQualityManageSysElements(path);
+        }
+    }
+
 }
