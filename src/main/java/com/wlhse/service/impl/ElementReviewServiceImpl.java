@@ -96,6 +96,8 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     public R updateStatus(ElementReviewDto elementReviewDto) {
         int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
         String status = elementReviewDto.getStatus();
+        int i=elementReviewDao.update(elementReviewDto);
+        int j=1;
         //TODO 添加不批准的逻辑
         if (status.equals("不通过")){
             String s = jedisClient.get("TNoInput" + tableId);
@@ -108,10 +110,8 @@ public class ElementReviewServiceImpl implements ElementReviewService {
             }
             // 更新状态
             taskDao.updateCheckStatus(tableId,"重新录入");
+            j=elementReviewDao.updateAddvice(elementReviewDto);
         }
-        int i=elementReviewDao.update(elementReviewDto);
-        int j=1;
-        if (status.equals("不通过")) j=elementReviewDao.updateAddvice(elementReviewDto);
         if (i*j<= 0)
             throw new WLHSException("更新失败");
         return R.ok();
