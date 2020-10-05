@@ -5,6 +5,7 @@ import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
+import com.wlhse.util.R;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,18 +115,11 @@ public class FileDownloadController {
 
     //回显图片1
     @RequestMapping(value = "/pictureDownload",method = RequestMethod.GET)
-    public void pictureDownload(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
-                                   HttpServletResponse response) throws IOException {
-        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck";
-        File file = new File(path + File.separator + fileName);
+    public R pictureDownload(@RequestParam(value = "fileName",required = false)String fileName) {
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
-        //将文件原名保存在响应头
-        response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
-        FileInputStream fis=new FileInputStream(file);
-        byte[] b=new byte[fis.available()];
-        fis.read(b);
-        OutputStream outputStream = response.getOutputStream();
-        outputStream.write(b);
+        R ok = R.ok();
+        ok.put("data",fileName);
+        return ok;
     }
 
     @RequestMapping(value = "/downloadQualityAttach", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
