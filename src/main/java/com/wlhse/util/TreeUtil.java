@@ -634,6 +634,29 @@ public class TreeUtil {
         return result;
     }
 
+    // 【质量】
+    public List<QualityFactorOutDto> returnQualityFactoryTree(Map<String, QualityFactorOutDto> map, List<Integer> code) {
+        List<QualityFactorOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityFactorOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QualityFactorOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QualityFactorOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
     public List<FactorOutDto2> getFactoryTree(List<FactorOutDto> checkRecordTreeDtos) {
         Map<String, FactorOutDto2> map1 = new TreeMap<>();
         List<Integer> code = new ArrayList<>();
@@ -655,6 +678,30 @@ public class TreeUtil {
                 code.add(pojo.getFactorCode().length());
         }
         return returnFactoryTree(map1, code);
+    }
+
+    // 【质量】
+    public List<QualityFactorOutDto> getQualityFactoryTree(List<QualityFactorOutDto> checkRecordTreeDtos) {
+        Map<String, QualityFactorOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityFactorOutDto pojo : checkRecordTreeDtos) {
+            QualityFactorOutDto factorOutDto2 = new QualityFactorOutDto();
+            factorOutDto2.setId(pojo.getId());
+            factorOutDto2.setFactorCode(pojo.getFactorCode());
+            factorOutDto2.setFactorID(pojo.getFactorID());
+            factorOutDto2.setName(pojo.getName());
+            factorOutDto2.setRight(pojo.getRight());
+            factorOutDto2.setFactorHseCode(pojo.getFactorHseCode());
+            factorOutDto2.setFactorObserverCode(pojo.getFactorObserverCode());
+            factorOutDto2.setFactorSourceCode(pojo.getFactorSourceCode());
+            factorOutDto2.setFactorDepartmentCode(pojo.getFactorDepartmentCode());
+            map1.put(factorOutDto2.getFactorCode(), factorOutDto2);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getFactorCode().length()) == -1)
+                code.add(pojo.getFactorCode().length());
+        }
+        return returnQualityFactoryTree(map1, code);
     }
 
     //th---QualityCheckListTree
