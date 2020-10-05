@@ -116,7 +116,7 @@ public class FileDownloadController {
     @RequestMapping(value = "/pictureDownload",method = RequestMethod.GET)
     public void pictureDownload(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
                                    HttpServletResponse response) throws IOException {
-        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck\\";
+        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck";
         File file = new File(path + File.separator + fileName);
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
         //将文件原名保存在响应头
