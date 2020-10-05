@@ -1,10 +1,6 @@
-package com.wlhse.entity;
+package com.wlhse.dto.inDto;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class QhseElementsPojo {
-
+public class QualityManagerSysElementInDto {
     private Integer qhseManagerSysElementID;
 
     private String code;
@@ -23,6 +19,8 @@ public class QhseElementsPojo {
     private Integer totalCount;
 
     private String status;
+
+    private String ScoreShows;
 
     public Integer getQhseManagerSysElementID() {
         return qhseManagerSysElementID;
@@ -56,7 +54,6 @@ public class QhseElementsPojo {
         this.content = content;
     }
 
-
     public String getAuditMode() {
         return auditMode;
     }
@@ -81,7 +78,6 @@ public class QhseElementsPojo {
         this.formula = formula;
     }
 
-
     public Integer getTotalCount() {
         return totalCount;
     }
@@ -98,4 +94,27 @@ public class QhseElementsPojo {
         this.status = status;
     }
 
+    public String getScoreShows() {
+        return ScoreShows;
+    }
+
+    public void setScoreShows(String scoreShows) {
+        ScoreShows = scoreShows;
+    }
+
+    @Override
+    public String toString() {
+        return "QualityManagerSysElementInDto{" +
+                "qhseManagerSysElementID=" + qhseManagerSysElementID +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                ", ScoreShows='" + ScoreShows + '\'' +
+                '}';
+    }
 }

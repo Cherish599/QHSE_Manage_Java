@@ -4,6 +4,8 @@ package com.wlhse.controller;
 import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
+import com.wlhse.dto.QualityCheckDto;
+import com.wlhse.util.R;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -101,22 +101,6 @@ public class FileDownloadController {
         String path =System.getProperty("catalina.home") +"\\webapps\\" + "RemoteMonitor\\" + "screenShot";
         File file = new File(path + File.separator + fileName);
         fileName=monitorFileDao.getOriginName(fileName);
-        //将文件原名保存在响应头
-        response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
-        FileInputStream fis=new FileInputStream(file);
-        byte[] b=new byte[fis.available()];
-        fis.read(b);
-        OutputStream outputStream = response.getOutputStream();
-        outputStream.write(b);
-    }
-
-    //回显图片1
-    @RequestMapping(value = "/pictureDownload",method = RequestMethod.GET)
-    public void pictureDownload(@RequestParam(value = "fileName",required = false)String fileName, HttpServletRequest request,
-                                   HttpServletResponse response) throws IOException {
-        String path =System.getProperty("catalina.home") + "\\webapps\\"+"\\resources\\" + "QualityCheck";
-        File file = new File(path + File.separator + fileName);
-        fileName=fileDao.getQualityAttachOriginFileName(fileName);
         //将文件原名保存在响应头
         response.setHeader("fileName",new String(fileName.getBytes("UTF-8"),"ISO8859-1"));
         FileInputStream fis=new FileInputStream(file);

@@ -1,11 +1,11 @@
-package com.wlhse.entity;
+package com.wlhse.dto.outDto;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class QhseElementsPojo {
+public class QualityManagerSysElementOutDto {
 
-    private Integer qhseManagerSysElementID;
+    private Integer id;
 
     private String code;
 
@@ -19,17 +19,22 @@ public class QhseElementsPojo {
 
     private String formula;
 
+    private String problemDescription;
 
     private Integer totalCount;
 
     private String status;
 
-    public Integer getQhseManagerSysElementID() {
-        return qhseManagerSysElementID;
+    private String scoreShows;
+
+    private List<QualityManagerSysElementOutDto> childNode = new LinkedList<>();
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setQhseManagerSysElementID(Integer qhseManagerSysElementID) {
-        this.qhseManagerSysElementID = qhseManagerSysElementID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCode() {
@@ -56,7 +61,6 @@ public class QhseElementsPojo {
         this.content = content;
     }
 
-
     public String getAuditMode() {
         return auditMode;
     }
@@ -81,6 +85,13 @@ public class QhseElementsPojo {
         this.formula = formula;
     }
 
+    public String getProblemDescription() {
+        return problemDescription;
+    }
+
+    public void setProblemDescription(String problemDescription) {
+        this.problemDescription = problemDescription;
+    }
 
     public Integer getTotalCount() {
         return totalCount;
@@ -98,4 +109,19 @@ public class QhseElementsPojo {
         this.status = status;
     }
 
+    public String getScoreShows() {
+        return scoreShows;
+    }
+
+    public void setScoreShows(String scoreShows) {
+        this.scoreShows = scoreShows;
+    }
+
+    public List<QualityManagerSysElementOutDto> getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(List<QualityManagerSysElementOutDto> childNode) {
+        this.childNode = childNode;
+    }
 }

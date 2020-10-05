@@ -1,5 +1,6 @@
 package com.wlhse.controller;
 
+import com.wlhse.dao.FileDao;
 import com.wlhse.dto.QualityCheckDto;
 import com.wlhse.dto.inDto.QualityCheckInDto;
 import com.wlhse.service.QualityCheckService;
@@ -18,6 +19,9 @@ public class QualityCheckController {
     private QualityCheckService qualityCheckService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    FileDao fileDao;
 
     //查询所有
     @RequestMapping(value = "/queryAllTable", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
@@ -86,6 +90,15 @@ public class QualityCheckController {
     public R backTable(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
         return qualityCheckService.backTable(qualityCheckDto);
     }
+    @RequestMapping(value = "/getOriginFileName", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R pictureDownload(String fileName) {
+        fileName=fileDao.getQualityAttachOriginFileName(fileName);
+        System.out.println(fileName);
+        R ok = R.ok();
+        ok.put("data",fileName);
+        return ok;
+    }
+
 
 
 
