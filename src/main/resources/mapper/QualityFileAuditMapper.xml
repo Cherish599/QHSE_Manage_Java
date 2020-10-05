@@ -217,18 +217,17 @@
         </where>
     </select>
 
-    <!--TODO 数据库表的建立-->
-    <update id="updateCheckStatus" parameterType="com.wlhse.dto.inDto.YearElementsDto">
-        update qhse_companyyearmanagersyselement
+    <!--tobing-->
+    <update id="updateCheckStatus" parameterType="com.wlhse.dto.inDto.QualityYearElementsDto">
+        update quality_companyyearmanagersyselement
         <trim prefix="set" suffixOverrides=",">
             <if test="fileCheckStatus != null and fileCheckStatus != ''">
                 fileCheckStatus=#{fileCheckStatus},
             </if>
         </trim>
         where Code=#{code} and
-        QHSE_CompanyYearManagerSysElementTable_ID=#{qhseCompanyYearManagerSysElementTableID}
+        Quality_CompanyYearManagerSysElementTable_ID=#{qualityCompanyYearManagerSysElementTableID}
     </update>
-
 
 
 </mapper>

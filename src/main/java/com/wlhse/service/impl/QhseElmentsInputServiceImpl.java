@@ -98,8 +98,10 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     }
 
     @Override
+    @Transactional
     public R submitInputResult(int tableId) {
         qhseElementsInputDao.updateCheckStatus(tableId,1);
+        taskDao.updateCheckStatus(tableId,"审核中");
         return R.ok();
     }
 

@@ -3,6 +3,7 @@ package com.wlhse.controller;
 
 import com.wlhse.dto.QualityFileAuditDto;
 import com.wlhse.dto.QualityFileAuditRecordDto;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.service.QHSEManageSysElementsService;
 import com.wlhse.service.QualityFileAuditService;
@@ -78,8 +79,9 @@ public class QualityFileAuditController {
         return qualityFileAuditService.getStatus(qualityFileAuditRecordDto);
     }
 
-//    @RequestMapping(value = "/update_checkstatus", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
-//    public String updateCheckStatus(@RequestBody(required = false) YearElementsDto yearElementsDto) {
-//        return qualityFileAuditService.updateCheckStatus(yearElementsDto);
-//    }
+    // tobing
+    @RequestMapping(value = "/update_qualitycheckstatus", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public String updateCheckStatus(@RequestBody(required = false) QualityYearElementsDto yearElementsDto) {
+        return qualityFileAuditService.updateCheckStatus(yearElementsDto);
+    }
 }
