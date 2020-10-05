@@ -1,5 +1,6 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.QualityFileInputInfoDto;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.entity.ElementInputFileInfo;
 import org.apache.ibatis.annotations.Param;
@@ -35,7 +36,8 @@ public interface QhseElementsInputDao {
 
     //插入要素附件新旧名称
     int insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
-
+    //质量插入新旧文件名称
+    int insertNewOriginFileNames(QualityFileInputInfoDto qualityFileInputInfoDto);
     //将对应证据表id存入方便删除
     int updateNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
 
