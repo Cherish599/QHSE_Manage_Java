@@ -173,13 +173,6 @@
                 AND t1.Year=#{year}
             </if>
             AND t1.ConfigStatus="启用"
-            AND t1.QHSE_CompanyYearManagerSysElementTable_ID IN (
-            SELECT Table_ID
-            FROM qhse_task
-            WHERE (Status='录入证据中' OR CheckStatus='重新录入')
-            AND CompanyCode=#{companyCode}
-            )
-            AND t1.CheckStatus=0
         </where>
     </select>
 
