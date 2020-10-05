@@ -404,7 +404,7 @@ public class TreeUtil {
         思想：直接一次把所有问题描述查完，根据code排序,放进list;然后根据code拼接，把code,对应问题描述字符，放进map;
          */
         //获得list
-        List<QualityManagerSysElementProDesDto> discriptionList=qualityManagerSysElementDao.querryAllDescription();
+        List<QHSEproblemDiscriptionDto> discriptionList=qhseManageSysElementsDao.querryAllDescription();
         Map<String,String> disMap=new HashMap<>();
         //核心算法；k代表当前code对象,j代表下一个对象;i表示序号，temp代表拼接的字符串；类似字符串的Index算法；
         String temp=1+"."+discriptionList.get(0).getDescription();
