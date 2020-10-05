@@ -18,4 +18,11 @@ public interface QualityElementReviewDao {
     //录附件
     int insertAttach(QualityInputAttachPojo qualityInputAttachPojo);
     int updateAttach(QualityInputAttachPojo qualityInputAttachPojo);
+    //审核批准查询
+    List<QualityManergerSysElementPojo> queryCheck(@Param("companyCode") String companyCode,@Param("year") String year,@Param("status") Integer status);
+    //通过与不通过
+    int updatePass(@Param("id")Integer id,@Param("tag") Integer tag);
+    int updateNoPass(@Param("id")Integer id,@Param("pass") String pass);
+    //不通过意见
+    int updateNegativeOpinion(@Param("negativeOpinion") String negativeOpinion,@Param("id") Integer id);
 }

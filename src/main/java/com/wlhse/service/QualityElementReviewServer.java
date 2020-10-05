@@ -18,4 +18,7 @@ public interface QualityElementReviewServer {
     R queryAttach(Integer id);
     //录附件
     R insertAttach(QualityInputAttachPojo qualityInputAttachPojo);
+    R queryCheck(Integer tag,String companyCode, String year);
+    //质量要素通过不通过
+    R pass(Integer id,Integer tag,String pass,String NegativeOpinion);
 }

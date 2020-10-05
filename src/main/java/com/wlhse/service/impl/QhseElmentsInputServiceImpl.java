@@ -5,6 +5,7 @@ import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QHSETaskDao;
 import com.wlhse.dao.QhseElementsInputDao;
+import com.wlhse.dto.QualityFileInputInfoDto;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.exception.WLHSException;
@@ -95,6 +96,11 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Override
     public void insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo) {
        qhseElementsInputDao.insertNewOriginFileName(elementInputFileInfo);
+    }
+
+    @Override
+    public void insertNewOriginFileNames(QualityFileInputInfoDto qualityFileInputInfoDto) {
+        qhseElementsInputDao.insertNewOriginFileNames(qualityFileInputInfoDto);
     }
 
     @Override
