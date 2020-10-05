@@ -4,6 +4,7 @@ package com.wlhse.controller;
 import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
+import com.wlhse.dto.QualityCheckDto;
 import com.wlhse.util.R;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -13,9 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -109,15 +108,6 @@ public class FileDownloadController {
         fis.read(b);
         OutputStream outputStream = response.getOutputStream();
         outputStream.write(b);
-    }
-
-    //回显图片1
-    @RequestMapping(value = "/pictureDownload",method = RequestMethod.GET)
-    public R pictureDownload(@RequestParam(value = "fileName",required = false)String fileName) {
-        fileName=fileDao.getQualityAttachOriginFileName(fileName);
-        R ok = R.ok();
-        ok.put("data",fileName);
-        return ok;
     }
 
     @RequestMapping(value = "/downloadQualityAttach", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
