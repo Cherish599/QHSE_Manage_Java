@@ -277,6 +277,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     }
 
     //th-查询基本数据表两级
+    //TODO querryQhseChildElement接口实现方法的位置
     @Override
     public R queryChildElement() {
         R ok = R.ok();
@@ -515,6 +516,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return R.ok();
     }
 
+
+    //TODO addQHSEYearElement接口的实现方法位置
     @Transactional
     @Override
     public R addYearElement(YearElementsDto yearElementsDto) {
@@ -684,6 +687,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return r;
     }
 
+    //TODO queryYearElement接口的实现位置
     @Override
     public R queryYearElements(YearElementsDto yearElementsDto) {
         List<YearElementsDto> lists=qhseManageSysElementsDao.queryYearElement(yearElementsDto);
