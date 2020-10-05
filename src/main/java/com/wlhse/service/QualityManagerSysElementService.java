@@ -1,9 +1,7 @@
 package com.wlhse.service;
 
-import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.YearElementsDto;
-import com.wlhse.entity.QHSEManageSysElements;
-import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.entity.QualityElementsPojo;
 import com.wlhse.util.R;
 
@@ -32,9 +30,9 @@ public interface QualityManagerSysElementService {
     //根据ID删除对应的问题描述
     R deleteQhseProblemDiscription(Integer id);
     //改
-    R updateQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto);
+    R updateQhseProblemDiscription(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto);
     //增加
-    R addQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto);
+    R addQhseProblemDiscription(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto);
 
     R addYearElement(YearElementsDto yearElementsDto);
 

@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.inDto.QualityManagerSysElementInDto;
 import com.wlhse.dto.inDto.YearElementsDto;
@@ -75,13 +76,13 @@ public interface QualityManagerSysElementDao {
     //导入excel问题描述时，根据code添加对应问题描述
     Integer addProblemDescription(@Param("code") String code,@Param("description") String description);
     //根据code查询对应的问题描述
-    List<QHSEproblemDiscriptionDto>  querryDescriptionBycode(@Param("code") String code);
+    List<QualityManagerSysElementProDesDto>  querryDescriptionBycode(@Param("code") String code);
     //根据ID删除对应的问题描述
     Integer deleteDescriptionById(@Param("id") Integer id);
     //更新
-    Integer updateDescriptionById(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto);
+    Integer updateDescriptionById(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto);
     //查询所有问题描述，导入Excel
-    List<QHSEproblemDiscriptionDto> querryAllDescription();
+    List<QualityManagerSysElementProDesDto> querryAllDescription();
 
 
 

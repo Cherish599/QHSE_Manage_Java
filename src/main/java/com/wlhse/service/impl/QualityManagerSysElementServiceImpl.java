@@ -4,6 +4,7 @@ import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QualityManagerSysElementDao;
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
@@ -343,7 +344,7 @@ public class QualityManagerSysElementServiceImpl implements QualityManagerSysEle
      * @return 返回新增操作成功，失败的消息，为json对象
      */
     @Override
-    public R updateQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto) {
+    public R updateQhseProblemDiscription(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto) {
         if(qualityManagerSysElementDao.updateDescriptionById(qHSEproblemDiscriptionDto)<=0)
             throw new WLHSException("更新失败");
         return R.ok();
@@ -355,7 +356,7 @@ public class QualityManagerSysElementServiceImpl implements QualityManagerSysEle
      * @return 返回新增操作成功，失败的消息，为json对象
      */
     @Override
-    public R addQhseProblemDiscription(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto) {
+    public R addQhseProblemDiscription(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto) {
         String code=qHSEproblemDiscriptionDto.getCode();
         String description=qHSEproblemDiscriptionDto.getDescription();
         if(qualityManagerSysElementDao.addProblemDescription(code,description)<=0)

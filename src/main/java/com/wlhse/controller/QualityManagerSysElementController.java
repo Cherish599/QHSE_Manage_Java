@@ -2,6 +2,7 @@ package com.wlhse.controller;
 
 
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.entity.QualityElementsPojo;
@@ -80,13 +81,13 @@ public class QualityManagerSysElementController {
     }
     //跟新
     @RequestMapping(value = "/updateQualityProDis", method = RequestMethod.PUT,produces = {"application/json;charset=UTF-8"})
-    public R updateQualityProDis(@RequestBody(required = false)QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto)
+    public R updateQualityProDis(@RequestBody(required = false)QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto)
     {
         return qualityManagerSysElementService.updateQhseProblemDiscription(qHSEproblemDiscriptionDto);
     }
     //添加
     @RequestMapping(value = "/addQualityProDis", method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
-    public R addQualityProDis(@RequestBody(required = false) QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto)
+    public R addQualityProDis(@RequestBody(required = false) QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto)
     {
         return qualityManagerSysElementService.addQhseProblemDiscription(qHSEproblemDiscriptionDto);
     }

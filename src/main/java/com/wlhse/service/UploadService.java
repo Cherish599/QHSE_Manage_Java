@@ -20,4 +20,6 @@ public interface UploadService {
     boolean insertAttachInfoDto(QualityCheckTableRecordAttachInfoDto qualityCheckTableRecordAttachInfoDto);
 
     R uploadQualityCheck(String path) throws Exception;
+
+    R uploadQualityManageSysElements(String path) throws Exception;//要素审核excel录入数据库
 }

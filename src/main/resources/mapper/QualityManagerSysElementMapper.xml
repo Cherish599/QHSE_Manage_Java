@@ -470,12 +470,12 @@
     <!--</insert>-->
 
     <delete id="deleteAllDescription">
-        delete from qhse_managersyselementproblemdescription
+        delete from quality_managersyselementproblemdescription
     </delete>
 
 
     <insert id="addProblemDescription" >
-        insert into qhse_managersyselementproblemdescription
+        insert into quality_managersyselementproblemdescription
         (
         <trim suffixOverrides=",">
             <if test="code != null and code != ''">
@@ -500,25 +500,26 @@
         )
     </insert>
 
-    <select id="querryDescriptionBycode" resultType="com.wlhse.dto.QHSEproblemDiscriptionDto">
-        select QHSE_ManagerSysElementProblemDescription_ID,Code,Description from qhse_managersyselementproblemdescription where Code=#{code}
+    <select id="querryDescriptionBycode" resultType="com.wlhse.dto.QualityManagerSysElementProDesDto">
+        select Quality_ManagerSysElementProblemDescription_ID as qHSE_ManagerSysElementProblemDescription_ID,
+        Code,Description from quality_managersyselementproblemdescription where Code=#{code}
     </select>
 
-    <select id="querryAllDescription" resultType="com.wlhse.dto.QHSEproblemDiscriptionDto">
+    <select id="querryAllDescription" resultType="com.wlhse.dto.QualityManagerSysElementProDesDto">
         select Quality_ManagerSysElementProblemDescription_ID as qHSE_ManagerSysElementProblemDescription_ID,
         Code,
         Description from quality_managersyselementproblemdescription order by Code
     </select>
 
     <delete id="deleteDescriptionById">
-        delete from qhse_managersyselementproblemdescription
-        where QHSE_ManagerSysElementProblemDescription_ID=#{id}
+        delete from quality_managersyselementproblemdescription
+        where Quality_ManagerSysElementProblemDescription_ID=#{id}
     </delete>
 
-    <update id="updateDescriptionById" parameterType="com.wlhse.dto.QHSEproblemDiscriptionDto">
-        update qhse_managersyselementproblemdescription
+    <update id="updateDescriptionById" parameterType="com.wlhse.dto.QualityManagerSysElementProDesDto">
+        update quality_managersyselementproblemdescription
         set Description=#{description}
-        where QHSE_ManagerSysElementProblemDescription_ID=#{qHSE_ManagerSysElementProblemDescription_ID}
+        where Quality_ManagerSysElementProblemDescription_ID=#{qHSE_ManagerSysElementProblemDescription_ID}
     </update>
 
     <select id="selectCodeAndConfigStatusByTableId" resultType="com.wlhse.dto.outDto.ElementAndConfigStatusDto">
