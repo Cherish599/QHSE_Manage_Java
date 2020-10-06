@@ -928,4 +928,40 @@ public class TreeUtil {
         }
         return disMap;
     }
+
+
+//质量要素录入树
+public List<QualityManergerSysElementPojo> returnCurrentQualityElementList(Map<String, QualityManergerSysElementPojo> map, List<Integer> code) {
+    List<QualityManergerSysElementPojo> result = new ArrayList<>();
+    Collections.sort(code);
+    for (Map.Entry<String, QualityManergerSysElementPojo> entry : map.entrySet()) {
+        String key = entry.getKey();
+        if (key.length() == code.get(0))
+            result.add(entry.getValue());
+        else {
+            QualityManergerSysElementPojo treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+            if (null == treeDto)
+                continue;
+            if (null == treeDto.getChildNode()) {
+                List<QualityManergerSysElementPojo> tmp = new ArrayList<>();
+                tmp.add(entry.getValue());
+                treeDto.setChildNode(tmp);
+            } else
+                treeDto.getChildNode().add(entry.getValue());
+        }
+    }
+    return result;
+}
+
+    public  List<QualityManergerSysElementPojo> getCurrentQualityElementTree(List<QualityManergerSysElementPojo> qhseElementsPojos) {
+        Map<String, QualityManergerSysElementPojo> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityManergerSysElementPojo pojo : qhseElementsPojos) {
+            map1.put(pojo.getCode(), pojo);
+            //存入长度相同的数字
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnCurrentQualityElementList(map1, code);
+    }
 }

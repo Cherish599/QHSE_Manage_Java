@@ -158,6 +158,30 @@
         </trim>
         )
     </insert>
+    <insert id="insertNewOriginFileNames" parameterType="com.wlhse.dto.QualityFileInputInfoDto">
+        insert into qualityelementinputfileinfo
+        (
+        <trim suffixOverrides=",">
+            <if test="originalFileName != null and originalFileName != ''">
+                originalFileName,
+            </if>
+            <if test="newFileName != null and newFileName != ''">
+                newFileName,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="originalFileName != null and originalFileName != ''">
+                #{originalFileName},
+            </if>
+            <if test="newFileName != null and newFileName != ''">
+                #{newFileName},
+            </if>
+        </trim>
+        )
+    </insert>
 
     <update id="updateNewOriginFileName" parameterType="com.wlhse.entity.ElementInputFileInfo">
         update elementinputfileinfo set  QHSE_CompanyYearManagerSysElementEvidence_ID=

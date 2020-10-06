@@ -4,6 +4,7 @@ import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.MonitorFileDao;
 import com.wlhse.dto.QualityCheckTableRecordAttachInfoDto;
 import com.wlhse.dto.QualityCheckTableRecordDto;
+import com.wlhse.dto.QualityFileInputInfoDto;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.service.QhseElementsInputService;
@@ -378,6 +379,21 @@ public class FileUploadUtils {
             }
         }
         return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, lists, null, 0, 0);
+    }
+    @RequestMapping(value = "/Quality_evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String uploadQualityEvidence(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws Exception {
+        String originName = file.getOriginalFilename();
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        } else {
+            QualityFileInputInfoDto qualityFileInputInfoDto = new QualityFileInputInfoDto();
+            qualityFileInputInfoDto.setOriginalFileName(originName);
+            String fileName = setFile(file, "resources\\QualityEvidence\\");
+            qualityFileInputInfoDto.setNewFileName(fileName);
+            qhseElementsInputService.insertNewOriginFileNames(qualityFileInputInfoDto);
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+        }
     }
 
     //---------质量要素excel录入数据库
