@@ -4,6 +4,7 @@ import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QualityManagerSysElementDao;
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
@@ -360,6 +361,34 @@ public class QualityManagerSysElementServiceImpl implements QualityManagerSysEle
         String code=qHSEproblemDiscriptionDto.getCode();
         String description=qHSEproblemDiscriptionDto.getDescription();
         if(qualityManagerSysElementDao.addProblemDescription(code,description)<=0)
+            throw new WLHSException("添加失败");
+        return R.ok();
+    }
+
+    @Override
+    public R queryQualityReviewTerms(String code) {
+        R ok = R.ok();
+        ok.put("data", qualityManagerSysElementDao.queryReviewTermsByCode(code));
+        return ok;
+    }
+
+    @Override
+    public R deleteQualityReviewTerms(Integer id) {
+        if(qualityManagerSysElementDao.deleteReviewTermsById(id)<=0)
+            throw new WLHSException("删除失败");
+        return R.ok();
+    }
+
+    @Override
+    public R updateQualityReviewTerms(QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto) {
+        if(qualityManagerSysElementDao.updateReviewTermsById(qualityManagerSysEleReviewTermsDto)<=0)
+            throw new WLHSException("更新失败");
+        return R.ok();
+    }
+
+    @Override
+    public R addQualityReviewTerms(QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto) {
+        if(qualityManagerSysElementDao.addReviewTerms(qualityManagerSysEleReviewTermsDto)<=0)
             throw new WLHSException("添加失败");
         return R.ok();
     }
