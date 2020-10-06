@@ -5,6 +5,7 @@ import com.wlhse.dao.ModuleDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
 import com.wlhse.dao.QualityManagerSysElementDao;
 import com.wlhse.dto.*;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
@@ -965,4 +966,58 @@ public List<QualityManergerSysElementPojo> returnCurrentQualityElementList(Map<S
         }
         return returnCurrentQualityElementList(map1, code);
     }
+
+
+    public List<QualityYearElementsOutDto> getQualityYearElementTree(List<QualityYearElementsDto> qhseElementsPojos) {
+        Map<String, QualityYearElementsOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityYearElementsDto pojo : qhseElementsPojos) {
+            QualityYearElementsOutDto qualityElementsOutDto = new QualityYearElementsOutDto();
+            qualityElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qualityElementsOutDto.setCode(pojo.getCode());
+            qualityElementsOutDto.setContent(pojo.getContent());
+            qualityElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qualityElementsOutDto.setFormula(pojo.getFormula());
+            qualityElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qualityElementsOutDto.setName(pojo.getName());
+            qualityElementsOutDto.setStatus(pojo.getStatus());
+            qualityElementsOutDto.setId(pojo.getQualityCompanyYearManagerSysElementID());
+            qualityElementsOutDto.setTableID(pojo.getQualityCompanyYearManagerSysElementTableID());
+            qualityElementsOutDto.setCompanyCode(pojo.getCompanyCode());
+            qualityElementsOutDto.setCompanyName(pojo.getCompanyName());
+            qualityElementsOutDto.setYear(pojo.getYear());
+            qualityElementsOutDto.setFileCheckStatus(pojo.getFileCheckStatus());
+            qualityElementsOutDto.setSchedule(pojo.getSchedule());
+            qualityElementsOutDto.setCheckStatus(pojo.getCheckStatus());
+            map1.put(qualityElementsOutDto.getCode(), qualityElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQualityYearElementList(map1, code);
+    }
+
+    public List<QualityYearElementsOutDto> returnQualityYearElementList(Map<String, QualityYearElementsOutDto> map, List<Integer> code) {
+        List<QualityYearElementsOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityYearElementsOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QualityYearElementsOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QualityYearElementsOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
 }

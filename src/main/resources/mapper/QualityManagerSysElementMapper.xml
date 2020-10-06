@@ -343,7 +343,7 @@
     </update>
 
 
-    <select id="queryElementsByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
+    <select id="queryElementsByCode" resultType="com.wlhse.dto.inDto.QualityYearElementsDto">
         select
         Code as code,
         name as name,
@@ -352,13 +352,13 @@
         initialScore as initialScore,
         formula as formula,
         totalCount as totalCount
-        from QHSE_ManagerSysElement
+        from Quality_ManagerSysElement
         where code like concat(#{c},'%')
         and status='启用'
     </select>
 
     <select id="findMaxLen" resultType="integer">
-        select Max(LENGTH(code)) FROM QHSE_ManagerSysElement
+        select Max(LENGTH(code)) FROM Quality_ManagerSysElement
     </select>
 
     <select id="queryByTableID" resultType="com.wlhse.dto.inDto.YearElementsDto">
@@ -376,11 +376,11 @@
         where QHSE_CompanyYearManagerSysElementTable_ID=#{id}
     </delete>
 
-    <insert id="addYearElement" parameterType="com.wlhse.dto.inDto.YearElementsDto">
-        insert into QHSE_CompanyYearManagerSysElement
+    <insert id="addYearElement" parameterType="com.wlhse.dto.inDto.QualityYearElementsDto">
+        insert into Quality_CompanyYearManagerSysElement
         (
         <trim suffixOverrides=",">
-            QHSE_CompanyYearManagerSysElementTable_ID,
+            Quality_CompanyYearManagerSysElementTable_ID,
             <if test="code != null and code != ''">
                 Code,
             </if>
@@ -421,7 +421,7 @@
         values
         (
         <trim suffixOverrides=",">
-            #{qhseCompanyYearManagerSysElementTableID},
+            #{qualityCompanyYearManagerSysElementTableID},
             <if test="code != null and code != ''">
                 #{code},
             </if>
@@ -525,8 +525,8 @@
     <select id="selectCodeAndConfigStatusByTableId" resultType="com.wlhse.dto.outDto.ElementAndConfigStatusDto">
         select Code as elementCode,
         ConfigStatus as configStatus
-        from qhse_companyyearmanagersyselement
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{tableId}
+        from quality_companyyearmanagersyselement
+        where Quality_CompanyYearManagerSysElementTable_ID=#{tableId}
     </select>
 
     <select id="queryElementByCode" resultType="com.wlhse.dto.inDto.YearElementsDto">
@@ -544,9 +544,9 @@
     </select>
 
     <update id="updateConfigStatus">
-        update  qhse_companyyearmanagersyselement
+        update  quality_companyyearmanagersyselement
         set ConfigStatus=#{2}
-        where QHSE_CompanyYearManagerSysElementTable_ID=#{1}
+        where Quality_CompanyYearManagerSysElementTable_ID=#{1}
         and Code=#{0}
     </update>
 

@@ -33,7 +33,6 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
         return R.ok();
     }
 
-    //TODO show_companyYearManager接口实现方法的位置
     @Override
     public R queryAll(CompanyYearManagerDtoWithEmployeeId companyYearManagerDto, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
@@ -47,7 +46,7 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
     }
 
 
-    //TODO delete_companyYearManager接口实现方法的位置
+
     @Override
     @Transactional
     public R deleteALL(int id) {
@@ -61,7 +60,6 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
         return R.ok();
     }
 
-    //TODO companyYearManager接口实现方法的位置
     @Override
     public R addCompanyYearManager(CompanyYearManagerDtoWithEmployeeId companyYearManagerDto,HttpServletRequest request) {
         String token = request.getHeader("Authorization");

@@ -4,6 +4,7 @@ import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.inDto.QualityManagerSysElementInDto;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
 import com.wlhse.dto.outDto.QhseElementsOutDto;
@@ -92,11 +93,11 @@ public interface QualityManagerSysElementDao {
 
 
 
-    List<YearElementsDto> queryElementsByCode(String c);
+    List<QualityYearElementsDto> queryElementsByCode(String c);
     YearElementsDto queryElementByCode(String code);
     Integer findMaxLen();
 
-    Integer addYearElement(YearElementsDto yearElementsDto);
+    Integer addYearElement(QualityYearElementsDto yearElementsDto);
 
     //查找指定tableid
     List<YearElementsDto> queryByTableID(@Param("id") Integer id);

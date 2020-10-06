@@ -277,7 +277,6 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     }
 
     //th-查询基本数据表两级
-    //TODO querryQhseChildElement接口实现方法的位置
     @Override
     public R queryChildElement() {
         R ok = R.ok();
@@ -529,7 +528,6 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             String companyName = yearElementsDto.getCompanyName();
             String year = yearElementsDto.getYear();
             Integer len = qhseManageSysElementsDao.findMaxLen();
-            //TODO Refactor add new element logic
             //get the table's elements status and code
             Map<String, String> elementCodeAndConfigStatusMap = getElementCodeAndConfigStatusMap(tableId);
             Map<String,String> elementsFromClients=new HashMap<>(),
@@ -687,7 +685,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return r;
     }
 
-    //TODO queryYearElement接口的实现位置
+
     @Override
     public R queryYearElements(YearElementsDto yearElementsDto) {
         List<YearElementsDto> lists=qhseManageSysElementsDao.queryYearElement(yearElementsDto);

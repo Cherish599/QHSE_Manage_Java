@@ -1,73 +1,83 @@
-package com.wlhse.dto.inDto;
+package com.wlhse.dto.outDto;
 
-public class QualityYearElementsDto {
-    private Integer qualityCompanyYearManagerSysElementID;//主键，自增id
-    private String codes;//选择的所有二级节点
-    private Integer qualityCompanyYearManagerSysElementTableID;//tableid
+import java.util.LinkedList;
+import java.util.List;
+
+public class QualityYearElementsOutDto {
+    private Integer id;
+
+    private Integer tableID;
+
     private String code;
+
     private String name;
+
     private String content;
+
+    private String basis;
+
     private String auditMode;
+
     private Integer initialScore;
+
     private String formula;
+
+    private String problemDescription;
+
     private Integer totalCount;
+
     private String status;
+
     private String companyCode;
+
     private String companyName;
+
     private String year;
+
     private String fileCheckStatus;
-    private String configStatus;
-    private String schedule;
+    private String  schedule;
+    private List<QualityYearElementsOutDto> childNode = new LinkedList<>();
     private int checkStatus;
-    // 测试
 
-
-    public QualityYearElementsDto() {
+    public QualityYearElementsOutDto() {
     }
 
-    public QualityYearElementsDto(Integer qualityCompanyYearManagerSysElementID, String codes, Integer qualityCompanyYearManagerSysElementTableID, String code, String name, String content, String auditMode, Integer initialScore, String formula, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String configStatus, String schedule, int checkStatus) {
-        this.qualityCompanyYearManagerSysElementID = qualityCompanyYearManagerSysElementID;
-        this.codes = codes;
-        this.qualityCompanyYearManagerSysElementTableID = qualityCompanyYearManagerSysElementTableID;
+    public QualityYearElementsOutDto(Integer id, Integer tableID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String schedule, List<QualityYearElementsOutDto> childNode, int checkStatus) {
+        this.id = id;
+        this.tableID = tableID;
         this.code = code;
         this.name = name;
         this.content = content;
+        this.basis = basis;
         this.auditMode = auditMode;
         this.initialScore = initialScore;
         this.formula = formula;
+        this.problemDescription = problemDescription;
         this.totalCount = totalCount;
         this.status = status;
         this.companyCode = companyCode;
         this.companyName = companyName;
         this.year = year;
         this.fileCheckStatus = fileCheckStatus;
-        this.configStatus = configStatus;
         this.schedule = schedule;
+        this.childNode = childNode;
         this.checkStatus = checkStatus;
     }
 
-    public Integer getQualityCompanyYearManagerSysElementID() {
-        return qualityCompanyYearManagerSysElementID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setQualityCompanyYearManagerSysElementID(Integer qualityCompanyYearManagerSysElementID) {
-        this.qualityCompanyYearManagerSysElementID = qualityCompanyYearManagerSysElementID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getCodes() {
-        return codes;
+    public Integer getTableID() {
+        return tableID;
     }
 
-    public void setCodes(String codes) {
-        this.codes = codes;
-    }
-
-    public Integer getQualityCompanyYearManagerSysElementTableID() {
-        return qualityCompanyYearManagerSysElementTableID;
-    }
-
-    public void setQualityCompanyYearManagerSysElementTableID(Integer qualityCompanyYearManagerSysElementTableID) {
-        this.qualityCompanyYearManagerSysElementTableID = qualityCompanyYearManagerSysElementTableID;
+    public void setTableID(Integer tableID) {
+        this.tableID = tableID;
     }
 
     public String getCode() {
@@ -94,6 +104,14 @@ public class QualityYearElementsDto {
         this.content = content;
     }
 
+    public String getBasis() {
+        return basis;
+    }
+
+    public void setBasis(String basis) {
+        this.basis = basis;
+    }
+
     public String getAuditMode() {
         return auditMode;
     }
@@ -116,6 +134,14 @@ public class QualityYearElementsDto {
 
     public void setFormula(String formula) {
         this.formula = formula;
+    }
+
+    public String getProblemDescription() {
+        return problemDescription;
+    }
+
+    public void setProblemDescription(String problemDescription) {
+        this.problemDescription = problemDescription;
     }
 
     public Integer getTotalCount() {
@@ -166,20 +192,20 @@ public class QualityYearElementsDto {
         this.fileCheckStatus = fileCheckStatus;
     }
 
-    public String getConfigStatus() {
-        return configStatus;
-    }
-
-    public void setConfigStatus(String configStatus) {
-        this.configStatus = configStatus;
-    }
-
     public String getSchedule() {
         return schedule;
     }
 
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    public List<QualityYearElementsOutDto> getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(List<QualityYearElementsOutDto> childNode) {
+        this.childNode = childNode;
     }
 
     public int getCheckStatus() {
@@ -192,24 +218,25 @@ public class QualityYearElementsDto {
 
     @Override
     public String toString() {
-        return "QualityYearElementsDto{" +
-                "qualityCompanyYearManagerSysElementID=" + qualityCompanyYearManagerSysElementID +
-                ", codes='" + codes + '\'' +
-                ", qualityCompanyYearManagerSysElementTableID=" + qualityCompanyYearManagerSysElementTableID +
+        return "QualityYearElementsOutDto{" +
+                "id=" + id +
+                ", tableID=" + tableID +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
+                ", basis='" + basis + '\'' +
                 ", auditMode='" + auditMode + '\'' +
                 ", initialScore=" + initialScore +
                 ", formula='" + formula + '\'' +
+                ", problemDescription='" + problemDescription + '\'' +
                 ", totalCount=" + totalCount +
                 ", status='" + status + '\'' +
                 ", companyCode='" + companyCode + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
                 ", fileCheckStatus='" + fileCheckStatus + '\'' +
-                ", configStatus='" + configStatus + '\'' +
                 ", schedule='" + schedule + '\'' +
+                ", childNode=" + childNode +
                 ", checkStatus=" + checkStatus +
                 '}';
     }
