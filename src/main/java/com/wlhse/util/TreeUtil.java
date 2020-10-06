@@ -870,7 +870,8 @@ public class TreeUtil {
          */
         Map<String, QualityManagerSysElementOutDto> map1 = new TreeMap<>();
         //获得问题描述map
-        //Map<String,String> discriptionMap=getQualityDescriptionMap();
+        Map<String,String> discriptionMap=getQualityDescriptionMap();
+        Map<String,String> ReviewMap=getReviewTermsMap();
         List<Integer> code = new ArrayList<>();
         for (QualityElementsPojo pojo : qhseElementsPojos) {
             QualityManagerSysElementOutDto qhseElementsOutDto = new QualityManagerSysElementOutDto();
@@ -883,11 +884,12 @@ public class TreeUtil {
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
             qhseElementsOutDto.setScoreShows(pojo.getScoreShows());
-            /*if(pojo.getCode().length()==12)//加入问题描述字段
+            if(pojo.getCode().length()==12)//加入问题描述字段
             {
                 qhseElementsOutDto.setProblemDescription(discriptionMap.get(pojo.getCode()));
                 //System.out.println(pojo.getCode()+"-----"+discriptionMap.get(pojo.getCode()));
-            }*/
+                qhseElementsOutDto.setReviewTerms(ReviewMap.get(pojo.getCode()));
+            }
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样
@@ -963,5 +965,41 @@ public List<QualityManergerSysElementPojo> returnCurrentQualityElementList(Map<S
                 code.add(pojo.getCode().length());
         }
         return returnCurrentQualityElementList(map1, code);
+    }
+
+    /**
+     * 该方法用于获得拼接好的审核要素问题描述字段
+     * @return 问题描述<code,Description>map
+     */
+    public Map<String,String> getReviewTermsMap()//获得审核条款的<code,Description>map
+    {
+        /*
+        思想：直接一次把所有问题描述查完，根据code排序,放进list;然后根据code拼接，把code,对应问题描述字符，放进map;
+         */
+        //获得list
+        List<QualityManagerSysEleReviewTermsDto> discriptionList=qualityManagerSysElementDao.queryAllReviewTerms();
+        Map<String,String> disMap=new HashMap<>();
+        //核心算法；k代表当前code对象,j代表下一个对象;i表示序号，temp代表拼接的字符串；类似字符串的Index算法；
+        QualityManagerSysEleReviewTermsDto qualityTermsDto=discriptionList.get(0);
+        String temp=qualityTermsDto.getBasis()+"%"+qualityTermsDto.getTerms()+"%"+qualityTermsDto.getContent();
+        for(int j=1,k=0;j<discriptionList.size();j++) {
+            //k的对象与自增j的对象code相等时，把j的字符和K拼在一起
+            if(discriptionList.get(k).getCode().equals(discriptionList.get(j).getCode())) {
+                qualityTermsDto=discriptionList.get(j);
+                temp+="/**/"+qualityTermsDto.getBasis()+"%"+qualityTermsDto.getTerms()+"%"+qualityTermsDto.getContent();
+                //list最后一个元素，须判断放入；
+                if(j==(discriptionList.size()-1)) {
+                    disMap.put(discriptionList.get(j).getCode(),temp);
+                }
+            }
+            else {
+                //k的对象与j的对象code不相等时，因为是有序，说明到了下一个字符，把上一个拼好的放入map;开始下一个字符拼接，k=j；
+                disMap.put(discriptionList.get(k).getCode(),temp);
+                k=j;
+                qualityTermsDto=discriptionList.get(k);
+                temp=qualityTermsDto.getBasis()+"%"+qualityTermsDto.getTerms()+"%"+qualityTermsDto.getContent();
+            }
+        }
+        return disMap;
     }
 }

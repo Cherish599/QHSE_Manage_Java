@@ -304,6 +304,7 @@ public class UploadServiceImpl implements UploadService {
                 "formula", //部门
                 "totalCount",//第五级叶子总数
                 "status",//状态
+                "reviewTerms",//审核条款
                 "problemDescription",//问题描述，插入另一个数据库
         };
         Workbook workbook = poiUtil.createWorkbook(path);
@@ -315,6 +316,7 @@ public class UploadServiceImpl implements UploadService {
         List<QualityManagerSysElementInDto> beanList = new ArrayList<>();
         //创建创建MAP,放入问题描述对象
         Map<String, String> problemDescriptionMap = new HashMap<>();
+        Map<String, String> reviewTermsMap = new HashMap<>();
         //获取EXCEL中的值
         DataFormatter dataFormat=new DataFormatter();
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {//类似二维数组的读取，外层为行，内层为列；从第2行开始读；
@@ -340,7 +342,11 @@ public class UploadServiceImpl implements UploadService {
                         else throw new WLHSException(rcode+"的可能问题序号不是1开始");
                     }
                 }
-                else {//当不为问题描述时，直接将属性键值对放入map
+                else if ("reviewTerms".equals(fieldArray[j])){
+                    if(value==null||"".equals(value)||" ".equals(value)||"  ".equals(value))//如果不是叶子节点，就为空，直接跳过
+                        continue;
+                    else reviewTermsMap.put(rcode,value);
+                }else {//当不为问题描述时，直接将属性键值对放入map
                     QSHEMSElementValueMap.put(fieldArray[j], value);//读取第i行第j列；
                 }
             }
@@ -370,7 +376,8 @@ public class UploadServiceImpl implements UploadService {
                     }
                 }
                 //再导入问题描述表
-                insertProblemDescription(problemDescriptionMap);
+                insertQualityDescription(problemDescriptionMap);
+                insertReviewTerms(reviewTermsMap);
                 return R.ok("文件上传成功");//导入数据库成功
             }
             else throw new WLHSException("有重复编码："+duplicCode);//提示有重复编码
@@ -437,6 +444,30 @@ public class UploadServiceImpl implements UploadService {
             if(qualityManagerSysElementDao.addProblemDescription(code, (s[1].startsWith(".")? s[1].substring(1):s[1]))<=0)
                 throw new WLHSException("新增失败");
         }
-
+    }
+    public void insertReviewTerms(Map<String, String> ReviewTerms) {
+        String code;
+        qualityManagerSysElementDao.deleteReviewTerms();
+        List<QualityManagerSysEleReviewTermsDto> list=new ArrayList<>();
+        for(Map.Entry<String,String> entry: ReviewTerms.entrySet())
+        {
+            code=entry.getKey();
+            String Terms;
+            String[] b;
+            Terms=entry.getValue();
+            String[] a= Terms.split("/\\*\\*/");
+            for(String temp:a){
+                b=temp.split("%");
+                QualityManagerSysEleReviewTermsDto ele=new QualityManagerSysEleReviewTermsDto();
+                ele.setBasis(b[0]);
+                ele.setTerms(b[1]);
+                ele.setContent(b[2]);
+                ele.setCode(code);
+                list.add(ele);
+            }
+        }
+        if(qualityManagerSysElementDao.batchInsertRecord(list)<=0) {
+            throw new WLHSException("新增失败");
+        }
     }
 }

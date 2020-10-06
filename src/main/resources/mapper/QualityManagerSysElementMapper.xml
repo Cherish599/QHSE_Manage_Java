@@ -683,7 +683,7 @@
     </select>
 
     <select id="queryAllReviewTerms" resultType="com.wlhse.dto.QualityManagerSysEleReviewTermsDto">
-        select Quality_ManagerSysElementProblemDescription_ID as qHSE_ManagerSysElementProblemDescription_ID,
+        select Quality_ManagerSysEleReviewTerms_ID as quality_ManagerSysEleReviewTerms_ID,
         Code as code,
         Basis as basis,
         Terms as terms,
@@ -701,7 +701,17 @@
         set Basis=#{basis},Terms=#{terms},Content=#{content}
         where Quality_ManagerSysEleReviewTerms_ID=#{quality_ManagerSysEleReviewTerms_ID}
     </update>
-
+    <insert id="batchInsertRecord">
+        insert into quality_managersyselereviewterms
+        (Code,Basis,Terms,Content)
+        values
+        <foreach collection="list" item="detail" separator=",">
+            (
+            #{detail.code},#{detail.basis},#{detail.terms},
+            #{detail.content}
+            )
+        </foreach>
+    </insert>
 
 
 </mapper>
