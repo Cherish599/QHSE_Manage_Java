@@ -25,6 +25,7 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     JedisClient jedisClient;
     @Resource
     EmployeeManagementService employeeManagementService;
+
     @Override
     public R addDangerRecord(DangerRecordDto dangerRecordDto, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
@@ -33,14 +34,14 @@ public class DangerRecordServiceImpl implements DangerRecordService {
         dangerRecordDto.setSafeStaff_ID(employeeId);
         String employeeName = employeeManagementService.getEmployeeNameByEmployeeID(employeeId);
         dangerRecordDto.setSafeStaff_Name(employeeName);
-        if(dangerRecordDao.addDangerRecord(dangerRecordDto)<=0)
+        if (dangerRecordDao.addDangerRecord(dangerRecordDto) <= 0)
             throw new WLHSException("新增失败");
         return R.ok();
     }
 
     @Override
     public R deleteDangerRecord(DangerRecordDto dangerRecordDto) {
-        if(dangerRecordDao.deleteDangerRecord(dangerRecordDto)<=0)
+        if (dangerRecordDao.deleteDangerRecord(dangerRecordDto) <= 0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
@@ -49,7 +50,7 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     public R updateDangerRecord(DangerRecordDto dangerRecordDto) {
         try {
             dangerRecordDao.updateDangerRecord(dangerRecordDto);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return R.error("更新失败");
         }
@@ -59,6 +60,27 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     @Override
     public String queryDangerRecordById(Integer id) {
         List<DangerRecordDto> list = dangerRecordDao.queryDangerRecordById(id);
+        if (list != null && list.size() != 0) {
+            for (DangerRecordDto dangerRecordDto : list) {
+                if (dangerRecordDto.getEndDate() != null && dangerRecordDto.getEndDate().length() > 10)
+                    dangerRecordDto.setEndDate(dangerRecordDto.getEndDate().substring(0, 10));
+
+                if (dangerRecordDto.getLimitDate() != null && dangerRecordDto.getLimitDate().length() > 10)
+                    dangerRecordDto.setLimitDate(dangerRecordDto.getLimitDate().substring(0, 10));
+
+                if (dangerRecordDto.getReceptionDate() != null && dangerRecordDto.getReceptionDate().length() > 10)
+                    dangerRecordDto.setReceptionDate(dangerRecordDto.getReceptionDate().substring(0, 10));
+
+                if (dangerRecordDto.getRecordDate() != null && dangerRecordDto.getRecordDate().length() > 10)
+                    dangerRecordDto.setRecordDate(dangerRecordDto.getRecordDate().substring(0, 10));
+
+                if (dangerRecordDto.getStartDate() != null && dangerRecordDto.getStartDate().length() > 10)
+                    dangerRecordDto.setStartDate(dangerRecordDto.getStartDate().substring(0, 10));
+
+                if (dangerRecordDto.getSupervisionDate() != null && dangerRecordDto.getSupervisionDate().length() > 10)
+                    dangerRecordDto.setSupervisionDate(dangerRecordDto.getSupervisionDate().substring(0, 10));
+            }
+        }
         return NR.r(list);
     }
 
@@ -73,7 +95,7 @@ public class DangerRecordServiceImpl implements DangerRecordService {
 
     @Override
     public R problemVerification(DangerRecordDto dangerRecordDto) {
-        if(dangerRecordDao.problemVerification(dangerRecordDto)<=0)
+        if (dangerRecordDao.problemVerification(dangerRecordDto) <= 0)
             throw new WLHSException("修改失败");
         return R.ok();
     }

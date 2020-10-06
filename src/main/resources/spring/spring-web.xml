@@ -19,7 +19,7 @@
 
 
    <!-- 项目权限认证 - 本地测试时关闭 -->
-    <mvc:interceptors>
+<!--    <mvc:interceptors>
         <mvc:interceptor>
 
             <mvc:mapping path="/**"/>
@@ -28,7 +28,7 @@
             <mvc:exclude-mapping path="/api/v3/anzhuo2"/>
             <mvc:exclude-mapping path="/api/v3/menu_module"/>
             <mvc:exclude-mapping path="/api/v3/logout"/>
-    <!-- 上传文件-->
+    &lt;!&ndash; 上传文件&ndash;&gt;
      <mvc:exclude-mapping path="/api/v3/file_upload"/>
      <mvc:exclude-mapping path="/api/v3/uploadQHSEProblem"/>
      <mvc:exclude-mapping path="/api/v3/uploadQHSEFill"/>
@@ -42,7 +42,7 @@
             <mvc:exclude-mapping path="/api/v3/downloadMonitorDetailExcelTemplate"/>
             <mvc:exclude-mapping path="/api/v3/screenShotDownload"/>
             <mvc:exclude-mapping path="/api/v3/selectModule/"/>
-            <!-- 发送消息-->
+            &lt;!&ndash; 发送消息&ndash;&gt;
      <mvc:exclude-mapping path="/api/v3/produce"/>
      <mvc:exclude-mapping path="/api/v3/message"/>
      <mvc:exclude-mapping path="/api/v3/message/*"/>
@@ -50,12 +50,12 @@
      <mvc:exclude-mapping path="/api/v3/message/all"/>
 
      <mvc:exclude-mapping path="/api/v3/problems_response/*"/>
-            <!-- WebSocekt-->
+            &lt;!&ndash; WebSocekt&ndash;&gt;
      <mvc:exclude-mapping path="/ws"/>
 
      <bean class="com.wlhse.controller.APIInterceptor"/>
  </mvc:interceptor>
-</mvc:interceptors>
+</mvc:interceptors>-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/"/>
