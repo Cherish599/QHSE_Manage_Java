@@ -705,6 +705,32 @@
         </where>
     </select>
 
+    <select id="getInputtedNum" resultType="java.lang.Integer">
+        select count(*) from
+        qhse_companyyearmanagersyselement
+        where FileCheckStatus='未审核'
+        and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </select>
 
+    <select id="getCheckedNum" resultType="java.lang.Integer">
+        select count(*) from
+        qhse_companyyearmanagersyselement
+        where FileCheckStatus='未批准'
+        and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </select>
+
+    <select id="getApprovedNum" resultType="java.lang.Integer">
+        select count(*) from
+        qhse_companyyearmanagersyselement
+        where FileCheckStatus='备案待查'
+        and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </select>
+
+    <select id="getReInputNum" resultType="java.lang.Integer">
+          select count(*) from
+        qhse_companyyearmanagersyselement
+        where FileCheckStatus='不通过'
+        and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </select>
 </mapper>
 

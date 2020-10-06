@@ -80,11 +80,12 @@ public class TaskServiceImp implements TaskService {
             jedisClient.set("T"+tableId,total);
         }
         ProgressDto progressDto=new ProgressDto();
-        String finishedNum="0";
+        int finishedNum=0;
         switch (status){
-            case "录入证据中":finishedNum=jedisClient.get("TInput"+tableId); break;
-            case "审核中":finishedNum=jedisClient.get("TCheck"+tableId);break;
-            case "批准中":finishedNum=jedisClient.get("TApprove"+tableId);
+            case "录入证据中":finishedNum=qhseManageSysElementsDao.getInputtedNum(tableId); break;
+            case "审核中":finishedNum=qhseManageSysElementsDao.getCheckedNum(tableId);break;
+            case "批准中":finishedNum=qhseManageSysElementsDao.getApprovedNum(tableId);break;
+            case "重新录入中":case "重新审核中":case "重新批准中":finishedNum=qhseManageSysElementsDao.getReInputNum(tableId);
         }
         progressDto.setTotal(total);
         progressDto.setFinishedNum(finishedNum);

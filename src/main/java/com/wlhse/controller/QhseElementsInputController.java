@@ -17,8 +17,6 @@ public class QhseElementsInputController {
 
     @Resource
     private QhseElementsInputService qhseElementsInputService;
-    @Resource
-    QhseElementsInputDao qhseElementsInputDao;
 
 
     //melon-增加附件所有信息(前端传值code、id、uploadtime不能为空）
@@ -46,7 +44,7 @@ public class QhseElementsInputController {
 //        return R.ok();
 //    }
 
-    @RequestMapping(value = "/submitInputResult/",method = RequestMethod.POST)
+    @RequestMapping(value = "/submitInputResult",method = RequestMethod.POST)
     public R submitInputResult(@RequestParam(value = "tableId",required = false)Integer tableId,@RequestParam("tag")Integer tag){
         return qhseElementsInputService.submitInputResult(tableId,tag);
     }

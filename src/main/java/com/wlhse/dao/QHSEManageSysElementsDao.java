@@ -111,4 +111,12 @@ public interface QHSEManageSysElementsDao {
     int getAllLeafNodeNumber(int table);
 
     List<YearElementsDto> queryYearElement(YearElementsDto yearElementsDto);
+
+    int getInputtedNum(int tableId);
+
+    int getCheckedNum(int tableId);
+
+    int getApprovedNum(int tableId);
+
+    int getReInputNum(int tableId);
 }
