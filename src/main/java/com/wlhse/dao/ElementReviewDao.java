@@ -47,9 +47,13 @@ public interface ElementReviewDao {
 
     //查询已审核
     List<QHSECompanyYearManagerSysElementDto> queryCheck(ElementReviewDto elementReviewDto);
+    //质量查询已审核
+    List<QualityManergerSysElementPojo> queryQualityCheck(QualityManergerSysElementPojo qHSECompanyYearManagerSysElementDto);
 
     //查询全要素个数
     int queryAllElement(ElementReviewDto elementReviewDto);
+    //查询zhil全要素个数
+    int queryQualityAllElement(QualityManergerSysElementPojo QualityManergerSysElementPojo);
 
     //质量审核部分：
     //查询叶子证据

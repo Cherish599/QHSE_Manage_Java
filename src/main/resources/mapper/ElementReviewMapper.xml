@@ -13,6 +13,7 @@
                 AND year=#{year}
             </if>
             and ConfigStatus="启用"
+            and Status="未审核"
         </where>
     </select>
 
@@ -27,6 +28,7 @@
             AND year=#{year}
         </if>
         and ConfigStatus="启用"
+        and Status="未批准"
         </where>
     </select>
 
@@ -139,6 +141,28 @@
     <select id="queryParentss" resultType="com.wlhse.entity.QualityManergerSysElementPojo">
          select * from quality_companyyearmanagersyselement where  code=#{0} and companyCode=#{1}
          and `year`=#{2}
+    </select>
+    <select id="queryQualityCheck" resultType="com.wlhse.entity.QualityManergerSysElementPojo">
+        select * from quality_companyyearmanagersyselement
+        <where>
+            <if test="companyCode !=null and companyCode!=''">
+                AND companyCode=#{companyCode}
+            </if>
+            <if test="year != null and year  != ''">
+                AND year=#{year}
+            </if>
+            <if test="status==0">
+                and (status="未批准" or status="备案待查")
+            </if>
+            <if test="status==1">
+                and status="备案待查"
+            </if>
+            and ConfigStatus="启用"
+        </where>
+    </select>
+    <select id="queryQualityAllElement" resultType="java.lang.Integer">
+         select count(*) from quality_companyyearmanagersyselement where companyCode=#{companyCode} and `year`=#{year}
+        and (status is not null and  status!="")
     </select>
 
 

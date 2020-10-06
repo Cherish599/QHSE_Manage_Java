@@ -7,6 +7,7 @@ import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.entity.QualityInputAttachPojo;
+import com.wlhse.entity.QualityManergerSysElementPojo;
 import com.wlhse.service.ElementReviewService;
 import com.wlhse.service.QualityElementReviewServer;
 import com.wlhse.util.GetCurrentUserIdUtil;
@@ -29,6 +30,8 @@ import java.text.ParseException;
 public class QualityElementReviewController {
     @Resource
     QualityElementReviewServer qualityElementReviewServer;
+    @Resource
+    ElementReviewService elementReviewService;
 
     //质量要素录入查询
     @RequestMapping(value = "/quality_query_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
@@ -54,5 +57,15 @@ public class QualityElementReviewController {
     @RequestMapping(value = "/passOrNoquality/{tag}", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R passOrNoQuality(@PathVariable("tag") Integer tag,@RequestParam("id")Integer id,@RequestParam("pass") String pass,@RequestParam(required = false)String negativeOpinion)  {
         return  qualityElementReviewServer.pass(id,tag,pass,negativeOpinion);
+    }
+    //查询已审核或已审批
+    @RequestMapping(value = "/quality_show_approve_check", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R qualityShowApproveCheck( QualityManergerSysElementPojo qualityManergerSysElementPojo) {
+        return  elementReviewService.qualityShows(qualityManergerSysElementPojo);
+    }
+    //查询全要素
+    @RequestMapping(value = "/showQualityAllElement", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R showQualityAllElement(QualityManergerSysElementPojo qualityManergerSysElementPojo) {
+        return  elementReviewService.queryQualityAllElement(qualityManergerSysElementPojo);
     }
 }
