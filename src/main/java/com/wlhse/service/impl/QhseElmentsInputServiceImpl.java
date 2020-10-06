@@ -50,14 +50,6 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
                     qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
                 }
             }
-            //增加统计数据
-            qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
-            if (jedisClient.get("TInput"+tableId)==null){
-                jedisClient.set("TInput"+tableId,String.valueOf(1));
-            }
-            else {
-                jedisClient.set("TInput"+tableId,String.valueOf(Integer.valueOf(jedisClient.get("TInput"+tableId))+1));
-            }
         } else {
             //再次录入数据
             //将附件attach对应id放入elementFileInfo

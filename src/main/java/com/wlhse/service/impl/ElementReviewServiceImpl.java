@@ -102,19 +102,10 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         int j=1;
         //TODO 添加不批准的逻辑
         if (status.equals("不通过")){
-            String s = jedisClient.get("TNoInput" + tableId);
-            if (s==null){
-                jedisClient.set("TNoInput"+tableId,String.valueOf(1));
-            }
-            else
-            {
-                jedisClient.set("TNoInput"+tableId,String.valueOf(Integer.valueOf(s)+1));
-            }
-
             j=elementReviewDao.updateAddvice(elementReviewDto);
         }
         // 更新状态
-        taskDao.updateCheckStatus(tableId,"重新录入");
+        taskDao.updateCheckStatus(tableId,"重新录入中");
         if (i*j<= 0)
             throw new WLHSException("更新失败");
         return R.ok();
