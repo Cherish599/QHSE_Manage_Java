@@ -34,8 +34,13 @@ public class ProblemDescriptionServiceImpl implements ProblemDescriptionService 
 
     @Override
     public R updateProblemDescription(ProblemDescriptionDto problemDescriptionDto) {
-        if(problemDescriptionDao.updateProblemDescription(problemDescriptionDto)<=0)
-            throw new WLHSException("更新失败");
+
+        try {
+            problemDescriptionDao.updateProblemDescription(problemDescriptionDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("更新失败");
+        }
         return R.ok();
     }
 

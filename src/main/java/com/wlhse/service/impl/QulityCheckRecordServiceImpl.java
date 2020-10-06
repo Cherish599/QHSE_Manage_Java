@@ -29,38 +29,14 @@ public class QulityCheckRecordServiceImpl implements QulityCheckRecordService {
 
         // 判断基础表数据是否为空
         if (qulityCheckRecordPojo.getQulity_CheckID() == null
-                || qulityCheckRecordPojo.getCheckListCode() == null
-                || qulityCheckRecordPojo.getNo() == null) {
+                || qulityCheckRecordPojo.getCheckListCode() == null) {
             return R.error("参数不合法");
         }
-
-        // 问题分类：不符合
-        // 预处理违章项相关字段
-        if ("不符合".equals(qulityCheckRecordPojo.getNature())) {
-            qulityCheckRecordPojo.setNonConformCorrectMeasureVerify(null);
-            qulityCheckRecordPojo.setNonConformCorrectMeasure(null);
-            qulityCheckRecordPojo.setNonConformCorrect(null);
-            qulityCheckRecordPojo.setNonConformSource(null);
-            qulityCheckRecordPojo.setNonConformClauseContent(null);
-            qulityCheckRecordPojo.setNonConformClauseNo(null);
-            qulityCheckRecordPojo.setNonConformityStd(null);
-            qulityCheckRecordPojo.setNonConformityType(null);
-            qulityCheckRecordPojo.setNonConformityNature(null);
-        }
-
-        // 问题分类：违章项
-        // 预处理不符合相关字段
-        if ("违章项".equals(qulityCheckRecordPojo.getNature())) {
-            qulityCheckRecordPojo.setViolationClauseContent(null);
-            qulityCheckRecordPojo.setViolationDeduction(null);
-            qulityCheckRecordPojo.setViolationScore(null);
-            qulityCheckRecordPojo.setViolationClause(null);
-        }
-
         try {
             qulityCheckRecordDao.addQualityCheckRecord(qulityCheckRecordPojo);
         } catch (Exception e) {
             e.printStackTrace();
+            return R.error("插入失败");
         }
         return R.ok("插入成功");
     }

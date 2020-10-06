@@ -20,6 +20,9 @@
             <if test="situation != null and situation  != ''">
                 Situation=#{situation},
             </if>
+            <if test="status != null and status  != ''">
+                status=#{status},
+            </if>
         </trim>
     </sql>
 
