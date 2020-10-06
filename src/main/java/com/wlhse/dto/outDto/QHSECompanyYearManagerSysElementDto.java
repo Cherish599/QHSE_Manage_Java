@@ -19,29 +19,7 @@ public class QHSECompanyYearManagerSysElementDto {
     private String  companyCode;
     private String  companyName;
     private String  year;
-    private int checkStatus;
-
-    public QHSECompanyYearManagerSysElementDto(Integer qHSE_CompanyYearManagerSysElement_ID, Integer qHSE_CompanyYearManagerSysElementTable_ID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, int checkStatus) {
-        this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
-        this.qHSE_CompanyYearManagerSysElementTable_ID = qHSE_CompanyYearManagerSysElementTable_ID;
-        this.code = code;
-        this.name = name;
-        this.content = content;
-        this.basis = basis;
-        this.auditMode = auditMode;
-        this.initialScore = initialScore;
-        this.formula = formula;
-        this.problemDescription = problemDescription;
-        this.totalCount = totalCount;
-        this.status = status;
-        this.companyCode = companyCode;
-        this.companyName = companyName;
-        this.year = year;
-        this.checkStatus = checkStatus;
-    }
-
-    public QHSECompanyYearManagerSysElementDto() {
-    }
+    private List<QHSECompanyYearManagerSysElementDto> childNode = new LinkedList<>();
 
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
         return qHSE_CompanyYearManagerSysElement_ID;
@@ -163,12 +141,12 @@ public class QHSECompanyYearManagerSysElementDto {
         this.year = year;
     }
 
-    public int getCheckStatus() {
-        return checkStatus;
+    public List<QHSECompanyYearManagerSysElementDto> getChildNode() {
+        return childNode;
     }
 
-    public void setCheckStatus(int checkStatus) {
-        this.checkStatus = checkStatus;
+    public void setChildNode(List<QHSECompanyYearManagerSysElementDto> childNode) {
+        this.childNode = childNode;
     }
 
     @Override
@@ -189,7 +167,7 @@ public class QHSECompanyYearManagerSysElementDto {
                 ", companyCode='" + companyCode + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
-                ", checkStatus=" + checkStatus +
+                ", childNode=" + childNode +
                 '}';
     }
 }
