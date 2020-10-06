@@ -29,8 +29,7 @@ public class QulityCheckRecordServiceImpl implements QulityCheckRecordService {
 
         // 判断基础表数据是否为空
         if (qulityCheckRecordPojo.getQulity_CheckID() == null
-                || qulityCheckRecordPojo.getCheckListCode() == null
-                || qulityCheckRecordPojo.getNo() == null) {
+                || qulityCheckRecordPojo.getCheckListCode() == null) {
             return R.error("参数不合法");
         }
 
