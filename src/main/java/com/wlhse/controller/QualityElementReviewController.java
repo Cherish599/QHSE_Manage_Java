@@ -45,4 +45,14 @@ public class QualityElementReviewController {
     public R elementReviewers(@RequestBody(required = false) QualityInputAttachPojo qualityInputAttachPojo) {
         return  qualityElementReviewServer.insertAttach(qualityInputAttachPojo);
     }
+    //质量要素审核审批查询
+    @RequestMapping(value = "/quality_show_check/{tag}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R elementReviewer(@PathVariable("tag") Integer tag,@RequestParam("companyCode") String companyCode,@RequestParam("year") String year) {
+        return  qualityElementReviewServer.queryCheck(tag,companyCode,year);
+    }
+    //质量通过or不通过
+    @RequestMapping(value = "/passOrNoquality/{tag}", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public R passOrNoQuality(@PathVariable("tag") Integer tag,@RequestParam("id")Integer id,@RequestParam("pass") String pass,@RequestParam(required = false)String negativeOpinion)  {
+        return  qualityElementReviewServer.pass(id,tag,pass,negativeOpinion);
+    }
 }

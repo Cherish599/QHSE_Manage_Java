@@ -4,6 +4,7 @@ import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
+import com.wlhse.entity.QualityManergerSysElementPojo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ public interface ElementReviewDao {
     //查父节点
     List<QHSECompanyYearManagerSysElementDto> queryParent(String code);
     QHSECompanyYearManagerSysElementDto queryParents(String code,String companyCode,String year);
+    QualityManergerSysElementPojo queryParentss(String code, String companyCode, String year);
     //添加审核人
     int updateCheck(ElementReviewDto elementReviewDto);
 
