@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
 import com.wlhse.dto.inDto.QualityManagerSysElementInDto;
@@ -83,12 +84,19 @@ public interface QualityManagerSysElementDao {
     //更新
     Integer updateDescriptionById(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto);
     //查询所有问题描述，导入Excel
-    List<QualityManagerSysElementProDesDto> querryAllDescription();
+    List<QualityManagerSysElementProDesDto> queryAllDescription();
 
-
-
-
-
+    List<QualityManagerSysEleReviewTermsDto>  queryReviewTermsByCode(@Param("code") String code);
+    //根据ID删除对应的审核条款
+    Integer deleteReviewTermsById(@Param("id") Integer id);
+    //更新
+    Integer updateReviewTermsById(QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto);
+    //插入
+    Integer addReviewTerms(QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto);
+    //查询所有条款，导入Excel
+    List<QualityManagerSysEleReviewTermsDto> queryAllReviewTerms();
+    //导入excel问题描述时，先删除所有审核条款
+    Integer deleteReviewTerms();
 
 
 

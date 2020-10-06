@@ -505,7 +505,7 @@
         Code,Description from quality_managersyselementproblemdescription where Code=#{code}
     </select>
 
-    <select id="querryAllDescription" resultType="com.wlhse.dto.QualityManagerSysElementProDesDto">
+    <select id="queryAllDescription" resultType="com.wlhse.dto.QualityManagerSysElementProDesDto">
         select Quality_ManagerSysElementProblemDescription_ID as qHSE_ManagerSysElementProblemDescription_ID,
         Code,
         Description from quality_managersyselementproblemdescription order by Code
@@ -630,6 +630,78 @@
             AND t1.ConfigStatus="启用"
         </where>
     </select>
+
+    <delete id="deleteReviewTerms">
+        delete from quality_managersyselereviewterms
+    </delete>
+
+
+    <insert id="addReviewTerms" >
+        insert into quality_managersyselereviewterms
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                Code,
+            </if>
+            <if test="basis != null and basis != ''">
+                Basis,
+            </if>
+            <if test="terms != null and terms != ''">
+                Terms,
+            </if>
+            <if test="content != null and content != ''">
+                Content
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="basis != null and basis != ''">
+                #{basis},
+            </if>
+            <if test="terms != null and terms != ''">
+                #{terms},
+            </if>
+            <if test="content != null and content != ''">
+                #{content}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <select id="queryReviewTermsByCode" resultType="com.wlhse.dto.QualityManagerSysEleReviewTermsDto">
+        select Quality_ManagerSysEleReviewTerms_ID as quality_ManagerSysEleReviewTerms_ID,
+        Code as code,
+        Basis as basis,
+        Terms as terms,
+        Content as content
+        from quality_managersyselereviewterms  where Code=#{code}
+    </select>
+
+    <select id="queryAllReviewTerms" resultType="com.wlhse.dto.QualityManagerSysEleReviewTermsDto">
+        select Quality_ManagerSysElementProblemDescription_ID as qHSE_ManagerSysElementProblemDescription_ID,
+        Code as code,
+        Basis as basis,
+        Terms as terms,
+        Content as content
+        from quality_managersyselereviewterms order by Code
+    </select>
+
+    <delete id="deleteReviewTermsById">
+        delete from quality_managersyselereviewterms
+        where Quality_ManagerSysEleReviewTerms_ID=#{id}
+    </delete>
+
+    <update id="updateReviewTermsById" parameterType="com.wlhse.dto.QualityManagerSysEleReviewTermsDto">
+        update quality_managersyselereviewterms
+        set Basis=#{basis},Terms=#{terms},Content=#{content}
+        where Quality_ManagerSysEleReviewTerms_ID=#{quality_ManagerSysEleReviewTerms_ID}
+    </update>
+
 
 
 </mapper>

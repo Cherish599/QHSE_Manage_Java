@@ -1,5 +1,6 @@
 package com.wlhse.service;
 
+import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QualityElementsPojo;
@@ -33,6 +34,15 @@ public interface QualityManagerSysElementService {
     R updateQhseProblemDiscription(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto);
     //增加
     R addQhseProblemDiscription(QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto);
+
+    //根据code查询对应的条款
+    R queryQualityReviewTerms(String code);
+    //根据ID删除对应的条款
+    R deleteQualityReviewTerms(Integer id);
+    //改
+    R updateQualityReviewTerms(QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto);
+    //增加
+    R addQualityReviewTerms(QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto);
 
     R addYearElement(YearElementsDto yearElementsDto);
 

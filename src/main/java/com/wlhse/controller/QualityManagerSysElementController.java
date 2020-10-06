@@ -2,6 +2,7 @@ package com.wlhse.controller;
 
 
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
+import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.entity.QhseElementsPojo;
@@ -90,6 +91,30 @@ public class QualityManagerSysElementController {
     public R addQualityProDis(@RequestBody(required = false) QualityManagerSysElementProDesDto qHSEproblemDiscriptionDto)
     {
         return qualityManagerSysElementService.addQhseProblemDiscription(qHSEproblemDiscriptionDto);
+    }
+
+    //查询审核内容，根据返回的code查询
+    @RequestMapping(value = "/queryQualityReviewTerms/{code}", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R queryQualityReviewTerms(@PathVariable("code") String code){
+        return qualityManagerSysElementService.queryQualityReviewTerms(code);
+    }
+    //删除
+    @RequestMapping(value = "/deleteQualityReviewTerms/{id}", method = RequestMethod.DELETE,produces = {"application/json;charset=UTF-8"})
+    public R deleteQualityReviewTerms(@PathVariable("id") Integer id)
+    {
+        return qualityManagerSysElementService.deleteQualityReviewTerms(id);
+    }
+    //跟新
+    @RequestMapping(value = "/updateQualityReviewTerms", method = RequestMethod.PUT,produces = {"application/json;charset=UTF-8"})
+    public R updateQualityReviewTerms(@RequestBody(required = false) QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto)
+    {
+        return qualityManagerSysElementService.updateQualityReviewTerms(qualityManagerSysEleReviewTermsDto);
+    }
+    //添加
+    @RequestMapping(value = "/addQualityReviewTerms", method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    public R addQualityReviewTerms(@RequestBody(required = false) QualityManagerSysEleReviewTermsDto qualityManagerSysEleReviewTermsDto)
+    {
+        return qualityManagerSysElementService.addQualityReviewTerms(qualityManagerSysEleReviewTermsDto);
     }
 
 
