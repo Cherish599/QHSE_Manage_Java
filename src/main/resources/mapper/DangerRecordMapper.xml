@@ -376,7 +376,7 @@
                 factorSource=#{factorSource},
             </if>
             <if test="profession != null and profession  != ''">
-                profession=#{professionID},
+                profession=#{profession},
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 factorHSE=#{factorHSE},
@@ -513,6 +513,9 @@
             </if>
             <if test="reformCase != null and reformCase  != ''">
                 reformCase=#{reformCase},
+            </if>
+            <if test="status != null and status  != ''">
+                status=#{status},
             </if>
         </trim>
     </sql>

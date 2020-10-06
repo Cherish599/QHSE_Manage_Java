@@ -9,7 +9,7 @@
         FactorCode as factorCode,
         FactorID as factorID,
         Name as name,
-        Rigth as right,
+        Rigth as `right`,
         FactorHseCode as factorHseCode,
         FactorObserverCode as factorObserverCode,
         FactorSourceCode as factorSourceCode,
