@@ -90,6 +90,27 @@ public class DangerRecordServiceImpl implements DangerRecordService {
         int pageIdx = dangerRecordDto.getPageIdx();
         PageHelper.startPage(pageIdx, dangerRecordDto.getPageSize());
         List<DangerRecordDto> list = dangerRecordDao.queryDangerRecord(dangerRecordDto);
+        if (list != null && list.size() != 0) {
+            for (DangerRecordDto temp : list) {
+                if (temp.getEndDate() != null && temp.getEndDate().length() > 10)
+                    temp.setEndDate(temp.getEndDate().substring(0, 10));
+
+                if (temp.getLimitDate() != null && temp.getLimitDate().length() > 10)
+                    temp.setLimitDate(temp.getLimitDate().substring(0, 10));
+
+                if (temp.getReceptionDate() != null && temp.getReceptionDate().length() > 10)
+                    temp.setReceptionDate(temp.getReceptionDate().substring(0, 10));
+
+                if (temp.getRecordDate() != null && temp.getRecordDate().length() > 10)
+                    temp.setRecordDate(temp.getRecordDate().substring(0, 10));
+
+                if (temp.getStartDate() != null && temp.getStartDate().length() > 10)
+                    temp.setStartDate(temp.getStartDate().substring(0, 10));
+
+                if (temp.getSupervisionDate() != null && temp.getSupervisionDate().length() > 10)
+                    temp.setSupervisionDate(temp.getSupervisionDate().substring(0, 10));
+            }
+        }
         return NR.r(list, total, pageIdx);
     }
 
