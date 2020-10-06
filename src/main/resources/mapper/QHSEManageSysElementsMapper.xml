@@ -163,7 +163,8 @@
         t1.CompanyCode as companyCode,
         t1.CompanyName as companyName,
         t1.Year as `year`,
-        t1.fileCheckStatus as fileCheckStatus
+        t1.fileCheckStatus as fileCheckStatus,
+        t1.CheckStatus as checkStatus
         from QHSE_CompanyYearManagerSysElement as t1
         <where>
             <if test="companyCode !=null and companyCode!=''">

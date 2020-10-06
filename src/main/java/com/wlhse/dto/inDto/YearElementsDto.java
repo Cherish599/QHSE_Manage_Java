@@ -18,21 +18,9 @@ public class YearElementsDto {
     private String fileCheckStatus;
     private String configStatus;
     private String  schedule;
+    private int checkStatus;
 
-    public String getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
-    }
-
-    public String getConfigStatus() {
-        return configStatus;
-    }
-
-    public void setConfigStatus(String configStatus) {
-        this.configStatus = configStatus;
+    public YearElementsDto() {
     }
 
     public Integer getQhseCompanyYearManagerSysElementID() {
@@ -83,7 +71,6 @@ public class YearElementsDto {
         this.content = content;
     }
 
-
     public String getAuditMode() {
         return auditMode;
     }
@@ -107,7 +94,6 @@ public class YearElementsDto {
     public void setFormula(String formula) {
         this.formula = formula;
     }
-
 
     public Integer getTotalCount() {
         return totalCount;
@@ -157,6 +143,52 @@ public class YearElementsDto {
         this.fileCheckStatus = fileCheckStatus;
     }
 
+    public String getConfigStatus() {
+        return configStatus;
+    }
+
+    public void setConfigStatus(String configStatus) {
+        this.configStatus = configStatus;
+    }
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public int getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(int checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    public YearElementsDto(Integer qhseCompanyYearManagerSysElementID, String codes, Integer qhseCompanyYearManagerSysElementTableID, String code, String name, String content, String auditMode, Integer initialScore, String formula, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String configStatus, String schedule, int checkStatus) {
+        this.qhseCompanyYearManagerSysElementID = qhseCompanyYearManagerSysElementID;
+        this.codes = codes;
+        this.qhseCompanyYearManagerSysElementTableID = qhseCompanyYearManagerSysElementTableID;
+        this.code = code;
+        this.name = name;
+        this.content = content;
+        this.auditMode = auditMode;
+        this.initialScore = initialScore;
+        this.formula = formula;
+        this.totalCount = totalCount;
+        this.status = status;
+        this.companyCode = companyCode;
+        this.companyName = companyName;
+        this.year = year;
+        this.fileCheckStatus = fileCheckStatus;
+        this.configStatus = configStatus;
+        this.schedule = schedule;
+        this.checkStatus = checkStatus;
+    }
+
+
     @Override
     public String toString() {
         return "YearElementsDto{" +
@@ -176,6 +208,8 @@ public class YearElementsDto {
                 ", year='" + year + '\'' +
                 ", fileCheckStatus='" + fileCheckStatus + '\'' +
                 ", configStatus='" + configStatus + '\'' +
+                ", schedule='" + schedule + '\'' +
+                ", checkStatus=" + checkStatus +
                 '}';
     }
 }
