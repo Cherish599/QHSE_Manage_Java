@@ -6,6 +6,7 @@ import com.wlhse.dao.QualityManagerSysElementDao;
 import com.wlhse.dto.QHSEproblemDiscriptionDto;
 import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
@@ -393,198 +394,20 @@ public class QualityManagerSysElementServiceImpl implements QualityManagerSysEle
         return R.ok();
     }
 
-    @Transactional
     @Override
     public R addYearElement(YearElementsDto yearElementsDto) {
-        try {
-            String[] codes = yearElementsDto.getCodes().split(";");
-            /*List<YearElementsDto> list = new ArrayList<>();*/
-            Integer tableId = yearElementsDto.getQhseCompanyYearManagerSysElementTableID();
-            String companyCode = yearElementsDto.getCompanyCode();
-            String companyName = yearElementsDto.getCompanyName();
-            String year = yearElementsDto.getYear();
-            Integer len = qualityManagerSysElementDao.findMaxLen();
-            //TODO Refactor add new element logic
-            //get the table's elements status and code
-            Map<String, String> elementCodeAndConfigStatusMap = getElementCodeAndConfigStatusMap(tableId);
-            Map<String,String> elementsFromClients=new HashMap<>(),
-                    needToReopenElement=new HashMap<>(),
-                    needToAddElement=new HashMap<>(),
-                    openedMap = new HashMap<>(),
-                    stoppedMap = new HashMap<>(),
-                    elementNeedToStop=new HashMap<>(),
-                    elementsFromClients1=new HashMap<>();
-            Map<String,YearElementsDto> map1=new HashMap<>();
-            //covert codes to Map<code,configStatus>
-            for (String code:codes){
-                elementsFromClients.put(code,"启用");
-            }
-            for (Map.Entry<String, String> code : elementsFromClients.entrySet()) {
-                List<YearElementsDto> temp = qualityManagerSysElementDao.queryElementsByCode(code.getKey());
-                for (int i = 0; i < temp.size(); i++) {
-              /*      if (len.equals(temp.get(i).getCode().length())) {//长度相等为最后一级节点
-                        temp.get(i).setStatus("未提供");
-                        temp.get(i).setFileCheckStatus("未审核");
-                    }*/
-                    temp.get(i).setQhseCompanyYearManagerSysElementTableID(tableId);
-                    temp.get(i).setCompanyCode(companyCode);
-                    temp.get(i).setCompanyName(companyName);
-                    temp.get(i).setYear(year);
-                    temp.get(i).setConfigStatus("启用");
-                    map1.put(temp.get(i).getCode(),temp.get(i));
-                    elementsFromClients1.put(temp.get(i).getCode(),"启用");
-                }
-            }
-            //the following algorithm is very inefficient.
-            //please do some optimization.
-            //commit  by Coco 2020-7-30 11:34 PM
-            if (elementCodeAndConfigStatusMap.size()!=0){
-            for (Map.Entry<String, String> entry : elementCodeAndConfigStatusMap.entrySet()) {
-                //find elements that have been stopped
-                if (entry.getValue().equals("停用")) {
-                    stoppedMap.put(entry.getKey(), entry.getValue());
-                }
-                //find elements that  in open status
-                if(entry.getValue().equals("启用")){
-                    openedMap.put(entry.getKey(), entry.getValue());
-                }
-            }}
-            //find elements need to stop
-            if (openedMap.size()!=0){
-            for (Map.Entry<String,String> entry:openedMap.entrySet()){
-                if (elementsFromClients1.containsKey(entry.getKey())==false){
-                    elementNeedToStop.put(entry.getKey(),"停用");
-                }
-            }
-            }
-            //find elements need to reopen and add
-            for (Map.Entry<String,String> entry : elementsFromClients1.entrySet()){
-                if (elementCodeAndConfigStatusMap.size()==0){
-                    needToAddElement=elementsFromClients1;
-                    break;
-                }
-                if (elementCodeAndConfigStatusMap.containsKey(entry.getKey())==false){
-                    needToAddElement.put(entry.getKey(),entry.getValue());
-                }
-                if (stoppedMap.containsKey(entry.getKey())){
-                    needToReopenElement.put(entry.getKey(),entry.getValue());
-                }
-            }
-/*            logger.info("数据库中获取到的element:"+elementCodeAndConfigStatusMap);
-            logger.info("-----------------------------------------------");
-            logger.info("客户端传来的element:"+elementsFromClients1);
-            logger.info("-----------------------------------------------");
-            logger.info("停用的element:"+stoppedMap);
-            logger.info("-----------------------------------------------");
-            logger.info("需要停用的element:"+elementNeedToStop);
-            logger.info("-----------------------------------------------");
-            logger.info("启用的element:"+openedMap);
-            logger.info("-----------------------------------------------");
-            logger.info("新增的element:"+needToAddElement);
-            logger.info("-----------------------------------------------");
-            logger.info("需要重启的element:"+needToReopenElement);*/
-            int leafCnt=0;
-            int size = needToAddElement.size();
-            int result = 0;
-            if (size!=0) {
-                logger.info("-----------------------------------------------");
-                logger.info("新增数据");
-                for (Map.Entry<String, String> code : needToAddElement.entrySet()) {
-                    YearElementsDto yearElementsDto1=new YearElementsDto();
-                    yearElementsDto1.setQhseCompanyYearManagerSysElementTableID(tableId);
-                    yearElementsDto1.setCompanyCode(companyCode);
-                    yearElementsDto1.setCompanyName(companyName);
-                    yearElementsDto1.setYear(year);
-                    if (map1.containsKey(code.getKey())){
-                        yearElementsDto1.setName(map1.get(code.getKey()).getName());
-                        yearElementsDto1.setFormula(map1.get(code.getKey()).getFormula());
-                        yearElementsDto1.setAuditMode(map1.get(code.getKey()).getAuditMode());
-                        yearElementsDto1.setContent(map1.get(code.getKey()).getContent());
-                        yearElementsDto1.setInitialScore(map1.get(code.getKey()).getInitialScore());
-                        yearElementsDto1.setTotalCount(map1.get(code.getKey()).getTotalCount());
-                    }
-                    if (len.equals(code.getKey().length())){
-                        leafCnt++;
-                        yearElementsDto1.setStatus("未提供");
-                        yearElementsDto1.setFileCheckStatus("未审核");
-                    }
-                    yearElementsDto1.setConfigStatus("启用");
-                    yearElementsDto1.setCode(code.getKey());
-                    //add new element
-                    qualityManagerSysElementDao.addYearElement(yearElementsDto1);
-                }
-                logger.info("新增完毕");
-            }
-
-            //update Manager Sys Element's configStatus
-            //when some elements need to stop.
-            if (elementNeedToStop.size()!=0){
-                logger.info("-----------------------------------------------");
-                logger.info("修改状态");
-                for (Map.Entry<String,String> entry:elementNeedToStop.entrySet()) {
-                    qualityManagerSysElementDao.updateConfigStatus(entry.getKey(), tableId, entry.getValue());
-                    logger.info("修改成功");
-                }
-            }
-            //when some elements need to reopen
-            if (needToReopenElement.size()!=0){
-             for (Map.Entry<String,String> entry:needToReopenElement.entrySet()){
-                 leafCnt++;
-                 qualityManagerSysElementDao.updateConfigStatus(entry.getKey(),tableId,entry.getValue());
-             }
-            }
-            //将叶子结点总数放入缓存中。
-            jedisClient.set("T"+tableId,String.valueOf(leafCnt));
-            if (result < 0)
-                throw new WLHSException("新增失败");
-        }catch (Exception e) {
-            e.printStackTrace();
-            throw new WLHSException("新增失败");
-        }
-        return R.ok();
+        return null;
     }
 
     @Override
     public R getTableCheckedProgress(int tableId) {
-        int checkedElementNumber = qualityManagerSysElementDao.getCheckedElementNumber(tableId);
-        String s;
-        s=jedisClient.get("T" + tableId);
-        // no data in redis
-        if (s==null){
-            int allLeafNodeNumber = qualityManagerSysElementDao.getAllLeafNodeNumber(tableId);
-            s=String.valueOf(allLeafNodeNumber);
-            jedisClient.set("T"+tableId,s);
-        }
-        double total=Double.valueOf(s);
-        double progress=(double)checkedElementNumber/total;
-        R r=new R();
-        r.put("data",progress);
-        return r;
+        return null;
     }
 
     @Override
     public R queryYearElements(YearElementsDto yearElementsDto) {
-        List<YearElementsDto> lists=qualityManagerSysElementDao.queryYearElement(yearElementsDto);
-        for (YearElementsDto yearElement:lists) {
-            int sums=qualityManagerSysElementDao.querySchedule(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
-            int num=qualityManagerSysElementDao.querySchdules(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
-            int num1=sums-num;
-            if(yearElement.getCode().length()!=QHSEMSETREE_MAX_HEIGHT*QHSEMSETREE_CODE_BITS)//树的最大编码
-                yearElement.setSchedule(num1+"/"+sums);
-        }
-        R ok = R.ok();
-        ok.put("data", treeUtil.getQhseYearElementTree(lists));
-        return ok;
+        return null;
     }
 
-    private Map<String,String> getElementCodeAndConfigStatusMap(int tableId){
-        Map<String,String> map=new HashMap<>();
-        List<ElementAndConfigStatusDto> elementAndConfigStatusDto = qualityManagerSysElementDao.selectCodeAndConfigStatusByTableId(tableId);
-        Iterator<ElementAndConfigStatusDto> iterator = elementAndConfigStatusDto.iterator();
-        while (iterator.hasNext()){
-            ElementAndConfigStatusDto next = iterator.next();
-            map.put(next.getElementCode(),next.getConfigStatus());
-        }
-        return map;
-    }
+
 }
