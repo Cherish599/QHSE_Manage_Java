@@ -14,5 +14,5 @@ public interface QhseElementsInputService {
     void insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
     void insertNewOriginFileNames(QualityFileInputInfoDto qualityFileInputInfoDto);
   //  void updateNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
-    R submitInputResult(int tableId);
+    R submitInputResult(int tableId,int tag);
 }

@@ -13,7 +13,6 @@
                 AND year=#{year}
             </if>
             and ConfigStatus="启用"
-            and status="未审核"
         </where>
     </select>
 
@@ -27,7 +26,7 @@
         <if test="year != null and year  != ''">
             AND year=#{year}
         </if>
-        and ConfigStatus="启用" and status="未批准"
+        and ConfigStatus="启用"
         </where>
     </select>
 

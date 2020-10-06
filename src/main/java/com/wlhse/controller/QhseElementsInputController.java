@@ -46,8 +46,8 @@ public class QhseElementsInputController {
 //        return R.ok();
 //    }
 
-    @RequestMapping(value = "/submitInputResult",method = RequestMethod.POST)
-    public R submitInputResult(@RequestParam(value = "tableId")Integer tableId){
-        return qhseElementsInputService.submitInputResult(tableId);
+    @RequestMapping(value = "/submitInputResult/",method = RequestMethod.POST)
+    public R submitInputResult(@RequestParam(value = "tableId",required = false)Integer tableId,@RequestParam("tag")Integer tag){
+        return qhseElementsInputService.submitInputResult(tableId,tag);
     }
 }

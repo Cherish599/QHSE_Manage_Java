@@ -38,15 +38,32 @@ public class QhseYearElementsOutDto {
     private String fileCheckStatus;
     private String  schedule;
     private List<QhseYearElementsOutDto> childNode = new LinkedList<>();
+    private int checkStatus;
 
-    public String getSchedule() {
-        return schedule;
+    public QhseYearElementsOutDto() {
     }
 
-    public void setSchedule(String schedule) {
+    public QhseYearElementsOutDto(Integer id, Integer tableID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String schedule, List<QhseYearElementsOutDto> childNode, int checkStatus) {
+        this.id = id;
+        this.tableID = tableID;
+        this.code = code;
+        this.name = name;
+        this.content = content;
+        this.basis = basis;
+        this.auditMode = auditMode;
+        this.initialScore = initialScore;
+        this.formula = formula;
+        this.problemDescription = problemDescription;
+        this.totalCount = totalCount;
+        this.status = status;
+        this.companyCode = companyCode;
+        this.companyName = companyName;
+        this.year = year;
+        this.fileCheckStatus = fileCheckStatus;
         this.schedule = schedule;
+        this.childNode = childNode;
+        this.checkStatus = checkStatus;
     }
-
 
     public Integer getId() {
         return id;
@@ -54,6 +71,14 @@ public class QhseYearElementsOutDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getTableID() {
+        return tableID;
+    }
+
+    public void setTableID(Integer tableID) {
+        this.tableID = tableID;
     }
 
     public String getCode() {
@@ -136,14 +161,6 @@ public class QhseYearElementsOutDto {
         this.status = status;
     }
 
-    public Integer getTableID() {
-        return tableID;
-    }
-
-    public void setTableID(Integer tableID) {
-        this.tableID = tableID;
-    }
-
     public String getCompanyCode() {
         return companyCode;
     }
@@ -168,6 +185,22 @@ public class QhseYearElementsOutDto {
         this.year = year;
     }
 
+    public String getFileCheckStatus() {
+        return fileCheckStatus;
+    }
+
+    public void setFileCheckStatus(String fileCheckStatus) {
+        this.fileCheckStatus = fileCheckStatus;
+    }
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
     public List<QhseYearElementsOutDto> getChildNode() {
         return childNode;
     }
@@ -176,11 +209,36 @@ public class QhseYearElementsOutDto {
         this.childNode = childNode;
     }
 
-    public String getFileCheckStatus() {
-        return fileCheckStatus;
+    public int getCheckStatus() {
+        return checkStatus;
     }
 
-    public void setFileCheckStatus(String fileCheckStatus) {
-        this.fileCheckStatus = fileCheckStatus;
+    public void setCheckStatus(int checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "QhseYearElementsOutDto{" +
+                "id=" + id +
+                ", tableID=" + tableID +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", basis='" + basis + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", problemDescription='" + problemDescription + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", year='" + year + '\'' +
+                ", fileCheckStatus='" + fileCheckStatus + '\'' +
+                ", schedule='" + schedule + '\'' +
+                ", childNode=" + childNode +
+                ", checkStatus=" + checkStatus +
+                '}';
     }
 }

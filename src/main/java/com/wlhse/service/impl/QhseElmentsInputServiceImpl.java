@@ -105,12 +105,56 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
 
     @Override
     @Transactional
-    public R submitInputResult(int tableId) {
-        qhseElementsInputDao.updateCheckStatus(tableId,1);
-        taskDao.updateCheckStatus(tableId,"审核中");
+    public R submitInputResult(int tableId,int tag) {
+        switch (tag){
+            //在录入处点击提交按钮
+            case 0:{
+                //将录入状态元素的checkStatus改为1---即改为可进入审核状态
+                qhseElementsInputDao.updateCheckStatus(tableId,0,1);
+                //将任务状态改为审核中
+                //第一次点击提交
+                if (isFistSubmit(tag,tableId)){
+                    taskDao.updateCheckStatus(tableId,"审核中");
+                }
+                else
+                    taskDao.updateCheckStatus(tableId,"重新审核中");
+            }break;
+            //在审核处点击提交按钮
+            case 1:{
+                //将审核状态元素的checkStatus改为2---即改为可进入批准状态
+                qhseElementsInputDao.updateCheckStatus(tableId,1,2);
+                //若是第一次点击提交
+                if (isFistSubmit(tag,tableId)) {
+                    taskDao.updateCheckStatus(tableId, "批准中");
+                }
+                else
+                    taskDao.updateCheckStatus(tableId,"重新批准中");
+            }break;
+            //在批准处点击提交
+            case 2:{
+                //将审核元素状态的checkStatus改为3---即不可再进行任何更改，直接进入下一流程
+                qhseElementsInputDao.updateCheckStatus(tableId,2,3);
+                //只能点一次提交,提交后，清空缓存
+                taskDao.updateCheckStatus(tableId,"任务完成");
+                //清空缓存
+                jedisClient.delManyCahce(0 + "table" + tableId,0);
+                jedisClient.delManyCahce(1 + "table" + tableId,0);
+
+            }
+        }
+
         return R.ok();
     }
 
+    private boolean isFistSubmit(int tag,int tableId){
+        String s = jedisClient.get(tag + "table" + tableId);
+        //第一次点击提交按钮
+        if (s==null){
+            jedisClient.set(tag+"table"+tableId,"true");
+            return true;
+        }
+        return false;
+    }
 
 }
 

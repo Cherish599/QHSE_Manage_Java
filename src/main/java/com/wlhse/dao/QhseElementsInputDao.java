@@ -56,7 +56,7 @@ public interface QhseElementsInputDao {
     int getQHSEYearManagerTableIdByElementId(int id);
 
     //修改CheckStatus状态
-    int updateCheckStatus(int tableId,int status);
+    int updateCheckStatus(int tableId,int oldStatus,int newStatus);
 
     int updateCheckStatusByElementId(int elementId,int status);
 }
