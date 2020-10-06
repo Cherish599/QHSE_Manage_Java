@@ -376,7 +376,7 @@
                 factorSource=#{factorSource},
             </if>
             <if test="profession != null and profession  != ''">
-                profession=#{professionID},
+                profession=#{profession},
             </if>
             <if test="factorHSE != null and factorHSE  != ''">
                 factorHSE=#{factorHSE},

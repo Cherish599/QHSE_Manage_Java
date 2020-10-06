@@ -870,7 +870,7 @@ public class TreeUtil {
          */
         Map<String, QualityManagerSysElementOutDto> map1 = new TreeMap<>();
         //获得问题描述map
-        Map<String,String> discriptionMap=getQualityDescriptionMap();
+        //Map<String,String> discriptionMap=getQualityDescriptionMap();
         List<Integer> code = new ArrayList<>();
         for (QualityElementsPojo pojo : qhseElementsPojos) {
             QualityManagerSysElementOutDto qhseElementsOutDto = new QualityManagerSysElementOutDto();
@@ -883,11 +883,11 @@ public class TreeUtil {
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
             qhseElementsOutDto.setScoreShows(pojo.getScoreShows());
-            if(pojo.getCode().length()==12)//加入问题描述字段
+            /*if(pojo.getCode().length()==12)//加入问题描述字段
             {
                 qhseElementsOutDto.setProblemDescription(discriptionMap.get(pojo.getCode()));
                 //System.out.println(pojo.getCode()+"-----"+discriptionMap.get(pojo.getCode()));
-            }
+            }*/
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样
