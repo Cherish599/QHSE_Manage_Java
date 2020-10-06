@@ -47,8 +47,12 @@ public class DangerRecordServiceImpl implements DangerRecordService {
 
     @Override
     public R updateDangerRecord(DangerRecordDto dangerRecordDto) {
-        if(dangerRecordDao.updateDangerRecord(dangerRecordDto)<=0)
-            throw new WLHSException("修改失败");
+        try {
+            dangerRecordDao.updateDangerRecord(dangerRecordDto);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return R.error("更新失败");
+        }
         return R.ok();
     }
 

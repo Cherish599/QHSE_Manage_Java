@@ -25,21 +25,28 @@ public class FactorServiceImpl implements FactorService {
 
     @Override
     public R queryFactor(FactorDto factorDto) {
-        //System.out.println(treeUtil.getFactoryTree(factorDao.findAll()));
         List<FactorOutDto> result = new ArrayList<>();
-        if (factorDto.getName().equals("隐患")) {//物
-            String code = factorDao.findByName("物的不安全状态");//环境不良
-            result.addAll(factorDao.findAll(code));
-            String code2 = factorDao.findByName("环境不良");//环境不良
-            result.addAll(factorDao.findAll(code2));
-        } else if (factorDto.getName().equals("违章")) {
-            String code = factorDao.findByName("人的不安全行为");//环境不良
-            result.addAll(factorDao.findAll(code));
-            String code2 = factorDao.findByName("管理缺陷");//环境不良
-            result.addAll(factorDao.findAll(code2));
-        } else {
+        try {
+
+
+            //System.out.println(treeUtil.getFactoryTree(factorDao.findAll()));
+            if (factorDto.getName().equals("隐患")) {//物
+                String code = factorDao.findByName("物的不安全状态");//环境不良
+                result.addAll(factorDao.findAll(code));
+                String code2 = factorDao.findByName("环境不良");//环境不良
+                result.addAll(factorDao.findAll(code2));
+            } else if (factorDto.getName().equals("违章")) {
+                String code = factorDao.findByName("人的不安全行为");//环境不良
+                result.addAll(factorDao.findAll(code));
+                String code2 = factorDao.findByName("管理缺陷");//环境不良
+                result.addAll(factorDao.findAll(code2));
+            } else {
 //            result.addAll(factorDao.findAll(""));
-            throw new WLHSException("查询失败");
+                throw new WLHSException("查询失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("失败");
         }
         return R.ok().put("data",treeUtil.getFactoryTree(result));
     }

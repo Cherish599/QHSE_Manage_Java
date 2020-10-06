@@ -30,7 +30,6 @@ public class DangerRecordController {
 
     @RequestMapping(value = "/update_dangerrecord/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public R updateDangerRecord(@PathVariable int id, @RequestBody(required = false) DangerRecordDto dangerRecordDto) {
-
         dangerRecordDto.setId(id);
         return dangerRecordService.updateDangerRecord(dangerRecordDto);
     }
