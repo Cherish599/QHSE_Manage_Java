@@ -5,6 +5,7 @@ import com.wlhse.dto.QualityCheckDto;
 import com.wlhse.dto.inDto.QualityCheckInDto;
 import com.wlhse.service.QualityCheckService;
 import com.wlhse.util.R;
+import com.wlhse.util.state_code.CodeDict;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -98,6 +99,14 @@ public class QualityCheckController {
         ok.put("data",fileName);
         return ok;
     }
+    @RequestMapping(value = "/deleteAttach", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
+    public R deleteAttach(@RequestParam(value = "fileName")String fileName ) {
+        if(fileDao.deleteAttachOriginFileName(fileName)<=0){
+            return R.error("删除失败");
+        }
+        return R.ok();
+    }
+
 
 
 
