@@ -458,5 +458,33 @@
         and Issued='已整改'
     </select>
 
+    <select id="queryAllPassTable" resultType="com.wlhse.dto.QualityCheckDto">
+        select Qulity_CheckID as qualityCheckID,
+        TaskType as taskType,
+        CheckedCompanyName as checkedCompanyName,
+        CheckedCompanyCode as checkedCompanyCode,
+        `Group` as `group`,
+        WorkProject as workProject,
+        ResponsiCompanyName as responsiCompanyName,
+        ResponsiCompanyCode as responsiCompanyCode,
+        ResponsePersonID as responsePersonID,
+        ResponsePersonName as responsePersonName,
+        CheckDate as checkDate,
+        CheckPersonID as checkPersonID,
+        CheckPerson as checkPerson,
+        CheckBasis as checkBasis,
+        Contractor as contractor,
+        Owner as owner,
+        ProjectName as projectName,
+        CheckProject as checkProject,
+        ExecStd as execStd,
+        IsPush as isPush,
+        CheckListCode as checkListCode,
+        CheckListName as checkListName,
+        Issued as issued
+        from quality_check
+        where IsPush='通过'
+    </select>
+
 
 </mapper>

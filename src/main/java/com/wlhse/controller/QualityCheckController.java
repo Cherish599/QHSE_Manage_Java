@@ -107,6 +107,12 @@ public class QualityCheckController {
         return R.ok();
     }
 
+    //查询所有
+    @RequestMapping(value = "/queryAllPassTable", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R queryAllPassTable() {
+        return qualityCheckService.queryAllPassTable();
+    }
+
 
 
 

@@ -178,6 +178,13 @@ public class QualityCheckServiceImpl implements QualityCheckService {
         return R.ok();
     }
 
+    @Override
+    public R queryAllPassTable() {
+        R ok = R.ok();
+        ok.put("data",qualityCheckDao.queryAllPassTable());
+        return ok;
+    }
+
     public List<QualityCheckTableRecordDto> getCheckTree(Integer qualityCheckID,String checkCode)
     {
         String[] checkListCodes =checkCode.split(";");

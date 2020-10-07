@@ -23,4 +23,5 @@ public interface QualityCheckDao {
     List<QualityCheckDto> queryTableByDateAndIssue(String company,String beginDate,String endDate);
     Integer modifyPush(Integer qualityCheckID);
     List<QualityCheckDto> queryByYearComAndModify(String company,String beginDate,String endDate);
+    List<QualityCheckDto> queryAllPassTable();
 }
