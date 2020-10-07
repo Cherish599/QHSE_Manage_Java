@@ -176,4 +176,10 @@
         from quality_checktablerecordattachinfo
         where AttachFilePath=#{0}
     </select>
+
+    <delete id="deleteAttachOriginFileName">
+        delete from quality_checktablerecordattachinfo
+        where AttachFilePath=#{0}
+    </delete>
+
 </mapper>

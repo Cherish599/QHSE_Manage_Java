@@ -27,6 +27,8 @@ public class QualityManagerSysElementOutDto {
 
     private String scoreShows;
 
+    private String reviewTerms;
+
     private List<QualityManagerSysElementOutDto> childNode = new LinkedList<>();
 
     public Integer getId() {
@@ -119,6 +121,14 @@ public class QualityManagerSysElementOutDto {
 
     public List<QualityManagerSysElementOutDto> getChildNode() {
         return childNode;
+    }
+
+    public String getReviewTerms() {
+        return reviewTerms;
+    }
+
+    public void setReviewTerms(String reviewTerms) {
+        this.reviewTerms = reviewTerms;
     }
 
     public void setChildNode(List<QualityManagerSysElementOutDto> childNode) {

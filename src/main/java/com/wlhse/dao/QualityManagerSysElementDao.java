@@ -1,6 +1,6 @@
 package com.wlhse.dao;
 
-import com.wlhse.dto.QHSEproblemDiscriptionDto;
+
 import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.QualityManagerSysElementProDesDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
@@ -98,7 +98,7 @@ public interface QualityManagerSysElementDao {
     //导入excel问题描述时，先删除所有审核条款
     Integer deleteReviewTerms();
 
-
+    int batchInsertRecord(List<QualityManagerSysEleReviewTermsDto> qualityManagerSysEleReviewTermsDto);
 
 
     List<QualityYearElementsDto> queryElementsByCode(String c);

@@ -16,5 +16,6 @@ public interface QualityCheckService {
     R modifyPush(Integer qualityCheckID);
     R queryByYearComAndModify(QualityCheckDto qualityCheckDto);
     R backTable(QualityCheckDto qualityCheckDto);
+    R queryAllPassTable();
 
 }

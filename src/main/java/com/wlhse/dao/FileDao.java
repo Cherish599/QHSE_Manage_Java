@@ -37,4 +37,6 @@ public interface FileDao {
     Integer InsertQualityAttachInfo(QualityCheckTableRecordAttachInfoDto qualityCheckTableRecordAttachInfoDto);
 
     String getQualityAttachOriginFileName(String fileName);
+
+    Integer deleteAttachOriginFileName(String fileName);
 }
