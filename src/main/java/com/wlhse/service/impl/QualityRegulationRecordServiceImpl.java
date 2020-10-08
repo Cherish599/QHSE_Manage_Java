@@ -46,7 +46,7 @@ public class QualityRegulationRecordServiceImpl implements QualityRegulationReco
             qualityregulationRecordDao.updateRegulationRecord(regulationRecordDto);
         } catch (Exception e) {
             e.printStackTrace();
-            return R.error("删除失败");
+            return R.error("更新失败");
         }
         return R.ok();
     }

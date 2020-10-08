@@ -1,10 +1,7 @@
 package com.wlhse.service.impl;
 
-import com.wlhse.dao.ProblemDescriptionDao;
 import com.wlhse.dao.QualityProblemDescriptionDao;
 import com.wlhse.dto.QualityProblemDescriptionDto;
-import com.wlhse.exception.WLHSException;
-import com.wlhse.service.ProblemDescriptionService;
 import com.wlhse.service.QualityProblemDescriptionService;
 import com.wlhse.util.R;
 import com.wlhse.util.state_code.NR;
@@ -32,10 +29,10 @@ public class QualityProblemDescriptionServiceImpl implements QualityProblemDescr
     }
 
     @Override
-    public R deleteProblemDescription(QualityProblemDescriptionDto problemDescriptionDto) {
+    public R deleteProblemDescription(int id) {
 
         try {
-            qualityProblemDescriptionDao.deleteProblemDescription(problemDescriptionDto);
+            qualityProblemDescriptionDao.deleteProblemDescription(id);
         } catch (Exception e) {
             e.printStackTrace();
             return R.error("删除失败");

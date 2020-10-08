@@ -1,9 +1,7 @@
 package com.wlhse.controller;
 
 
-import com.wlhse.dto.ProblemDescriptionDto;
 import com.wlhse.dto.QualityProblemDescriptionDto;
-import com.wlhse.service.ProblemDescriptionService;
 import com.wlhse.service.QualityProblemDescriptionService;
 import com.wlhse.util.R;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +28,9 @@ public class QualityProblemDescriptionController {
 
     // 删除问题记录
     // 简单测试通过
-    @RequestMapping(value = "/delete_quality_problemDescription", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
-    public R deleteProblemDescription(@ModelAttribute QualityProblemDescriptionDto problemDescriptionDto) {
-        return qualityProblemDescriptionService.deleteProblemDescription(problemDescriptionDto);
+    @RequestMapping(value = "/delete_quality_problemDescription/{id}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    public R deleteProblemDescription(@PathVariable int id) {
+        return qualityProblemDescriptionService.deleteProblemDescription(id);
     }
 
     // 更新问题记录
