@@ -50,6 +50,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
                     qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
                 }
             }
+            qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
         } else {
             //再次录入数据
             //将附件attach对应id放入elementFileInfo
@@ -66,7 +67,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             int j = qhseElementsInputDao.updateAttach(elementEvidenceAttachInDto);
             if (i * j < 0) throw new WLHSException("更新失败");
         }
-        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//需求改为提交后状态变为审核
+        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//状态变为审核
         return R.ok();
     }
 
