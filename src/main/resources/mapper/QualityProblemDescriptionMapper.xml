@@ -8,20 +8,13 @@
         (Qquality_FileAudit_ID,Qquality_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName)
         values
         (#{qquality_FileAudit_ID},#{qquality_FileAuditRecord_ID},#{problemDescription},#{code},#{companyCode},
-        #{auditor},#{companyName})
+        #{additor},#{companyName})
     </insert>
 
     <!--删除问题记录-->
     <delete id="deleteProblemDescription">
         delete from quality_auditproblemrecord
-        <where>
-            <if test="qquality_FileAudit_ID != null and qquality_FileAudit_ID  != ''">
-                AND Qquality_FileAudit_ID=#{qquality_FileAudit_ID}
-            </if>
-            <if test="code != null and code  != ''">
-                AND Code=#{code}
-            </if>
-        </where>
+        where Qquality_AuditProblemRecord_ID = #{id}
     </delete>
 
     <sql id="value1">

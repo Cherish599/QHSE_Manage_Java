@@ -7,7 +7,7 @@ public interface QualityProblemDescriptionService {
     //增
     R addProblemDescription(QualityProblemDescriptionDto problemDescriptionDto);
     //删
-    R deleteProblemDescription(QualityProblemDescriptionDto problemDescriptionDto);
+    R deleteProblemDescription(int  id);
     //改
     R updateProblemDescription(QualityProblemDescriptionDto problemDescriptionDto);
     //条件查询

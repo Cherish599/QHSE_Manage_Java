@@ -11,7 +11,7 @@ public interface QualityProblemDescriptionDao {
 
     int addProblemDescription(QualityProblemDescriptionDto problemDescriptionDto);
 
-    int deleteProblemDescription(QualityProblemDescriptionDto problemDescriptionDto);
+    int deleteProblemDescription(int id);
 
     int updateProblemDescription(QualityProblemDescriptionDto problemDescriptionDto);
 
