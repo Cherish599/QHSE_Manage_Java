@@ -520,6 +520,9 @@
             <if test="reformCase != null and reformCase  != ''">
                 reformCase=#{reformCase},
             </if>
+            <if test="status!=null and status != ''">
+                status = #{status}
+            </if>
         </trim>
     </sql>
 
