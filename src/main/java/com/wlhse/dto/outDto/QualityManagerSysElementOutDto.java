@@ -134,4 +134,23 @@ public class QualityManagerSysElementOutDto {
     public void setChildNode(List<QualityManagerSysElementOutDto> childNode) {
         this.childNode = childNode;
     }
+
+    @Override
+    public String toString() {
+        return "QualityManagerSysElementOutDto{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", problemDescription='" + problemDescription + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                ", scoreShows='" + scoreShows + '\'' +
+                ", reviewTerms='" + reviewTerms + '\'' +
+                ", childNode=" + childNode +
+                '}';
+    }
 }

@@ -50,4 +50,15 @@ public class QualityManagerSysEleReviewTermsDto {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "QualityManagerSysEleReviewTermsDto{" +
+                "quality_ManagerSysEleReviewTerms_ID=" + quality_ManagerSysEleReviewTerms_ID +
+                ", code='" + code + '\'' +
+                ", basis='" + basis + '\'' +
+                ", terms='" + terms + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
