@@ -52,6 +52,7 @@ public class UserController {
             resultList.add("0004");
             resultList.add("0005");
             resultList.add("0006");
+            resultList.add("0009");
             resultMap.put("data",resultList);
             return R.ok(resultMap);
         }
@@ -60,6 +61,7 @@ public class UserController {
             resultList.add("0006");
             resultList.add("0007");
             resultList.add("0008");
+            resultList.add("0010");
             resultMap.put("data",resultList);
             return R.ok(resultMap);
         }
