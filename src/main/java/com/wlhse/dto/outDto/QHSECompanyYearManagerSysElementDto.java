@@ -19,7 +19,12 @@ public class QHSECompanyYearManagerSysElementDto {
     private String  companyCode;
     private String  companyName;
     private String  year;
-    private int checkStatus;
+    private Integer checkStatus;
+
+    public void setCheckStatus(Integer checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
     private List<QHSECompanyYearManagerSysElementDto> childNode = new LinkedList<>();
 
     public QHSECompanyYearManagerSysElementDto(Integer qHSE_CompanyYearManagerSysElement_ID, Integer qHSE_CompanyYearManagerSysElementTable_ID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, int checkStatus, List<QHSECompanyYearManagerSysElementDto> childNode) {
