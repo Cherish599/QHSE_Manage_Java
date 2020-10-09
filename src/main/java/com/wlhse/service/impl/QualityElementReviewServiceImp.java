@@ -38,6 +38,7 @@ public class QualityElementReviewServiceImp  implements QualityElementReviewServ
 
     @Override
     public R query(String companyCode, String year) {
+        if("未接收".equals(qhseManageSysElementsDao.queryTask(year,companyCode))) return R.ok();
         List<QualityManergerSysElementPojo> lists = qualityElementReviewDao.query(companyCode,year);
         for (QualityManergerSysElementPojo pojo:lists) {
             int sums=qhseManageSysElementsDao.querySchedule1(pojo.getCode(),pojo.getCompanyCode(),pojo.getYear());
