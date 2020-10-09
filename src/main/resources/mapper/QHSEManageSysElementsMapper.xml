@@ -732,5 +732,9 @@
         where FileCheckStatus='不通过'
         and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
     </select>
+    <select id="queryTask" resultType="java.lang.String">
+        select Status from qhse_task where Table_ID=(select QHSE_CompanyYearManagerSysElementTable_ID
+        from qhse_companyyearmanagersyselementtable where companyCode=#{companyCode} and year=#{year})
+    </select>
 </mapper>
 

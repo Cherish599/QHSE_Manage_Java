@@ -38,6 +38,7 @@ public class QualityElementReviewServiceImp  implements QualityElementReviewServ
 
     @Override
     public R query(String companyCode, String year) {
+        if("未接收".equals(qhseManageSysElementsDao.queryTask(year,companyCode))) return R.ok();
         List<QualityManergerSysElementPojo> lists = qualityElementReviewDao.query(companyCode,year);
         for (QualityManergerSysElementPojo pojo:lists) {
             int sums=qhseManageSysElementsDao.querySchedule1(pojo.getCode(),pojo.getCompanyCode(),pojo.getYear());
@@ -94,7 +95,7 @@ public class QualityElementReviewServiceImp  implements QualityElementReviewServ
         if("通过".equals(pass)) qualityElementReviewDao.updatePass(id,tag);
         else {
             qualityElementReviewDao.updateNoPass(id,pass);
-            qualityElementReviewDao.updateNegativeOpinion(NegativeOpinion,id);
+            if(NegativeOpinion!=null)qualityElementReviewDao.updateNegativeOpinion(NegativeOpinion,id);
         }
         return R.ok();
     }

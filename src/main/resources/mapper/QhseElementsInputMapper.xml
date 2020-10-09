@@ -264,9 +264,9 @@
         and CheckStatus=#{1}
     </update>
 
-    <update id="updateCheckStatusByElementId">
-      update QHSE_CompanyYearManagerSysElement
-        set CheckStatus=#{1}
-        where QHSE_CompanyYearManagerSysElement_ID=#{0}
+    <update id="updateCheckStatusByElementId" parameterType="java.lang.Integer">
+    update QHSE_CompanyYearManagerSysElement
+        set CheckStatus=0
+        where QHSE_CompanyYearManagerSysElement_ID=#{id}
     </update>
 </mapper>

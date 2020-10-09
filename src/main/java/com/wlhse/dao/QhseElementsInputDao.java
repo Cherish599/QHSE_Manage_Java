@@ -58,5 +58,5 @@ public interface QhseElementsInputDao {
     //修改CheckStatus状态
     int updateCheckStatus(int tableId,int oldStatus,int newStatus);
 
-    int updateCheckStatusByElementId(int elementId,int status);
+    int updateCheckStatusByElementId(@Param("id") Integer id);
 }

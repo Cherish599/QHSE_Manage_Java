@@ -68,7 +68,8 @@ public class ElementReviewController {
     public R elementReviewer3(@RequestBody(required = false) ElementReviewDto elementReviewDto) {
         //elementReviewService.deletes(elementReviewDto);不通过删除附件等所有信息
         elementReviewDto.setStatus("不通过");
-        qhseElementsInputDao.updateCheckStatusByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID(),0);
+        System.out.println(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
+        qhseElementsInputDao.updateCheckStatusByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
         return  elementReviewService.updateStatus(elementReviewDto);
     }
     //查询已审核或已审批

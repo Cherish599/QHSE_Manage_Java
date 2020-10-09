@@ -56,6 +56,8 @@ public interface QHSEManageSysElementsDao {
     List<QhseElementsPojo> queryQhseElements();
     //查询年度要素表
     List<YearElementsDto> queryQhseYearElements(YearElementsDto yearElementsDto);
+    //查看任务是否被接收
+    String queryTask(@Param("year")String year,@Param("companyCode") String companyCode);
     //melon查询进度
     int querySchedule(@Param("code") String code,String companyCode,String year);
     int querySchdules(@Param("code") String code,String companyCode,String year);

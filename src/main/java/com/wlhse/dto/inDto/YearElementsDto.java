@@ -18,7 +18,11 @@ public class YearElementsDto {
     private String fileCheckStatus;
     private String configStatus;
     private String  schedule;
-    private int checkStatus;
+    private Integer checkStatus;
+
+    public void setCheckStatus(Integer checkStatus) {
+        this.checkStatus = checkStatus;
+    }
 
     public YearElementsDto() {
     }
