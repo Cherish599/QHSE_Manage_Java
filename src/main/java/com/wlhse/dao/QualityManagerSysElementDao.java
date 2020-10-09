@@ -9,6 +9,7 @@ import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.ElementAndConfigStatusDto;
 import com.wlhse.dto.outDto.QhseElementsOutDto;
+import com.wlhse.dto.outDto.QualityManagerSysElementOutDto;
 import com.wlhse.entity.QHSECompanySysElementsPojo;
 import com.wlhse.entity.QHSEManageSysElements;
 import com.wlhse.entity.QhseElementsPojo;
@@ -24,7 +25,7 @@ public interface QualityManagerSysElementDao {
     Integer addQHSERule(QHSEManageSysElements rule);
     Integer addQHSEElement(QualityElementsPojo element);//换类型重写
     Integer addExcelQHSEElement(QualityManagerSysElementInDto element);//excel文件添加节点
-    Integer addExcelQHSEElemenForInerPople(QhseElementsOutDto element);
+    Integer addExcelQHSEElemenForInerPople(QualityManagerSysElementOutDto element);
 
 
     List<QHSECompanySysElementsPojo> querryQHSEReportElements(@Param("status") String status);

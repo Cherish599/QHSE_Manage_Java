@@ -20,7 +20,7 @@ public class QualityManagerSysElementInDto {
 
     private String status;
 
-    private String ScoreShows;
+    private String scoreShows;
 
     public Integer getQhseManagerSysElementID() {
         return qhseManagerSysElementID;
@@ -95,11 +95,11 @@ public class QualityManagerSysElementInDto {
     }
 
     public String getScoreShows() {
-        return ScoreShows;
+        return scoreShows;
     }
 
     public void setScoreShows(String scoreShows) {
-        ScoreShows = scoreShows;
+        this.scoreShows = scoreShows;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class QualityManagerSysElementInDto {
                 ", formula='" + formula + '\'' +
                 ", totalCount=" + totalCount +
                 ", status='" + status + '\'' +
-                ", ScoreShows='" + ScoreShows + '\'' +
+                ", scoreShows='" + scoreShows + '\'' +
                 '}';
     }
 }
