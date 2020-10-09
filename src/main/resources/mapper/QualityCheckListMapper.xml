@@ -25,7 +25,6 @@
     <select id="getCheckListOne" resultType="com.wlhse.dto.QualityCheckListDto">
         select * from quality_checklist
         where CheckListCode=#{code}
-        and status="启用"
     </select>
     <update id="updateIsChild">
         update quality_checklist
