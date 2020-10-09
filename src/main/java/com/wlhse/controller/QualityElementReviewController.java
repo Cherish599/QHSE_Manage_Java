@@ -9,6 +9,7 @@ import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
 import com.wlhse.entity.QualityInputAttachPojo;
 import com.wlhse.entity.QualityManergerSysElementPojo;
 import com.wlhse.service.ElementReviewService;
+import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.service.QualityElementReviewServer;
 import com.wlhse.util.GetCurrentUserIdUtil;
 import com.wlhse.util.R;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.ParseException;
 
 /**
@@ -32,6 +34,8 @@ public class QualityElementReviewController {
     QualityElementReviewServer qualityElementReviewServer;
     @Resource
     ElementReviewService elementReviewService;
+    @Resource
+    QhseElementsInputService qhseElementsInputService;
 
     //质量要素录入查询
     @RequestMapping(value = "/quality_query_elementReviewer", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
@@ -67,5 +71,11 @@ public class QualityElementReviewController {
     @RequestMapping(value = "/showQualityAllElement", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R showQualityAllElement(QualityManergerSysElementPojo qualityManergerSysElementPojo) {
         return  elementReviewService.queryQualityAllElement(qualityManergerSysElementPojo);
+    }
+    //要素录入返回原文件名
+    @RequestMapping(value = "/returnElementFile", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public R returnElementFile(@RequestParam(value = "fileName")String fileName)  {
+        String fileNames=qhseElementsInputService.queryQualityOriginFileName(fileName);
+       return R.ok().put("data",fileNames);
     }
 }

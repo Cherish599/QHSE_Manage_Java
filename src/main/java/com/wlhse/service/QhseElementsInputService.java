@@ -11,6 +11,8 @@ public interface QhseElementsInputService {
     R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
     R queryAll(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
     String queryOriginFileName (String newElementFileName);
+    //质量原文件名
+    String queryQualityOriginFileName (String newElementFileName);
     void insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
     void insertNewOriginFileNames(QualityFileInputInfoDto qualityFileInputInfoDto);
   //  void updateNewOriginFileName(ElementInputFileInfo elementInputFileInfo);

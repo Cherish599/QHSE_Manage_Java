@@ -30,6 +30,7 @@ public interface QhseElementsInputDao {
 
     //查询要素附件原始名
     String queryOriginFileName(@Param("newElementFileName") String newElementFileName);
+    String queryQualityOriginFileName(@Param("NewFileName") String NewFileName);
 
     //删除要素附件新旧名称
     int deleteNewOriginFileName(@Param("id") Integer id);

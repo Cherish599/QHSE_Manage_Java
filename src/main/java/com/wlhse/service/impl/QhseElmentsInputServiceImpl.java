@@ -87,6 +87,11 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     }
 
     @Override
+    public String queryQualityOriginFileName(String newElementFileName) {
+        return qhseElementsInputDao.queryQualityOriginFileName(newElementFileName);
+    }
+
+    @Override
     public void insertNewOriginFileName(ElementInputFileInfo elementInputFileInfo) {
        qhseElementsInputDao.insertNewOriginFileName(elementInputFileInfo);
     }
