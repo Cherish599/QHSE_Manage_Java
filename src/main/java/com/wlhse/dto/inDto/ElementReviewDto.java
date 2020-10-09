@@ -14,6 +14,10 @@ public class ElementReviewDto {
     private Integer approverStaffID;
     private String negativeOpinion;//不通过意见
 
+    public String getNegativeOpinion() {
+        return negativeOpinion;
+    }
+
     public void setNegativeOpinion(String negativeOpinion) {
         this.negativeOpinion = negativeOpinion;
     }

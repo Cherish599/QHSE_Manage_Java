@@ -101,7 +101,7 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         int i=elementReviewDao.update(elementReviewDto);
         int j=1;
         //TODO 添加不批准的逻辑
-        if (status.equals("不通过")){
+        if (status.equals("不通过")&&elementReviewDto.getNegativeOpinion()!=null){
             j=elementReviewDao.updateAddvice(elementReviewDto);
         }
         // 更新状态

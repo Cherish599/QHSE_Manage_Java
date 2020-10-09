@@ -95,7 +95,7 @@ public class QualityElementReviewServiceImp  implements QualityElementReviewServ
         if("通过".equals(pass)) qualityElementReviewDao.updatePass(id,tag);
         else {
             qualityElementReviewDao.updateNoPass(id,pass);
-            qualityElementReviewDao.updateNegativeOpinion(NegativeOpinion,id);
+            if(NegativeOpinion!=null)qualityElementReviewDao.updateNegativeOpinion(NegativeOpinion,id);
         }
         return R.ok();
     }
