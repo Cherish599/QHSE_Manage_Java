@@ -20,6 +20,8 @@
         <result property="tableId" column="QHSE_CompanyYearManagerSysElementTable_ID"/>
         <result property="auditName" column="AuditName"/>
         <result property="auditType" column="AuditType"/>
+        <result property="additor" column="additor"/>
+        <result property="auditTime" column="auditTime"/>
         <result property="companyCode" column="CompanyCode"/>
         <result property="companyName" column="CompanyName"/>
         <result property="year" column="Year"/>
@@ -53,9 +55,15 @@
             <if test="auditType != null and auditType  != ''">
                 auditType,
             </if>
+            <if test="additor != null and additor  != ''">
+                additor,
+            </if>
+            <if test="auditTime != null and auditTime  != ''">
+                auditTime,
+            </if>
 
             <if test="companyCode != null and companyCode  != ''">
-            companyCode,companyName,
+                companyCode,companyName,
             </if>
             <if test="year != null and year  != ''">
                 year,
@@ -76,6 +84,12 @@
             </if>
             <if test="auditType != null and auditType  != ''">
                 #{auditType},
+            </if>
+            <if test="additor != null and additor  != ''">
+                #{additor},
+            </if>
+            <if test="auditTime != null and auditTime  != ''">
+                #{auditTime},
             </if>
 
             <if test="companyCode != null and companyCode  != ''">
@@ -151,9 +165,9 @@
 
     <insert id="addFileAuditRecord" parameterType="com.wlhse.dto.FileAuditRecordDto">
         insert into qhse_fileauditrecord
-         (<include refid="key1"/>)
+        (<include refid="key1"/>)
         values
-         (<include refid="value2"/>)
+        (<include refid="value2"/>)
     </insert>
 
     <select id="queryRecordId" resultType="com.wlhse.dto.FileAuditRecordDto">
@@ -175,7 +189,7 @@
     </delete>
 
     <update id="updateStatus" parameterType="com.wlhse.dto.FileAuditRecordDto">
-    update qhse_fileauditrecord
+        update qhse_fileauditrecord
         <trim prefix="set" suffixOverrides=",">
             <if test="pass != null and pass != ''">
                 Pass=#{pass},
@@ -227,7 +241,6 @@
         where Code=#{code} and
         QHSE_CompanyYearManagerSysElementTable_ID=#{qhseCompanyYearManagerSysElementTableID}
     </update>
-
 
 
 </mapper>

@@ -5,6 +5,8 @@ import com.wlhse.dto.getDto.BaseGetDto;
 public class FileAuditDto extends BaseGetDto {
     private Integer fileAuditId;
     private Integer tableId;
+    private String additor;
+    private String auditTime;
     private String auditName;
     private String auditType;
     private String companyCode;
@@ -43,6 +45,21 @@ public class FileAuditDto extends BaseGetDto {
         this.auditType = auditType;
     }
 
+    public String getAdditor() {
+        return additor;
+    }
+
+    public void setAdditor(String additor) {
+        this.additor = additor;
+    }
+
+    public String getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(String auditTime) {
+        this.auditTime = auditTime;
+    }
 
     public String getCompanyCode() {
         return companyCode;
