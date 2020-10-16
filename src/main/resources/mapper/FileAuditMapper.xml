@@ -41,6 +41,12 @@
         order by year desc
     </select>
 
+    <select id="getAllFileAudit" resultMap="fileAuditMap">
+        select *
+        from qhse_fileaudit
+        order by year desc
+    </select>
+
     <sql id="key">
         <trim suffixOverrides=",">
             <if test="fileAuditId != null and fileAuditId  != ''">

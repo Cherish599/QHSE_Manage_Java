@@ -37,6 +37,20 @@ public class FileAuditController {
         return fileAuditService.queryExistFile(fileAuditDto);
     }
 
+
+    /**
+     * 分页查询所有
+     *
+     * @param page 页码数
+     * @param size 每页大小
+     * @return 分页结果集
+     */
+    @RequestMapping(value = "/get_allfileaduitpage/{page}/{size}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getAllFileAuditPage(@PathVariable("page") int page,
+                                 @PathVariable("size") int size) {
+        return fileAuditService.getAllFileAuditPage(page, size);
+    }
+
     @RequestMapping(value = "/update_status", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
     public String updateStatus(@RequestBody(required = false) FileAuditRecordDto fileAuditRecordDto) {
         return fileAuditService.updateStatus(fileAuditRecordDto);

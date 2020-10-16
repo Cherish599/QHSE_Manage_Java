@@ -30,4 +30,12 @@ public interface FileAuditService {
     //更改要素表中的审核状态
     String updateCheckStatus(YearElementsDto yearElementsDto);
 
+    /**
+     * 分页查询所有
+     *
+     * @param page 页码数
+     * @param size 每页大小
+     * @return 分页结果集
+     */
+    R getAllFileAuditPage(int page, int size);
 }

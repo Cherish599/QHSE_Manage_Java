@@ -27,28 +27,28 @@ public class FileAuditServiceImpl implements FileAuditService {
     public String queryExistFile(FileAuditDto fileAuditDto) {
         int total = fileAuditDao.queryTotal(fileAuditDto);
         int pageIdx = fileAuditDto.getPageIdx();
-        PageHelper.startPage(pageIdx,fileAuditDto.getPageSize());
+        PageHelper.startPage(pageIdx, fileAuditDto.getPageSize());
         List<FileAuditDto> list = fileAuditDao.queryExistFile(fileAuditDto);
         return NR.r(list, total, pageIdx);
     }
 
     @Override
     public R addFileAudit(FileAuditDto fileAuditDto) {
-        if(fileAuditDao.addFileAudit(fileAuditDto)<=0)
+        if (fileAuditDao.addFileAudit(fileAuditDto) <= 0)
             throw new WLHSException("新增失败");
         return R.ok();
     }
 
     @Override
     public R deleteFileAudit(Integer id) {
-        if(fileAuditDao.deleteFileAudit(id)<=0)
+        if (fileAuditDao.deleteFileAudit(id) <= 0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
 
     @Override
     public R addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto) {
-        if(fileAuditDao.addFileAuditRecord(fileAuditRecordDto)<=0)
+        if (fileAuditDao.addFileAuditRecord(fileAuditRecordDto) <= 0)
             throw new WLHSException("新增记录失败");
         return R.ok();
     }
@@ -68,14 +68,14 @@ public class FileAuditServiceImpl implements FileAuditService {
 
     @Override
     public String updateStatus(FileAuditRecordDto fileAuditRecordDto) {
-        if(fileAuditDao.updateStatus(fileAuditRecordDto)<=0)
+        if (fileAuditDao.updateStatus(fileAuditRecordDto) <= 0)
             throw new WLHSException("更新失败");
         return NR.r();
     }
 
     @Override
     public String updateScore(FileAuditRecordDto fileAuditRecordDto) {
-        if(fileAuditDao.updateScore(fileAuditRecordDto)<=0)
+        if (fileAuditDao.updateScore(fileAuditRecordDto) <= 0)
             throw new WLHSException("更新失败");
         return NR.r();
     }
@@ -94,9 +94,20 @@ public class FileAuditServiceImpl implements FileAuditService {
 
     @Override
     public String updateCheckStatus(YearElementsDto yearElementsDto) {
-        if(fileAuditDao.updateCheckStatus(yearElementsDto)<=0)
+        if (fileAuditDao.updateCheckStatus(yearElementsDto) <= 0)
             throw new WLHSException("更新失败");
         return NR.r();
+    }
+
+    @Override
+    public R getAllFileAuditPage(int page, int size) {
+        PageHelper.startPage(page, size);
+        List<FileAuditDto> fileAuditDtoList = fileAuditDao.getAllFileAudit();
+        PageInfo pageInfo = new PageInfo(fileAuditDtoList);
+        R r = new R();
+        r.put("list", pageInfo.getList());
+        r.put("totals", pageInfo.getTotal());
+        return r;
     }
 
 

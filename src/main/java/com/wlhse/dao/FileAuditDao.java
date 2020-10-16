@@ -13,6 +13,7 @@ import java.util.List;
 public interface FileAuditDao {
     //分页+查询存在的记录
     int queryTotal(FileAuditDto fileAuditDto);
+
     List<FileAuditDto> queryExistFile(FileAuditDto fileAuditDto);
 
     //新增审核记录
@@ -43,4 +44,11 @@ public interface FileAuditDao {
 
     //更改要素表中的审核状态
     int updateCheckStatus(YearElementsDto yearElementsDto);
+
+    /**
+     * 查询所有文件审核
+     *
+     * @return 文件审核结果集
+     */
+    List<FileAuditDto> getAllFileAudit();
 }
