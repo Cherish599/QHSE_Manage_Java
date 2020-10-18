@@ -248,5 +248,4 @@
         QHSE_CompanyYearManagerSysElementTable_ID=#{qhseCompanyYearManagerSysElementTableID}
     </update>
 
-
 </mapper>
