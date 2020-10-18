@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequestMapping("/api/v3")
 public class QualityYearManagerController {
     @Resource
     QualityYearManagerService qualityYearManagerService;
@@ -39,7 +40,7 @@ public class QualityYearManagerController {
         return qualityYearManagerService.queryYearElements(yearElementsDto);
     }
 
-    @RequestMapping(value = "quality_addYearElement", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/quality_addYearElement", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R qualityAddYearElement(@RequestBody(required = false) QualityYearElementsDto yearElementsDto){
         return qualityYearManagerService.addYearElement(yearElementsDto);
     }

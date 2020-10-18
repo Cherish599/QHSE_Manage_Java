@@ -175,6 +175,7 @@
             </if>
             AND t1.ConfigStatus="启用"
         </where>
+        order by CheckStatus asc
     </select>
 
     <select id="queryQhseAllElements" resultType="com.wlhse.entity.QhseElementsPojo">
