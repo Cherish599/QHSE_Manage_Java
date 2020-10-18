@@ -30,7 +30,13 @@ public class QualityFileAuditController {
 
     @RequestMapping(value = "/add_qualityfileaduit", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addFileAudit(@RequestBody(required = false) QualityFileAuditDto qualityFileAuditDto) {
-        return qualityFileAuditService.addFileAudit(qualityFileAuditDto);
+        try {
+            R r = qualityFileAuditService.addFileAudit(qualityFileAuditDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("添加失败");
+        }
+        return R.ok();
     }
 
     @RequestMapping(value = "/delete_qualityfileaduit/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
