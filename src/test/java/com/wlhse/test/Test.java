@@ -521,7 +521,7 @@ public class Test {
                 }//3
             }//2
         }*/
-        qualityManagerSysElementDao.batchInsertRecord(allTermsList);
+       // qualityManagerSysElementDao.batchInsertRecord(allTermsList);
         workbook.close();
         System.out.println("----关闭close");
         fis.close();
