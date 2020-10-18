@@ -256,6 +256,9 @@
         from qhse_companyyearmanagersyselement
         where QHSE_CompanyYearManagerSysElement_ID=#{0}
     </select>
+    <select id="queryQualityOriginFileName" resultType="java.lang.String">
+          select OriginalFileName from qualityelementinputfileinfo where NewFileName=#{NewFileName}
+    </select>
 
     <update id="updateCheckStatus">
         update QHSE_CompanyYearManagerSysElement
