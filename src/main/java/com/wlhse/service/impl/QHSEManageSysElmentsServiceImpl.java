@@ -262,6 +262,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     //th-查询年度要素
     @Override
+    // TODO
     public R queryYearElement(YearElementsDto yearElementsDto) {
         List<YearElementsDto> lists=qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto);
         for (YearElementsDto yearElement:lists) {
