@@ -16,6 +16,26 @@ public class CheckRecordTreeDto {
     private String pass;
     private String checkPersonId;
     private String checkPerson;
+    private String reason;
+
+    public CheckRecordTreeDto() {
+    }
+
+    public CheckRecordTreeDto(Integer checkRecordID, String checkListCode, String checkListName, String checkType, String companyName, String companyCode, String checkDate, String problems, String checkTypeCode, String pass, String checkPersonId, String checkPerson, String reason) {
+        this.checkRecordID = checkRecordID;
+        this.checkListCode = checkListCode;
+        this.checkListName = checkListName;
+        this.checkType = checkType;
+        this.companyName = companyName;
+        this.companyCode = companyCode;
+        this.checkDate = checkDate;
+        this.problems = problems;
+        this.checkTypeCode = checkTypeCode;
+        this.pass = pass;
+        this.checkPersonId = checkPersonId;
+        this.checkPerson = checkPerson;
+        this.reason = reason;
+    }
 
     public Integer getCheckRecordID() {
         return checkRecordID;
@@ -41,8 +61,6 @@ public class CheckRecordTreeDto {
         this.checkListName = checkListName;
     }
 
-
-
     public String getCheckType() {
         return checkType;
     }
@@ -50,8 +68,6 @@ public class CheckRecordTreeDto {
     public void setCheckType(String checkType) {
         this.checkType = checkType;
     }
-
-
 
     public String getCompanyName() {
         return companyName;
@@ -117,6 +133,14 @@ public class CheckRecordTreeDto {
         this.checkPerson = checkPerson;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     @Override
     public String toString() {
         return "CheckRecordTreeDto{" +
@@ -132,6 +156,7 @@ public class CheckRecordTreeDto {
                 ", pass='" + pass + '\'' +
                 ", checkPersonId='" + checkPersonId + '\'' +
                 ", checkPerson='" + checkPerson + '\'' +
+                ", reason='" + reason + '\'' +
                 '}';
     }
 }

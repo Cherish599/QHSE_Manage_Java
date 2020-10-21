@@ -607,6 +607,7 @@ public class TreeUtil {
             checkRecordTreeOutDto.setCheckPersonId(pojo.getCheckPersonId());
             checkRecordTreeOutDto.setCheckPerson(pojo.getCheckPerson());
             checkRecordTreeOutDto.setCheckTypeCode(pojo.getCheckTypeCode());
+            checkRecordTreeOutDto.setReason(pojo.getReason());
             //System.out.println(pojo.getQhseManagerSysElementID());
             map1.put(checkRecordTreeOutDto.getCheckListCode(), checkRecordTreeOutDto);
 
