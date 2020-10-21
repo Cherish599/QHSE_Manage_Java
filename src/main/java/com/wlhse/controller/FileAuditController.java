@@ -100,4 +100,17 @@ public class FileAuditController {
         return fileAuditService.updateCheckStatus(yearElementsDto);
     }
 
+
+    /**
+     * 不录入文件审核
+     * 【修改文件审核记录字段】
+     *
+     * @return R
+     * @author tobing
+     */
+    @RequestMapping(value = "/noPassReasonFileAudit", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R noPassReasonFileAudit(@RequestBody FileAuditRecordDto fileAuditRecordDto) {
+        return fileAuditService.noPassReasonFileAudit(fileAuditRecordDto);
+    }
+
 }

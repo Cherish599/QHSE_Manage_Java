@@ -3,6 +3,7 @@ package com.wlhse.dao;
 import com.wlhse.dto.FileAuditDto;
 import com.wlhse.dto.FileAuditRecordDto;
 import com.wlhse.dto.inDto.YearElementsDto;
+import com.wlhse.util.R;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,7 @@ public interface FileAuditDao {
 
     //增加审核记录
     int addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto);
+
     //查询审核记录的ID
     List<FileAuditRecordDto> queryRecordId(FileAuditRecordDto fileAuditRecordDto);
 
@@ -51,4 +53,11 @@ public interface FileAuditDao {
      * @return 文件审核结果集
      */
     List<FileAuditDto> getAllFileAudit();
+
+    /**
+     * 不录入文件审核
+     *
+     * @param fileAuditRecordDto 文件审核记录字段
+     */
+    void noPassReasonFileAudit(FileAuditRecordDto fileAuditRecordDto);
 }

@@ -10,6 +10,10 @@ public class FileAuditRecordDto {
     private String companyName;
     private String auditTime;
     private String additor;
+    /**
+     * 不录入的原因描述
+     */
+    private String noPassReason;
 
     public String getAuditTime() {
         return auditTime;
@@ -81,5 +85,13 @@ public class FileAuditRecordDto {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getNoPassReason() {
+        return noPassReason;
+    }
+
+    public void setNoPassReason(String noPassReason) {
+        this.noPassReason = noPassReason;
     }
 }

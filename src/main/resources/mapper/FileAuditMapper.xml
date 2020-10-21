@@ -248,4 +248,10 @@
         QHSE_CompanyYearManagerSysElementTable_ID=#{qhseCompanyYearManagerSysElementTableID}
     </update>
 
+    <!--不录入文件审核-->
+    <update id="noPassReasonFileAudit" parameterType="com.wlhse.dto.FileAuditRecordDto">
+        UPDATE qhse_fileauditrecord
+        SET nopassReason= #{noPassReason}
+        WHERE  QHSE_FileAudit_ID = #{fileAuditId}  AND CODE = #{code}
+    </update>
 </mapper>

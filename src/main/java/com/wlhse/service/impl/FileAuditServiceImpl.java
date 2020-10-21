@@ -61,7 +61,7 @@ public class FileAuditServiceImpl implements FileAuditService {
 
     @Override
     public R deleteFileAuditRecord(Integer id1) {
-        if(fileAuditDao.deleteFileAuditRecord(id1)<=0)
+        if (fileAuditDao.deleteFileAuditRecord(id1) <= 0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
@@ -108,6 +108,16 @@ public class FileAuditServiceImpl implements FileAuditService {
         r.put("list", pageInfo.getList());
         r.put("totals", pageInfo.getTotal());
         return r;
+    }
+
+    @Override
+    public R noPassReasonFileAudit(FileAuditRecordDto fileAuditRecordDto) {
+        if (fileAuditRecordDto.getFileAuditId() == null
+                || fileAuditRecordDto.getCode() == null) {
+            return R.error("参数不完整");
+        }
+        fileAuditDao.noPassReasonFileAudit(fileAuditRecordDto);
+        return R.ok("更新成功");
     }
 
 
