@@ -110,5 +110,15 @@ public class QualityFileAuditServiceImpl implements QualityFileAuditService {
         return r;
     }
 
+    @Override
+    public R noPassReasonFileAudit(QualityFileAuditRecordDto qualityFileAuditRecordDto) {
+        if (qualityFileAuditRecordDto.getFileAuditId() == null
+                || qualityFileAuditRecordDto.getCode() == null) {
+            return R.error("参数不完整");
+        }
+        qualityfileAuditDao.noPassReasonFileAudit(qualityFileAuditRecordDto);
+        return R.ok("更新成功");
+    }
+
 
 }

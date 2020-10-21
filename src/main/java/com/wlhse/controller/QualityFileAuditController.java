@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 
+import com.wlhse.dto.FileAuditRecordDto;
 import com.wlhse.dto.QualityFileAuditDto;
 import com.wlhse.dto.QualityFileAuditRecordDto;
 import com.wlhse.dto.inDto.QualityYearElementsDto;
@@ -103,4 +104,18 @@ public class QualityFileAuditController {
                                  @PathVariable("size") int size) {
         return qualityFileAuditService.getAllFileAuditPage(page, size);
     }
+
+    /**
+     * 不录入文件审核
+     * 【修改文件审核记录字段】
+     *
+     * @return R
+     * @author tobing
+     */
+    @RequestMapping(value = "/noPassReasonQualityFileAudit", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
+    public R noPassReasonFileAudit(@RequestBody QualityFileAuditRecordDto qualityFileAuditRecordDto) {
+        return qualityFileAuditService.noPassReasonFileAudit(qualityFileAuditRecordDto);
+    }
+
+
 }

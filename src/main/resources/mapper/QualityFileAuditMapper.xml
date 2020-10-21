@@ -247,5 +247,12 @@
         order by year desc
     </select>
 
+    <!--不录入文件审核-->
+    <update id="noPassReasonFileAudit" parameterType="com.wlhse.dto.QualityFileAuditRecordDto">
+        UPDATE quality_fileauditrecord
+        SET nopassReason= #{noPassReason}
+        WHERE  Quality_FileAudit_ID = #{fileAuditId}  AND CODE = #{code}
+    </update>
+
 
 </mapper>

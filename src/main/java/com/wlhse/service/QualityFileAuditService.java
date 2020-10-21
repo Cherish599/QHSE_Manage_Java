@@ -48,4 +48,12 @@ public interface QualityFileAuditService {
      * @return 分页结果集
      */
     R getAllFileAuditPage(int page, int size);
+
+    /**
+     * 不录入文件审核
+     *
+     * @param qualityFileAuditRecordDto 文件审核记录数据
+     * @return R
+     */
+    R noPassReasonFileAudit(QualityFileAuditRecordDto qualityFileAuditRecordDto);
 }
