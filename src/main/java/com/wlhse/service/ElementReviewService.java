@@ -41,4 +41,7 @@ public interface ElementReviewService {
     R queryAllElement(ElementReviewDto elementReviewDto);
     //质量查询全要素
     R queryQualityAllElement(QualityManergerSysElementPojo qualityManergerSysElementPojo);
+
+    R showNoPass(ElementReviewDto elementReviewDto);
+
 }

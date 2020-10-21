@@ -77,6 +77,12 @@ public class ElementReviewController {
     public R elementReviewer4( ElementReviewDto elementReviewDto) {
         return  elementReviewService.shows(elementReviewDto);
     }
+
+    //查询未通过审核或未通过批准的要素
+    @RequestMapping(value = "/show_no_pass_element",method = RequestMethod.GET)
+    public R elementReviewer6(ElementReviewDto elementReviewDto){
+        return elementReviewService.showNoPass(elementReviewDto);
+    }
     //查询全要素
     @RequestMapping(value = "/showAllElement", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R elementReviewer5( ElementReviewDto elementReviewDto) {

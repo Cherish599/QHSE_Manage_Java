@@ -19,7 +19,7 @@
 
 
     <!-- 项目权限认证 - 本地测试时关闭 -->
-<!--    <mvc:interceptors>
+   <mvc:interceptors>
         <mvc:interceptor>
 
             <mvc:mapping path="/**"/>
@@ -28,7 +28,7 @@
             <mvc:exclude-mapping path="/api/v3/anzhuo2"/>
             <mvc:exclude-mapping path="/api/v3/menu_module"/>
             <mvc:exclude-mapping path="/api/v3/logout"/>
-            &lt;!&ndash; 上传文件&ndash;&gt;
+            <!--上传文件-->
             <mvc:exclude-mapping path="/api/v3/file_upload"/>
             <mvc:exclude-mapping path="/api/v3/uploadQHSEProblem"/>
             <mvc:exclude-mapping path="/api/v3/uploadQHSEFill"/>
@@ -42,7 +42,7 @@
             <mvc:exclude-mapping path="/api/v3/downloadMonitorDetailExcelTemplate"/>
             <mvc:exclude-mapping path="/api/v3/screenShotDownload"/>
             <mvc:exclude-mapping path="/api/v3/selectModule/"/>
-            &lt;!&ndash; 发送消息&ndash;&gt;
+            <!--发送消息-->
             <mvc:exclude-mapping path="/api/v3/produce"/>
             <mvc:exclude-mapping path="/api/v3/message"/>
             <mvc:exclude-mapping path="/api/v3/message/*"/>
@@ -50,19 +50,19 @@
             <mvc:exclude-mapping path="/api/v3/message/all"/>
 
             <mvc:exclude-mapping path="/api/v3/problems_response/*"/>
-            &lt;!&ndash; WebSocekt&ndash;&gt;
-            <mvc:exclude-mapping path="/ws"/>
+            <!--WebSocekt-->
+    <mvc:exclude-mapping path="/ws"/>
 
-            <bean class="com.wlhse.controller.APIInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>-->
+    <bean class="com.wlhse.controller.APIInterceptor"/>
+</mvc:interceptor>
+</mvc:interceptors>
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<property name="prefix" value="/WEB-INF/"/>
+<property name="suffix" value=".jsp"/>
+</bean>
 
-    <!-- <mvc:resources mapping="/Pictures/**" location="/WEB-INF/Pictures/"/>-->
+<!-- <mvc:resources mapping="/Pictures/**" location="/WEB-INF/Pictures/"/>-->
     <!--文件上传解析器,名字不允许更改 bytes-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 设定默认编码 -->

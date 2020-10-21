@@ -190,4 +190,23 @@
         is null or QHSE_CompanyYearManagerSysElementEvidence_ID =#{id}
     </delete>
 
+    <select id="queryNoPasElement" resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto"
+            parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+    select * from qhse_companyyearmanagersyselement
+    <where>
+        <if test="companyCode !=null and companyCode!=''">
+            AND companyCode=#{companyCode}
+        </if>
+        <if test="year != null and year  != ''">
+            AND year=#{year}
+        </if>
+        <if test="status==0">
+            and status='不通过'
+        </if>
+        <if test="status==1">
+            and status="备案待查"
+        </if>
+        and ConfigStatus="启用"
+    </where>
+    </select>
 </mapper>

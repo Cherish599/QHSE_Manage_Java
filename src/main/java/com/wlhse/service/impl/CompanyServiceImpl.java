@@ -39,23 +39,23 @@ public class CompanyServiceImpl implements CompanyService {
     public R listQhseTreeCompany(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
 
-        String userId = "";
+        String employeeId = "";
         if (StringUtils.isNotBlank(token)) {
             Map<String, String> map = jedisClient.hGetAll(token);
-            userId= map.get("userId");
+            employeeId= map.get("employeeId");
         }
-        List<CompanyPojo> companyPojos = companyDao.queryCompany(Integer.valueOf(userId));
-        //获取当前员工所在公司
-        CompanyPojo companyPojo = companyPojos.get(0);
+        String companyCode = companyDao.getCompanyByEmployeeId(Integer.valueOf(employeeId));
         R ok = R.ok();
         //职能部门
-        if (companyPojo.getCompanyCode().startsWith("0001")){
+        if (companyCode.contains("0001")||companyCode.equals("00")){
 
             ok.put("data", treeUtil.getQhseCompanyTree(companyDao.queryQhseCompany()));
         }
         else {
             //基层单位
-            ok.put("data",companyPojo);
+            List<CompanyPojo> resultList=new ArrayList<>();
+            resultList.add(companyDao.getCompanyByCompanyCode(companyCode));
+            ok.put("data",treeUtil.getQhseCompanyTree(resultList));
         }
         return ok;
     }

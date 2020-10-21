@@ -42,4 +42,6 @@ public interface MonitorPlanService {
     R getNeedToCheckPlanDetails(int planId,String date);
 
     R getDayReport(int planId,String date);
+
+    R endPlan(Integer planId);
 }
