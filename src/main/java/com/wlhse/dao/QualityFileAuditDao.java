@@ -54,4 +54,11 @@ public interface QualityFileAuditDao {
      * @return 文件审核结果集
      */
     List<QualityFileAuditDto> getAllFileAudit();
+
+    /**
+     * 不录入文件审核
+     *
+     * @param qualityFileAuditRecordDto 文件审核记录字段
+     */
+    void noPassReasonFileAudit(QualityFileAuditRecordDto qualityFileAuditRecordDto);
 }
