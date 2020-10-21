@@ -262,6 +262,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
 
     //th-查询年度要素
     @Override
+    // TODO
     public R queryYearElement(YearElementsDto yearElementsDto) {
         //查看任务是否被接收
         if("未接收".equals(qhseManageSysElementsDao.queryTask(yearElementsDto.getYear(),yearElementsDto.getCompanyCode()))) return R.ok();

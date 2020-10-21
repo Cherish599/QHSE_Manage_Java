@@ -90,4 +90,17 @@ public class QualityFileAuditController {
     public String updateCheckStatus(@RequestBody(required = false) QualityYearElementsDto yearElementsDto) {
         return qualityFileAuditService.updateCheckStatus(yearElementsDto);
     }
+
+    /**
+     * 分页查询所有
+     *
+     * @param page 页码数
+     * @param size 每页大小
+     * @return 分页结果集
+     */
+    @RequestMapping(value = "/get_allqualityfileaduitpage/{page}/{size}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getAllFileAuditPage(@PathVariable("page") int page,
+                                 @PathVariable("size") int size) {
+        return qualityFileAuditService.getAllFileAuditPage(page, size);
+    }
 }

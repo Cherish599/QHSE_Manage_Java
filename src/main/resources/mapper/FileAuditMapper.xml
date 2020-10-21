@@ -134,7 +134,7 @@
             <if test="codeScore != null and codeScore  != ''">
                 CodeScore,
             </if>
-            <if test="pass != null and pass  != ''">
+            <if test="pass != null and pass != ''">
                 Pass,
             </if>
             <if test="additor!=null and additor!=''">
@@ -228,7 +228,7 @@
     <select id="getStatus" resultType="com.wlhse.dto.FileAuditRecordDto">
         select codeScore,Pass from qhse_fileauditrecord
         <where>
-            <if test="code != null and code  != ''">
+            <if test="fileAuditId != null and fileAuditId  != ''">
                 AND QHSE_FileAudit_ID=#{fileAuditId}
             </if>
             <if test="code != null and code  != ''">
@@ -247,6 +247,5 @@
         where Code=#{code} and
         QHSE_CompanyYearManagerSysElementTable_ID=#{qhseCompanyYearManagerSysElementTableID}
     </update>
-
 
 </mapper>

@@ -16,6 +16,7 @@ import java.util.List;
 public interface QualityFileAuditDao {
     //分页+查询存在的记录
     int queryTotal(QualityFileAuditDto qualityFileAuditDto);
+
     List<QualityFileAuditDto> queryExistFile(QualityFileAuditDto qualityFileAuditDto);
 
     //新增审核记录
@@ -26,6 +27,7 @@ public interface QualityFileAuditDao {
 
     //增加审核记录
     int addFileAuditRecord(QualityFileAuditRecordDto qualityFileAuditRecordDto);
+
     //查询审核记录的ID
     List<QualityFileAuditRecordDto> queryRecordId(QualityFileAuditRecordDto qualityFileAuditRecordDto);
 
@@ -46,4 +48,11 @@ public interface QualityFileAuditDao {
 
     //更改要素表中的审核状态
     int updateCheckStatus(QualityYearElementsDto yearElementsDto);
+
+    /**
+     * 查询所有文件审核
+     *
+     * @return 文件审核结果集
+     */
+    List<QualityFileAuditDto> getAllFileAudit();
 }

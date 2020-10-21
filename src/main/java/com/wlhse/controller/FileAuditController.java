@@ -18,10 +18,12 @@ public class FileAuditController {
     private FileAuditService fileAuditService;
     @Resource
     QHSEManageSysElementsService qhseManageSysElementsService;
-    @RequestMapping(value = "/getFileAuditProgress",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
-    public  R getProgress(@RequestParam(value = "tableId",required = false)Integer tableId){
+
+    @RequestMapping(value = "/getFileAuditProgress", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public R getProgress(@RequestParam(value = "tableId", required = false) Integer tableId) {
         return qhseManageSysElementsService.getTableCheckedProgress(tableId);
     }
+
     @RequestMapping(value = "/add_fileaduit", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addFileAudit(@RequestBody(required = false) FileAuditDto fileAuditDto) {
         return fileAuditService.addFileAudit(fileAuditDto);
@@ -82,6 +84,12 @@ public class FileAuditController {
     }
 
 
+    /**
+     * 修复部分bug
+     *
+     * @param fileAuditRecordDto 文件审核条件
+     * @return 文件审核结果集
+     */
     @RequestMapping(value = "/get_status", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String getStatus(@ModelAttribute FileAuditRecordDto fileAuditRecordDto) {
         return fileAuditService.getStatus(fileAuditRecordDto);

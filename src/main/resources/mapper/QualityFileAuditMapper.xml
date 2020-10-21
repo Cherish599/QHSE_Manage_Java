@@ -220,7 +220,7 @@
     <select id="getStatus" resultType="com.wlhse.dto.QualityFileAuditRecordDto">
         select codeScore,Pass from quality_fileauditrecord
         <where>
-            <if test="code != null and code  != ''">
+            <if test="fileAuditId != null and fileAuditId  != ''">
                 AND Quality_FileAudit_ID=#{fileAuditId}
             </if>
             <if test="code != null and code  != ''">
@@ -240,6 +240,12 @@
         where Code=#{code} and
         Quality_CompanyYearManagerSysElementTable_ID=#{qualityCompanyYearManagerSysElementTableID}
     </update>
+
+    <select id="getAllFileAudit" resultMap="fileAuditMap">
+        select *
+        from quality_fileaudit
+        order by year desc
+    </select>
 
 
 </mapper>
