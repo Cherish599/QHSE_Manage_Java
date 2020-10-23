@@ -12,7 +12,7 @@ public interface RegulationRecordService {
     //改
     R updateRegulationRecord (RegulationRecordDto regulationRecordDto);
     //按ID查询
-    String queryRegulationRecordById(Integer id);
+    R queryRegulationRecordById(Integer id);
     //查询
-    String queryRegulationRecord(RegulationRecordDto regulationRecordDto);
+    R queryRegulationRecord(RegulationRecordDto regulationRecordDto);
 }

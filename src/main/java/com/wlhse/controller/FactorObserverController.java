@@ -22,6 +22,12 @@ public class FactorObserverController {
         return factorObserverService.getAll();
     }
 
+    /**
+     * 修复空指针异常
+     * tobing
+     * @param factorCode
+     * @return
+     */
     @RequestMapping(value = "/factor_observer_bycode/{factorCode}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R getFactorObserver(@PathVariable String factorCode) {
         return factorObserverService.getFactorObserver(factorCode);

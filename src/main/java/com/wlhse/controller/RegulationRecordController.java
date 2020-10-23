@@ -34,13 +34,13 @@ public class RegulationRecordController {
     }
 
     @RequestMapping(value = "/query_regulationrecord/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String queryRegulationRecordById(@PathVariable int id) {
+    public R queryRegulationRecordById(@PathVariable int id) {
 
         return regulationRecordService.queryRegulationRecordById(id);
     }
 
     @RequestMapping(value = "/query_regulationrecord", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String queryDangerRecord(@ModelAttribute RegulationRecordDto regulationRecordDto) {
+    public R queryDangerRecord(@ModelAttribute RegulationRecordDto regulationRecordDto) {
 
         return regulationRecordService.queryRegulationRecord(regulationRecordDto);
     }

@@ -11,6 +11,6 @@ public interface ProblemDescriptionService {
     //改
     R updateProblemDescription(ProblemDescriptionDto problemDescriptionDto);
     //条件查询
-    String queryProblemDescription (ProblemDescriptionDto problemDescriptionDto);
+    R queryProblemDescription (ProblemDescriptionDto problemDescriptionDto);
 
 }

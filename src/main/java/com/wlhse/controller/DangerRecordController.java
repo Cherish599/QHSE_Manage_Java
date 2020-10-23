@@ -35,13 +35,13 @@ public class DangerRecordController {
     }
 
     @RequestMapping(value = "/query_dangerrecord/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String queryDangerRecordById(@PathVariable int id) {
+    public R queryDangerRecordById(@PathVariable int id) {
 
         return dangerRecordService.queryDangerRecordById(id);
     }
 
     @RequestMapping(value = "/query_dangerrecord", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String queryDangerRecord(@ModelAttribute DangerRecordDto dangerRecordDto) {
+    public R queryDangerRecord(@ModelAttribute DangerRecordDto dangerRecordDto) {
 
         return dangerRecordService.queryDangerRecord(dangerRecordDto);
     }
