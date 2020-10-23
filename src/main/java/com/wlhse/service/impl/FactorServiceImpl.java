@@ -48,6 +48,6 @@ public class FactorServiceImpl implements FactorService {
             e.printStackTrace();
             return R.error("失败");
         }
-        return R.ok().put("data",treeUtil.getFactoryTree(result));
+        return R.ok().put("data", treeUtil.getFactoryTree(result));
     }
 }

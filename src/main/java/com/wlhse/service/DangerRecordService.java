@@ -13,9 +13,9 @@ public interface DangerRecordService {
     //改
     R updateDangerRecord(DangerRecordDto dangerRecordDto);
     //按ID查询
-    String queryDangerRecordById(Integer id);
+    R queryDangerRecordById(Integer id);
     //查询
-    String queryDangerRecord(DangerRecordDto dangerRecordDto);
+    R queryDangerRecord(DangerRecordDto dangerRecordDto);
     //问题验证
     R problemVerification(DangerRecordDto dangerRecordDto);
 }

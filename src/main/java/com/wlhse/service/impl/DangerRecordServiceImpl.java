@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,8 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     }
 
     @Override
-    public String queryDangerRecordById(Integer id) {
+    public R queryDangerRecordById(Integer id) {
+        System.out.println("exec....");
         List<DangerRecordDto> list = dangerRecordDao.queryDangerRecordById(id);
         if (list != null && list.size() != 0) {
             for (DangerRecordDto dangerRecordDto : list) {
@@ -81,11 +83,13 @@ public class DangerRecordServiceImpl implements DangerRecordService {
                     dangerRecordDto.setSupervisionDate(dangerRecordDto.getSupervisionDate().substring(0, 10));
             }
         }
-        return NR.r(list);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", list);
+        return R.ok(map);
     }
 
     @Override
-    public String queryDangerRecord(DangerRecordDto dangerRecordDto) {
+    public R queryDangerRecord(DangerRecordDto dangerRecordDto) {
         int total = dangerRecordDao.queryTotal(dangerRecordDto);
         int pageIdx = dangerRecordDto.getPageIdx();
         PageHelper.startPage(pageIdx, dangerRecordDto.getPageSize());
@@ -111,7 +115,11 @@ public class DangerRecordServiceImpl implements DangerRecordService {
                     temp.setSupervisionDate(temp.getSupervisionDate().substring(0, 10));
             }
         }
-        return NR.r(list, total, pageIdx);
+        Map<String, Object> res = new HashMap<>();
+        res.put("page", pageIdx);
+        res.put("total", total);
+        res.put("list", list);
+        return R.ok(res);
     }
 
     @Override

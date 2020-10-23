@@ -6,7 +6,6 @@
 
     <!--QulityCheckRecordPojo的ResultMap-->
     <resultMap id="qulityCheckRecordPojoResultMap" type="com.wlhse.entity.QulityCheckRecordPojo">
-
     </resultMap>
 
     <!--添加质量检查-->
@@ -117,6 +116,18 @@
             <if test="correctPic != null and correctPic != ''">
                 correctPic,
             </if>
+            <!--new add-->
+            <if test="nonConformClause != null and nonConformClause != ''">nonConformClause,</if>
+            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">nonConformityCtdNo,</if>
+            <if test="nonConformityStdContent != null and nonConformityStdContent != ''">nonConformityStdContent,</if>
+            <if test="resVerifierID != null and resVerifierID != ''">resVerifierID,</if>
+            <if test="resVerifierName != null and resVerifierName != ''">resVerifierName,</if>
+            <if test="resVerifyDate != null and resVerifyDate != ''">resVerifyDate,</if>
+            <if test="resVerifyAdvice != null and resVerifyAdvice != ''">resVerifyAdvice,</if>
+            <if test="cheVerifierID != null and cheVerifierID != ''">cheVerifierID,</if>
+            <if test="cheVerifierName != null and cheVerifierName != ''">cheVerifierName,</if>
+            <if test="cheVerifyDate != null and cheVerifyDate != ''">cheVerifyDate,</if>
+            <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">cheVerifyAdvice,</if>
 
 
         </trim>
@@ -226,7 +237,19 @@
             <if test="correctPic != null and correctPic != ''">
                 #{correctPic},
             </if>
-
+            <!--new add-->
+            <if test="nonConformClause != null and nonConformClause != ''">#{nonConformClause},</if>
+            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">#{nonConformityCtdNo},</if>
+            <if test="nonConformityStdContent != null and nonConformityStdContent != ''">#{nonConformityStdContent},
+            </if>
+            <if test="resVerifierID != null and resVerifierID != ''">#{resVerifierID},</if>
+            <if test="resVerifierName != null and resVerifierName != ''">#{resVerifierName},</if>
+            <if test="resVerifyDate != null and resVerifyDate != ''">#{resVerifyDate},</if>
+            <if test="resVerifyAdvice != null and resVerifyAdvice != ''">#{resVerifyAdvice},</if>
+            <if test="cheVerifierID != null and cheVerifierID != ''">#{cheVerifierID},</if>
+            <if test="cheVerifierName != null and cheVerifierName != ''">#{cheVerifierName},</if>
+            <if test="cheVerifyDate != null and cheVerifyDate != ''">#{cheVerifyDate},</if>
+            <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">#{cheVerifyAdvice},</if>
 
         </trim>
         )
@@ -348,6 +371,22 @@
             <if test="correctPic != null and correctPic != ''">
                 correctPic= #{correctPic},
             </if>
+            <!--new add-->
+            <if test="nonConformClause != null and nonConformClause != ''">nonConformClause = #{nonConformClause},</if>
+            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">nonConformityCtdNo =
+                #{nonConformityCtdNo},
+            </if>
+            <if test="nonConformityStdContent != null and nonConformityStdContent != ''">
+                nonConformityStdContent=#{nonConformityStdContent},
+            </if>
+            <if test="resVerifierID != null and resVerifierID != ''">resVerifierID=#{resVerifierID},</if>
+            <if test="resVerifierName != null and resVerifierName != ''">resVerifierName=#{resVerifierName},</if>
+            <if test="resVerifyDate != null and resVerifyDate != ''">resVerifyDate=#{resVerifyDate},</if>
+            <if test="resVerifyAdvice != null and resVerifyAdvice != ''">resVerifyAdvice=#{resVerifyAdvice},</if>
+            <if test="cheVerifierID != null and cheVerifierID != ''">cheVerifierID=#{cheVerifierID},</if>
+            <if test="cheVerifierName != null and cheVerifierName != ''">cheVerifierName=#{cheVerifierName},</if>
+            <if test="cheVerifyDate != null and cheVerifyDate != ''">cheVerifyDate=#{cheVerifyDate},</if>
+            <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">cheVerifyAdvice=#{cheVerifyAdvice},</if>
         </trim>
         WHERE Qulity_CheckRecordID = #{qulity_CheckRecordID}
     </update>

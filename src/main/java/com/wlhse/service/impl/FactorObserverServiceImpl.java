@@ -22,17 +22,21 @@ public class FactorObserverServiceImpl implements FactorObserverService {
         return NR.r(list);
     }
 
+
     @Override
     public R getFactorObserver(String factorCode) {
         String str1 = factorObserverDao.getFactorObserverCode(factorCode);
-        String[] str2 = str1.split(",");
-        Set<String> set= new HashSet<>(Arrays.asList(str2));
-        List<FactorObserverDto> dep = new ArrayList<>();
-        for (String s:set
-        ) {
-            FactorObserverDto a = factorObserverDao.getFactorObserver(s);
-            dep.add(a);
+        if (str1 != null) {
+            String[] str2 = str1.split(",");
+            Set<String> set = new HashSet<>(Arrays.asList(str2));
+            List<FactorObserverDto> dep = new ArrayList<>();
+            for (String s : set
+            ) {
+                FactorObserverDto a = factorObserverDao.getFactorObserver(s);
+                dep.add(a);
+            }
+            return R.ok().put("data", dep);
         }
-        return R.ok().put("data",dep);
+        return R.ok("该FactorCode无FactorObserver数据！");
     }
 }

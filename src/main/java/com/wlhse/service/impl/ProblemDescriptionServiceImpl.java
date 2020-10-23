@@ -9,7 +9,9 @@ import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -20,14 +22,14 @@ public class ProblemDescriptionServiceImpl implements ProblemDescriptionService 
 
     @Override
     public R addProblemDescription(ProblemDescriptionDto problemDescriptionDto) {
-        if(problemDescriptionDao.addProblemDescription(problemDescriptionDto)<=0)
+        if (problemDescriptionDao.addProblemDescription(problemDescriptionDto) <= 0)
             throw new WLHSException("新增失败");
         return R.ok();
     }
 
     @Override
     public R deleteProblemDescription(int id) {
-        if(problemDescriptionDao.deleteProblemDescription(id)<=0)
+        if (problemDescriptionDao.deleteProblemDescription(id) <= 0)
             throw new WLHSException("删除失败");
         return R.ok();
     }
@@ -45,8 +47,10 @@ public class ProblemDescriptionServiceImpl implements ProblemDescriptionService 
     }
 
     @Override
-    public String queryProblemDescription(ProblemDescriptionDto problemDescriptionDto) {
+    public R queryProblemDescription(ProblemDescriptionDto problemDescriptionDto) {
         List<ProblemDescriptionDto> list = problemDescriptionDao.queryProblemDescription(problemDescriptionDto);
-        return NR.r(list);
+        Map<String, Object> res = new HashMap<>();
+        res.put("data", list);
+        return R.ok(res);
     }
 }
