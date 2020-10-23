@@ -258,6 +258,9 @@ public class UploadServiceImpl implements UploadService {
             checkListValueMap.put("parentName",dataFormat.formatCellValue(row.getCell(3)));
             checkListValueMap.put("isChildNode",dataFormat.formatCellValue(row.getCell(4)));
             checkListValueMap.put("status",dataFormat.formatCellValue(row.getCell(5)));
+            checkListValueMap.put("checkCategory",dataFormat.formatCellValue(row.getCell(6)));
+            checkListValueMap.put("checkBasis",dataFormat.formatCellValue(row.getCell(7)));
+            checkListValueMap.put("checkMethod",dataFormat.formatCellValue(row.getCell(8)));
             //使用BeanUtils将封装的属性注入对象
             QualityCheckListDto qualityCheckListDto=new QualityCheckListDto();
             BeanUtils.populate(qualityCheckListDto, checkListValueMap);

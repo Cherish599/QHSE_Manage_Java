@@ -6,6 +6,9 @@ public class QualityCheckInDto {
     private String checkListCode;//本级code
     private String attribute;//新增节点属性，想增加的那级的名称头
     private String status;
+    private String checkCategory;
+    private String checkBasis;
+    private String checkMethod;
 
     public String getCheckListName() {
         return checkListName;
@@ -45,5 +48,29 @@ public class QualityCheckInDto {
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
+    }
+
+    public String getCheckCategory() {
+        return checkCategory;
+    }
+
+    public void setCheckCategory(String checkCategory) {
+        this.checkCategory = checkCategory;
+    }
+
+    public String getCheckBasis() {
+        return checkBasis;
+    }
+
+    public void setCheckBasis(String checkBasis) {
+        this.checkBasis = checkBasis;
+    }
+
+    public String getCheckMethod() {
+        return checkMethod;
+    }
+
+    public void setCheckMethod(String checkMethod) {
+        this.checkMethod = checkMethod;
     }
 }
