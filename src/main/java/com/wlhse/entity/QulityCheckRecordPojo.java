@@ -43,6 +43,19 @@ public class QulityCheckRecordPojo {
     private String problemPic;
     private String correctAttach;
     private String correctPic;
+    // new add
+    private String nonConformClause;
+    private String nonConformityCtdNo;
+    private String nonConformityStdContent;
+    private Integer resVerifierID;
+    private String resVerifierName;
+    private String resVerifyDate;
+    private String resVerifyAdvice;
+    private Integer cheVerifierID;
+    private String cheVerifierName;
+    private String cheVerifyDate;
+    private String cheVerifyAdvice;
+
 
     public Integer getQulity_CheckRecordID() {
         return qulity_CheckRecordID;
@@ -316,4 +329,91 @@ public class QulityCheckRecordPojo {
         this.correctPic = correctPic;
     }
 
+    public String getNonConformClause() {
+        return nonConformClause;
+    }
+
+    public void setNonConformClause(String nonConformClause) {
+        this.nonConformClause = nonConformClause;
+    }
+
+    public String getNonConformityCtdNo() {
+        return nonConformityCtdNo;
+    }
+
+    public void setNonConformityCtdNo(String nonConformityCtdNo) {
+        this.nonConformityCtdNo = nonConformityCtdNo;
+    }
+
+    public String getNonConformityStdContent() {
+        return nonConformityStdContent;
+    }
+
+    public void setNonConformityStdContent(String nonConformityStdContent) {
+        this.nonConformityStdContent = nonConformityStdContent;
+    }
+
+    public Integer getResVerifierID() {
+        return resVerifierID;
+    }
+
+    public void setResVerifierID(Integer resVerifierID) {
+        this.resVerifierID = resVerifierID;
+    }
+
+    public String getResVerifierName() {
+        return resVerifierName;
+    }
+
+    public void setResVerifierName(String resVerifierName) {
+        this.resVerifierName = resVerifierName;
+    }
+
+    public String getResVerifyDate() {
+        return resVerifyDate;
+    }
+
+    public void setResVerifyDate(String resVerifyDate) {
+        this.resVerifyDate = resVerifyDate;
+    }
+
+    public String getResVerifyAdvice() {
+        return resVerifyAdvice;
+    }
+
+    public void setResVerifyAdvice(String resVerifyAdvice) {
+        this.resVerifyAdvice = resVerifyAdvice;
+    }
+
+    public Integer getCheVerifierID() {
+        return cheVerifierID;
+    }
+
+    public void setCheVerifierID(Integer cheVerifierID) {
+        this.cheVerifierID = cheVerifierID;
+    }
+
+    public String getCheVerifierName() {
+        return cheVerifierName;
+    }
+
+    public void setCheVerifierName(String cheVerifierName) {
+        this.cheVerifierName = cheVerifierName;
+    }
+
+    public String getCheVerifyDate() {
+        return cheVerifyDate;
+    }
+
+    public void setCheVerifyDate(String cheVerifyDate) {
+        this.cheVerifyDate = cheVerifyDate;
+    }
+
+    public String getCheVerifyAdvice() {
+        return cheVerifyAdvice;
+    }
+
+    public void setCheVerifyAdvice(String cheVerifyAdvice) {
+        this.cheVerifyAdvice = cheVerifyAdvice;
+    }
 }
