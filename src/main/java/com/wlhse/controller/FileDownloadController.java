@@ -4,8 +4,6 @@ package com.wlhse.controller;
 import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
-import com.wlhse.dto.QualityCheckDto;
-import com.wlhse.util.R;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

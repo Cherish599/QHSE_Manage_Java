@@ -179,7 +179,10 @@
 
     <select id="getTableNode" resultType="com.wlhse.dto.QualityCheckListDto">
         select CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        CheckCategory as checkCategory,
+        CheckBasis as checkBasis,
+        CheckMethod as checkMethod
         from quality_checklist
         where length(CheckListCode)=4
         and Status='启用'
