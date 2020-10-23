@@ -13,6 +13,14 @@ public class ProblemDescriptionDto {
     private String companyName;
     private String status;
     private String situation;
+    /**
+     * 问题详细描述
+     */
+    private String itemName;
+    /**
+     * 审核时间
+     */
+    private String auditTime;
 
     public String getStatus() {
         return status;
@@ -108,5 +116,21 @@ public class ProblemDescriptionDto {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(String auditTime) {
+        this.auditTime = auditTime;
     }
 }
