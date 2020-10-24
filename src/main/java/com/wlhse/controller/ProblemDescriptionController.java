@@ -18,13 +18,7 @@ public class ProblemDescriptionController {
     @RequestMapping(value = "/add_problemDescription", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public R addProblemDescription(@RequestBody(required = false) ProblemDescriptionDto problemDescriptionDto) {
         problemDescriptionDto.setStatus("未整改");
-        R r = null;
-        try {
-            problemDescriptionService.addProblemDescription(problemDescriptionDto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return r;
+        return problemDescriptionService.addProblemDescription(problemDescriptionDto);
     }
 
     @RequestMapping(value = "/delete_problemDescription/{id}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
