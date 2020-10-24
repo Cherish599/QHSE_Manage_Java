@@ -17,7 +17,26 @@ public class MonitorPlanDetail {
     private String charger;
     @ExcelProperty("电话")
     private String tel;
+    @ExcelProperty("基层单位")
+    private String companyName;
+
     private String condition;
+
+    public MonitorPlanDetail() {
+    }
+
+    public MonitorPlanDetail(int monitorPlanDetailID, int monitorPlanID, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String companyName, String condition) {
+        this.monitorPlanDetailID = monitorPlanDetailID;
+        this.monitorPlanID = monitorPlanID;
+        this.no = no;
+        this.deviceNo = deviceNo;
+        this.myNo = myNo;
+        this.projectName = projectName;
+        this.charger = charger;
+        this.tel = tel;
+        this.companyName = companyName;
+        this.condition = condition;
+    }
 
     public int getMonitorPlanDetailID() {
         return monitorPlanDetailID;
@@ -83,6 +102,14 @@ public class MonitorPlanDetail {
         this.tel = tel;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public String getCondition() {
         return condition;
     }
@@ -102,6 +129,7 @@ public class MonitorPlanDetail {
                 ", projectName='" + projectName + '\'' +
                 ", charger='" + charger + '\'' +
                 ", tel='" + tel + '\'' +
+                ", companyName='" + companyName + '\'' +
                 ", condition='" + condition + '\'' +
                 '}';
     }

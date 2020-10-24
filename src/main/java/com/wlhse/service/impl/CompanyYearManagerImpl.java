@@ -45,6 +45,8 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
         return R.ok(map);
     }
 
+
+
     @Override
     @Transactional
     public R deleteALL(int id) {
@@ -57,6 +59,7 @@ public class CompanyYearManagerImpl implements CompanyYearManagerService {
         }
         return R.ok();
     }
+
     @Override
     public R addCompanyYearManager(CompanyYearManagerDtoWithEmployeeId companyYearManagerDto,HttpServletRequest request) {
         String token = request.getHeader("Authorization");

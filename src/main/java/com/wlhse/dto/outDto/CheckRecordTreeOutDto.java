@@ -19,6 +19,15 @@ public class CheckRecordTreeOutDto {
     private String checkPersonId;
     private String checkPerson;
     private List<CheckRecordTreeOutDto> childNode;
+    private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public Integer getCheckRecordID() {
         return checkRecordID;

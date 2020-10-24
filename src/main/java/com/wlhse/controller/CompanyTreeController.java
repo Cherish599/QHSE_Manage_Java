@@ -34,8 +34,8 @@ public class CompanyTreeController {
 
     //qhse新增公司树查询
     @RequestMapping(value = "/qhse_company/tree", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String getQhseCompanyTree() {
-        return companyService.listQhseTreeCompany().toJSONString();
+    public String getQhseCompanyTree(HttpServletRequest request) {
+        return companyService.listQhseTreeCompany(request).toJSONString();
     }
 
     //增加company

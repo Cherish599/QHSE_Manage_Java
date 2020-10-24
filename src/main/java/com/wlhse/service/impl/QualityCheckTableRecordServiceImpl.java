@@ -33,9 +33,7 @@ public class QualityCheckTableRecordServiceImpl implements QualityCheckTableReco
     }
 
     @Override
-    public R addInformAndAttach(QualityCheckTableRecordDto qualityCheckTableRecordDto, List<QualityCheckTableRecordAttachInfoDto> Plist) {
-        if(fileDao.batchInsertQualityAttachInfo(Plist)<0)
-            throw new WLHSException("插入失败");
+    public R addInformAndAttach(QualityCheckTableRecordDto qualityCheckTableRecordDto) {
         if(qualityCheckTableRecordDao.addInformAndAttach(qualityCheckTableRecordDto)<0)
             throw new WLHSException("更新失败");
         return R.ok();

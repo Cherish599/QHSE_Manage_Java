@@ -54,6 +54,9 @@ public class QualityCheckListServiceImpl implements QualityCheckListService {
         QualityCheckListDto saveDto=new QualityCheckListDto();
         saveDto.setCheckListName(qualityCheckInDto.getCheckListName());
         saveDto.setStatus(qualityCheckInDto.getStatus());
+        saveDto.setCheckBasis(qualityCheckInDto.getCheckBasis());
+        saveDto.setCheckCategory(qualityCheckInDto.getCheckCategory());
+        saveDto.setCheckMethod(qualityCheckInDto.getCheckMethod());
         int i=1;
         //新增表
         if(parentCode==null||"".equals(parentCode)){//添加第一级code传null，Attribute传表
@@ -68,7 +71,7 @@ public class QualityCheckListServiceImpl implements QualityCheckListService {
                 String maxNode=sortCodeUtil.getMaxCode(list);
                 node=sortCodeUtil.getMaxCodeString(maxNode);
             }
-            System.out.println(node);
+            //System.out.println(node);
             saveDto.setCheckListCode(node);
             saveDto.setIsChildNode("true");
             saveDto.setAttribute(qualityCheckInDto.getAttribute());
@@ -122,6 +125,9 @@ public class QualityCheckListServiceImpl implements QualityCheckListService {
         for (QualityCheckListDto checkListDto:listDtos){
             if(checkListDto.getCheckListID().equals(checkListOldDto.getCheckListID())){//如果是当前节点还要改其他值
                 checkListDto.setCheckListName(qualityCheckInDto.getCheckListName());//更改名字
+                checkListDto.setCheckBasis(qualityCheckInDto.getCheckBasis());//更改三个内容
+                checkListDto.setCheckCategory(qualityCheckInDto.getCheckCategory());
+                checkListDto.setCheckMethod(qualityCheckInDto.getCheckMethod());
                 //checkListDto.setStatus(checkListAddDto.getStatus());
             }else{
                 StringBuffer newParentName=new StringBuffer();

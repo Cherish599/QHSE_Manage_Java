@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController("UserController")
@@ -35,5 +38,32 @@ public class UserController {
         String token = request.getHeader("Authorization");
         jedisClient.delManyCahce(token,0);
         return R.ok();
+    }
+
+    //0 返回安全体系菜单，1返回质量体系菜单
+    @RequestMapping(value = "/selectModule/{type}",method = RequestMethod.GET)
+    public R selectModule(@PathVariable("type")Integer type){
+        Map<String, Object> resultMap=new HashMap<>();
+        List<String> resultList=new ArrayList<>();
+        if (type==0){
+            resultList.add("0001");
+            resultList.add("0002");
+            resultList.add("0003");
+            resultList.add("0004");
+            resultList.add("0005");
+            resultList.add("0006");
+            resultList.add("0009");
+            resultMap.put("data",resultList);
+            return R.ok(resultMap);
+        }
+        {
+            resultList.add("0005");
+            resultList.add("0006");
+            resultList.add("0007");
+            resultList.add("0008");
+            resultList.add("0010");
+            resultMap.put("data",resultList);
+            return R.ok(resultMap);
+        }
     }
 }

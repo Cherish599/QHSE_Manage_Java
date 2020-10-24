@@ -25,7 +25,6 @@
     <select id="getCheckListOne" resultType="com.wlhse.dto.QualityCheckListDto">
         select * from quality_checklist
         where CheckListCode=#{code}
-        and status="启用"
     </select>
     <update id="updateIsChild">
         update quality_checklist
@@ -57,7 +56,15 @@
             <if test="status != null and status != ''">
                 status,
             </if>
-
+            <if test="checkCategory != null and checkCategory != ''">
+                CheckCategory,
+            </if>
+            <if test="checkBasis != null and checkBasis != ''">
+                CheckBasis,
+            </if>
+            <if test="checkMethod != null and checkMethod != ''">
+                CheckMethod
+            </if>
         </trim>
         )
         values
@@ -81,6 +88,15 @@
             <if test="status != null and status != ''">
                 #{status},
             </if>
+            <if test="checkCategory != null and checkCategory != ''">
+                #{checkCategory},
+            </if>
+            <if test="checkBasis != null and checkBasis != ''">
+                #{checkBasis},
+            </if>
+            <if test="checkMethod != null and checkMethod != ''">
+                #{checkMethod}
+            </if>
         </trim>
         )
     </insert>
@@ -101,6 +117,15 @@
             </if>
             <if test="parentName != null and parentName  != ''">
                 parentName=#{parentName},
+            </if>
+            <if test="checkCategory != null and checkCategory != ''">
+                CheckCategory=#{checkCategory},
+            </if>
+            <if test="checkBasis != null and checkBasis != ''">
+                CheckBasis=#{checkBasis},
+            </if>
+            <if test="checkMethod != null and checkMethod != ''">
+                CheckMethod=#{checkMethod}
             </if>
         </set>
         where CheckListID=#{checkListID}
@@ -133,12 +158,13 @@
 
     <insert id="batchInsertRecord">
         insert into quality_checklist
-        (CheckListCode,CheckListName,Attribute,ParentName,IsChildNode,Status)
+        (CheckListCode,CheckListName,Attribute,ParentName,IsChildNode,Status,CheckCategory,CheckBasis,CheckMethod)
         values
         <foreach collection="list" item="detail" separator=",">
             (
             #{detail.checkListCode},#{detail.checkListName},#{detail.attribute},
-            #{detail.parentName},#{detail.isChildNode},#{detail.status}
+            #{detail.parentName},#{detail.isChildNode},#{detail.status},
+            #{detail.checkCategory},#{detail.checkBasis},#{detail.checkMethod}
             )
         </foreach>
     </insert>
@@ -153,9 +179,13 @@
 
     <select id="getTableNode" resultType="com.wlhse.dto.QualityCheckListDto">
         select CheckListCode as checkListCode,
-        CheckListName as checkListName
+        CheckListName as checkListName,
+        CheckCategory as checkCategory,
+        CheckBasis as checkBasis,
+        CheckMethod as checkMethod
         from quality_checklist
         where length(CheckListCode)=4
+        and Status='启用'
     </select>
 
 

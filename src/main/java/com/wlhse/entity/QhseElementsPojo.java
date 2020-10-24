@@ -13,7 +13,6 @@ public class QhseElementsPojo {
 
     private String content;
 
-
     private String auditMode;
 
     private Integer initialScore;

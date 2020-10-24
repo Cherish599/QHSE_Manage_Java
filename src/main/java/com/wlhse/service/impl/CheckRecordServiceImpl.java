@@ -11,6 +11,7 @@ import com.wlhse.exception.WLHSException;
 import com.wlhse.service.CheckRecordService;
 import com.wlhse.util.R;
 import com.wlhse.util.TreeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class CheckRecordServiceImpl implements CheckRecordService {
 
     @Resource
@@ -32,6 +34,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
 
     @Override
     public R addCheckRecord(CheckRecordDto checkRecordDto) {
+        log.info("接收到的参数"+checkRecordDto);
         if ( checkRecordDao.addCheckRecord(checkRecordDto)<= 0)
             throw new WLHSException("新增失败");
         return R.ok();
@@ -56,7 +59,6 @@ public class CheckRecordServiceImpl implements CheckRecordService {
                 codes.add(dto.getCode().substring(0,4));
             }
         }
-        System.out.println(codes.toString());
         List<CheckRecordTreeDto> resultDtos = new ArrayList<>();
         for (String code:codes) {
             resultDtos.addAll(checkRecordDao.queryAllByParentCode(code));

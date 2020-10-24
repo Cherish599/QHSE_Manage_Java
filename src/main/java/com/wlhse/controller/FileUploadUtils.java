@@ -4,6 +4,7 @@ import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.MonitorFileDao;
 import com.wlhse.dto.QualityCheckTableRecordAttachInfoDto;
 import com.wlhse.dto.QualityCheckTableRecordDto;
+import com.wlhse.dto.QualityFileInputInfoDto;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.service.QhseElementsInputService;
@@ -48,6 +49,7 @@ public class FileUploadUtils {
 
     @Resource
     DrFileDao drFileDao;
+
 
     public String setFile(MultipartFile file, String str) throws Exception {
 
@@ -140,7 +142,7 @@ public class FileUploadUtils {
     @ResponseBody
     public R uploadCheckList(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-            return R.error(CodeDict.UPLOAD_EMPTY,"上传文件为空");
+            return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
         } else {
             String fileName = setFile(file, "CheckList\\");
             String path = System.getProperty("catalina.home") + "\\webapps\\CheckList\\" + fileName;
@@ -176,7 +178,7 @@ public class FileUploadUtils {
     @RequestMapping(value = "/evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String uploadEvidence(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws Exception {
-        String originName=file.getOriginalFilename();
+        String originName = file.getOriginalFilename();
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else {
@@ -185,7 +187,7 @@ public class FileUploadUtils {
             String fileName = setFile(file, "resources\\QHSEEvidence\\");
             elementInputFileInfo.setNewElementFileName(fileName);
             qhseElementsInputService.insertNewOriginFileName(elementInputFileInfo);
-           return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
         }
     }
 
@@ -194,7 +196,7 @@ public class FileUploadUtils {
     @ResponseBody
     public R uploadQHSEMSElements(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-            return R.error(CodeDict.UPLOAD_EMPTY,"上传文件为空");
+            return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
         } else {
             String fileName = setFile(file, "ManageSysElements\\");
             String path = System.getProperty("catalina.home") + "\\webapps\\ManageSysElements\\" + fileName;
@@ -203,22 +205,21 @@ public class FileUploadUtils {
     }
 
     //upload files for file propagation.
-    @RequestMapping(value = "/propagationFileUpload",method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "/propagationFileUpload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String uploadFilesForPropagation(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
-        if (file.isEmpty()){
+        if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        }
-        else {
-            FilePropagationFileInfo filePropagationFileInfo=new FilePropagationFileInfo();
+        } else {
+            FilePropagationFileInfo filePropagationFileInfo = new FilePropagationFileInfo();
             filePropagationFileInfo.setOriginName(file.getOriginalFilename());
-            String fileName=setFile(file,"FilePropagation\\");
+            String fileName = setFile(file, "FilePropagation\\");
             filePropagationFileInfo.setFilePath(fileName);
-            IdUtil idUtil=new IdUtil(2,5,3);
+            IdUtil idUtil = new IdUtil(2, 5, 3);
             filePropagationFileInfo.setId(idUtil.getId());
             boolean b = uploadService.insertFilePropagationFileRecord(filePropagationFileInfo);
             if (b)
-                 return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+                return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
             else
                 return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
 
@@ -229,7 +230,7 @@ public class FileUploadUtils {
     @ResponseBody
     public R uploadQuality_Check(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-            return R.error(CodeDict.UPLOAD_EMPTY,"上传文件为空");
+            return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
         } else {
             String fileName = setFile(file, "CheckList\\");
             String path = System.getProperty("catalina.home") + "\\webapps\\CheckList\\" + fileName;
@@ -245,7 +246,7 @@ public class FileUploadUtils {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
-            String originFileName=file.getOriginalFilename();
+            String originFileName = file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSEDanger\\photoes");
             drFileDao.insertNewFile(fileName,originFileName);
             //拼接生成图片下载链接链接
@@ -284,7 +285,7 @@ public class FileUploadUtils {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
-            String originFileName=file.getOriginalFilename();
+            String originFileName = file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSERegulation\\photoes");
             drFileDao.insertNewFile(fileName,originFileName);
             //拼接生成图片下载链接链接
@@ -308,63 +309,104 @@ public class FileUploadUtils {
             String fileName = setFile(file, "resources\\QualityRegulation\\photoes");
             drFileDao.insertNewFile(fileName,originFileName);
             //拼接生成图片下载链接链接
-            String downloadLink="/downloadRegulationFile?fileName="+fileName;
+            String downloadLink = "/downloadRegulationFile?fileName=" + fileName;
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
         } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
     }
 
-
     //上传远程监控截图,直接将截图下载链接放置于响应结果中
-    @RequestMapping(value = "/uploadScreenShot",method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadScreenShot", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadScreenShot(@RequestParam(value = "file",required = false)MultipartFile file) throws Exception {
+    public String uploadScreenShot(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
                 "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
-            String originFileName=file.getOriginalFilename();
+            String originFileName = file.getOriginalFilename();
             String fileName = setFile(file, "RemoteMonitor\\screenShot");
-            monitorFileDao.insertNewFile(fileName,originFileName);
+            monitorFileDao.insertNewFile(fileName, originFileName);
             //拼接生成图片下载链接链接
-            String downloadLink="/screenShotDownload?fileName="+fileName;
+            String downloadLink = "/screenShotDownload?fileName=" + fileName;
             return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, downloadLink, null, 0, 0);
         } else {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_TYPE_ERROR, null, null, 0, 0);
         }
     }
 
-    @RequestMapping(value = "/addQualityInformAndAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "/addQualityAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public R addQualityInformAndAttach(@RequestParam(value = "file", required = false) MultipartFile file[],QualityCheckTableRecordDto qualityCheckTableRecordDto) throws Exception {
-        if (file != null) {
-            String attachFilePath = "";
-            String picFilePath = "";
-            List<QualityCheckTableRecordAttachInfoDto> Plist = new ArrayList<>();
-            for (int i = 0; i < file.length; i++) {
-                if (!file[i].isEmpty()) {
-                    String OriginalFilename = file[i].getOriginalFilename();
-                    QualityCheckTableRecordAttachInfoDto AttachInfoDto = new QualityCheckTableRecordAttachInfoDto();
-                    AttachInfoDto.setAttachOriginName(OriginalFilename);
-                    String FilePath = setFile(file[i], "resources\\QualityCheck");
-                    AttachInfoDto.setAttachFilePath(FilePath);
-                    if ("jpg".equals(OriginalFilename.split("\\.")[1].toLowerCase()) || "png".equals(OriginalFilename.split("\\.")[1].toLowerCase()) ||
-                            "bmp".equals(OriginalFilename.split("\\.")[1].toLowerCase())) {
-                        picFilePath += (FilePath + ";");
-                    } else {
-                        attachFilePath += (FilePath + ";");
-                    }
-                    Plist.add(AttachInfoDto);
-                }
-            }
-            if(!attachFilePath.equals(""))
-            qualityCheckTableRecordDto.setAttach(attachFilePath.substring(0, attachFilePath.length() - 1));
-            if(!picFilePath.equals(""))
-            qualityCheckTableRecordDto.setPic(picFilePath.substring(0, picFilePath.length() - 1));
-            //System.out.println(qualityCheckTableRecordDto);
-            return qualityCheckTableRecordService.addInformAndAttach(qualityCheckTableRecordDto,Plist);
+    public String addQualityAttach(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        } else {
+            String OriginalFilename = file.getOriginalFilename();
+            QualityCheckTableRecordAttachInfoDto attachInfoDto = new QualityCheckTableRecordAttachInfoDto();
+            attachInfoDto.setAttachOriginName(OriginalFilename);
+            String FilePath = setFile(file, "resources\\QualityCheck");
+            attachInfoDto.setAttachFilePath(FilePath);
+            boolean b = uploadService.insertAttachInfoDto(attachInfoDto);
+            if (b)
+                return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, FilePath, null, 0, 0);
+            else
+                return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
         }
-        else return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
     }
+
+    //要素多文件上传
+    @RequestMapping(value = "/uploadAllElement", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String uploadAllElement(@RequestParam(value = "file", required = false) List<MultipartFile> file) throws Exception {
+        String fileName = "";
+        List<String> lists = new ArrayList();
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        } else {
+            for (int i = 0; i < file.size(); i++) {
+                String originName = file.get(i).getOriginalFilename();
+                if ("jpg".equals(file.get(i).getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.get(i).getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+                        "bmp".equals(file.get(i).getOriginalFilename().split("\\.")[1].toLowerCase())) {
+                    fileName = setFile(file.get(i), "resources\\QHSEEvidence\\photo");
+                } else {
+                    fileName = setFile(file.get(i), "resources\\QHSEEvidence\\attach");
+                }
+                ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
+                elementInputFileInfo.setElementOriginFileName(originName);
+                elementInputFileInfo.setNewElementFileName(fileName);
+                qhseElementsInputService.insertNewOriginFileName(elementInputFileInfo);
+                lists.add(fileName);
+            }
+        }
+        return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, lists, null, 0, 0);
+    }
+    @RequestMapping(value = "/Quality_evidence_upload", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String uploadQualityEvidence(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws Exception {
+        String originName = file.getOriginalFilename();
+        if (file.isEmpty()) {
+            return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
+        } else {
+            QualityFileInputInfoDto qualityFileInputInfoDto = new QualityFileInputInfoDto();
+            qualityFileInputInfoDto.setOriginalFileName(originName);
+            String fileName = setFile(file, "resources\\QualityEvidence\\");
+            qualityFileInputInfoDto.setNewFileName(fileName);
+            qhseElementsInputService.insertNewOriginFileNames(qualityFileInputInfoDto);
+            return NR.r(CodeDict.CODE_MESSAGE_DATA, 0, 0, fileName, null, 0, 0);
+        }
+    }
+
+    //---------质量要素excel录入数据库
+    @RequestMapping(value = "/uploadQualityElements", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public R uploadQualityElements(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            return R.error(CodeDict.UPLOAD_EMPTY, "上传文件为空");
+        } else {
+            String fileName = setFile(file, "QualityManagerSysElement\\");
+            String path = System.getProperty("catalina.home") + "\\webapps\\QualityManagerSysElement\\" + fileName;
+            return uploadService.uploadQualityManageSysElements(path);
+        }
+    }
+
 }

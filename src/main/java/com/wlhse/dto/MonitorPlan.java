@@ -9,14 +9,20 @@ public class MonitorPlan {
     private int planPersonID;
     private String planPersonName;
     private String companyCode;
+    private String status;
 
-
-    public String getCompanyCode() {
-        return companyCode;
+    public MonitorPlan() {
     }
 
-    public void setCompanyCode(String companyCode) {
+    public MonitorPlan(int monitorPlanID, String startDate, String endDate, String planName, int planPersonID, String planPersonName, String companyCode, String status) {
+        this.monitorPlanID = monitorPlanID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.planName = planName;
+        this.planPersonID = planPersonID;
+        this.planPersonName = planPersonName;
         this.companyCode = companyCode;
+        this.status = status;
     }
 
     public int getMonitorPlanID() {
@@ -67,5 +73,33 @@ public class MonitorPlan {
         this.planPersonName = planPersonName;
     }
 
+    public String getCompanyCode() {
+        return companyCode;
+    }
 
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "MonitorPlan{" +
+                "monitorPlanID=" + monitorPlanID +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", planName='" + planName + '\'' +
+                ", planPersonID=" + planPersonID +
+                ", planPersonName='" + planPersonName + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

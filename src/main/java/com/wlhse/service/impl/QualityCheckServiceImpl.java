@@ -30,8 +30,12 @@ public class QualityCheckServiceImpl implements QualityCheckService {
     @Override
     public R addQualityCheck(QualityCheckDto qualityCheckDto) {
         qualityCheckDto.setIsPush("未推送");
+        qualityCheckDto.setIssued("未下达");
         if(qualityCheckDao.addQualityCheck(qualityCheckDto)<0)
             throw new WLHSException("插入失败");
+        if(qualityCheckDto.getCheckListCode()==null){
+            throw new WLHSException("检查表为空");
+        }
         List<QualityCheckTableRecordDto> allQualityCheckTableRecord=getCheckTree(qualityCheckDto.getQualityCheckID(),qualityCheckDto.getCheckListCode());
         if(allQualityCheckTableRecord.size()>0){
             if(qualityCheckTableRecordDao.batchInsertTree(allQualityCheckTableRecord)<0)
@@ -115,6 +119,72 @@ public class QualityCheckServiceImpl implements QualityCheckService {
         R ok = R.ok();
         String[] dates=qualityCheckDto.getCheckDate().split(";");
         ok.put("data",qualityCheckDao.queryTableByDateAndPush(qualityCheckDto.getCheckedCompanyCode(),dates[0],dates[1]));
+        return ok;
+    }
+
+    @Override
+    public R issuedTable(QualityCheckDto qualityCheckDto) {
+        if("通过".equals(qualityCheckDto.getIsPush())){//是通过，修改推送字段。
+            if(qualityCheckDao.passTable(qualityCheckDto.getQualityCheckID())<0)
+                throw new WLHSException("更新失败");
+        }
+        else{
+            if("下达".equals(qualityCheckDto.getIsPush())){
+                if(qualityCheckDao.issuedTable(qualityCheckDto.getQualityCheckID())<0)
+                    throw new WLHSException("更新失败");
+            }
+            else{
+                throw new WLHSException("字段错误");
+            }
+        }
+        return R.ok();
+    }
+
+    @Override
+    public R queryTableByYearAndComAndIssued(QualityCheckDto qualityCheckDto) {
+        R ok = R.ok();
+        String[] dates=qualityCheckDto.getCheckDate().split(";");
+        ok.put("data",qualityCheckDao.queryTableByDateAndIssue(qualityCheckDto.getCheckedCompanyCode(),dates[0],dates[1]));
+        return ok;
+    }
+
+    @Override
+    public R modifyPush(Integer qualityCheckID) {
+        if(qualityCheckDao.modifyPush(qualityCheckID)<0)
+            throw new WLHSException("更新失败");
+        return R.ok();
+    }
+
+    @Override
+    public R queryByYearComAndModify(QualityCheckDto qualityCheckDto) {
+        R ok = R.ok();
+        String[] dates=qualityCheckDto.getCheckDate().split(";");
+        ok.put("data",qualityCheckDao.queryByYearComAndModify(qualityCheckDto.getCheckedCompanyCode(),dates[0],dates[1]));
+        return ok;
+    }
+
+    @Override
+    public R backTable(QualityCheckDto qualityCheckDto) {
+        if("通过".equals(qualityCheckDto.getIsPush())){//是通过，修改推送字段。
+            if(qualityCheckDao.passTable(qualityCheckDto.getQualityCheckID())<0)
+                throw new WLHSException("更新失败");
+        }
+        else{
+            if("打回".equals(qualityCheckDto.getIsPush())){
+                if(qualityCheckDao.issuedTable(qualityCheckDto.getQualityCheckID())<0)
+                    throw new WLHSException("更新失败");
+            }
+            else{
+                throw new WLHSException("字段错误");
+            }
+        }
+        return R.ok();
+    }
+
+    @Override
+    public R queryAllPassTable() {
+        R ok = R.ok();
+        ok.put("data",qualityCheckDao.queryAllPassTable());
         return ok;
     }
 

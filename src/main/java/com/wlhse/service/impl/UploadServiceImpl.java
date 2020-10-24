@@ -1,12 +1,10 @@
 package com.wlhse.service.impl;
 
-import com.wlhse.dao.CheckListDao;
-import com.wlhse.dao.FileDao;
-import com.wlhse.dao.QHSEManageSysElementsDao;
-import com.wlhse.dao.QualityCheckListDao;
+import com.wlhse.dao.*;
 import com.wlhse.dto.*;
 import com.wlhse.dto.inDto.FilePropagationFileInfo;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
+import com.wlhse.dto.inDto.QualityManagerSysElementInDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.UploadService;
 import com.wlhse.util.*;
@@ -44,6 +42,8 @@ public class UploadServiceImpl implements UploadService {
     @Resource
     private QualityCheckListDao qualityCheckListDao;
 
+    @Resource
+    private QualityManagerSysElementDao qualityManagerSysElementDao;
 
     private final static String staus = "启用";
 
@@ -233,6 +233,13 @@ public class UploadServiceImpl implements UploadService {
         return false;
     }
 
+    @Override
+    public boolean insertAttachInfoDto(QualityCheckTableRecordAttachInfoDto qualityCheckTableRecordAttachInfoDto) {
+        int i = fileDao.InsertQualityAttachInfo(qualityCheckTableRecordAttachInfoDto);
+        if (i!=0) return true;
+        return false;
+    }
+
     @Transactional
     @Override
     public R uploadQualityCheck(String path) throws Exception {
@@ -251,6 +258,9 @@ public class UploadServiceImpl implements UploadService {
             checkListValueMap.put("parentName",dataFormat.formatCellValue(row.getCell(3)));
             checkListValueMap.put("isChildNode",dataFormat.formatCellValue(row.getCell(4)));
             checkListValueMap.put("status",dataFormat.formatCellValue(row.getCell(5)));
+            checkListValueMap.put("checkCategory",dataFormat.formatCellValue(row.getCell(6)));
+            checkListValueMap.put("checkBasis",dataFormat.formatCellValue(row.getCell(7)));
+            checkListValueMap.put("checkMethod",dataFormat.formatCellValue(row.getCell(8)));
             //使用BeanUtils将封装的属性注入对象
             QualityCheckListDto qualityCheckListDto=new QualityCheckListDto();
             BeanUtils.populate(qualityCheckListDto, checkListValueMap);
@@ -276,6 +286,106 @@ public class UploadServiceImpl implements UploadService {
         else {
             throw new WLHSException("excel文件为空");//list为空，读取excel失败；
         }
+    }
+
+    @Transactional
+    @Override
+    public R uploadQualityManageSysElements(String path) throws Exception {
+         /*
+        思想：创建excel工具类对象，使用该对象对表格进行读写，读写的顺序为一行一行从左往右，每读一行，即一条记录，一个对象；
+        然后把存放对象属性值的键值对MAP封装为对象，放进list中；
+        然后对数据进行校验，包括是否为空表，读取失败，有重复编码；都没问题再写入，根据code有则更新，无则添加；
+         */
+        //创建一个字段数组，用于放入对象的map，一定要对应excel里的列顺序
+        String[] fieldArray = {
+                "code",//编码
+                "name",//名字
+                "content",//需提供审核证据
+                "initialScore",//分数
+                "ScoreShows",//评分说明
+                "auditMode",//审核方式
+                "formula", //部门
+                "totalCount",//第五级叶子总数
+                "status",//状态
+                "reviewTerms",//审核条款
+                "problemDescription",//问题描述，插入另一个数据库
+        };
+        Workbook workbook = poiUtil.createWorkbook(path);
+        //得到第一张表
+        Sheet sheet = workbook.getSheetAt(0);
+        // 得到标题行
+        // Row titleRow=sheet.getRow(0);
+        //创建实体类对象容器,放入审核要素对象
+        List<QualityManagerSysElementInDto> beanList = new ArrayList<>();
+        //创建创建MAP,放入问题描述对象
+        Map<String, String> problemDescriptionMap = new HashMap<>();
+        Map<String, String> reviewTermsMap = new HashMap<>();
+        //获取EXCEL中的值
+        DataFormatter dataFormat=new DataFormatter();
+        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {//类似二维数组的读取，外层为行，内层为列；从第2行开始读；
+            HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+            Row row = sheet.getRow(i);
+            String rcode=new String();
+            for(int j=0;j<fieldArray.length;j++)//j可以j<titleRow.getLastCellNum()，但害怕excel错误添加,有多余的字段
+            {
+                String value=dataFormat.formatCellValue(row.getCell(j));
+                if(j==0){//找到该条记录的code
+                    rcode=value;
+                    if(rcode==null||"".equals(value)||" ".equals(value))//检查code是否为空
+                        throw new WLHSException("存在code为空或有空行");
+                }
+                if("problemDescription".equals(fieldArray[j])) {//问题描述，先放进map，等所有格式检查无误后，再统一插入；
+                    if(value==null||"".equals(value)||" ".equals(value)||"  ".equals(value))//如果不是叶子节点，就为空，直接跳过
+                        continue;
+                    else {
+                        if(value.startsWith("1")){//检查是不是以序号1开头
+                            problemDescriptionMap.put(rcode,value);
+                            continue;
+                        }
+                        else throw new WLHSException(rcode+"的可能问题序号不是1开始");
+                    }
+                }
+                else if ("reviewTerms".equals(fieldArray[j])){
+                    if(value==null||"".equals(value)||" ".equals(value)||"  ".equals(value))//如果不是叶子节点，就为空，直接跳过
+                        continue;
+                    else reviewTermsMap.put(rcode,value);
+                }else {//当不为问题描述时，直接将属性键值对放入map
+                    QSHEMSElementValueMap.put(fieldArray[j], value);//读取第i行第j列；
+                }
+            }
+            /*QSHEMSElementValueMap.put("code", dataFormat.formatCellValue(row.getCell(0)));*/
+            //使用BeanUtils将封装的属性注入对象
+            QualityManagerSysElementInDto qSHEMSElement=new QualityManagerSysElementInDto();
+            BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+            //对象放进进容器
+            beanList.add(qSHEMSElement);
+        }
+        workbook.close();
+        if (beanList.size() > 0)//开始检查装入容器是否成功
+        {
+            String duplicCode=PoiMSElement.isDuplicelements4(beanList);//判断是否有重复编码
+            if (duplicCode== null)//至此，所有格式检查完毕，开始导入
+            { //先导入审核要素表
+                //优化，一次把所有code查询出来放进list，在list中查找code
+                List<String> list=qualityManagerSysElementDao.queryAllCode();
+                for(QualityManagerSysElementInDto ele:beanList) {
+                    if(list.contains(ele.getCode())) {//-------编码存在则更新
+                        if (qualityManagerSysElementDao.updateExcelElement(ele) <= 0)
+                            throw new WLHSException("更新失败");
+                    }
+                    else {//--------不存在则插入
+                        if (qualityManagerSysElementDao.addExcelQHSEElement(ele) <= 0)
+                            throw new WLHSException("新增失败");
+                    }
+                }
+                //再导入问题描述表
+                insertQualityDescription(problemDescriptionMap);
+                insertReviewTerms(reviewTermsMap);
+                return R.ok("文件上传成功");//导入数据库成功
+            }
+            else throw new WLHSException("有重复编码："+duplicCode);//提示有重复编码
+        }
+        else throw new WLHSException("excel文件为空");//list为空，读取excel失败；
     }
 
     /**
@@ -309,5 +419,58 @@ public class UploadServiceImpl implements UploadService {
                 throw new WLHSException("新增失败");
         }
 
+    }
+
+    @Transactional
+    public void insertQualityDescription(Map<String, String> problemDescription)  {
+        /*
+        思想：算法升级，根据递增序号1，2，3，4....打断，能有效解决：1.占总数的1.5% 2注安占专职人员的比例等于20% 3注安占专职人员的比例在20%以下等格式
+        但弊端是，序号必须是递增的，1，2，2，3就会打断失败。
+         */
+        String code;
+        String description;
+        //为了提高效率，直接把数据表先清空，然后再插入。使用事务管理防止插入失败造成数据丢失。
+        qualityManagerSysElementDao.deleteAllDescription();
+        for(Map.Entry<String,String> entry: problemDescription.entrySet())
+        {
+            code=entry.getKey();
+            description=entry.getValue();
+            String[] s=description.split("1",2);
+            for(int i=2;s[1].contains(String.valueOf(i));i++) {
+                description=s[1];
+                s=description.split(String.valueOf(i),2);
+                //得到的s[0]即为插入的问题描述；
+                //有".",就去除，没有”."就直接写入
+                if(qualityManagerSysElementDao.addProblemDescription(code,(s[0].startsWith(".")? s[0].substring(1):s[0]))<=0)
+                    throw new WLHSException("新增失败");
+            }//插入最后个问题描述，有".",就去除，没有”."就直接写入
+            if(qualityManagerSysElementDao.addProblemDescription(code, (s[1].startsWith(".")? s[1].substring(1):s[1]))<=0)
+                throw new WLHSException("新增失败");
+        }
+    }
+    public void insertReviewTerms(Map<String, String> ReviewTerms) {
+        String code;
+        qualityManagerSysElementDao.deleteReviewTerms();
+        List<QualityManagerSysEleReviewTermsDto> list=new ArrayList<>();
+        for(Map.Entry<String,String> entry: ReviewTerms.entrySet())
+        {
+            code=entry.getKey();
+            String Terms;
+            String[] b;
+            Terms=entry.getValue();
+            String[] a= Terms.split("/\\*\\*/");
+            for(String temp:a){
+                b=temp.split("%");
+                QualityManagerSysEleReviewTermsDto ele=new QualityManagerSysEleReviewTermsDto();
+                ele.setBasis(b[0]);
+                ele.setTerms(b[1]);
+                ele.setContent(b[2]);
+                ele.setCode(code);
+                list.add(ele);
+            }
+        }
+        if(qualityManagerSysElementDao.batchInsertRecord(list)<=0) {
+            throw new WLHSException("新增失败");
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.wlhse.controller;
 
 
-import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dao.DrFileDao;
 import com.wlhse.dao.FileDao;
 import com.wlhse.dao.MonitorFileDao;
@@ -13,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -118,7 +114,7 @@ public class FileDownloadController {
         File file = new File(path + File.separator + fileName);
         System.out.println(file.getPath());
         fileName=fileDao.getQualityAttachOriginFileName(fileName);
-        System.out.println("原文件名: "+fileName);
+       //System.out.println("原文件名: "+fileName);
         HttpHeaders headers = new HttpHeaders();
         //Solve the garbled problem
         String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");

@@ -264,6 +264,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     @Override
     // TODO
     public R queryYearElement(YearElementsDto yearElementsDto) {
+        //查看任务是否被接收
+        if("未接收".equals(qhseManageSysElementsDao.queryTask(yearElementsDto.getYear(),yearElementsDto.getCompanyCode()))) return R.ok();
         List<YearElementsDto> lists=qhseManageSysElementsDao.queryQhseYearElements(yearElementsDto);
         for (YearElementsDto yearElement:lists) {
             int sums=qhseManageSysElementsDao.querySchedule(yearElement.getCode(),yearElement.getCompanyCode(),yearElement.getYear());
@@ -516,6 +518,8 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         return R.ok();
     }
 
+
+    //TODO addQHSEYearElement接口的实现方法位置
     @Transactional
     @Override
     public R addYearElement(YearElementsDto yearElementsDto) {
@@ -527,7 +531,6 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
             String companyName = yearElementsDto.getCompanyName();
             String year = yearElementsDto.getYear();
             Integer len = qhseManageSysElementsDao.findMaxLen();
-            //TODO Refactor add new element logic
             //get the table's elements status and code
             Map<String, String> elementCodeAndConfigStatusMap = getElementCodeAndConfigStatusMap(tableId);
             Map<String,String> elementsFromClients=new HashMap<>(),
@@ -684,6 +687,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         r.put("data",progress);
         return r;
     }
+
 
     @Override
     public R queryYearElements(YearElementsDto yearElementsDto) {

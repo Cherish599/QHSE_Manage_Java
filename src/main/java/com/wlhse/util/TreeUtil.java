@@ -3,7 +3,9 @@ package com.wlhse.util;
 import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.ModuleDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dao.QualityManagerSysElementDao;
 import com.wlhse.dto.*;
+import com.wlhse.dto.inDto.QualityYearElementsDto;
 import com.wlhse.dto.inDto.YearElementsDto;
 import com.wlhse.dto.outDto.*;
 import com.wlhse.entity.*;
@@ -22,6 +24,9 @@ public class TreeUtil {
 
     @Resource
     QHSEManageSysElementsDao qhseManageSysElementsDao;
+
+    @Resource
+    QualityManagerSysElementDao qualityManagerSysElementDao;
 
     @Resource
     private CheckListDao checkListDao;
@@ -468,6 +473,7 @@ public class TreeUtil {
             qhseElementsOutDto.setYear(pojo.getYear());
             qhseElementsOutDto.setFileCheckStatus(pojo.getFileCheckStatus());
             qhseElementsOutDto.setSchedule(pojo.getSchedule());
+            qhseElementsOutDto.setCheckStatus(pojo.getCheckStatus());
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样
@@ -601,6 +607,7 @@ public class TreeUtil {
             checkRecordTreeOutDto.setCheckPersonId(pojo.getCheckPersonId());
             checkRecordTreeOutDto.setCheckPerson(pojo.getCheckPerson());
             checkRecordTreeOutDto.setCheckTypeCode(pojo.getCheckTypeCode());
+            checkRecordTreeOutDto.setReason(pojo.getReason());
             //System.out.println(pojo.getQhseManagerSysElementID());
             map1.put(checkRecordTreeOutDto.getCheckListCode(), checkRecordTreeOutDto);
 
@@ -741,6 +748,9 @@ public class TreeUtil {
             qualityCheckListTreeDto.setParentName(pojo.getParentName());
             qualityCheckListTreeDto.setIsChildNode(pojo.getIsChildNode());
             qualityCheckListTreeDto.setStatus(pojo.getStatus());
+            qualityCheckListTreeDto.setCheckCategory(pojo.getCheckCategory());
+            qualityCheckListTreeDto.setCheckBasis(pojo.getCheckBasis());
+            qualityCheckListTreeDto.setCheckMethod(pojo.getCheckMethod());
             map1.put(qualityCheckListTreeDto.getCheckListCode(), qualityCheckListTreeDto);
 
             //同一层节点长度一样
@@ -792,5 +802,264 @@ public class TreeUtil {
                 code.add(pojo.getCheckListCode().length());
         }
         return returnQualityCheckTree(map1, code);
+    }
+
+    public List<QualityManagerSysElementOutDto> returnQualityElementList(Map<String, QualityManagerSysElementOutDto> map, List<Integer> code) {
+        /*
+        思想：创建一个list,然后遍历map里的节点,如果是一级节点，就放进list；
+        如果不是一级节点，就去找他的父节点，找到后就把当前节点放进父节里的孩子list中，最后逐渐形成一棵树；
+         */
+        List<QualityManagerSysElementOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityManagerSysElementOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))//是一级节点，就放进list；
+                result.add(entry.getValue());
+            else {//如果不是一级节点，就去找他的父节点
+                QualityManagerSysElementOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)//父节孩子为空
+                    continue;
+                if (null == treeDto.getChildNode()) {//父节孩子为空，建一个list放入
+                    List<QualityManagerSysElementOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else////父节孩子不为空，直接放入
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 该方法用于把查询出来的list里的对象，封装为一棵树；
+     * @param qhseElementsPojos 该参数为List<QhseElementsPojo>集合，为数据库查询出的结果
+     * @return 一棵树
+     */
+    public List<QualityManagerSysElementOutDto> getQualityElementTree(List<QualityElementsPojo> qhseElementsPojos) {
+        /*
+        思想，把list里的对象逐个遍历；QhseElementsPojo赋值给QhseElementsOutDto，
+        并把节点<code,QhseElementsOutDto>,放进map集合，方便后续操作；同时设一个code list记录节点长度；
+         */
+        Map<String, QualityManagerSysElementOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityElementsPojo pojo : qhseElementsPojos) {
+            QualityManagerSysElementOutDto qhseElementsOutDto = new QualityManagerSysElementOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setContent(pojo.getContent());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
+            qhseElementsOutDto.setScoreShows(pojo.getScoreShows());
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQualityElementList(map1, code);
+    }
+
+
+
+    /**
+     * 该方法用于导出excel查询树
+     * @param qhseElementsPojos 该参数为List<QhseElementsPojo>集合，为数据库查询出的结果
+     * @return 一棵树
+     */
+    public List<QualityManagerSysElementOutDto> getQualityElementTreeForExcel(List<QualityElementsPojo> qhseElementsPojos) {
+           /*
+        思想：同上，增加了setProblemDescription字段的导出
+         */
+        Map<String, QualityManagerSysElementOutDto> map1 = new TreeMap<>();
+        //获得问题描述map
+        Map<String,String> discriptionMap=getQualityDescriptionMap();
+        Map<String,String> ReviewMap=getReviewTermsMap();
+        List<Integer> code = new ArrayList<>();
+        for (QualityElementsPojo pojo : qhseElementsPojos) {
+            QualityManagerSysElementOutDto qhseElementsOutDto = new QualityManagerSysElementOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
+            qhseElementsOutDto.setScoreShows(pojo.getScoreShows());
+            if(pojo.getCode().length()==12)//加入问题描述字段
+            {
+                qhseElementsOutDto.setProblemDescription(discriptionMap.get(pojo.getCode()));
+                //System.out.println(pojo.getCode()+"-----"+discriptionMap.get(pojo.getCode()));
+                qhseElementsOutDto.setReviewTerms(ReviewMap.get(pojo.getCode()));
+            }
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQualityElementList(map1, code);
+    }
+
+    public Map<String,String> getQualityDescriptionMap()//获得问题描述<code,Description>map
+    {
+        /*
+        思想：直接一次把所有问题描述查完，根据code排序,放进list;然后根据code拼接，把code,对应问题描述字符，放进map;
+         */
+        //获得list
+        List<QualityManagerSysElementProDesDto> discriptionList=qualityManagerSysElementDao.queryAllDescription();
+        Map<String,String> disMap=new HashMap<>();
+        //核心算法；k代表当前code对象,j代表下一个对象;i表示序号，temp代表拼接的字符串；类似字符串的Index算法；
+        String temp=1+"."+discriptionList.get(0).getDescription();
+        for(int j=1,k=0,i=2;j<discriptionList.size();j++) {
+            //k的对象与自增j的对象code相等时，把j的字符和K拼在一起
+            if(discriptionList.get(k).getCode().equals(discriptionList.get(j).getCode())) {
+                temp+=i+"."+discriptionList.get(j).getDescription();
+                i++;
+                //list最后一个元素，须判断放入；
+                if(j==(discriptionList.size()-1)) {
+                    disMap.put(discriptionList.get(j).getCode(),temp);
+                }
+            }
+            else {
+                //k的对象与j的对象code不相等时，因为是有序，说明到了下一个字符，把上一个拼好的放入map;开始下一个字符拼接，k=j；
+                disMap.put(discriptionList.get(k).getCode(),temp);
+                k=j;
+                temp=1+"."+discriptionList.get(k).getDescription();
+                //序号重置；
+                i=2;
+            }
+        }
+        return disMap;
+    }
+
+
+//质量要素录入树
+public List<QualityManergerSysElementPojo> returnCurrentQualityElementList(Map<String, QualityManergerSysElementPojo> map, List<Integer> code) {
+    List<QualityManergerSysElementPojo> result = new ArrayList<>();
+    Collections.sort(code);
+    for (Map.Entry<String, QualityManergerSysElementPojo> entry : map.entrySet()) {
+        String key = entry.getKey();
+        if (key.length() == code.get(0))
+            result.add(entry.getValue());
+        else {
+            QualityManergerSysElementPojo treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+            if (null == treeDto)
+                continue;
+            if (null == treeDto.getChildNode()) {
+                List<QualityManergerSysElementPojo> tmp = new ArrayList<>();
+                tmp.add(entry.getValue());
+                treeDto.setChildNode(tmp);
+            } else
+                treeDto.getChildNode().add(entry.getValue());
+        }
+    }
+    return result;
+}
+
+    public  List<QualityManergerSysElementPojo> getCurrentQualityElementTree(List<QualityManergerSysElementPojo> qhseElementsPojos) {
+        Map<String, QualityManergerSysElementPojo> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityManergerSysElementPojo pojo : qhseElementsPojos) {
+            map1.put(pojo.getCode(), pojo);
+            //存入长度相同的数字
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnCurrentQualityElementList(map1, code);
+    }
+
+
+    public List<QualityYearElementsOutDto> getQualityYearElementTree(List<QualityYearElementsDto> qhseElementsPojos) {
+        Map<String, QualityYearElementsOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityYearElementsDto pojo : qhseElementsPojos) {
+            QualityYearElementsOutDto qualityElementsOutDto = new QualityYearElementsOutDto();
+            qualityElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qualityElementsOutDto.setCode(pojo.getCode());
+            qualityElementsOutDto.setContent(pojo.getContent());
+            qualityElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qualityElementsOutDto.setFormula(pojo.getFormula());
+            qualityElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qualityElementsOutDto.setName(pojo.getName());
+            qualityElementsOutDto.setStatus(pojo.getStatus());
+            qualityElementsOutDto.setId(pojo.getQualityCompanyYearManagerSysElementID());
+            qualityElementsOutDto.setTableID(pojo.getQualityCompanyYearManagerSysElementTableID());
+            qualityElementsOutDto.setCompanyCode(pojo.getCompanyCode());
+            qualityElementsOutDto.setCompanyName(pojo.getCompanyName());
+            qualityElementsOutDto.setYear(pojo.getYear());
+            qualityElementsOutDto.setFileCheckStatus(pojo.getFileCheckStatus());
+            qualityElementsOutDto.setSchedule(pojo.getSchedule());
+            qualityElementsOutDto.setCheckStatus(pojo.getCheckStatus());
+            map1.put(qualityElementsOutDto.getCode(), qualityElementsOutDto);
+
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQualityYearElementList(map1, code);
+    }
+
+    public List<QualityYearElementsOutDto> returnQualityYearElementList(Map<String, QualityYearElementsOutDto> map, List<Integer> code) {
+        List<QualityYearElementsOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityYearElementsOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))
+                result.add(entry.getValue());
+            else {
+                QualityYearElementsOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)
+                    continue;
+                if (null == treeDto.getChildNode()) {
+                    List<QualityYearElementsOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * 该方法用于获得拼接好的审核要素问题描述字段
+     * @return 问题描述<code,Description>map
+     */
+    public Map<String,String> getReviewTermsMap()//获得审核条款的<code,Description>map
+    {
+        /*
+        思想：直接一次把所有问题描述查完，根据code排序,放进list;然后根据code拼接，把code,对应问题描述字符，放进map;
+         */
+        //获得list
+        List<QualityManagerSysEleReviewTermsDto> discriptionList=qualityManagerSysElementDao.queryAllReviewTerms();
+        Map<String,String> disMap=new HashMap<>();
+        //核心算法；k代表当前code对象,j代表下一个对象;i表示序号，temp代表拼接的字符串；类似字符串的Index算法；
+        QualityManagerSysEleReviewTermsDto qualityTermsDto=discriptionList.get(0);
+        String temp=qualityTermsDto.getBasis()+"%"+qualityTermsDto.getTerms()+"%"+qualityTermsDto.getContent();
+        for(int j=1,k=0;j<discriptionList.size();j++) {
+            //k的对象与自增j的对象code相等时，把j的字符和K拼在一起
+            if(discriptionList.get(k).getCode().equals(discriptionList.get(j).getCode())) {
+                qualityTermsDto=discriptionList.get(j);
+                temp+="/**/"+qualityTermsDto.getBasis()+"%"+qualityTermsDto.getTerms()+"%"+qualityTermsDto.getContent();
+                //list最后一个元素，须判断放入；
+                if(j==(discriptionList.size()-1)) {
+                    disMap.put(discriptionList.get(j).getCode(),temp);
+                }
+            }
+            else {
+                //k的对象与j的对象code不相等时，因为是有序，说明到了下一个字符，把上一个拼好的放入map;开始下一个字符拼接，k=j；
+                disMap.put(discriptionList.get(k).getCode(),temp);
+                k=j;
+                qualityTermsDto=discriptionList.get(k);
+                temp=qualityTermsDto.getBasis()+"%"+qualityTermsDto.getTerms()+"%"+qualityTermsDto.getContent();
+            }
+        }
+        return disMap;
     }
 }

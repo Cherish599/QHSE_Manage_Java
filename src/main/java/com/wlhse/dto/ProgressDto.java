@@ -2,7 +2,7 @@ package com.wlhse.dto;
 
 public class ProgressDto {
     private String total;
-    private String finishedNum;
+    private int finishedNum;
 
     public String getTotal() {
         return total;
@@ -12,11 +12,11 @@ public class ProgressDto {
         this.total = total;
     }
 
-    public String getFinishedNum() {
+    public int getFinishedNum() {
         return finishedNum;
     }
 
-    public void setFinishedNum(String finishedNum) {
+    public void setFinishedNum(int finishedNum) {
         this.finishedNum = finishedNum;
     }
 }

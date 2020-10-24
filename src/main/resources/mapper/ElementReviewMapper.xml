@@ -13,14 +13,7 @@
                 AND year=#{year}
             </if>
             and ConfigStatus="启用"
-            and status="未审核"
-            and QHSE_CompanyYearManagerSysElementTable_ID in
-            (
-                select Table_ID
-                from qhse_task
-                where CompanyCode=#{companyCode}
-                and (Status='审核中' OR Status='批准中')
-            )
+            and Status="未审核"
         </where>
     </select>
 
@@ -34,14 +27,8 @@
         <if test="year != null and year  != ''">
             AND year=#{year}
         </if>
-        and ConfigStatus="启用" and status="未批准"
-            and QHSE_CompanyYearManagerSysElementTable_ID in
-            (
-            select Table_ID
-            from qhse_task
-            where CompanyCode=#{companyCode}
-            and Status='批准中'
-            )
+        and ConfigStatus="启用"
+        and Status="未批准"
         </where>
     </select>
 
@@ -70,6 +57,17 @@
             </if>
         </set>
         where  QHSE_CompanyYearManagerSysElement_ID=#{qHSE_CompanyYearManagerSysElement_ID}
+    </update>
+    <update id="updateQuality" parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+        update  quality_checktablerecord set CheckResult=#{checkResult}
+        where CheckListCode=#{checkListCode} and Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
+    </update>
+    <update id="qualityInput"  parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+         update  quality_checktablerecord
+         <set>
+
+         </set>
+            where CheckListCode=#{checkListCode} and Qulity_CheckTableRecordID=#{qualityCheckTableRecordID}
     </update>
 
     <sql id = "element_evidence_key">
@@ -128,6 +126,44 @@
         select count(*) from qhse_companyyearmanagersyselement where companyCode=#{companyCode} and `year`=#{year}
         and (status is not null or status!="")
     </select>
+    <select id="queryQuality" resultType="com.wlhse.dto.QualityCheckTableRecordDto" parameterType="com.wlhse.dto.QualityCheckTableRecordDto">
+        select Qulity_CheckTableRecordID as qualityCheckTableRecordID,
+        Qulity_CheckID as qualityCheckID,
+        CheckListCode as checkListCode,
+        CheckResult as checkResult,
+        Attach as attach,
+        Pic as pic,
+        Description as description,
+        Quality_CheckName as qualityCheckName
+        from quality_checktablerecord
+        where CheckListCode=#{checkListCode} and Qulity_CheckID=#{qualityCheckID}
+    </select>
+    <select id="queryParentss" resultType="com.wlhse.entity.QualityManergerSysElementPojo">
+         select * from quality_companyyearmanagersyselement where  code=#{0} and companyCode=#{1}
+         and `year`=#{2}
+    </select>
+    <select id="queryQualityCheck" resultType="com.wlhse.entity.QualityManergerSysElementPojo">
+        select * from quality_companyyearmanagersyselement
+        <where>
+            <if test="companyCode !=null and companyCode!=''">
+                AND companyCode=#{companyCode}
+            </if>
+            <if test="year != null and year  != ''">
+                AND year=#{year}
+            </if>
+            <if test="status==0">
+                and (status="未批准" or status="备案待查")
+            </if>
+            <if test="status==1">
+                and status="备案待查"
+            </if>
+            and ConfigStatus="启用"
+        </where>
+    </select>
+    <select id="queryQualityAllElement" resultType="java.lang.Integer">
+         select count(*) from quality_companyyearmanagersyselement where companyCode=#{companyCode} and `year`=#{year}
+        and (status is not null and  status!="")
+    </select>
 
 
     <delete id="delete" parameterType="com.wlhse.dto.inDto.ElementReviewDto">
@@ -154,4 +190,23 @@
         is null or QHSE_CompanyYearManagerSysElementEvidence_ID =#{id}
     </delete>
 
+    <select id="queryNoPasElement" resultType="com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto"
+            parameterType="com.wlhse.dto.inDto.ElementReviewDto">
+    select * from qhse_companyyearmanagersyselement
+    <where>
+        <if test="companyCode !=null and companyCode!=''">
+            AND companyCode=#{companyCode}
+        </if>
+        <if test="year != null and year  != ''">
+            AND year=#{year}
+        </if>
+        <if test="status==0">
+            and status='不通过'
+        </if>
+        <if test="status==1">
+            and status="备案待查"
+        </if>
+        and ConfigStatus="启用"
+    </where>
+    </select>
 </mapper>

@@ -192,4 +192,11 @@ public class MonitorController {
     R getDayReport(@RequestParam(value = "date",required = false)String date,@RequestParam(value = "planId")Integer planId){
         return monitorPlanService.getDayReport(planId,date);
     }
+
+
+    //任务结束按钮
+    @RequestMapping(value = "/endMonitorPlan",method = RequestMethod.GET)
+    R endMonitorPlan(@RequestParam("planId")Integer planId){
+        return monitorPlanService.endPlan(planId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.wlhse.controller;
 
 
+import com.wlhse.dao.QhseElementsInputDao;
 import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
@@ -35,5 +36,16 @@ public class QhseElementsInputController {
          R r=new R();
          r.put("data",fileNames);
          return r;
+    }
+//    //要素提交
+//    @RequestMapping(value = "/elementCommit/{id}", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+//    public R elementCommit(@PathVariable("id")Integer id) {
+//        qhseElementsInputDao.updateStatus(id);
+//        return R.ok();
+//    }
+
+    @RequestMapping(value = "/submitInputResult",method = RequestMethod.POST)
+    public R submitInputResult(@RequestParam(value = "tableId",required = false)Integer tableId,@RequestParam("tag")Integer tag){
+        return qhseElementsInputService.submitInputResult(tableId,tag);
     }
 }

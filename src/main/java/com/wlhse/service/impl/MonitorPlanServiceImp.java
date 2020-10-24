@@ -166,4 +166,10 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         return r;
 
     }
+
+    @Override
+    public R endPlan(Integer planId) {
+        monitorPlanDao.endPlan(planId);
+        return R.ok();
+    }
 }

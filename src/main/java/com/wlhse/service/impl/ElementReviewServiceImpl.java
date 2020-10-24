@@ -9,6 +9,8 @@ import com.wlhse.dto.TaskStatusDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
+import com.wlhse.entity.QualityInputAttachPojo;
+import com.wlhse.entity.QualityManergerSysElementPojo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.ElementReviewService;
 import com.wlhse.util.R;
@@ -96,22 +98,14 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     public R updateStatus(ElementReviewDto elementReviewDto) {
         int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementReviewDto.getqHSE_CompanyYearManagerSysElement_ID());
         String status = elementReviewDto.getStatus();
-        //TODO 添加不批准的逻辑
-        if (status.equals("不通过")){
-            String s = jedisClient.get("TNoInput" + tableId);
-            if (s==null){
-                jedisClient.set("TNoInput"+tableId,String.valueOf(1));
-            }
-            else
-            {
-                jedisClient.set("TNoInput"+tableId,String.valueOf(Integer.valueOf(s)+1));
-            }
-            // 更新状态
-            taskDao.updateCheckStatus(tableId,"重新录入");
-        }
         int i=elementReviewDao.update(elementReviewDto);
         int j=1;
-        if (status.equals("不通过")) j=elementReviewDao.updateAddvice(elementReviewDto);
+        //TODO 添加不批准的逻辑
+        if (status.equals("不通过")&&elementReviewDto.getNegativeOpinion()!=null){
+            j=elementReviewDao.updateAddvice(elementReviewDto);
+        }
+        // 更新状态
+        taskDao.updateCheckStatus(tableId,"重新录入中");
         if (i*j<= 0)
             throw new WLHSException("更新失败");
         return R.ok();
@@ -245,11 +239,69 @@ public class ElementReviewServiceImpl implements ElementReviewService {
     }
 
     @Override
+    public R qualityShows(QualityManergerSysElementPojo qualityManergerSysElementPojo) {
+        List<QualityManergerSysElementPojo> lists=elementReviewDao.queryQualityCheck(qualityManergerSysElementPojo);
+        List<String> codes = new ArrayList<>() ;
+        if(lists!=null && !lists.isEmpty()){
+            int layer=2,grad=3;//可以抽取方法返回指定层数,grad为树状code梯度
+            for(;grad<3*layer;grad+=3){
+                for (int i=0;i<lists.size();i++)
+                    codes.add(lists.get(i).getCode().substring(0,lists.get(i).getCode().length() - grad));
+            }
+            //去重父节点最高效
+            HashSet<String> hs=new HashSet(codes);
+            codes.clear();
+            codes.addAll(hs);
+            //查询父节点并插入
+            for (String code : codes) {
+              QualityManergerSysElementPojo parent=elementReviewDao.queryParentss(code,qualityManergerSysElementPojo.getCompanyCode(),qualityManergerSysElementPojo.getYear());
+                lists.add(parent);
+            }
+        }
+        R ok = R.ok();
+        ok.put("data", treeUtil.getCurrentQualityElementTree(lists));
+        return ok;
+    }
+
+    @Override
     public R queryAllElement(ElementReviewDto elementReviewDto) {
         R r=new R();
         r.put("AllElement",elementReviewDao.queryAllElement(elementReviewDto));
         r.put("NotInput",elementsDao.querySchdules(null,elementReviewDto.getCompanyCode(),elementReviewDto.getYear()));
         return r;
+    }
+
+    @Override
+    public R queryQualityAllElement(QualityManergerSysElementPojo qualityManergerSysElementPojo) {
+        R r=new R();
+        r.put("AllElement",elementReviewDao.queryQualityAllElement(qualityManergerSysElementPojo));
+        r.put("NotInput",elementsDao.querySchdules1(null,qualityManergerSysElementPojo.getCompanyCode(),qualityManergerSysElementPojo.getYear()));
+        return r;
+    }
+
+    @Override
+    public R showNoPass(ElementReviewDto elementReviewDto) {
+        List<QHSECompanyYearManagerSysElementDto> lists=elementReviewDao.queryNoPasElement(elementReviewDto);
+        List<String> codes = new ArrayList<>() ;
+        if(lists!=null && !lists.isEmpty()){
+            int layer=2,grad=3;//可以抽取方法返回指定层数,grad为树状code梯度
+            for(;grad<3*layer;grad+=3){
+                for (int i=0;i<lists.size();i++)
+                    codes.add(lists.get(i).getCode().substring(0,lists.get(i).getCode().length() - grad));
+            }
+            //去重父节点最高效
+            HashSet<String> hs=new HashSet(codes);
+            codes.clear();
+            codes.addAll(hs);
+            //查询父节点并插入
+            for (String code : codes) {
+                QHSECompanyYearManagerSysElementDto parent=elementReviewDao.queryParents(code,elementReviewDto.getCompanyCode(),elementReviewDto.getYear());
+                lists.add(parent);
+            }
+        }
+        R ok = R.ok();
+        ok.put("data", treeUtil.getCurrentQhseElementTree1(lists));
+        return ok;
     }
 
 }

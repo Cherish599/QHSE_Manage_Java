@@ -5,6 +5,7 @@ import com.wlhse.entity.MonitorInputCheckRecord;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface MonitorInputCheckDao {
@@ -26,6 +27,6 @@ public interface MonitorInputCheckDao {
 
     List<MonitorInputCheckRecordOutDto> getNeedToCheckPlanDetails(int planId,String date);
 
-    List<MonitorInputCheckRecordOutDto> getDayReport(int planId,String date);
+    Set<MonitorInputCheckRecordOutDto> getDayReport(int planId, String date);
 
 }

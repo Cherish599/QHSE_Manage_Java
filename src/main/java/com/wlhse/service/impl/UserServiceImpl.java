@@ -86,7 +86,6 @@ public class UserServiceImpl implements UserService {
         map.put("employeeId",String.valueOf(userOutDto.getEmployeeId()));
         jedisClient.hset(token,map);
         userOutDto.setToken(token);
-        System.out.println("token"+token);
         return NR.r(userOutDto);
     }
 

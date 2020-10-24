@@ -111,4 +111,15 @@
     <select id="querryCode" parameterType="java.lang.String" resultType="java.lang.String">
         select Code from sys_company where CompanyCode=#{code}
     </select>
+
+    <select id="getCompanyByEmployeeId" resultType="java.lang.String">
+        select CompanyCode
+        from employee
+        where EmployeeID=#{0}
+    </select>
+
+    <select id="getCompanyByCompanyCode" resultMap="companyMap">
+        select * from sys_company
+        where CompanyCode=#{0}
+    </select>
 </mapper>

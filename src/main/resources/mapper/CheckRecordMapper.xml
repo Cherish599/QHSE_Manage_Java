@@ -39,6 +39,9 @@
             <if test="checkPerson!=null and checkPerson!=''">
                 CheckPerson,
             </if>
+            <if test="reason!=null and reason!=''">
+                reason,
+            </if>
         </trim>
         )
         values
@@ -77,6 +80,9 @@
             <if test="checkPerson!=null and checkPerson!=''">
                 #{checkPerson},
             </if>
+            <if test="reason!=null and reason!=''">
+                #{reason},
+            </if>
         </trim>
         )
     </insert>
@@ -97,7 +103,8 @@
         checkrecord.Problems,
         checkrecord.CheckTypeCode,
         checkrecord.CheckPersonId,
-        checkrecord.CheckPerson
+        checkrecord.CheckPerson,
+        checkrecord.reason
         from checklist
         left join checkrecord
         on checklist.CheckListCode=checkrecord.code

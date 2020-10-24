@@ -17,6 +17,9 @@ public class QualityCheckListTreeDto implements Cloneable{
     private String parentName;
     private String isChildNode;
     private String status;
+    private String checkCategory;
+    private String checkBasis;
+    private String checkMethod;
 
     private List<QualityCheckListTreeDto> children;//=new LinkedList<>()
 
@@ -76,6 +79,29 @@ public class QualityCheckListTreeDto implements Cloneable{
         this.status = status;
     }
 
+    public String getCheckCategory() {
+        return checkCategory;
+    }
+
+    public void setCheckCategory(String checkCategory) {
+        this.checkCategory = checkCategory;
+    }
+
+    public String getCheckBasis() {
+        return checkBasis;
+    }
+
+    public void setCheckBasis(String checkBasis) {
+        this.checkBasis = checkBasis;
+    }
+
+    public String getCheckMethod() {
+        return checkMethod;
+    }
+
+    public void setCheckMethod(String checkMethod) {
+        this.checkMethod = checkMethod;
+    }
 
     public List<QualityCheckListTreeDto> getChildren() {
         return children;
@@ -84,6 +110,7 @@ public class QualityCheckListTreeDto implements Cloneable{
     public void setChildren(List<QualityCheckListTreeDto> children) {
         this.children = children;
     }
+
 
     public Object clone() throws CloneNotSupportedException{
         return super.clone();

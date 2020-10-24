@@ -1,8 +1,10 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.QualityCheckTableRecordDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
+import com.wlhse.entity.QualityManergerSysElementPojo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +29,7 @@ public interface ElementReviewDao {
     //查父节点
     List<QHSECompanyYearManagerSysElementDto> queryParent(String code);
     QHSECompanyYearManagerSysElementDto queryParents(String code,String companyCode,String year);
+    QualityManergerSysElementPojo queryParentss(String code, String companyCode, String year);
     //添加审核人
     int updateCheck(ElementReviewDto elementReviewDto);
 
@@ -44,7 +47,20 @@ public interface ElementReviewDao {
 
     //查询已审核
     List<QHSECompanyYearManagerSysElementDto> queryCheck(ElementReviewDto elementReviewDto);
+    //质量查询已审核
+    List<QualityManergerSysElementPojo> queryQualityCheck(QualityManergerSysElementPojo qHSECompanyYearManagerSysElementDto);
 
     //查询全要素个数
     int queryAllElement(ElementReviewDto elementReviewDto);
+    //查询zhil全要素个数
+    int queryQualityAllElement(QualityManergerSysElementPojo QualityManergerSysElementPojo);
+
+    //质量审核部分：
+    //查询叶子证据
+    QualityCheckTableRecordDto queryQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
+    //审核人通过
+    int updateQuality(QualityCheckTableRecordDto qualityCheckTableRecordDto);
+    int qualityInput(QualityCheckTableRecordDto qualityCheckTableRecordDto);
+
+    List<QHSECompanyYearManagerSysElementDto> queryNoPasElement(ElementReviewDto elementReviewDto);
 }

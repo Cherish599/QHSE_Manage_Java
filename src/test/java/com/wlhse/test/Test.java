@@ -2,8 +2,12 @@ package com.wlhse.test;
 
 import com.wlhse.dao.CheckListDao;
 import com.wlhse.dao.QHSEManageSysElementsDao;
+import com.wlhse.dao.QualityManagerSysElementDao;
+import com.wlhse.dto.QualityManagerSysEleReviewTermsDto;
 import com.wlhse.dto.inDto.QSHEMSElementInDto;
+import com.wlhse.dto.inDto.QualityManagerSysElementInDto;
 import com.wlhse.dto.outDto.QhseElementsOutDto;
+import com.wlhse.dto.outDto.QualityManagerSysElementOutDto;
 import com.wlhse.entity.QhseElementsPojo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.util.SortCodeUtil;
@@ -40,6 +44,11 @@ public class Test {
     @Resource
     private QHSEManageSysElementsDao qHSEManageSysElementsDao;
 
+    @Resource
+    private QualityManagerSysElementDao qualityManagerSysElementDao;
+
+
+
     //导入excel采用！！！！！
 //    @org.junit.Test
 //    public void test1() throws Exception {
@@ -65,40 +74,6 @@ public class Test {
             System.out.println(t);
         }
     }
-
-    @org.junit.Test
-    public void insertProblemDescriptionTest() {
-        // String[] description=problemDescription.split("([1-9][0-9]{0,1})");//用0-99的数字打断，中间为正则表达式
-        //先把该code的问题描述全部删除，再添加。
-        String description = "1.全部没有持有\n" +
-                "2.行政领导未持有\n" +
-                "3.党组织领导未持有\n" +
-                "4.证件全部过期\n" +
-                "5.行政领导证件过期\n" +
-                "6.党组织领导证件过期\n" +
-                "7.其他_______________";
-        String b = description.replace("\n", "");
-        System.out.println(b);
-        if (description.startsWith("1")) {
-            String[] s = description.split("1", 2);
-            for (int i = 2; s[1].contains(String.valueOf(i)); i++) {
-                description = s[1];
-                s = description.split("\\n" + String.valueOf(i), 2);
-                if (s[0].startsWith("."))
-                    System.out.println(s[0].substring(1));
-                else
-                    System.out.println(s[0]);
-
-            }
-            if (s[1].startsWith("."))
-                System.out.println(s[1].substring(1));
-            else
-                System.out.println(s[1]);
-        } else {
-            System.out.println("第一项的序号不是：1");
-        }
-    }
-
 
     //---------读取审核要素原表excel算法，自动生成记录，自动生成编码，自动分级，自动统计分数，节点数，自动分解问题描述，分别写入数据库-----
     //---对excel有格式要求，运行直接写入数据库，仅限算法作者使用。
@@ -456,5 +431,377 @@ public class Test {
             if (qHSEManageSysElementsDao.addProblemDescription(code, (s[1].startsWith(".") ? s[1].substring(1) : s[1])) <= 0)
                 throw new WLHSException("新增失败");
         }
+    }
+
+
+
+
+
+
+
+
+
+    //---------读取质量原表excel算法，自动生成记录，自动生成编码，自动分级，自动统计分数，节点数，自动分解问题描述，分别写入数据库-----
+    //---对excel有格式要求，运行直接写入数据库，仅限算法作者使用。
+    @org.junit.Test
+    public void readQualityComplexExcel() throws Exception {
+        Workbook workbook;
+        String filePath = "E:\\qshe\\质量量化审核检查表上传.xlsx";
+        FileInputStream fis = null;
+        fis = new FileInputStream(filePath);
+        workbook = new XSSFWorkbook(fis);
+        Sheet sheet = workbook.getSheetAt(0);
+        int endloc = sheet.getPhysicalNumberOfRows() - 1;//从0开始
+        Map<String, Object> T1result = getQualityTNNode(sheet, 1, endloc, "", 0);
+        Map<Integer, int[]> T1RangeMap = (Map<Integer, int[]>) T1result.get("RangeMap");
+        Map<Integer, String> T1CodeMap = (Map<Integer, String>) T1result.get("CodeMap");
+        List<QualityManagerSysElementInDto> beanList1 = (List<QualityManagerSysElementInDto>) T1result.get("elementList");
+        List<QualityManagerSysEleReviewTermsDto> allTermsList=new ArrayList<>();
+        for (Map.Entry<Integer, int[]> entry1 : T1RangeMap.entrySet())//第二层
+        {
+            //System.out.println(entry1.getKey()+"---"+entry1.getValue()[0]+"   "+entry1.getValue()[1]);
+            Map<String, Object> T2result = getQualityTNNode(sheet, entry1.getValue()[0], entry1.getValue()[1], T1CodeMap.get(entry1.getKey()), 1);
+            Map<Integer, int[]> T2RangeMap = (Map<Integer, int[]>) T2result.get("RangeMap");
+            Map<Integer, String> T2CodeMap = (Map<Integer, String>) T2result.get("CodeMap");
+            List<QualityManagerSysElementInDto> beanList2 = (List<QualityManagerSysElementInDto>) T2result.get("elementList");
+            beanList1.addAll(beanList2);
+
+            for (Map.Entry<Integer, int[]> entry2 : T2RangeMap.entrySet())//第三层
+            {
+                //System.out.println(entry2.getKey()+"---"+entry2.getValue()[0]+"   "+entry2.getValue()[1]);
+                Map<String, Object> T3result = getQualityTNNode(sheet, entry2.getValue()[0], entry2.getValue()[1], T2CodeMap.get(entry2.getKey()), 2);
+                Map<Integer, int[]> T3RangeMap = (Map<Integer, int[]>) T3result.get("RangeMap");
+                Map<Integer, String> T3CodeMap = (Map<Integer, String>) T3result.get("CodeMap");
+                List<QualityManagerSysElementInDto> beanList3 = (List<QualityManagerSysElementInDto>) T3result.get("elementList");
+                beanList1.addAll(beanList3);
+                for (Map.Entry<Integer, int[]> entry3 : T3RangeMap.entrySet())//第四层
+                {
+                    //System.out.println(entry3.getKey()+"---"+entry3.getValue()[0]+"   "+entry3.getValue()[1]);
+                    Map<String, Object> T4result = getLastQualityTNNode(sheet, entry3.getValue()[0], entry3.getValue()[1], T3CodeMap.get(entry3.getKey()), 3);
+                    Map<Integer, int[]> T4RangeMap = (Map<Integer, int[]>) T4result.get("RangeMap");
+                    Map<Integer, String> T4CodeMap = (Map<Integer, String>) T4result.get("CodeMap");
+                    for (Map.Entry<Integer, int[]> entry4 : T4RangeMap.entrySet())//第五层
+                    {
+                        //System.out.println(entry4.getKey()+"---"+entry4.getValue()[0]+"   "+entry4.getValue()[1]);
+                        Map<String, Object> T5result = getFinalLastQualityTNNode(sheet, entry4.getValue()[0], entry4.getValue()[1], T4CodeMap.get(entry4.getKey()), 3);
+                        List<QualityManagerSysEleReviewTermsDto> termsList=(List<QualityManagerSysEleReviewTermsDto>) T5result.get("termsList");
+                        List<QualityManagerSysElementInDto> beanList5 = (List<QualityManagerSysElementInDto>) T5result.get("elementList");
+                        beanList1.addAll(beanList5);
+                        allTermsList.addAll(termsList);
+                    }
+                }
+            }
+        }
+
+        List<QualityManagerSysElementOutDto> TreeList=getQualityTree(beanList1);
+
+
+        for(QualityManagerSysElementOutDto qshele:TreeList) {
+            getQScore(qshele);
+            getQCount(qshele);
+        }
+        for(QualityManagerSysElementOutDto ele:TreeList)
+        {
+            System.out.println(ele);
+        }
+        /*for (QualityManagerSysElementOutDto ele1:TreeList)
+        {
+            System.out.println(ele1.getName() + "--" + ele1.getCode());
+            qualityManagerSysElementDao.addExcelQHSEElemenForInerPople(ele1);
+            for (QualityManagerSysElementOutDto ele2 : ele1.getChildNode()) {
+                System.out.println(ele2.getName() + "--" + ele2.getCode());
+                qualityManagerSysElementDao.addExcelQHSEElemenForInerPople(ele2);
+                for (QualityManagerSysElementOutDto ele3 : ele2.getChildNode()) {
+                    System.out.println(ele3.getName() + "--" + ele3.getCode());
+                    qualityManagerSysElementDao.addExcelQHSEElemenForInerPople(ele3);
+                    for (QualityManagerSysElementOutDto ele4 : ele3.getChildNode()) {
+                        System.out.println(ele4.getName() + "--" + ele4.getCode());
+                        qualityManagerSysElementDao.addExcelQHSEElemenForInerPople(ele4);
+                    }//4
+                }//3
+            }//2
+        }*/
+       // qualityManagerSysElementDao.batchInsertRecord(allTermsList);
+        workbook.close();
+        System.out.println("----关闭close");
+        fis.close();
+        System.out.println("----关闭fis" + "成功了，666");
+    }
+    public Map<String, Object> getQualityTNNode(Sheet sheet, int start, int end, String parentCode, int rowNUmber) throws Exception {
+        DataFormatter dataFormat = new DataFormatter();
+        Row row;
+        String value;
+        int[] a = new int[2];
+        Map<Integer, String> T1CodeMap = new TreeMap<>();
+        Map<Integer, int[]> T1RangeMap = new TreeMap<>();
+        List<QualityManagerSysElementInDto> beanList = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+        HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+        row = sheet.getRow(start);
+        value=dataFormat.formatCellValue(row.getCell(rowNUmber));
+        if (value == null || "".equals(value) || " ".equals(value))
+            start+=1;
+        row = sheet.getRow(start);
+        String f1Code = parentCode + "001";
+        QSHEMSElementValueMap.put("code", f1Code);
+        QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(rowNUmber)));
+        QSHEMSElementValueMap.put("status", "启用");
+        QualityManagerSysElementInDto qSHEMSElement = new QualityManagerSysElementInDto();
+        BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+        //对象放进进容器
+        beanList.add(qSHEMSElement);
+        int id = 1;
+        a[0] = start;
+        if(start>=end) {
+            a[1]=end;
+            T1RangeMap.put(id, a);
+        }
+        T1CodeMap.put(id, f1Code);
+        for (int i = start + 1; i <= end; i++) {
+            row = sheet.getRow(i);
+            value = dataFormat.formatCellValue(row.getCell(rowNUmber));
+            if (value == null || "".equals(value) || " ".equals(value)) {
+                if (i == end) {
+                    a[1] = i;
+                    T1RangeMap.put(id, a);
+                }
+                continue;
+            }else{
+                //生成code
+                f1Code = sortCodeUtil.getMaxCodeString(f1Code);
+                //封装对象
+                QSHEMSElementValueMap.put("code", f1Code);
+                QSHEMSElementValueMap.put("name", value);
+                QSHEMSElementValueMap.put("status", "启用");
+                qSHEMSElement = new QualityManagerSysElementInDto();
+                BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+                beanList.add(qSHEMSElement);
+                //子节点范围定位
+                a[1] = i - 1;
+                T1RangeMap.put(id, a);
+                a = new int[2];
+                a[0] = i;
+                //存储code
+                id++;
+                T1CodeMap.put(id, f1Code);
+            }
+            if (i == end) {
+                a[1] = i;
+                T1RangeMap.put(id, a);
+            }
+        }
+        result.put("CodeMap",T1CodeMap);
+        result.put("RangeMap",T1RangeMap);
+        result.put("elementList",beanList);
+        return result;
+    }
+
+    public Map<String, Object> getLastQualityTNNode(Sheet sheet, int start, int end, String parentCode, int rowNUmber) throws Exception {
+        DataFormatter dataFormat = new DataFormatter();
+        Row row;
+        String value;
+        int[] a = new int[2];
+        Map<Integer, String> T1CodeMap = new TreeMap<>();
+        Map<Integer, int[]> T1RangeMap = new TreeMap<>();
+        List<QualityManagerSysElementInDto> beanList = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+        HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+        row = sheet.getRow(start);
+        value=dataFormat.formatCellValue(row.getCell(rowNUmber));
+        if (value == null || "".equals(value) || " ".equals(value))
+            start+=1;
+        row = sheet.getRow(start);
+        String f1Code = parentCode + "001";
+        QSHEMSElementValueMap.put("code", f1Code);
+        QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(rowNUmber)));
+        QSHEMSElementValueMap.put("status", "启用");
+        QSHEMSElementValueMap.put("initialScore", "5");
+        QSHEMSElementValueMap.put("totalCount", "1");
+        QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(rowNUmber+4)));
+        QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(rowNUmber+6)));
+        QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(rowNUmber+7)));
+        QualityManagerSysElementInDto qSHEMSElement = new QualityManagerSysElementInDto();
+        BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+        //对象放进进容器
+        beanList.add(qSHEMSElement);
+        int id = 1;
+        a[0] = start;
+        if(start>=end) {
+            a[1]=end;
+            T1RangeMap.put(id, a);
+        }
+        T1CodeMap.put(id, f1Code);
+        for (int i = start + 1; i <= end; i++) {
+            row = sheet.getRow(i);
+            value = dataFormat.formatCellValue(row.getCell(rowNUmber));
+            if (value == null || "".equals(value) || " ".equals(value)) {
+                if (i == end) {
+                    a[1] = i;
+                    T1RangeMap.put(id, a);
+                }
+                continue;
+            }else{
+                //生成code
+                f1Code = sortCodeUtil.getMaxCodeString(f1Code);
+                //封装对象
+                QSHEMSElementValueMap.put("code", f1Code);
+                QSHEMSElementValueMap.put("name", value);
+                QSHEMSElementValueMap.put("status", "启用");
+                QSHEMSElementValueMap.put("initialScore", "5");
+                QSHEMSElementValueMap.put("totalCount", "1");
+                QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(rowNUmber+4)));
+                QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(rowNUmber+6)));
+                QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(rowNUmber+7)));
+                qSHEMSElement = new QualityManagerSysElementInDto();
+                BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+                beanList.add(qSHEMSElement);
+                //子节点范围定位
+                a[1] = i - 1;
+                T1RangeMap.put(id, a);
+                a = new int[2];
+                a[0] = i;
+                //存储code
+                id++;
+                T1CodeMap.put(id, f1Code);
+            }
+            if (i == end) {
+                a[1] = i;
+                T1RangeMap.put(id, a);
+            }
+        }
+        result.put("CodeMap",T1CodeMap);
+        result.put("RangeMap",T1RangeMap);
+        result.put("elementList",beanList);
+        return result;
+    }
+    public Map<String, Object> getFinalLastQualityTNNode(Sheet sheet, int start, int end, String parentCode, int rowNUmber) throws Exception {
+        DataFormatter dataFormat = new DataFormatter();
+        Row row;
+        String value;
+        List<QualityManagerSysElementInDto> beanList = new ArrayList<>();
+        List<QualityManagerSysEleReviewTermsDto> termsList=new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+        HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+        row = sheet.getRow(start);
+        value=dataFormat.formatCellValue(row.getCell(rowNUmber));
+        QSHEMSElementValueMap.put("code", parentCode);
+        QSHEMSElementValueMap.put("name",value);
+        QSHEMSElementValueMap.put("status", "启用");
+        QSHEMSElementValueMap.put("initialScore", "5");
+        QSHEMSElementValueMap.put("totalCount", "1");
+        QSHEMSElementValueMap.put("content", dataFormat.formatCellValue(row.getCell(rowNUmber+4)));
+        QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(rowNUmber+6)));
+        QSHEMSElementValueMap.put("formula", dataFormat.formatCellValue(row.getCell(rowNUmber+7)));
+        String basis;
+        String terms;
+        String content;
+        String scoreShow="";
+        for (int i = start ; i <= end; i++){
+            row = sheet.getRow(i);
+            scoreShow+=dataFormat.formatCellValue(row.getCell(rowNUmber+5));
+            basis= dataFormat.formatCellValue(row.getCell(rowNUmber+1));
+            terms= dataFormat.formatCellValue(row.getCell(rowNUmber+2));
+            content= dataFormat.formatCellValue(row.getCell(rowNUmber+3));
+            if((basis==null||"".equals(basis))&&(terms==null||"".equals(terms))&&(content==null||"".equals(content))){
+                continue;
+            }else{
+                QualityManagerSysEleReviewTermsDto ele=new QualityManagerSysEleReviewTermsDto();
+                ele.setCode(parentCode);
+                ele.setBasis(basis);
+                ele.setTerms(terms);
+                ele.setContent(content);
+                termsList.add(ele);
+            }
+        }
+        QSHEMSElementValueMap.put("scoreShows",scoreShow);
+        QualityManagerSysElementInDto qSHEMSElement = new QualityManagerSysElementInDto();
+        BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+        //对象放进进容器
+        beanList.add(qSHEMSElement);
+        result.put("elementList",beanList);
+        result.put("termsList",termsList);
+        return result;
+    }
+
+    public List<QualityManagerSysElementOutDto> returnQualityList(Map<String, QualityManagerSysElementOutDto> map, List<Integer> code) {
+        /*
+        思想：创建一个list,然后遍历map里的节点,如果是一级节点，就放进list；
+        如果不是一级节点，就去找他的父节点，找到后就把当前节点放进父节里的孩子list中，最后逐渐形成一棵树；
+         */
+        List<QualityManagerSysElementOutDto> result = new ArrayList<>();
+        Collections.sort(code);
+        for (Map.Entry<String, QualityManagerSysElementOutDto> entry : map.entrySet()) {
+            String key = entry.getKey();
+            if (key.length() == code.get(0))//是一级节点，就放进list；
+                result.add(entry.getValue());
+            else {//如果不是一级节点，就去找他的父节点
+                QualityManagerSysElementOutDto treeDto = map.get(key.substring(0, code.get(code.indexOf(key.length()) - 1)));
+                if (null == treeDto)//父节孩子为空
+                    continue;
+                if (null == treeDto.getChildNode()) {//父节孩子为空，建一个list放入
+                    List<QualityManagerSysElementOutDto> tmp = new ArrayList<>();
+                    tmp.add(entry.getValue());
+                    treeDto.setChildNode(tmp);
+                } else////父节孩子不为空，直接放入
+                    treeDto.getChildNode().add(entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    public List<QualityManagerSysElementOutDto> getQualityTree(List<QualityManagerSysElementInDto> qhseElementsPojos) {
+        /*
+        思想，把list里的对象逐个遍历；QhseElementsPojo赋值给QhseElementsOutDto，
+        并把节点<code,QhseElementsOutDto>,放进map集合，方便后续操作；同时设一个code list记录节点长度；
+         */
+        Map<String, QualityManagerSysElementOutDto> map1 = new TreeMap<>();
+        List<Integer> code = new ArrayList<>();
+        for (QualityManagerSysElementInDto pojo : qhseElementsPojos) {
+            QualityManagerSysElementOutDto qhseElementsOutDto = new QualityManagerSysElementOutDto();
+            qhseElementsOutDto.setAuditMode(pojo.getAuditMode());
+            qhseElementsOutDto.setCode(pojo.getCode());
+            qhseElementsOutDto.setTotalCount(pojo.getTotalCount());
+            qhseElementsOutDto.setFormula(pojo.getFormula());
+            qhseElementsOutDto.setInitialScore(pojo.getInitialScore());
+            qhseElementsOutDto.setName(pojo.getName());
+            qhseElementsOutDto.setStatus(pojo.getStatus());
+            qhseElementsOutDto.setScoreShows(pojo.getScoreShows());
+            qhseElementsOutDto.setContent(pojo.getContent());
+            map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
+            //同一层节点长度一样
+            if (code.indexOf(pojo.getCode().length()) == -1)
+                code.add(pojo.getCode().length());
+        }
+        return returnQualityList(map1, code);
+    }
+    public Integer getQScore(QualityManagerSysElementOutDto hseElementsOutDto)//递归求分数；
+    {
+        int score=0;
+        if(hseElementsOutDto.getInitialScore()==null){
+            if(hseElementsOutDto.getChildNode()==null)
+                hseElementsOutDto.setInitialScore(0);
+            else{
+                for(QualityManagerSysElementOutDto ele:hseElementsOutDto.getChildNode()){
+                    score+=getQScore(ele);
+                }
+                hseElementsOutDto.setInitialScore(score);
+            }
+        }
+        return hseElementsOutDto.getInitialScore();
+    }
+    public Integer getQCount(QualityManagerSysElementOutDto hseElementsOutDto)//递归求分数；
+    {
+        int count=0;
+        if(hseElementsOutDto.getTotalCount()==null){
+            if(hseElementsOutDto.getChildNode()==null)
+                hseElementsOutDto.setTotalCount(0);
+            else{
+                for(QualityManagerSysElementOutDto ele:hseElementsOutDto.getChildNode()){
+                    count+=getQCount(ele);
+                }
+                hseElementsOutDto.setTotalCount(count);
+            }
+        }
+        return hseElementsOutDto.getTotalCount();
     }
 }

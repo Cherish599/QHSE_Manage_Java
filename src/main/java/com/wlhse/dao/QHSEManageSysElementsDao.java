@@ -56,9 +56,14 @@ public interface QHSEManageSysElementsDao {
     List<QhseElementsPojo> queryQhseElements();
     //查询年度要素表
     List<YearElementsDto> queryQhseYearElements(YearElementsDto yearElementsDto);
+    //查看任务是否被接收
+    String queryTask(@Param("year")String year,@Param("companyCode") String companyCode);
     //melon查询进度
     int querySchedule(@Param("code") String code,String companyCode,String year);
     int querySchdules(@Param("code") String code,String companyCode,String year);
+    //melon质量查询进度
+    int querySchedule1(@Param("code") String code,String companyCode,String year);
+    int querySchdules1(@Param("code") String code,String companyCode,String year);
     //th----查询基本数据表两级
     List<QhseElementsPojo> queryQhseChildElements();
     //th----查询所有的数据表
@@ -108,4 +113,12 @@ public interface QHSEManageSysElementsDao {
     int getAllLeafNodeNumber(int table);
 
     List<YearElementsDto> queryYearElement(YearElementsDto yearElementsDto);
+
+    int getInputtedNum(int tableId);
+
+    int getCheckedNum(int tableId);
+
+    int getApprovedNum(int tableId);
+
+    int getReInputNum(int tableId);
 }

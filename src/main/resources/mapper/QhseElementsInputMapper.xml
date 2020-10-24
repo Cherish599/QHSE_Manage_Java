@@ -158,6 +158,30 @@
         </trim>
         )
     </insert>
+    <insert id="insertNewOriginFileNames" parameterType="com.wlhse.dto.QualityFileInputInfoDto">
+        insert into qualityelementinputfileinfo
+        (
+        <trim suffixOverrides=",">
+            <if test="originalFileName != null and originalFileName != ''">
+                originalFileName,
+            </if>
+            <if test="newFileName != null and newFileName != ''">
+                newFileName,
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="originalFileName != null and originalFileName != ''">
+                #{originalFileName},
+            </if>
+            <if test="newFileName != null and newFileName != ''">
+                #{newFileName},
+            </if>
+        </trim>
+        )
+    </insert>
 
     <update id="updateNewOriginFileName" parameterType="com.wlhse.entity.ElementInputFileInfo">
         update elementinputfileinfo set  QHSE_CompanyYearManagerSysElementEvidence_ID=
@@ -232,4 +256,20 @@
         from qhse_companyyearmanagersyselement
         where QHSE_CompanyYearManagerSysElement_ID=#{0}
     </select>
+    <select id="queryQualityOriginFileName" resultType="java.lang.String">
+          select OriginalFileName from qualityelementinputfileinfo where NewFileName=#{NewFileName}
+    </select>
+
+    <update id="updateCheckStatus">
+        update QHSE_CompanyYearManagerSysElement
+        set CheckStatus=#{2}
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+        and CheckStatus=#{1}
+    </update>
+
+    <update id="updateCheckStatusByElementId" parameterType="java.lang.Integer">
+    update QHSE_CompanyYearManagerSysElement
+        set CheckStatus=0
+        where QHSE_CompanyYearManagerSysElement_ID=#{id}
+    </update>
 </mapper>

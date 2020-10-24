@@ -18,7 +18,33 @@ public class QualityYearElementsDto {
     private String fileCheckStatus;
     private String configStatus;
     private String schedule;
+    private int checkStatus;
     // 测试
+
+
+    public QualityYearElementsDto() {
+    }
+
+    public QualityYearElementsDto(Integer qualityCompanyYearManagerSysElementID, String codes, Integer qualityCompanyYearManagerSysElementTableID, String code, String name, String content, String auditMode, Integer initialScore, String formula, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String configStatus, String schedule, int checkStatus) {
+        this.qualityCompanyYearManagerSysElementID = qualityCompanyYearManagerSysElementID;
+        this.codes = codes;
+        this.qualityCompanyYearManagerSysElementTableID = qualityCompanyYearManagerSysElementTableID;
+        this.code = code;
+        this.name = name;
+        this.content = content;
+        this.auditMode = auditMode;
+        this.initialScore = initialScore;
+        this.formula = formula;
+        this.totalCount = totalCount;
+        this.status = status;
+        this.companyCode = companyCode;
+        this.companyName = companyName;
+        this.year = year;
+        this.fileCheckStatus = fileCheckStatus;
+        this.configStatus = configStatus;
+        this.schedule = schedule;
+        this.checkStatus = checkStatus;
+    }
 
     public Integer getQualityCompanyYearManagerSysElementID() {
         return qualityCompanyYearManagerSysElementID;
@@ -28,36 +54,20 @@ public class QualityYearElementsDto {
         this.qualityCompanyYearManagerSysElementID = qualityCompanyYearManagerSysElementID;
     }
 
-    public Integer getQualityCompanyYearManagerSysElementTableID() {
-        return qualityCompanyYearManagerSysElementTableID;
-    }
-
-    public void setQualityCompanyYearManagerSysElementTableID(Integer qualityCompanyYearManagerSysElementTableID) {
-        this.qualityCompanyYearManagerSysElementTableID = qualityCompanyYearManagerSysElementTableID;
-    }
-
-    public String getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
-    }
-
-    public String getConfigStatus() {
-        return configStatus;
-    }
-
-    public void setConfigStatus(String configStatus) {
-        this.configStatus = configStatus;
-    }
-
     public String getCodes() {
         return codes;
     }
 
     public void setCodes(String codes) {
         this.codes = codes;
+    }
+
+    public Integer getQualityCompanyYearManagerSysElementTableID() {
+        return qualityCompanyYearManagerSysElementTableID;
+    }
+
+    public void setQualityCompanyYearManagerSysElementTableID(Integer qualityCompanyYearManagerSysElementTableID) {
+        this.qualityCompanyYearManagerSysElementTableID = qualityCompanyYearManagerSysElementTableID;
     }
 
     public String getCode() {
@@ -84,7 +94,6 @@ public class QualityYearElementsDto {
         this.content = content;
     }
 
-
     public String getAuditMode() {
         return auditMode;
     }
@@ -108,7 +117,6 @@ public class QualityYearElementsDto {
     public void setFormula(String formula) {
         this.formula = formula;
     }
-
 
     public Integer getTotalCount() {
         return totalCount;
@@ -158,5 +166,51 @@ public class QualityYearElementsDto {
         this.fileCheckStatus = fileCheckStatus;
     }
 
+    public String getConfigStatus() {
+        return configStatus;
+    }
 
+    public void setConfigStatus(String configStatus) {
+        this.configStatus = configStatus;
+    }
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public int getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(int checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "QualityYearElementsDto{" +
+                "qualityCompanyYearManagerSysElementID=" + qualityCompanyYearManagerSysElementID +
+                ", codes='" + codes + '\'' +
+                ", qualityCompanyYearManagerSysElementTableID=" + qualityCompanyYearManagerSysElementTableID +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", year='" + year + '\'' +
+                ", fileCheckStatus='" + fileCheckStatus + '\'' +
+                ", configStatus='" + configStatus + '\'' +
+                ", schedule='" + schedule + '\'' +
+                ", checkStatus=" + checkStatus +
+                '}';
+    }
 }

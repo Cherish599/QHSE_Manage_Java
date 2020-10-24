@@ -1,28 +1,43 @@
 package com.wlhse.dto;
 
 public class QualityCheckDto {
-    Integer qualityCheckID;
-    String taskType;
-    String checkListCode;//选择的所有表节点
-    String checkedCompanyName;
-    String checkedCompanyCode;
-    String group;
-    String workProject;
-    String responsiCompanyName;
-    String responsiCompanyCode;
-    Integer responsePersonID;
-    String responsePersonName;
-    String checkDate;
-    Integer checkPersonID;
-    String checkPerson;
-    String checkBasis;
-    String contractor;
-    String owner;
-    String projectName;
-    String checkProject;
-    String execStd;
-    String isPush;
-    String checkListName;
+    private Integer qualityCheckID;
+    private String checkCategory;
+    private String checkListCode;//选择的所有表节点
+    private String checkedCompanyName;
+    private String checkedCompanyCode;
+    private String group;
+    private Integer checkedPersonID;
+    private String checkedPersonName;
+    private Integer groupLeaderID;
+    private String groupLeaderName;
+    private String responsiCompanyName;
+    private String responsiCompanyCode;
+    private Integer responsePersonID;
+    private String responsePersonName;
+    private String checkDate;
+    private Integer checkPersonID;
+    private String checkPerson;
+    private String checkBasis;
+    private String contractor;
+    private String owner;
+    private String projectName;
+    private Integer projectLeaderID;
+    private String projectLeaderName;
+    private String checkProject;
+    private String execStd;
+    private String isPush;
+    private String checkListName;
+    private String issued;
+    private String checkMethod;
+    private String qualityCheckName;
+    private Integer workerNumber;
+    private Integer ERPNumber;
+    private Integer externalNumber;
+    private String workPlace;
+    private Integer contractorNumber;
+    private String progress;
+    private String finishDate;
 
     public Integer getQualityCheckID() {
         return qualityCheckID;
@@ -32,12 +47,12 @@ public class QualityCheckDto {
         this.qualityCheckID = qualityCheckID;
     }
 
-    public String getTaskType() {
-        return taskType;
+    public String getCheckCategory() {
+        return checkCategory;
     }
 
-    public void setTaskType(String taskType) {
-        this.taskType = taskType;
+    public void setCheckCategory(String checkCategory) {
+        this.checkCategory = checkCategory;
     }
 
     public String getCheckListCode() {
@@ -72,12 +87,36 @@ public class QualityCheckDto {
         this.group = group;
     }
 
-    public String getWorkProject() {
-        return workProject;
+    public Integer getCheckedPersonID() {
+        return checkedPersonID;
     }
 
-    public void setWorkProject(String workProject) {
-        this.workProject = workProject;
+    public void setCheckedPersonID(Integer checkedPersonID) {
+        this.checkedPersonID = checkedPersonID;
+    }
+
+    public String getCheckedPersonName() {
+        return checkedPersonName;
+    }
+
+    public void setCheckedPersonName(String checkedPersonName) {
+        this.checkedPersonName = checkedPersonName;
+    }
+
+    public Integer getGroupLeaderID() {
+        return groupLeaderID;
+    }
+
+    public void setGroupLeaderID(Integer groupLeaderID) {
+        this.groupLeaderID = groupLeaderID;
+    }
+
+    public String getGroupLeaderName() {
+        return groupLeaderName;
+    }
+
+    public void setGroupLeaderName(String groupLeaderName) {
+        this.groupLeaderName = groupLeaderName;
     }
 
     public String getResponsiCompanyName() {
@@ -168,6 +207,22 @@ public class QualityCheckDto {
         this.projectName = projectName;
     }
 
+    public Integer getProjectLeaderID() {
+        return projectLeaderID;
+    }
+
+    public void setProjectLeaderID(Integer projectLeaderID) {
+        this.projectLeaderID = projectLeaderID;
+    }
+
+    public String getProjectLeaderName() {
+        return projectLeaderName;
+    }
+
+    public void setProjectLeaderName(String projectLeaderName) {
+        this.projectLeaderName = projectLeaderName;
+    }
+
     public String getCheckProject() {
         return checkProject;
     }
@@ -200,16 +255,99 @@ public class QualityCheckDto {
         this.checkListName = checkListName;
     }
 
+    public String getIssued() {
+        return issued;
+    }
+
+    public void setIssued(String issued) {
+        this.issued = issued;
+    }
+
+    public String getCheckMethod() {
+        return checkMethod;
+    }
+
+    public void setCheckMethod(String checkMethod) {
+        this.checkMethod = checkMethod;
+    }
+
+    public String getQualityCheckName() {
+        return qualityCheckName;
+    }
+
+    public void setQualityCheckName(String qualityCheckName) {
+        this.qualityCheckName = qualityCheckName;
+    }
+
+    public Integer getWorkerNumber() {
+        return workerNumber;
+    }
+
+    public void setWorkerNumber(Integer workerNumber) {
+        this.workerNumber = workerNumber;
+    }
+
+    public Integer getERPNumber() {
+        return ERPNumber;
+    }
+
+    public void setERPNumber(Integer ERPNumber) {
+        this.ERPNumber = ERPNumber;
+    }
+
+    public Integer getExternalNumber() {
+        return externalNumber;
+    }
+
+    public void setExternalNumber(Integer externalNumber) {
+        this.externalNumber = externalNumber;
+    }
+
+    public String getWorkPlace() {
+        return workPlace;
+    }
+
+    public void setWorkPlace(String workPlace) {
+        this.workPlace = workPlace;
+    }
+
+    public Integer getContractorNumber() {
+        return contractorNumber;
+    }
+
+    public void setContractorNumber(Integer contractorNumber) {
+        this.contractorNumber = contractorNumber;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
+
+    public String getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(String finishDate) {
+        this.finishDate = finishDate;
+    }
+
     @Override
     public String toString() {
         return "QualityCheckDto{" +
                 "qualityCheckID=" + qualityCheckID +
-                ", taskType='" + taskType + '\'' +
+                ", checkCategory='" + checkCategory + '\'' +
                 ", checkListCode='" + checkListCode + '\'' +
                 ", checkedCompanyName='" + checkedCompanyName + '\'' +
                 ", checkedCompanyCode='" + checkedCompanyCode + '\'' +
                 ", group='" + group + '\'' +
-                ", workProject='" + workProject + '\'' +
+                ", checkedPersonID=" + checkedPersonID +
+                ", checkedPersonName='" + checkedPersonName + '\'' +
+                ", groupLeaderID=" + groupLeaderID +
+                ", groupLeaderName='" + groupLeaderName + '\'' +
                 ", responsiCompanyName='" + responsiCompanyName + '\'' +
                 ", responsiCompanyCode='" + responsiCompanyCode + '\'' +
                 ", responsePersonID=" + responsePersonID +
@@ -221,10 +359,22 @@ public class QualityCheckDto {
                 ", contractor='" + contractor + '\'' +
                 ", owner='" + owner + '\'' +
                 ", projectName='" + projectName + '\'' +
+                ", projectLeaderID=" + projectLeaderID +
+                ", projectLeaderName='" + projectLeaderName + '\'' +
                 ", checkProject='" + checkProject + '\'' +
                 ", execStd='" + execStd + '\'' +
                 ", isPush='" + isPush + '\'' +
                 ", checkListName='" + checkListName + '\'' +
+                ", issued='" + issued + '\'' +
+                ", checkMethod='" + checkMethod + '\'' +
+                ", qualityCheckName='" + qualityCheckName + '\'' +
+                ", workerNumber=" + workerNumber +
+                ", ERPNumber=" + ERPNumber +
+                ", externalNumber=" + externalNumber +
+                ", workPlace='" + workPlace + '\'' +
+                ", contractorNumber=" + contractorNumber +
+                ", progress='" + progress + '\'' +
+                ", finishDate='" + finishDate + '\'' +
                 '}';
     }
 }
