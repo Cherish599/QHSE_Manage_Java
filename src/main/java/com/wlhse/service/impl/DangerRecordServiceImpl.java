@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.DangerRecordDao;
 import com.wlhse.dto.DangerRecordDto;
+import com.wlhse.dto.DangerRecordOutDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.DangerRecordService;
 import com.wlhse.service.EmployeeManagementService;
@@ -61,11 +62,11 @@ public class DangerRecordServiceImpl implements DangerRecordService {
     @Override
     public R queryDangerRecordById(Integer id) {
         System.out.println("exec....");
-        List<DangerRecordDto> list = dangerRecordDao.queryDangerRecordById(id);
+        List<DangerRecordOutDto> list = dangerRecordDao.queryDangerRecordById(id);
         if (list != null && list.size() != 0) {
-            for (DangerRecordDto dangerRecordDto : list) {
-                if (dangerRecordDto.getEndDate() != null && dangerRecordDto.getEndDate().length() > 10)
-                    dangerRecordDto.setEndDate(dangerRecordDto.getEndDate().substring(0, 10));
+            for (DangerRecordOutDto dangerRecordDto : list) {
+//                if (dangerRecordDto.getEndDate() != null && dangerRecordDto.getEndDate().length() > 10)
+//                    dangerRecordDto.setEndDate(dangerRecordDto.getEndDate().substring(0, 10));
 
                 if (dangerRecordDto.getLimitDate() != null && dangerRecordDto.getLimitDate().length() > 10)
                     dangerRecordDto.setLimitDate(dangerRecordDto.getLimitDate().substring(0, 10));
@@ -73,11 +74,11 @@ public class DangerRecordServiceImpl implements DangerRecordService {
                 if (dangerRecordDto.getReceptionDate() != null && dangerRecordDto.getReceptionDate().length() > 10)
                     dangerRecordDto.setReceptionDate(dangerRecordDto.getReceptionDate().substring(0, 10));
 
-                if (dangerRecordDto.getRecordDate() != null && dangerRecordDto.getRecordDate().length() > 10)
-                    dangerRecordDto.setRecordDate(dangerRecordDto.getRecordDate().substring(0, 10));
-
-                if (dangerRecordDto.getStartDate() != null && dangerRecordDto.getStartDate().length() > 10)
-                    dangerRecordDto.setStartDate(dangerRecordDto.getStartDate().substring(0, 10));
+//                if (dangerRecordDto.getRecordDate() != null && dangerRecordDto.getRecordDate().length() > 10)
+//                    dangerRecordDto.setRecordDate(dangerRecordDto.getRecordDate().substring(0, 10));
+//
+//                if (dangerRecordDto.getStartDate() != null && dangerRecordDto.getStartDate().length() > 10)
+//                    dangerRecordDto.setStartDate(dangerRecordDto.getStartDate().substring(0, 10));
 
                 if (dangerRecordDto.getSupervisionDate() != null && dangerRecordDto.getSupervisionDate().length() > 10)
                     dangerRecordDto.setSupervisionDate(dangerRecordDto.getSupervisionDate().substring(0, 10));
@@ -93,11 +94,11 @@ public class DangerRecordServiceImpl implements DangerRecordService {
         int total = dangerRecordDao.queryTotal(dangerRecordDto);
         int pageIdx = dangerRecordDto.getPageIdx();
         PageHelper.startPage(pageIdx, dangerRecordDto.getPageSize());
-        List<DangerRecordDto> list = dangerRecordDao.queryDangerRecord(dangerRecordDto);
+        List<DangerRecordOutDto> list = dangerRecordDao.queryDangerRecord(dangerRecordDto);
         if (list != null && list.size() != 0) {
-            for (DangerRecordDto temp : list) {
-                if (temp.getEndDate() != null && temp.getEndDate().length() > 10)
-                    temp.setEndDate(temp.getEndDate().substring(0, 10));
+            for (DangerRecordOutDto temp : list) {
+//                if (temp.getEndDate() != null && temp.getEndDate().length() > 10)
+//                    temp.setEndDate(temp.getEndDate().substring(0, 10));
 
                 if (temp.getLimitDate() != null && temp.getLimitDate().length() > 10)
                     temp.setLimitDate(temp.getLimitDate().substring(0, 10));
@@ -105,11 +106,11 @@ public class DangerRecordServiceImpl implements DangerRecordService {
                 if (temp.getReceptionDate() != null && temp.getReceptionDate().length() > 10)
                     temp.setReceptionDate(temp.getReceptionDate().substring(0, 10));
 
-                if (temp.getRecordDate() != null && temp.getRecordDate().length() > 10)
-                    temp.setRecordDate(temp.getRecordDate().substring(0, 10));
+//                if (temp.getRecordDate() != null && temp.getRecordDate().length() > 10)
+//                    temp.setRecordDate(temp.getRecordDate().substring(0, 10));
 
-                if (temp.getStartDate() != null && temp.getStartDate().length() > 10)
-                    temp.setStartDate(temp.getStartDate().substring(0, 10));
+//                if (temp.getStartDate() != null && temp.getStartDate().length() > 10)
+//                    temp.setStartDate(temp.getStartDate().substring(0, 10));
 
                 if (temp.getSupervisionDate() != null && temp.getSupervisionDate().length() > 10)
                     temp.setSupervisionDate(temp.getSupervisionDate().substring(0, 10));

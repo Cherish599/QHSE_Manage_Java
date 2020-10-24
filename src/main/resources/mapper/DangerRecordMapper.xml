@@ -276,7 +276,7 @@
         </trim>
     </sql>
 
-    <insert id="addDangerRecord" parameterType="com.wlhse.dto.DangerRecordDto" >
+    <insert id="addDangerRecord" parameterType="com.wlhse.dto.DangerRecordDto">
         insert into dangerrecord
         (<include refid="key"/>)
         values
@@ -301,7 +301,8 @@
                 checkId=#{checkId},
             </if>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
-                safeStaff_ID=#{safeStaff_ID},safeStaff_Name=(select Name from employee where EmployeeID=#{safeStaff_ID}),
+                safeStaff_ID=#{safeStaff_ID},safeStaff_Name=(select Name from employee where
+                EmployeeID=#{safeStaff_ID}),
             </if>
             <if test="workItem != null and workItem  != ''">
                 workItem=#{workItem},
@@ -325,7 +326,8 @@
                 solution=#{solution},
             </if>
             <if test="reformPersonID != null and reformPersonID  != ''">
-                reformPersonID=#{reformPersonID},reformPerson=(select Name from employee where EmployeeID=#{reformPersonID}),
+                reformPersonID=#{reformPersonID},reformPerson=(select Name from employee where
+                EmployeeID=#{reformPersonID}),
             </if>
             <if test="limitDate != null and limitDate  != ''">
                 limitDate=#{limitDate},
@@ -432,11 +434,10 @@
         where ID = #{id}
     </update>
 
-    <select id="queryDangerRecordById" resultType="com.wlhse.dto.DangerRecordDto">
+    <select id="queryDangerRecordById" resultType="com.wlhse.dto.DangerRecordOutDto">
         select * from dangerrecord
         where ID=#{id}
     </select>
-
 
     <select id="queryTotal" resultType="java.lang.Integer">
         select count(*)
@@ -471,8 +472,8 @@
             </if>
         </where>
     </select>
-    
-    <select id="queryDangerRecord" resultType="com.wlhse.dto.DangerRecordDto">
+
+    <select id="queryDangerRecord" resultType="com.wlhse.dto.DangerRecordOutDto">
         select *
         from dangerrecord
         <where>

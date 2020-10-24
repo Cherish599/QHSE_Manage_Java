@@ -412,7 +412,7 @@
         where ID = #{id}
     </update>
 
-    <select id="queryRegulationRecordById" resultType="com.wlhse.dto.RegulationRecordDto">
+    <select id="queryRegulationRecordById" resultType="com.wlhse.dto.RegulationRecordOutDto">
         select * from regulationrecord
         where ID=#{id}
     </select>
@@ -451,7 +451,7 @@
         </where>
     </select>
 
-    <select id="queryRegulationRecord" resultType="com.wlhse.dto.RegulationRecordDto">
+    <select id="queryRegulationRecord" resultType="com.wlhse.dto.RegulationRecordOutDto">
         select * from regulationrecord
         <where>
             <if test="safeStaff_ID != null and safeStaff_ID  != ''">
