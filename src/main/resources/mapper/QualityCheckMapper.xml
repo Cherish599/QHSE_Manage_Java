@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wlhse.dao.QualityCheckDao">
 
-    <insert id="addQualityCheck" parameterType="com.wlhse.dto.QualityCheckDto" useGeneratedKeys="true" keyProperty="qualityCheckID">
+    <insert id="addQualityCheck" parameterType="com.wlhse.dto.QualityCheckDto" useGeneratedKeys="true"
+            keyProperty="qualityCheckID">
         insert into quality_check
         (
         <trim suffixOverrides=",">
@@ -171,13 +172,13 @@
                 #{checkBasis},
             </if>
             <if test="contractor != null and contractor != ''">
-               #{contractor},
+                #{contractor},
             </if>
             <if test="owner != null and owner != ''">
                 #{owner},
             </if>
             <if test="projectName != null and projectName != ''">
-               #{projectName},
+                #{projectName},
             </if>
             <if test="projectLeaderID != null and projectLeaderID != ''">
                 #{projectLeaderID},
@@ -382,6 +383,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -422,6 +424,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -463,6 +466,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -503,6 +507,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -517,7 +522,7 @@
         where CheckedCompanyCode=#{0}
     </select>
 
-    <update id="pushTable" >
+    <update id="pushTable">
         update quality_check
         <set>
             IsPush='已推送'
@@ -551,6 +556,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -567,7 +573,7 @@
         and IsPush='已推送'
         and Issued='未下达'
     </select>
-    <update id="issuedTable" >
+    <update id="issuedTable">
         update quality_check
         <set>
             Issued='已下达',
@@ -601,6 +607,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -617,7 +624,7 @@
         and IsPush='已推送'
         and Issued='已下达'
     </select>
-    <update id="passTable" >
+    <update id="passTable">
         update quality_check
         <set>
             IsPush='通过',
@@ -626,7 +633,7 @@
         where Qulity_CheckID=#{0}
     </update>
 
-    <update id="modifyPush" >
+    <update id="modifyPush">
         update quality_check
         <set>
             Issued='已整改',
@@ -660,6 +667,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
@@ -703,6 +711,7 @@
         CheckProject as checkProject,
         ExecStd as execStd,
         IsPush as isPush,
+        Issued as issued,
         CheckListCode as checkListCode,
         CheckListName as checkListName,
         CheckMethod as checkMethod,
