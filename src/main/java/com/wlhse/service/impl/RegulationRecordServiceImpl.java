@@ -3,7 +3,6 @@ package com.wlhse.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.wlhse.dao.RegulationRecordDao;
 import com.wlhse.dto.RegulationRecordDto;
-import com.wlhse.dto.RegulationRecordOutDto;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.RegulationRecordService;
 import com.wlhse.util.R;
@@ -44,7 +43,7 @@ public class RegulationRecordServiceImpl implements RegulationRecordService {
 
     @Override
     public R queryRegulationRecordById(Integer id) {
-        List<RegulationRecordOutDto> list = regulationRecordDao.queryRegulationRecordById(id);
+        List<RegulationRecordDto> list = regulationRecordDao.queryRegulationRecordById(id);
         Map<String, Object> res = new HashMap<>();
         res.put("data", list);
         return R.ok(res);
@@ -55,7 +54,7 @@ public class RegulationRecordServiceImpl implements RegulationRecordService {
         int total = regulationRecordDao.queryTotal(regulationRecordDto);
         int pageIdx = regulationRecordDto.getPageIdx();
         PageHelper.startPage(pageIdx, regulationRecordDto.getPageSize());
-        List<RegulationRecordOutDto> list = regulationRecordDao.queryRegulationRecord(regulationRecordDto);
+        List<RegulationRecordDto> list = regulationRecordDao.queryRegulationRecord(regulationRecordDto);
         Map<String, Object> res = new HashMap<>();
         res.put("page", pageIdx);
         res.put("total", total);

@@ -434,7 +434,7 @@
         where ID = #{id}
     </update>
 
-    <select id="queryDangerRecordById" resultType="com.wlhse.dto.DangerRecordOutDto">
+    <select id="queryDangerRecordById" resultType="com.wlhse.dto.DangerRecordDto">
         select * from dangerrecord
         where ID=#{id}
     </select>
@@ -473,7 +473,7 @@
         </where>
     </select>
 
-    <select id="queryDangerRecord" resultType="com.wlhse.dto.DangerRecordOutDto">
+    <select id="queryDangerRecord" resultType="com.wlhse.dto.DangerRecordDto">
         select *
         from dangerrecord
         <where>
