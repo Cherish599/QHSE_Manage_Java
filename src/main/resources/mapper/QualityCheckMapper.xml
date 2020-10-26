@@ -525,7 +525,8 @@
     <update id="pushTable">
         update quality_check
         <set>
-            IsPush='已推送'
+            IsPush='已推送',
+            Progress='录入中'
         </set>
         where Qulity_CheckID=#{0}
     </update>
