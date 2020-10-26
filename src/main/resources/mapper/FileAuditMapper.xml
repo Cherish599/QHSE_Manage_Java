@@ -226,7 +226,7 @@
     </select>
 
     <select id="getStatus" resultType="com.wlhse.dto.FileAuditRecordDto">
-        select codeScore,Pass from qhse_fileauditrecord
+        select codeScore,Pass,AuditTime,noPassReason from qhse_fileauditrecord
         <where>
             <if test="fileAuditId != null and fileAuditId  != ''">
                 AND QHSE_FileAudit_ID=#{fileAuditId}
