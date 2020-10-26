@@ -748,6 +748,9 @@ public class TreeUtil {
             qualityCheckListTreeDto.setParentName(pojo.getParentName());
             qualityCheckListTreeDto.setIsChildNode(pojo.getIsChildNode());
             qualityCheckListTreeDto.setStatus(pojo.getStatus());
+            qualityCheckListTreeDto.setCheckCategory(pojo.getCheckCategory());
+            qualityCheckListTreeDto.setCheckBasis(pojo.getCheckBasis());
+            qualityCheckListTreeDto.setCheckMethod(pojo.getCheckMethod());
             map1.put(qualityCheckListTreeDto.getCheckListCode(), qualityCheckListTreeDto);
 
             //同一层节点长度一样

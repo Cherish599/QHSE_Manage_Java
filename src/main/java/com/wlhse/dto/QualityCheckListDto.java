@@ -8,9 +8,9 @@ public class QualityCheckListDto {
     private String parentName;
     private String isChildNode;
     private String status;
-
-
-
+    private String checkCategory;
+    private String checkBasis;
+    private String checkMethod;
 
     public Integer getCheckListID() {
         return checkListID;
@@ -68,9 +68,33 @@ public class QualityCheckListDto {
         this.status = status;
     }
 
+    public String getCheckCategory() {
+        return checkCategory;
+    }
+
+    public void setCheckCategory(String checkCategory) {
+        this.checkCategory = checkCategory;
+    }
+
+    public String getCheckBasis() {
+        return checkBasis;
+    }
+
+    public void setCheckBasis(String checkBasis) {
+        this.checkBasis = checkBasis;
+    }
+
+    public String getCheckMethod() {
+        return checkMethod;
+    }
+
+    public void setCheckMethod(String checkMethod) {
+        this.checkMethod = checkMethod;
+    }
+
     @Override
     public String toString() {
-        return "CheckListDto{" +
+        return "QualityCheckListDto{" +
                 "checkListID=" + checkListID +
                 ", checkListName='" + checkListName + '\'' +
                 ", checkListCode='" + checkListCode + '\'' +
@@ -78,6 +102,9 @@ public class QualityCheckListDto {
                 ", parentName='" + parentName + '\'' +
                 ", isChildNode='" + isChildNode + '\'' +
                 ", status='" + status + '\'' +
+                ", checkCategory='" + checkCategory + '\'' +
+                ", checkBasis='" + checkBasis + '\'' +
+                ", checkMethod='" + checkMethod + '\'' +
                 '}';
     }
 }

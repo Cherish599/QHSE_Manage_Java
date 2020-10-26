@@ -33,6 +33,9 @@ public class QualityCheckServiceImpl implements QualityCheckService {
         qualityCheckDto.setIssued("未下达");
         if(qualityCheckDao.addQualityCheck(qualityCheckDto)<0)
             throw new WLHSException("插入失败");
+        if(qualityCheckDto.getCheckListCode()==null){
+            throw new WLHSException("检查表为空");
+        }
         List<QualityCheckTableRecordDto> allQualityCheckTableRecord=getCheckTree(qualityCheckDto.getQualityCheckID(),qualityCheckDto.getCheckListCode());
         if(allQualityCheckTableRecord.size()>0){
             if(qualityCheckTableRecordDao.batchInsertTree(allQualityCheckTableRecord)<0)

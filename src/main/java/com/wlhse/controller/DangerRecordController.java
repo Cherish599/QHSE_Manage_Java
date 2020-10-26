@@ -19,7 +19,7 @@ public class DangerRecordController {
     @RequestMapping(value = "/add_dangerrecord", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public R addDangerRecord(@RequestBody(required = false) DangerRecordDto dangerRecordDto, HttpServletRequest request) {
 
-        return dangerRecordService.addDangerRecord(dangerRecordDto,request);
+        return dangerRecordService.addDangerRecord(dangerRecordDto, request);
     }
 
     @RequestMapping(value = "/delete_dangerrecord", method = RequestMethod.DELETE, produces = "application/json; charset=utf-8")
@@ -42,8 +42,14 @@ public class DangerRecordController {
 
     @RequestMapping(value = "/query_dangerrecord", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public R queryDangerRecord(@ModelAttribute DangerRecordDto dangerRecordDto) {
+        R r = null;
+        try {
+            r = dangerRecordService.queryDangerRecord(dangerRecordDto);
 
-        return dangerRecordService.queryDangerRecord(dangerRecordDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return r;
     }
 
     @RequestMapping(value = "/problemverification/{id}", method = RequestMethod.PUT, produces = "application/json; charset=utf-8")
