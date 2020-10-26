@@ -2,7 +2,6 @@ package com.wlhse.dao;
 
 
 import com.wlhse.dto.RegulationRecordDto;
-import com.wlhse.dto.RegulationRecordOutDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +18,8 @@ public interface RegulationRecordDao {
     //修改违章记录
     int updateRegulationRecord(RegulationRecordDto regulationRecordDto);
     //按ID查询违章记录
-    List<RegulationRecordOutDto> queryRegulationRecordById(@Param("id") Integer id);
+    List<RegulationRecordDto> queryRegulationRecordById(@Param("id") Integer id);
     //条件查询违章记录
     int queryTotal(RegulationRecordDto regulationRecordDto);
-    List<RegulationRecordOutDto> queryRegulationRecord(RegulationRecordDto regulationRecordDto);
+    List<RegulationRecordDto> queryRegulationRecord(RegulationRecordDto regulationRecordDto);
 }

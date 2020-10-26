@@ -1,7 +1,6 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.DangerRecordDto;
-import com.wlhse.dto.DangerRecordOutDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -18,13 +17,13 @@ public interface DangerRecordDao {
     int updateDangerRecord(DangerRecordDto dangerRecordDto);
 
     //按ID查询隐患记录
-    default List<DangerRecordOutDto> queryDangerRecordById(@Param("id") Integer id) {
+    default List<DangerRecordDto> queryDangerRecordById(@Param("id") Integer id) {
         return null;
     }
 
     //条件查询隐患记录
     int queryTotal(DangerRecordDto dangerRecordDto);
-    List<DangerRecordOutDto> queryDangerRecord(DangerRecordDto dangerRecordDto);
+    List<DangerRecordDto> queryDangerRecord(DangerRecordDto dangerRecordDto);
     //问题整改
     int problemVerification(DangerRecordDto dangerRecordDto);
 }
