@@ -132,4 +132,17 @@
             UName=#{userName}
         </where>
     </select>
+
+    <select id="getUserAuthMinCode" resultType="java.lang.String">
+        select distinct left (ModuleCode,4)
+        from sys_rolemodule
+        where RoleCode=(
+        SELECT RoleCode FROM sys_user_role
+        where UNAME=
+        (
+            select UName
+            from sys_user where SYS_USER_ID=#{0}
+        )
+        )
+    </select>
 </mapper>
