@@ -36,9 +36,14 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Transactional
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
         //首次录入数据
-        //获取tableId
-        int tableId = qhseElementsInputDao.getQHSEYearManagerTableIdByElementId(elementEvidenceAttachInDto.getId());
-        if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
+        //判断是不是不涉及
+        if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
+            elementEvidenceAttachInDto.setAttach("");
+            elementEvidenceAttachInDto.setAttachDescrption("录入判定该项要素不涉及流程，不予录入");
+            qhseElementsInputDao.add(elementEvidenceAttachInDto);
+            qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
+        }
+        else if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {

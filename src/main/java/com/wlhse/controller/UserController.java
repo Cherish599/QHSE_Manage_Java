@@ -1,10 +1,13 @@
 package com.wlhse.controller;
 
 import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.UserDao;
 import com.wlhse.dto.inDto.UserDto;
 import com.wlhse.entity.UserPojo;
 import com.wlhse.service.UserService;
 import com.wlhse.util.R;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,12 +19,15 @@ import java.util.Map;
 
 @RestController("UserController")
 @RequestMapping("/api/v3")
+@Slf4j
 public class UserController {
 
     @Resource
     private UserService service;
     @Resource
     JedisClient jedisClient;
+    @Resource
+    UserDao userDao;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public String Login1(@RequestBody(required = false) UserDto userDto, HttpServletRequest request) {
@@ -42,26 +48,53 @@ public class UserController {
 
     //0 返回安全体系菜单，1返回质量体系菜单
     @RequestMapping(value = "/selectModule/{type}",method = RequestMethod.GET)
-    public R selectModule(@PathVariable("type")Integer type){
+    public R selectModule(@PathVariable("type")Integer type,HttpServletRequest request){
         Map<String, Object> resultMap=new HashMap<>();
+        List<String> qhseModuleList=new ArrayList<>();
+        //安全模块的编码
+        qhseModuleList.add("0001");
+        qhseModuleList.add("0002");
+        qhseModuleList.add("0003");
+        qhseModuleList.add("0004");
+        qhseModuleList.add("0005");
+        qhseModuleList.add("0006");
+        qhseModuleList.add("0009");
+        List<String> qualityModuleList=new ArrayList<>();
+        qualityModuleList.add("0005");
+        qualityModuleList.add("0006");
+        qualityModuleList.add("0007");
+        qualityModuleList.add("0008");
+        qualityModuleList.add("0010");
         List<String> resultList=new ArrayList<>();
+        //获取用户的编码Code
+        String token = request.getHeader("Authorization");
+        //先获取用户id
+        String userId = "";
+        if (StringUtils.isNotBlank(token)) {
+            Map<String, String> map = jedisClient.hGetAll(token);
+            userId= map.get("userId");
+        }
+        //获取到当前登陆用户权限所属的一级模块编码
+        List<String> userAuthMinCode = userDao.getUserAuthMinCode(userId);
+        log.info("当前登陆用户所拥有的权限"+userAuthMinCode.toString());
+        //根据userId获取角色和权限的最小编码
         if (type==0){
-            resultList.add("0001");
-            resultList.add("0002");
-            resultList.add("0003");
-            resultList.add("0004");
-            resultList.add("0005");
-            resultList.add("0006");
-            resultList.add("0009");
+            //找到用户权限所属一级菜单编码中属于qhse体系的
+            for(String code:userAuthMinCode){
+                if (qhseModuleList.contains(code)){
+                    resultList.add(code);
+                }
+            }
+            log.info("结果菜单集"+resultList.toString());
             resultMap.put("data",resultList);
             return R.ok(resultMap);
         }
         {
-            resultList.add("0005");
-            resultList.add("0006");
-            resultList.add("0007");
-            resultList.add("0008");
-            resultList.add("0010");
+            for(String code:userAuthMinCode){
+                if (qualityModuleList.contains(code)){
+                    resultList.add(code);
+                }
+            }
             resultMap.put("data",resultList);
             return R.ok(resultMap);
         }
