@@ -55,6 +55,10 @@ public class QulityCheckRecordPojo {
     private String cheVerifierName;
     private String cheVerifyDate;
     private String cheVerifyAdvice;
+    private String responsiCompanyName;
+    private String responsiCompanyCode;
+    private Integer responsePersonID;
+    private String responsePersonName;
 
 
     public Integer getQulity_CheckRecordID() {
@@ -415,5 +419,37 @@ public class QulityCheckRecordPojo {
 
     public void setCheVerifyAdvice(String cheVerifyAdvice) {
         this.cheVerifyAdvice = cheVerifyAdvice;
+    }
+
+    public String getResponsiCompanyName() {
+        return responsiCompanyName;
+    }
+
+    public void setResponsiCompanyName(String responsiCompanyName) {
+        this.responsiCompanyName = responsiCompanyName;
+    }
+
+    public String getResponsiCompanyCode() {
+        return responsiCompanyCode;
+    }
+
+    public void setResponsiCompanyCode(String responsiCompanyCode) {
+        this.responsiCompanyCode = responsiCompanyCode;
+    }
+
+    public Integer getResponsePersonID() {
+        return responsePersonID;
+    }
+
+    public void setResponsePersonID(Integer responsePersonID) {
+        this.responsePersonID = responsePersonID;
+    }
+
+    public String getResponsePersonName() {
+        return responsePersonName;
+    }
+
+    public void setResponsePersonName(String responsePersonName) {
+        this.responsePersonName = responsePersonName;
     }
 }
