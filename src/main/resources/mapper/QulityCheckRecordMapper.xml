@@ -118,7 +118,7 @@
             </if>
             <!--new add-->
             <if test="nonConformClause != null and nonConformClause != ''">nonConformClause,</if>
-            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">nonConformityCtdNo,</if>
+            <if test="nonConformityStdNo != null and nonConformityStdNo != ''">nonConformityStdNo,</if>
             <if test="nonConformityStdContent != null and nonConformityStdContent != ''">nonConformityStdContent,</if>
             <if test="resVerifierID != null and resVerifierID != ''">resVerifierID,</if>
             <if test="resVerifierName != null and resVerifierName != ''">resVerifierName,</if>
@@ -128,8 +128,10 @@
             <if test="cheVerifierName != null and cheVerifierName != ''">cheVerifierName,</if>
             <if test="cheVerifyDate != null and cheVerifyDate != ''">cheVerifyDate,</if>
             <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">cheVerifyAdvice,</if>
-
-
+            <if test="responsiCompanyName != null and responsiCompanyName != ''">responsiCompanyName,</if>
+            <if test="responsiCompanyCode != null and responsiCompanyCode != ''">responsiCompanyCode,</if>
+            <if test="responsePersonID != null and responsePersonID != ''">responsePersonID,</if>
+            <if test="responsePersonName != null and responsePersonName != ''">responsePersonName,</if>
         </trim>
         )
         values
@@ -239,7 +241,7 @@
             </if>
             <!--new add-->
             <if test="nonConformClause != null and nonConformClause != ''">#{nonConformClause},</if>
-            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">#{nonConformityCtdNo},</if>
+            <if test="nonConformityStdNo != null and nonConformityStdNo != ''">#{nonConformityStdNo},</if>
             <if test="nonConformityStdContent != null and nonConformityStdContent != ''">#{nonConformityStdContent},
             </if>
             <if test="resVerifierID != null and resVerifierID != ''">#{resVerifierID},</if>
@@ -250,6 +252,10 @@
             <if test="cheVerifierName != null and cheVerifierName != ''">#{cheVerifierName},</if>
             <if test="cheVerifyDate != null and cheVerifyDate != ''">#{cheVerifyDate},</if>
             <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">#{cheVerifyAdvice},</if>
+            <if test="responsiCompanyName != null and responsiCompanyName != ''">#{responsiCompanyName},</if>
+            <if test="responsiCompanyCode != null and responsiCompanyCode != ''">#{responsiCompanyCode},</if>
+            <if test="responsePersonID != null and responsePersonID != ''">#{responsePersonID},</if>
+            <if test="responsePersonName != null and responsePersonName != ''">#{responsePersonName},</if>
 
         </trim>
         )
@@ -373,8 +379,8 @@
             </if>
             <!--new add-->
             <if test="nonConformClause != null and nonConformClause != ''">nonConformClause = #{nonConformClause},</if>
-            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">nonConformityCtdNo =
-                #{nonConformityCtdNo},
+            <if test="nonConformityStdNo != null and nonConformityStdNo != ''">nonConformityStdNo =
+                #{nonConformityStdNo},
             </if>
             <if test="nonConformityStdContent != null and nonConformityStdContent != ''">
                 nonConformityStdContent=#{nonConformityStdContent},
@@ -387,6 +393,10 @@
             <if test="cheVerifierName != null and cheVerifierName != ''">cheVerifierName=#{cheVerifierName},</if>
             <if test="cheVerifyDate != null and cheVerifyDate != ''">cheVerifyDate=#{cheVerifyDate},</if>
             <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">cheVerifyAdvice=#{cheVerifyAdvice},</if>
+            <if test="responsiCompanyName != null and responsiCompanyName != ''">responsiCompanyName=#{responsiCompanyName},</if>
+            <if test="responsiCompanyCode != null and responsiCompanyCode != ''">responsiCompanyCode=#{responsiCompanyCode},</if>
+            <if test="responsePersonID != null and responsePersonID != ''">responsePersonID=#{responsePersonID},</if>
+            <if test="responsePersonName != null and responsePersonName != ''">responsePersonName#{responsePersonName},</if>
         </trim>
         WHERE Qulity_CheckRecordID = #{qulity_CheckRecordID}
     </update>

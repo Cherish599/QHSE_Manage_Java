@@ -4,10 +4,10 @@
 <mapper namespace="com.wlhse.dao.ProblemDescriptionDao">
     <insert id="addProblemDescription" parameterType="com.wlhse.dto.ProblemDescriptionDto">
         insert into qhse_auditproblemrecord
-        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName,Status,itemName,auditTime)
+        (QHSE_FileAudit_ID,QHSE_FileAuditRecord_ID,ProblemDescription,Code,CompanyCode,Additor,CompanyName,Status,itemName,auditTime,problemSource)
         values
         (#{qHSE_FileAudit_ID},#{qHSE_FileAuditRecord_ID},#{problemDescription},#{code},#{companyCode},
-        #{auditor},#{companyName},#{status},#{itemName},#{auditTime})
+        #{auditor},#{companyName},#{status},#{itemName},#{auditTime},#{problemSource})
     </insert>
 
     <delete id="deleteProblemDescription">
@@ -35,16 +35,14 @@
     <select id="queryProblemDescription" resultType="com.wlhse.dto.ProblemDescriptionDto">
         select t1.QHSE_AuditProblemRecord_ID, t1.QHSE_FileAudit_ID, t1.QHSE_FileAuditRecord_ID,
         t1.Code, t1.ProblemDescription, t1.CompanyCode, t1.Additor as auditor, t1.CompanyName,
-        t1.Status, t1.Situation,t1.itemName,t1.auditTime
+        t1.Status, t1.Situation,t1.itemName,t1.auditTime,t1.problemSource
         from qhse_auditproblemrecord as t1
-        left join qhse_fileauditrecord as t2
-        on t1.QHSE_FileAuditRecord_ID = t2.QHSE_FileAudit_RecordID
         <where>
             <if test="startDate != null and startDate  != ''">
-                AND t2.AuditTime>=#{startDate}
+                AND t1.AuditTime>=#{startDate}
             </if>
             <if test="endDate != null and endDate  != ''">
-                AND #{endDate}>=t2.AuditTime
+                AND #{endDate}>=t1.AuditTime
             </if>
             <if test="auditor != null and auditor  != ''">
                 AND t1.Additor=#{auditor}
@@ -59,6 +57,34 @@
                 AND t1.auditTime=#{auditTime}
             </if>
         </where>
+
+
+        <!--        select t1.QHSE_AuditProblemRecord_ID, t1.QHSE_FileAudit_ID, t1.QHSE_FileAuditRecord_ID,-->
+        <!--        t1.Code, t1.ProblemDescription, t1.CompanyCode, t1.Additor as auditor, t1.CompanyName,-->
+        <!--        t1.Status, t1.Situation,t1.itemName,t1.auditTime,t1.problemSource-->
+        <!--        from qhse_auditproblemrecord as t1-->
+        <!--        left join qhse_fileauditrecord as t2-->
+        <!--        on t1.QHSE_FileAuditRecord_ID = t2.QHSE_FileAudit_RecordID-->
+        <!--        <where>-->
+        <!--            <if test="startDate != null and startDate  != ''">-->
+        <!--                AND t2.AuditTime>=#{startDate}-->
+        <!--            </if>-->
+        <!--            <if test="endDate != null and endDate  != ''">-->
+        <!--                AND #{endDate}>=t2.AuditTime-->
+        <!--            </if>-->
+        <!--            <if test="auditor != null and auditor  != ''">-->
+        <!--                AND t1.Additor=#{auditor}-->
+        <!--            </if>-->
+        <!--            <if test="companyCode != null and companyCode  != ''">-->
+        <!--                AND t1.CompanyCode=#{companyCode}-->
+        <!--            </if>-->
+        <!--            <if test="itemName != null and itemName  != ''">-->
+        <!--                AND t1.itemName=#{itemName}-->
+        <!--            </if>-->
+        <!--            <if test="auditTime != null and auditTime  != ''">-->
+        <!--                AND t1.auditTime=#{auditTime}-->
+        <!--            </if>-->
+        <!--        </where>-->
     </select>
 
 

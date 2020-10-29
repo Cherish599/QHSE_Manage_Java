@@ -21,6 +21,10 @@ public class ProblemDescriptionDto {
      * 审核时间
      */
     private String auditTime;
+    /**
+     * 问题来源
+     */
+    private String problemSource;
 
     public String getStatus() {
         return status;
@@ -132,5 +136,13 @@ public class ProblemDescriptionDto {
 
     public void setAuditTime(String auditTime) {
         this.auditTime = auditTime;
+    }
+
+    public String getProblemSource() {
+        return problemSource;
+    }
+
+    public void setProblemSource(String problemSource) {
+        this.problemSource = problemSource;
     }
 }

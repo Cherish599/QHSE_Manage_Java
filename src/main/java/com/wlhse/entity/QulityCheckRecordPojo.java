@@ -45,7 +45,7 @@ public class QulityCheckRecordPojo {
     private String correctPic;
     // new add
     private String nonConformClause;
-    private String nonConformityCtdNo;
+    private String nonConformityStdNo;
     private String nonConformityStdContent;
     private Integer resVerifierID;
     private String resVerifierName;
@@ -55,6 +55,10 @@ public class QulityCheckRecordPojo {
     private String cheVerifierName;
     private String cheVerifyDate;
     private String cheVerifyAdvice;
+    private String responsiCompanyName;
+    private String responsiCompanyCode;
+    private Integer responsePersonID;
+    private String responsePersonName;
 
 
     public Integer getQulity_CheckRecordID() {
@@ -337,12 +341,12 @@ public class QulityCheckRecordPojo {
         this.nonConformClause = nonConformClause;
     }
 
-    public String getNonConformityCtdNo() {
-        return nonConformityCtdNo;
+    public String getNonConformityStdNo() {
+        return nonConformityStdNo;
     }
 
-    public void setNonConformityCtdNo(String nonConformityCtdNo) {
-        this.nonConformityCtdNo = nonConformityCtdNo;
+    public void setNonConformityStdNo(String nonConformityStdNo) {
+        this.nonConformityStdNo = nonConformityStdNo;
     }
 
     public String getNonConformityStdContent() {
@@ -415,5 +419,37 @@ public class QulityCheckRecordPojo {
 
     public void setCheVerifyAdvice(String cheVerifyAdvice) {
         this.cheVerifyAdvice = cheVerifyAdvice;
+    }
+
+    public String getResponsiCompanyName() {
+        return responsiCompanyName;
+    }
+
+    public void setResponsiCompanyName(String responsiCompanyName) {
+        this.responsiCompanyName = responsiCompanyName;
+    }
+
+    public String getResponsiCompanyCode() {
+        return responsiCompanyCode;
+    }
+
+    public void setResponsiCompanyCode(String responsiCompanyCode) {
+        this.responsiCompanyCode = responsiCompanyCode;
+    }
+
+    public Integer getResponsePersonID() {
+        return responsePersonID;
+    }
+
+    public void setResponsePersonID(Integer responsePersonID) {
+        this.responsePersonID = responsePersonID;
+    }
+
+    public String getResponsePersonName() {
+        return responsePersonName;
+    }
+
+    public void setResponsePersonName(String responsePersonName) {
+        this.responsePersonName = responsePersonName;
     }
 }
