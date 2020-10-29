@@ -59,6 +59,7 @@ public class UserController {
         qhseModuleList.add("0005");
         qhseModuleList.add("0006");
         qhseModuleList.add("0009");
+        qhseModuleList.add("0011");
         List<String> qualityModuleList=new ArrayList<>();
         qualityModuleList.add("0005");
         qualityModuleList.add("0006");
