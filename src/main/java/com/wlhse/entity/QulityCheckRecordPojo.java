@@ -45,7 +45,7 @@ public class QulityCheckRecordPojo {
     private String correctPic;
     // new add
     private String nonConformClause;
-    private String nonConformityCtdNo;
+    private String nonConformityStdNo;
     private String nonConformityStdContent;
     private Integer resVerifierID;
     private String resVerifierName;
@@ -341,12 +341,12 @@ public class QulityCheckRecordPojo {
         this.nonConformClause = nonConformClause;
     }
 
-    public String getNonConformityCtdNo() {
-        return nonConformityCtdNo;
+    public String getNonConformityStdNo() {
+        return nonConformityStdNo;
     }
 
-    public void setNonConformityCtdNo(String nonConformityCtdNo) {
-        this.nonConformityCtdNo = nonConformityCtdNo;
+    public void setNonConformityStdNo(String nonConformityStdNo) {
+        this.nonConformityStdNo = nonConformityStdNo;
     }
 
     public String getNonConformityStdContent() {

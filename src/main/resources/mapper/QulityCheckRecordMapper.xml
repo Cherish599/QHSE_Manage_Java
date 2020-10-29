@@ -118,7 +118,7 @@
             </if>
             <!--new add-->
             <if test="nonConformClause != null and nonConformClause != ''">nonConformClause,</if>
-            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">nonConformityCtdNo,</if>
+            <if test="nonConformityStdNo != null and nonConformityStdNo != ''">nonConformityStdNo,</if>
             <if test="nonConformityStdContent != null and nonConformityStdContent != ''">nonConformityStdContent,</if>
             <if test="resVerifierID != null and resVerifierID != ''">resVerifierID,</if>
             <if test="resVerifierName != null and resVerifierName != ''">resVerifierName,</if>
@@ -241,7 +241,7 @@
             </if>
             <!--new add-->
             <if test="nonConformClause != null and nonConformClause != ''">#{nonConformClause},</if>
-            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">#{nonConformityCtdNo},</if>
+            <if test="nonConformityStdNo != null and nonConformityStdNo != ''">#{nonConformityStdNo},</if>
             <if test="nonConformityStdContent != null and nonConformityStdContent != ''">#{nonConformityStdContent},
             </if>
             <if test="resVerifierID != null and resVerifierID != ''">#{resVerifierID},</if>
@@ -379,8 +379,8 @@
             </if>
             <!--new add-->
             <if test="nonConformClause != null and nonConformClause != ''">nonConformClause = #{nonConformClause},</if>
-            <if test="nonConformityCtdNo != null and nonConformityCtdNo != ''">nonConformityCtdNo =
-                #{nonConformityCtdNo},
+            <if test="nonConformityStdNo != null and nonConformityStdNo != ''">nonConformityStdNo =
+                #{nonConformityStdNo},
             </if>
             <if test="nonConformityStdContent != null and nonConformityStdContent != ''">
                 nonConformityStdContent=#{nonConformityStdContent},
