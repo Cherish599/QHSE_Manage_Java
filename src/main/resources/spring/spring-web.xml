@@ -19,7 +19,7 @@
 
 
     <!-- 项目权限认证 - 本地测试时关闭 -->
-  <!-- <mvc:interceptors>
+<!--   <mvc:interceptors>
         <mvc:interceptor>
 
             <mvc:mapping path="/**"/>
