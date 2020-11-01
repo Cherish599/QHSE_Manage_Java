@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--tobing-->
+<!--大屏Mapper-->
+<mapper namespace="com.wlhse.dao.DashboardDao">
+
+    <!--ResultMap:质量管理-->
+    <resultMap id="resultMapDashboardQualityManagement" type="com.wlhse.entity.DashboardQualityManagement">
+
+    </resultMap>
+
+    <!--ResultMap:记录仪管理-->
+    <resultMap id="resultMapDashboardRecorderManagement" type="com.wlhse.entity.DashboardRecorderManagement">
+
+    </resultMap>
+
+    <!--ResultMap:标准进度管理-->
+    <resultMap id="resultDashboardScheduleManagement" type="com.wlhse.entity.DashboardScheduleManagement">
+
+    </resultMap>
+
+    <!--查：质量管理-->
+    <select id="queryDashboardQualityManagement" parameterType="com.wlhse.entity.DashboardQualityManagement"
+            resultMap="resultMapDashboardQualityManagement">
+        <!--根据公司查询-->
+        <if test="companyCode!=null and companyCode!=''">
+            SELECT
+            id AS id,
+            companyName AS companyName,
+            companyCode AS companyCode,
+            monthPlanNum AS monthPlanNum,
+            monthFinishNum AS monthFinishNum,
+            monthFinishNum/monthPlanNum*100 AS monthFinishRate,
+            updateTime AS updateTime
+            FROM dashboard_quality_management
+            WHERE companyCode = #{companyCode}
+        </if>
+        <!--查询所有-->
+        <if test="companyCode==null or companyCode==''">
+            SELECT
+            SUM(monthPlanNum) AS monthPlanNum,
+            SUM(monthFinishNum) AS monthFinishNum,
+            SUM(monthFinishNum)/SUM(monthPlanNum)*100 AS monthFinishRate
+            FROM dashboard_quality_management
+        </if>
+    </select>
+
+    <!--TODO 计算公式-->
+    <!--查：记录仪管理-->
+    <select id="queryDashboardRecorderManagement" parameterType="com.wlhse.entity.DashboardRecorderManagement"
+            resultMap="resultMapDashboardRecorderManagement">
+        <!--根据公司查询-->
+        <if test="companyCode!=null and companyCode!=''">
+            SELECT
+            id AS id,
+            companyName AS companyName,
+            companyCode AS companyCode,
+            weeklyCollectNum AS weeklyCollectNum,
+            weeklyNormalNum AS weeklyNormalNum,
+            weeklySupervisionNum AS weeklySupervisionNum,
+            weeklyNormalNum/weeklySupervisionNum AS weeklyUsageRate,
+            updateTime AS updateTime
+            FROM dashboard_recorder_management
+            WHERE companyCode=#{companyCode}
+        </if>
+        <!--查询所有-->
+        <if test="companyCode==null or companyCode==''">
+            SELECT
+            SUM(weeklyCollectNum) AS weeklyCollectNum,
+            SUM(weeklyNormalNum) AS weeklyNormalNum,
+            SUM(weeklySupervisionNum) AS weeklySupervisionNum,
+            SUM(weeklyNormalNum)/SUM(weeklySupervisionNum) AS weeklyUsageRate
+            FROM dashboard_recorder_management
+        </if>
+    </select>
+
+    <!--查：标准进度管理-->
+    <select id="queryDashboardScheduleManagement" parameterType="com.wlhse.entity.DashboardScheduleManagement"
+            resultMap="resultDashboardScheduleManagement">
+        <!--根据公司查询-->
+        <if test="companyCode!=null and companyCode!=''">
+            SELECT
+            companyName AS companyName,
+            planNum AS planNum,
+            firstDraftFinishNum AS firstDraftFinishNum,
+            ReviewPassNum AS ReviewPassNum,
+            StandardReleaseNum AS StandardReleaseNum,
+            firstDraftFinishNum/planNum AS firstDraftFinishRate,
+            ReviewPassNum/planNum AS ReviewPassRate,
+            StandardReleaseNum/planNum AS StandardReleaseRate,
+            updateTime AS updateTime
+            FROM dashboard_schedule_management
+            WHERE companyCode=#{companyCode}
+        </if>
+        <!--查询所有-->
+        <if test="companyCode==null or companyCode==''">
+            SELECT
+            SUM(planNum) AS planNum,
+            SUM(firstDraftFinishNum) AS firstDraftFinishNum,
+            SUM(ReviewPassNum) AS ReviewPassNum,
+            SUM(StandardReleaseNum) AS StandardReleaseNum,
+            SUM(firstDraftFinishNum)/SUM(planNum) AS firstDraftFinishRate,
+            SUM(ReviewPassNum)/SUM(planNum) AS ReviewPassRate,
+            SUM(StandardReleaseNum)/SUM(planNum) AS StandardReleaseRate
+            FROM dashboard_schedule_management
+        </if>
+    </select>
+
+    <!--更新：质量管理-->
+    <update id="updateDQM" parameterType="com.wlhse.entity.DashboardQualityManagement">
+        UPDATE dashboard_quality_management
+        <set>
+            monthPlanNum = #{monthPlanNum},
+            monthFinishNum = #{monthFinishNum},
+            monthFinishRate =#{monthFinishRate},
+            updateTime={updateTime}
+        </set>
+        WHERE companyCode = #{companyCode}
+    </update>
+    <!--更新：进度管理-->
+    <update id="updateDSM" parameterType="com.wlhse.entity.DashboardScheduleManagement">
+        UPDATE dashboard_schedule_management
+        <set>
+            planNum = #{planNum},
+            firstDraftFinishNum = #{firstDraftFinishNum},
+            reviewPassNum = #{reviewPassNum},
+            standardReleaseNum = #{standardReleaseNum} ,
+            firstDraftFinishRate = #{firstDraftFinishRate},
+            ReviewPassRate=#{ReviewPassRate},
+            StandardReleaseRate =#{StandardReleaseRate},
+            updateTime = #{updateTime}
+        </set>
+        WHERE companyCode = #{companyCode}
+    </update>
+    <!--更新：记录仪管理-->
+    <update id="updateDRM" parameterType="com.wlhse.entity.DashboardRecorderManagement">
+        UPDATE dashboard_recorder_management
+        <set>
+            weeklyCollectNum = #{weeklyCollectNum},
+            weeklyNormalNum = #{weeklyNormalNum},
+            weeklySupervisionNum = #{weeklySupervisionNum},
+            weeklyUsageRate = #{weeklyUsageRate},
+            updateTime = #{updateTime}
+        </set>
+        WHERE companyCode = #{companyCode}
+    </update>
+</mapper>

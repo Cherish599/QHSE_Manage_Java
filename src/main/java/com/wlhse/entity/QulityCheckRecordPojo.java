@@ -36,7 +36,7 @@ public class QulityCheckRecordPojo {
     private String employmentProperty;
     private String workingYears;
     private String education;
-    private Date reformDate;
+    private String reformDate;
     private String reformLimit;
     private String isPush;
     private String problemAttach;
@@ -277,11 +277,11 @@ public class QulityCheckRecordPojo {
         this.education = education;
     }
 
-    public Date getReformDate() {
+    public String getReformDate() {
         return reformDate;
     }
 
-    public void setReformDate(Date reformDate) {
+    public void setReformDate(String reformDate) {
         this.reformDate = reformDate;
     }
 
