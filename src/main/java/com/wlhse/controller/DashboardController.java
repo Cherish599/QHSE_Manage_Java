@@ -1,21 +1,15 @@
 package com.wlhse.controller;
 
-import com.alibaba.excel.EasyExcel;
 import com.wlhse.entity.DashboardQualityManagement;
 import com.wlhse.entity.DashboardRecorderManagement;
 import com.wlhse.entity.DashboardScheduleManagement;
 import com.wlhse.service.DashboardService;
 import com.wlhse.util.R;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
