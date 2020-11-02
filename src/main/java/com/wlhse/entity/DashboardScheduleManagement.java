@@ -26,7 +26,7 @@ public class DashboardScheduleManagement {
     @ExcelProperty("初稿完成率")
     private Double firstDraftFinishRate;
     @ExcelProperty("评审完成率")
-    private Double reviewPasRate;
+    private Double reviewPassRate;
     @ExcelProperty("标准发布率")
     private Double standardReleaseRate;
     @ExcelProperty("填报日期")
@@ -88,12 +88,12 @@ public class DashboardScheduleManagement {
         this.reviewPassNum = reviewPassNum;
     }
 
-    public Double getReviewPasRate() {
-        return reviewPasRate;
+    public Double getReviewPassRate() {
+        return reviewPassRate;
     }
 
-    public void setReviewPasRate(Double reviewPasRate) {
-        this.reviewPasRate = reviewPasRate;
+    public void setReviewPassRate(Double reviewPassRate) {
+        this.reviewPassRate = reviewPassRate;
     }
 
     public Integer getStandardReleaseNum() {
