@@ -83,11 +83,11 @@
             companyName AS companyName,
             planNum AS planNum,
             firstDraftFinishNum AS firstDraftFinishNum,
-            ReviewPassNum AS ReviewPassNum,
-            StandardReleaseNum AS StandardReleaseNum,
+            ReviewPassNum AS reviewPassNum,
+            StandardReleaseNum AS standardReleaseNum,
             firstDraftFinishNum/planNum AS firstDraftFinishRate,
-            ReviewPassNum/planNum AS ReviewPassRate,
-            StandardReleaseNum/planNum AS StandardReleaseRate,
+            ReviewPassNum/planNum AS reviewPassRate,
+            StandardReleaseNum/planNum AS standardReleaseRate,
             updateTime AS updateTime
             FROM dashboard_schedule_management
             WHERE companyCode=#{companyCode}
@@ -97,11 +97,11 @@
             SELECT
             SUM(planNum) AS planNum,
             SUM(firstDraftFinishNum) AS firstDraftFinishNum,
-            SUM(ReviewPassNum) AS ReviewPassNum,
+            SUM(ReviewPassNum) AS reviewPassNum,
             SUM(StandardReleaseNum) AS StandardReleaseNum,
             SUM(firstDraftFinishNum)/SUM(planNum) AS firstDraftFinishRate,
-            SUM(ReviewPassNum)/SUM(planNum) AS ReviewPassRate,
-            SUM(StandardReleaseNum)/SUM(planNum) AS StandardReleaseRate
+            SUM(ReviewPassNum)/SUM(planNum) AS reviewPassRate,
+            SUM(StandardReleaseNum)/SUM(planNum) AS standardReleaseRate
             FROM dashboard_schedule_management
         </if>
     </select>
@@ -113,7 +113,7 @@
             monthPlanNum = #{monthPlanNum},
             monthFinishNum = #{monthFinishNum},
             monthFinishRate =#{monthFinishRate},
-            updateTime={updateTime}
+            updateTime=#{updateTime}
         </set>
         WHERE companyCode = #{companyCode}
     </update>
@@ -126,8 +126,8 @@
             reviewPassNum = #{reviewPassNum},
             standardReleaseNum = #{standardReleaseNum} ,
             firstDraftFinishRate = #{firstDraftFinishRate},
-            ReviewPassRate=#{ReviewPassRate},
-            StandardReleaseRate =#{StandardReleaseRate},
+            reviewPassRate=#{reviewPassRate},
+            standardReleaseRate =#{standardReleaseRate},
             updateTime = #{updateTime}
         </set>
         WHERE companyCode = #{companyCode}

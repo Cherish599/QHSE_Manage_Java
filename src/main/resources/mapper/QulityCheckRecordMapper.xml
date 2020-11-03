@@ -14,7 +14,7 @@
         insert into quality_checkrecord
         (
         <trim suffixOverrides=",">
-            <if test="qulity_CheckRecordID != null and taskTqulity_CheckRecordIDype != ''">
+            <if test="qulity_CheckRecordID != null and qulity_CheckRecordID != ''">
                 qulity_CheckRecordID,
             </if>
             <if test="qulity_CheckID != null and qulity_CheckID != ''">
@@ -95,7 +95,7 @@
             <if test="education != null and education != ''">
                 education,
             </if>
-            <if test="reformDate != null">
+            <if test="reformDate != null and reformDate != ''">
                 reformDate,
             </if>
             <if test="reformLimit != null and reformLimit != ''">
@@ -218,7 +218,7 @@
             <if test="education != null and education != ''">
                 #{education},
             </if>
-            <if test="reformDate != null">
+            <if test="reformDate != null and reformDate != ''">
                 #{reformDate},
             </if>
             <if test="reformLimit != null and reformLimit != ''">
@@ -356,7 +356,7 @@
             <if test="education != null and education != ''">
                 education= #{education},
             </if>
-            <if test="reformDate != null">
+            <if test="reformDate != null and reformDate != ''">
                 reformDate= #{reformDate},
             </if>
             <if test="reformLimit != null and reformLimit != ''">
@@ -393,10 +393,16 @@
             <if test="cheVerifierName != null and cheVerifierName != ''">cheVerifierName=#{cheVerifierName},</if>
             <if test="cheVerifyDate != null and cheVerifyDate != ''">cheVerifyDate=#{cheVerifyDate},</if>
             <if test="cheVerifyAdvice != null and cheVerifyAdvice != ''">cheVerifyAdvice=#{cheVerifyAdvice},</if>
-            <if test="responsiCompanyName != null and responsiCompanyName != ''">responsiCompanyName=#{responsiCompanyName},</if>
-            <if test="responsiCompanyCode != null and responsiCompanyCode != ''">responsiCompanyCode=#{responsiCompanyCode},</if>
+            <if test="responsiCompanyName != null and responsiCompanyName != ''">
+                responsiCompanyName=#{responsiCompanyName},
+            </if>
+            <if test="responsiCompanyCode != null and responsiCompanyCode != ''">
+                responsiCompanyCode=#{responsiCompanyCode},
+            </if>
             <if test="responsePersonID != null and responsePersonID != ''">responsePersonID=#{responsePersonID},</if>
-            <if test="responsePersonName != null and responsePersonName != ''">responsePersonName#{responsePersonName},</if>
+            <if test="responsePersonName != null and responsePersonName != ''">
+                responsePersonName#{responsePersonName},
+            </if>
         </trim>
         WHERE Qulity_CheckRecordID = #{qulity_CheckRecordID}
     </update>
