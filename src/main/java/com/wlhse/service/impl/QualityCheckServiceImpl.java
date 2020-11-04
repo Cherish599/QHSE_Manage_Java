@@ -166,7 +166,7 @@ public class QualityCheckServiceImpl implements QualityCheckService {
     @Override
     public R backTable(QualityCheckDto qualityCheckDto) {
         if("通过".equals(qualityCheckDto.getIsPush())){//是通过，修改推送字段。
-            if(qualityCheckDao.passTable(qualityCheckDto.getQualityCheckID())<0)
+            if(qualityCheckDao.passTable2(qualityCheckDto)<0)
                 throw new WLHSException("更新失败");
         }
         else{

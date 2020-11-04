@@ -633,6 +633,15 @@
         </set>
         where Qulity_CheckID=#{0}
     </update>
+    <update id="passTable2">
+        update quality_check
+        <set>
+            IsPush='通过',
+            Progress='完成',
+            FinishDate=#{finishDate}
+        </set>
+        where Qulity_CheckID=#{qualityCheckID}
+    </update>
 
     <update id="modifyPush">
         update quality_check
