@@ -204,8 +204,7 @@
             and status='不通过'
         </if>
         <if test="status==1">
-            and status="备案待查"
-            and fileCheckStatus="不通过"
+            and status="不通过"
         </if>
         and ConfigStatus="启用"
     </where>
