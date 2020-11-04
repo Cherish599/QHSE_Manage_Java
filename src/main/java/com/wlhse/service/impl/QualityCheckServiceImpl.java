@@ -188,6 +188,15 @@ public class QualityCheckServiceImpl implements QualityCheckService {
         return ok;
     }
 
+    @Override
+    public R addQualityCheck2(QualityCheckDto qualityCheckDto) {
+        qualityCheckDto.setIsPush("已推送");
+        qualityCheckDto.setIssued("未下达");
+        if(qualityCheckDao.addQualityCheck(qualityCheckDto)<0)
+            throw new WLHSException("插入失败");
+        return R.ok();
+    }
+
     public List<QualityCheckTableRecordDto> getCheckTree(Integer qualityCheckID,String checkCode)
     {
         String[] checkListCodes =checkCode.split(";");

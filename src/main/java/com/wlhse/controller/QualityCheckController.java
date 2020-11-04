@@ -113,6 +113,13 @@ public class QualityCheckController {
         return qualityCheckService.queryAllPassTable();
     }
 
+    //零星添加
+    @RequestMapping(value = "/addOddQualityCheck", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public R addOddQualityCheck(@RequestBody(required = false) QualityCheckDto qualityCheckDto) {
+        logger.info("传入的数据:" + qualityCheckDto.toString());
+        return qualityCheckService.addQualityCheck2(qualityCheckDto);
+    }
+
 
 
 
