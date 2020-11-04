@@ -401,7 +401,7 @@
             </if>
             <if test="responsePersonID != null and responsePersonID != ''">responsePersonID=#{responsePersonID},</if>
             <if test="responsePersonName != null and responsePersonName != ''">
-                responsePersonName#{responsePersonName},
+                responsePersonName=#{responsePersonName},
             </if>
         </trim>
         WHERE Qulity_CheckRecordID = #{qulity_CheckRecordID}
