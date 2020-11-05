@@ -52,6 +52,10 @@ public class DangerRecordDto extends BaseGetDto {
     private String startDate;
     private String endDate;
     private String dangerSource;
+    /**
+     * 打回原因
+     */
+    private String refuseReason;
 
     public String getDangerSource() {
         return dangerSource;
@@ -444,5 +448,13 @@ public class DangerRecordDto extends BaseGetDto {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
     }
 }

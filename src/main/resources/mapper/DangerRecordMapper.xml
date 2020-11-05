@@ -518,6 +518,9 @@
             <if test="status != null and status  != ''">
                 status=#{status},
             </if>
+            <if test="refuseReason != null and refuseReason  != ''">
+                refuseReason=#{refuseReason},
+            </if>
         </trim>
     </sql>
 
