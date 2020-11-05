@@ -23,10 +23,13 @@
             <if test="status != null and status  != ''">
                 status=#{status},
             </if>
+            <if test="passReason != null and passReason  != ''">
+                passReason=#{passReason},
+            </if>
         </trim>
     </sql>
 
-    <update id="updateProblemDescription">
+    <update id="updateProblemDescription" parameterType="com.wlhse.dto.ProblemDescriptionDto">
         update qhse_auditproblemrecord
         <include refid="value1"/>
         where QHSE_AuditProblemRecord_ID = #{qHSE_AuditProblemRecord_ID}
@@ -35,7 +38,7 @@
     <select id="queryProblemDescription" resultType="com.wlhse.dto.ProblemDescriptionDto">
         select t1.QHSE_AuditProblemRecord_ID, t1.QHSE_FileAudit_ID, t1.QHSE_FileAuditRecord_ID,
         t1.Code, t1.ProblemDescription, t1.CompanyCode, t1.Additor as auditor, t1.CompanyName,
-        t1.Status, t1.Situation,t1.itemName,t1.auditTime,t1.problemSource
+        t1.Status, t1.Situation,t1.itemName,t1.auditTime,t1.problemSource,t1.passReason
         from qhse_auditproblemrecord as t1
         <where>
             <if test="startDate != null and startDate  != ''">

@@ -50,7 +50,8 @@ public class FileAuditServiceImpl implements FileAuditService {
     public R addFileAuditRecord(FileAuditRecordDto fileAuditRecordDto) {
         if (fileAuditDao.addFileAuditRecord(fileAuditRecordDto) <= 0)
             throw new WLHSException("新增记录失败");
-        return R.ok();
+        // 将id生成器返回的主键进行返回
+        return R.ok().put("key", fileAuditRecordDto.getqHSE_FileAudit_RecordID());
     }
 
     @Override

@@ -169,7 +169,9 @@
         </trim>
     </sql>
 
-    <insert id="addFileAuditRecord" parameterType="com.wlhse.dto.FileAuditRecordDto">
+    <!--使用id生成器，接受新增的id-->
+    <insert id="addFileAuditRecord" parameterType="com.wlhse.dto.FileAuditRecordDto" useGeneratedKeys="true"
+            keyProperty="qHSE_FileAudit_RecordID" keyColumn="QHSE_FileAudit_RecordID">
         insert into qhse_fileauditrecord
         (<include refid="key1"/>)
         values
@@ -226,7 +228,7 @@
     </select>
     <!--TODO commit-->
     <select id="getStatus" resultType="com.wlhse.dto.FileAuditRecordDto">
-        select codeScore,Pass,AuditTime,noPassReason from qhse_fileauditrecord
+        SELECT QHSE_FileAudit_RecordID, codeScore,Pass,AuditTime,noPassReason FROM qhse_fileauditrecord
         <where>
             <if test="fileAuditId != null and fileAuditId  != ''">
                 AND QHSE_FileAudit_ID=#{fileAuditId}

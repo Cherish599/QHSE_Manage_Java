@@ -25,6 +25,10 @@ public class ProblemDescriptionDto {
      * 问题来源
      */
     private String problemSource;
+    /**
+     * 通过原因
+     */
+    private String passReason;
 
     public String getStatus() {
         return status;
@@ -144,5 +148,13 @@ public class ProblemDescriptionDto {
 
     public void setProblemSource(String problemSource) {
         this.problemSource = problemSource;
+    }
+
+    public String getPassReason() {
+        return passReason;
+    }
+
+    public void setPassReason(String passReason) {
+        this.passReason = passReason;
     }
 }
