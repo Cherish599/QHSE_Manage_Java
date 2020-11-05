@@ -45,22 +45,30 @@ public class APIInterceptor extends HandlerInterceptorAdapter {
                 Map<String, String> map = jedisClient.hGetAll(token);
                 employeeId= map.get("employeeId");
             }
-            String servletPath = request.getServletPath();
-            String method = request.getMethod();
-            InterfaceModuleInDto interfaceModuleInDto = new InterfaceModuleInDto(Integer.parseInt(employeeId), sortCodeUtil.getNoNumberString(servletPath), method);
-            int count = moduleDao.getInterfaceCountByEmpId(interfaceModuleInDto);
-            if (StringUtils.isNotBlank(employeeId) && count >= 1) {
-                //spring请求的链式执行顺序为Filter-->拦截器-->controller
-                if (!("GET".equals(method))) {
-                    logger.info("employeeId:" + employeeId + " url:" + servletPath + " method:" + method);
-                }
+
+            //当前用户登陆了，且token未过期
+            if (!employeeId.equals("")){
                 return true;
-            } else {
-                PrintWriter pw = response.getWriter();
-                logger.info(request.getRequestURI()+" 无权限");
-                pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
-                return false;
             }
+            //未登录，且
+            return false;
+//
+//            String servletPath = request.getServletPath();
+//            String method = request.getMethod();
+//            InterfaceModuleInDto interfaceModuleInDto = new InterfaceModuleInDto(Integer.parseInt(employeeId), sortCodeUtil.getNoNumberString(servletPath), method);
+//            int count = moduleDao.getInterfaceCountByEmpId(interfaceModuleInDto);
+//            if (StringUtils.isNotBlank(employeeId) && count >= 1) {
+//                //spring请求的链式执行顺序为Filter-->拦截器-->controller
+//                if (!("GET".equals(method))) {
+//                    logger.info("employeeId:" + employeeId + " url:" + servletPath + " method:" + method);
+//                }
+//                return true;
+//            } else {
+//                PrintWriter pw = response.getWriter();
+//                logger.info(request.getRequestURI()+" 无权限");
+//                pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
+//                return false;
+//            }
         } catch (Exception e) {
             logger.info(request.getRequestURI()+" 请求出错");
             PrintWriter pw = response.getWriter();
