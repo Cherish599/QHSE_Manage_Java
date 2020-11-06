@@ -53,6 +53,10 @@ public class DangerRecordDto extends BaseGetDto {
     private String endDate;
     private String dangerSource;
     /**
+     * 通过原因
+     */
+    private String passReason;
+    /**
      * 打回原因
      */
     private String refuseReason;
@@ -456,5 +460,13 @@ public class DangerRecordDto extends BaseGetDto {
 
     public void setRefuseReason(String refuseReason) {
         this.refuseReason = refuseReason;
+    }
+
+    public String getPassReason() {
+        return passReason;
+    }
+
+    public void setPassReason(String passReason) {
+        this.passReason = passReason;
     }
 }

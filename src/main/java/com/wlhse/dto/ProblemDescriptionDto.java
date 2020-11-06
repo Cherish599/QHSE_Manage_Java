@@ -29,6 +29,10 @@ public class ProblemDescriptionDto {
      * 通过原因
      */
     private String passReason;
+    /**
+     * 打回原因
+     */
+    private String refuseReason;
 
     public String getStatus() {
         return status;
@@ -156,5 +160,13 @@ public class ProblemDescriptionDto {
 
     public void setPassReason(String passReason) {
         this.passReason = passReason;
+    }
+
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
     }
 }
