@@ -521,6 +521,9 @@
             <if test="refuseReason != null and refuseReason  != ''">
                 refuseReason=#{refuseReason},
             </if>
+            <if test="passReason != null and passReason  != ''">
+                passReason=#{passReason},
+            </if>
         </trim>
     </sql>
 

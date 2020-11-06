@@ -154,7 +154,7 @@ public class DashboardServiceImpl implements DashboardService {
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        String fileName = name + ".xls";
+        String fileName = name + ".xlsx";
         String downloadFileName = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
         headers.setContentDispositionFormData("attachment", downloadFileName);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
