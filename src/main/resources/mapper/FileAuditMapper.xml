@@ -226,7 +226,7 @@
             </if>
         </where>
     </select>
-    <!--TODO commit-->
+
     <select id="getStatus" resultType="com.wlhse.dto.FileAuditRecordDto">
         SELECT QHSE_FileAudit_RecordID, codeScore,Pass,AuditTime,noPassReason FROM qhse_fileauditrecord
         <where>
