@@ -4,13 +4,13 @@
 
     <insert id="batchInsertNewRecord">
         insert into monitorplandetail
-        (MonitorPlanID,`No`,DeviceNo,MyNo,ProjectName,Charger,Tel,CompanyName)
+        (MonitorPlanID,`No`,DeviceNo,MyNo,ProjectName,Charger,Tel,CompanyName,ItemCategory,ProjectProgress)
         values
         <foreach collection="list" item="detail" separator=",">
             (
                 #{detail.monitorPlanID},#{detail.no},#{detail.deviceNo},
                 #{detail.myNo},#{detail.projectName},#{detail.charger},#{detail.tel},
-                #{detail.companyName}
+                #{detail.companyName},#{detail.itemCategory},#{detail.projectProgress}
             )
         </foreach>
     </insert>
@@ -22,7 +22,9 @@
         MyNo=#{myNo},
         ProjectName=#{projectName},
         Charger=#{charger},
-        Tel=#{tel}
+        Tel=#{tel},
+        CompanyName=#{companyName},
+        ItemCategory=#{itemCategory}
         where MonitorPlanDetailID=#{monitorPlanDetailID}
     </update>
 

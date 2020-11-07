@@ -1,6 +1,5 @@
 package com.wlhse.dao;
 
-import com.wlhse.dto.MonitorPlanDetail;
 import com.wlhse.entity.DashboardQualityManagement;
 import com.wlhse.entity.DashboardRecorderManagement;
 import com.wlhse.entity.DashboardScheduleManagement;

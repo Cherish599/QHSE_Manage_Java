@@ -6,7 +6,7 @@
         (StartDate,EndDate,PlanName,PlanPersonID,PlanPersonName,CompanyCode,createTime,status)
         values (
         #{startDate},#{endDate},#{planName},#{planPersonID},#{planPersonName},#{companyCode}
-        ,now(),#{status})
+        ,now(),'未完成')
     </insert>
 
     <select id="getMonitorPlanByPlanCompanyCode" resultType="com.wlhse.dto.MonitorPlan">
@@ -31,7 +31,7 @@
 
 
     <update id="endPlan">
-        update monitorPlan set endDate = curdate() where
+        update monitorPlan set endDate = curdate(),`status`='已完成' where
          MonitorPlanID=#{0};
     </update>
 </mapper>

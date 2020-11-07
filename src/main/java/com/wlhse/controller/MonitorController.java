@@ -49,7 +49,6 @@ public class MonitorController {
     //批量上传远程监控计划详情
     @RequestMapping(value = "/uploadMonitorPlanExcel",method = RequestMethod.POST)
     R addDetailsForMonitorPlan(@RequestParam(value = "file",required = false) MultipartFile file,@RequestParam(value = "planId",required = false)Integer planId) throws IOException {
-        log.info("传入的文件名："+(file==null?"未传入文件":file.getOriginalFilename()));
         EasyExcel.read(file.getInputStream(), MonitorPlanDetail.class,
                 new MonitorDataListener(monitorPlanDetailDao,planId)).
                 sheet().doRead();
@@ -198,5 +197,11 @@ public class MonitorController {
     @RequestMapping(value = "/endMonitorPlan",method = RequestMethod.GET)
     R endMonitorPlan(@RequestParam("planId")Integer planId){
         return monitorPlanService.endPlan(planId);
+    }
+
+
+    @RequestMapping(value = "/getTotalInputTime",method = RequestMethod.GET)
+    R getTotalInputTime(@RequestParam("planId")Integer planId){
+        return monitorPlanService.getTotalInputTime(planId);
     }
 }

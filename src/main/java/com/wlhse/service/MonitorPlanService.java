@@ -44,4 +44,6 @@ public interface MonitorPlanService {
     R getDayReport(int planId,String date);
 
     R endPlan(Integer planId);
+
+    R getTotalInputTime(int planId);
 }

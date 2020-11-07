@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Repository
 public interface MonitorInputCheckDao {
-    //一天录入一次
+
+
     int insertNewInputRecord(MonitorInputCheckRecord monitorInputCheckRecord);
 
     //更改录入信息、检查均可调用该方法

@@ -5,6 +5,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 public class MonitorPlanDetail {
 
     private int monitorPlanDetailID;
+
     private int monitorPlanID;
     private String no;
     @ExcelProperty("设备编号")
@@ -20,12 +21,16 @@ public class MonitorPlanDetail {
     @ExcelProperty("基层单位")
     private String companyName;
 
-    private String condition;
+    //项目进度
+    private String projectProgress;
+    //项目类别
+    private String itemCategory;
+
 
     public MonitorPlanDetail() {
     }
 
-    public MonitorPlanDetail(int monitorPlanDetailID, int monitorPlanID, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String companyName, String condition) {
+    public MonitorPlanDetail(int monitorPlanDetailID, int monitorPlanID, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String companyName, String projectProgress, String itemCategory) {
         this.monitorPlanDetailID = monitorPlanDetailID;
         this.monitorPlanID = monitorPlanID;
         this.no = no;
@@ -35,7 +40,8 @@ public class MonitorPlanDetail {
         this.charger = charger;
         this.tel = tel;
         this.companyName = companyName;
-        this.condition = condition;
+        this.projectProgress = projectProgress;
+        this.itemCategory = itemCategory;
     }
 
     public int getMonitorPlanDetailID() {
@@ -110,27 +116,19 @@ public class MonitorPlanDetail {
         this.companyName = companyName;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getProjectProgress() {
+        return projectProgress;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setProjectProgress(String projectProgress) {
+        this.projectProgress = projectProgress;
     }
 
-    @Override
-    public String toString() {
-        return "MonitorPlanDetail{" +
-                "monitorPlanDetailID=" + monitorPlanDetailID +
-                ", monitorPlanID=" + monitorPlanID +
-                ", no='" + no + '\'' +
-                ", deviceNo='" + deviceNo + '\'' +
-                ", myNo='" + myNo + '\'' +
-                ", projectName='" + projectName + '\'' +
-                ", charger='" + charger + '\'' +
-                ", tel='" + tel + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", condition='" + condition + '\'' +
-                '}';
+    public String getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 }

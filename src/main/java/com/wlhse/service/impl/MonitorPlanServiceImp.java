@@ -96,6 +96,9 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         String employeeName = employeeManagementDao.queryEmployeeNameByEmployeeId(employeeId);
         monitorInputCheckRecord.setInputPersonID(employeeId);
         monitorInputCheckRecord.setInputPersonName(employeeName);
+        //该计划录入次数++
+        jedisClient.set("InputCnt"+monitorInputCheckRecord.getMonitorPlanID(),jedisClient.get("InputCnt"+monitorInputCheckRecord.getMonitorPlanID()
+        ==null?String.valueOf(0):String.valueOf(Integer.valueOf(jedisClient.get("InputCnt"+monitorInputCheckRecord.getMonitorPlanID()))+1)));
         monitorInputCheckDao.insertNewInputRecord(monitorInputCheckRecord);
         return R.ok();
     }
@@ -171,5 +174,12 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     public R endPlan(Integer planId) {
         monitorPlanDao.endPlan(planId);
         return R.ok();
+    }
+
+    @Override
+    public R getTotalInputTime(int planId) {
+        R r=new R();
+        r.put("data",jedisClient.get("InputCnt"+planId));
+        return r;
     }
 }
