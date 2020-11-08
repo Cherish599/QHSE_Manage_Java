@@ -99,7 +99,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         //该计划录入次数++
         //获取录入次数
         String time = jedisClient.get("InputCnt" + monitorInputCheckRecord.getMonitorPlanID());
-        jedisClient.set("InputCnt"+monitorInputCheckRecord.getMonitorPlanID(),time==null?String.valueOf(0):String.valueOf(Integer.valueOf(time
+        jedisClient.set("InputCnt"+monitorInputCheckRecord.getMonitorPlanID(),time==null?String.valueOf(1):String.valueOf(Integer.valueOf(time
         )+1));
         monitorInputCheckDao.insertNewInputRecord(monitorInputCheckRecord);
         return R.ok();
