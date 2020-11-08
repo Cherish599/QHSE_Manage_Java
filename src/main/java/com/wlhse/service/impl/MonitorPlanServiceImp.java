@@ -97,8 +97,10 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         monitorInputCheckRecord.setInputPersonID(employeeId);
         monitorInputCheckRecord.setInputPersonName(employeeName);
         //该计划录入次数++
-        jedisClient.set("InputCnt"+monitorInputCheckRecord.getMonitorPlanID(),jedisClient.get("InputCnt"+monitorInputCheckRecord.getMonitorPlanID()
-        ==null?String.valueOf(0):String.valueOf(Integer.valueOf(jedisClient.get("InputCnt"+monitorInputCheckRecord.getMonitorPlanID()))+1)));
+        //获取录入次数
+        String time = jedisClient.get("InputCnt" + monitorInputCheckRecord.getMonitorPlanID());
+        jedisClient.set("InputCnt"+monitorInputCheckRecord.getMonitorPlanID(),time==null?String.valueOf(0):String.valueOf(Integer.valueOf(time
+        )+1));
         monitorInputCheckDao.insertNewInputRecord(monitorInputCheckRecord);
         return R.ok();
     }

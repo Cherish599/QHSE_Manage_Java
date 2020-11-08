@@ -43,9 +43,9 @@
     <insert id="createNewPlanDetail">
         insert into
         monitorplandetail
-        (MonitorPlanID,`No`,DeviceNo,MyNo,ProjectName,Charger,Tel)
+        (MonitorPlanID,`No`,DeviceNo,MyNo,ProjectName,Charger,Tel,CompanyName,ProjectProgress,ItemCategory)
         values (
-        #{monitorPlanID},#{no},#{deviceNo},#{myNo},#{projectName},#{charger},#{tel}
+        #{monitorPlanID},#{no},#{deviceNo},#{myNo},#{projectName},#{charger},#{tel},#{companyName},#{projectProgress},#{itemCategory}
         )
     </insert>
 </mapper>
