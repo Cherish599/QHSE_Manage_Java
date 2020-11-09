@@ -4,13 +4,13 @@
     <insert id="batchInsertNewSumData">
         insert into meschecksumdata
         (SumDate,CompanyCode,CompanyName,WorkNum,DayReportNum,RecordDeviceNum,PowerOnNum,BackNum,
-        CoverageRate,UseRate,AvaiRate)
+        CoverageRate,UseRate,AvaiRate,OutStockNum)
         values
         <foreach collection="list" item="detail" separator=",">
             (
             #{detail.sumDate},#{detail.companyCode},#{detail.companyName},
             #{detail.workNum},#{detail.dayReportNum},#{detail.recordDeviceNum},#{detail.powerOnNum},
-            #{detail.backNum},#{detail.coverageRate},#{detail.useRate},#{detail.availableRate}
+            #{detail.backNum},#{detail.coverageRate},#{detail.useRate},#{detail.availableRate},#{detail.outStockNum}
             )
         </foreach>
 

@@ -46,4 +46,7 @@ public interface MonitorPlanService {
     R endPlan(Integer planId);
 
     R getTotalInputTime(int planId);
+
+    R getInputAndCheckDetail(Integer planId);
+
 }

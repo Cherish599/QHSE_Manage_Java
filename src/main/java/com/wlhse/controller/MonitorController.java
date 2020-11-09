@@ -204,4 +204,10 @@ public class MonitorController {
     R getTotalInputTime(@RequestParam("planId")Integer planId){
         return monitorPlanService.getTotalInputTime(planId);
     }
+
+
+    @RequestMapping(value = "/getInputAndCheckDetail",method = RequestMethod.GET)
+    R getInputAndCheckDetail(@RequestParam("planId")Integer planId){
+        return monitorPlanService.getInputAndCheckDetail(planId);
+    }
 }

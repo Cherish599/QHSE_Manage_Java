@@ -51,6 +51,8 @@ public class APIInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
             //未登录，且
+            PrintWriter pw = response.getWriter();
+               pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
             return false;
 //
 //            String servletPath = request.getServletPath();
@@ -65,7 +67,7 @@ public class APIInterceptor extends HandlerInterceptorAdapter {
 //                return true;
 //            } else {
 //                PrintWriter pw = response.getWriter();
-//                logger.info(request.getRequestURI()+" 无权限");
+//
 //                pw.write(NR.r(CodeDict.ILLEGAL_FAIL, 0, 0, null, null, 0, 0));
 //                return false;
 //            }
