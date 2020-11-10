@@ -232,6 +232,6 @@
         from monitorinputcheckrecord t1,
         monitorplandetail t2
         where t1.MonitorPlanID=t2.MonitorPlanID
-        and t1.MonitorPlanID={0}
+        and t1.MonitorPlanID=#{0}
     </select>
 </mapper>
