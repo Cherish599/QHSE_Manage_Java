@@ -207,7 +207,7 @@ public class MonitorController {
 
 
     @RequestMapping(value = "/getInputAndCheckDetail",method = RequestMethod.GET)
-    R getInputAndCheckDetail(@RequestParam("planId")Integer planId){
-        return monitorPlanService.getInputAndCheckDetail(planId);
+    R getInputAndCheckDetail(@RequestParam("planDetailId")Integer detailId){
+        return monitorPlanService.getInputAndCheckDetail(detailId);
     }
 }

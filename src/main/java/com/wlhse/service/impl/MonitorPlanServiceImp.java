@@ -186,9 +186,9 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     }
 
     @Override
-    public R getInputAndCheckDetail(Integer planId) {
+    public R getInputAndCheckDetail(Integer detailId) {
         R r=new R();
-        r.put("data",monitorInputCheckDao.getInputAndCheckDetail(planId));
+        r.put("data",monitorInputCheckDao.getInputAndCheckDetail(detailId));
         return r;
     }
 }

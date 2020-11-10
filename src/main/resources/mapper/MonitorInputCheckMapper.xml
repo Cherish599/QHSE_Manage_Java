@@ -207,12 +207,12 @@
 
     <select id="getInputAndCheckDetail" resultType="com.wlhse.dto.outDto.MonitorInputCheckRecordOutDto">
         select t1.MonitorInputCheckRecordID as monitorInputCheckRecordID,
-        t1.Condition as condition,
         t1.Description as description,
+        t1.Condition as `condition`,
         t1.PicNo as picNo,
         t1.Dispose_In as disposeIn,
         t1.Close_In as closeIn,
-        t1.`Check` as `check`,
+        t1.Check as `check`,
         t1.Dispose_Check as disposeCheck,
         t1.Close_Check as closeCheck,
         t1.InputPersonID as inputPersonID,
@@ -222,16 +222,7 @@
         t1.CheckPersonName as checkPersonName,
         t1.CheckDate as checkDate,
         t1.picLink as picLink,
-        t2.DeviceNo as deviceNo,
-        t2.MyNo as myNo,
-        t2.ProjectName as projectName,
-        t2.Charger as charger,
-        t2.tel as tel,
-        t2.CompanyName as companyName,
-        t2.ItemCategory as itemCategory
-        from monitorinputcheckrecord t1,
-        monitorplandetail t2
-        where t1.MonitorPlanID=t2.MonitorPlanID
-        and t1.MonitorPlanID=#{0}
+        from monitorinputcheckrecord t1
+        and t1.MonitorPlanDetailID=#{0}
     </select>
 </mapper>

@@ -30,5 +30,5 @@ public interface MonitorInputCheckDao {
 
     Set<MonitorInputCheckRecordOutDto> getDayReport(int planId, String date);
 
-    List<MonitorInputCheckRecordOutDto> getInputAndCheckDetail(Integer planId);
+    List<MonitorInputCheckRecordOutDto> getInputAndCheckDetail(Integer detailId);
 }
