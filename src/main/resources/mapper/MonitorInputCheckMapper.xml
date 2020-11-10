@@ -221,8 +221,8 @@
         t1.CheckPersonID as  checkPersonID,
         t1.CheckPersonName as checkPersonName,
         t1.CheckDate as checkDate,
-        t1.picLink as picLink,
+        t1.picLink as picLink
         from monitorinputcheckrecord t1
-        and t1.MonitorPlanDetailID=#{0}
+        where t1.MonitorPlanDetailID=#{0}
     </select>
 </mapper>
