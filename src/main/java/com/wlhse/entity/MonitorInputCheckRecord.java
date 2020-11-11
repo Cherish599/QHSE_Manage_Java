@@ -20,11 +20,10 @@ public class MonitorInputCheckRecord {
     private String checkPersonName;
     private String checkDate;
     private String picLink;
+    private String result;
 
-    public MonitorInputCheckRecord() {
-    }
 
-    public MonitorInputCheckRecord(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, int inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String picLink) {
+    public MonitorInputCheckRecord(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, int inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String picLink, String result) {
         this.monitorInputCheckRecordID = monitorInputCheckRecordID;
         this.monitorPlanID = monitorPlanID;
         this.monitorPlanDetailID = monitorPlanDetailID;
@@ -43,6 +42,10 @@ public class MonitorInputCheckRecord {
         this.checkPersonName = checkPersonName;
         this.checkDate = checkDate;
         this.picLink = picLink;
+        this.result = result;
+    }
+
+    public MonitorInputCheckRecord() {
     }
 
     public int getMonitorInputCheckRecordID() {
@@ -187,5 +190,13 @@ public class MonitorInputCheckRecord {
 
     public void setPicLink(String picLink) {
         this.picLink = picLink;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

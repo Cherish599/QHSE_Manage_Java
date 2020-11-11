@@ -28,11 +28,12 @@ public class MonitorInputCheckRecordOutDto {
     private String picLink;
     private String companyName;
     private String itemCategory;
+    private String result;
 
     public MonitorInputCheckRecordOutDto() {
     }
 
-    public MonitorInputCheckRecordOutDto(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, String inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String picLink, String companyName, String itemCategory) {
+    public MonitorInputCheckRecordOutDto(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, String inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String picLink, String companyName, String itemCategory, String result) {
         this.monitorInputCheckRecordID = monitorInputCheckRecordID;
         this.monitorPlanID = monitorPlanID;
         this.monitorPlanDetailID = monitorPlanDetailID;
@@ -59,8 +60,8 @@ public class MonitorInputCheckRecordOutDto {
         this.picLink = picLink;
         this.companyName = companyName;
         this.itemCategory = itemCategory;
+        this.result = result;
     }
-
 
     public int getMonitorInputCheckRecordID() {
         return monitorInputCheckRecordID;
@@ -268,5 +269,13 @@ public class MonitorInputCheckRecordOutDto {
 
     public void setItemCategory(String itemCategory) {
         this.itemCategory = itemCategory;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }
