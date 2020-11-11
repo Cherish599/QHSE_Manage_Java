@@ -26,13 +26,41 @@ public class MonitorInputCheckRecordOutDto {
     private String charger;
     private String tel;
     private String picLink;
+    private String companyName;
+    private String itemCategory;
+    private String result;
 
-    public String getPicLink() {
-        return picLink;
+    public MonitorInputCheckRecordOutDto() {
     }
 
-    public void setPicLink(String picLink) {
+    public MonitorInputCheckRecordOutDto(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, String inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String picLink, String companyName, String itemCategory, String result) {
+        this.monitorInputCheckRecordID = monitorInputCheckRecordID;
+        this.monitorPlanID = monitorPlanID;
+        this.monitorPlanDetailID = monitorPlanDetailID;
+        this.condition = condition;
+        this.description = description;
+        this.picNo = picNo;
+        this.disposeIn = disposeIn;
+        this.closeIn = closeIn;
+        this.check = check;
+        this.disposeCheck = disposeCheck;
+        this.closeCheck = closeCheck;
+        this.inputPersonID = inputPersonID;
+        this.inputPersonName = inputPersonName;
+        this.inputDate = inputDate;
+        this.checkPersonID = checkPersonID;
+        this.checkPersonName = checkPersonName;
+        this.checkDate = checkDate;
+        this.no = no;
+        this.deviceNo = deviceNo;
+        this.myNo = myNo;
+        this.projectName = projectName;
+        this.charger = charger;
+        this.tel = tel;
         this.picLink = picLink;
+        this.companyName = companyName;
+        this.itemCategory = itemCategory;
+        this.result = result;
     }
 
     public int getMonitorInputCheckRecordID() {
@@ -217,5 +245,37 @@ public class MonitorInputCheckRecordOutDto {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getPicLink() {
+        return picLink;
+    }
+
+    public void setPicLink(String picLink) {
+        this.picLink = picLink;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

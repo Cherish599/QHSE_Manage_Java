@@ -184,4 +184,11 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         r.put("data",jedisClient.get("InputCnt"+planId));
         return r;
     }
+
+    @Override
+    public R getInputAndCheckDetail(Integer detailId) {
+        R r=new R();
+        r.put("data",monitorInputCheckDao.getInputAndCheckDetail(detailId));
+        return r;
+    }
 }

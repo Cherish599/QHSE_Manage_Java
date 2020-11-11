@@ -24,6 +24,7 @@ public class MonitorPlanDetail {
     //项目进度
     private String projectProgress;
     //项目类别
+    @ExcelProperty("项目类别")
     private String itemCategory;
 
 

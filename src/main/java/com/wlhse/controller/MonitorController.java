@@ -112,6 +112,7 @@ public class MonitorController {
     }
 
     //当天的详情信息已经录入，需要更新录入的信息（输入核查信息也要使用该接口）
+    //新增核查结论字段
     @RequestMapping(value = "/updateInputtedDetailInfo",method = RequestMethod.PUT)
     R updateInputtedDetailInfo(@RequestBody(required = false)MonitorInputCheckRecord monitorInputCheckRecord,HttpServletRequest request){
         Integer userId = currentUserIdUtil.getUserId(request);
@@ -203,5 +204,11 @@ public class MonitorController {
     @RequestMapping(value = "/getTotalInputTime",method = RequestMethod.GET)
     R getTotalInputTime(@RequestParam("planId")Integer planId){
         return monitorPlanService.getTotalInputTime(planId);
+    }
+
+
+    @RequestMapping(value = "/getInputAndCheckDetail",method = RequestMethod.GET)
+    R getInputAndCheckDetail(@RequestParam("planDetailId")Integer detailId){
+        return monitorPlanService.getInputAndCheckDetail(detailId);
     }
 }
