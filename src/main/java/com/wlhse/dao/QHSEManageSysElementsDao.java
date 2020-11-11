@@ -85,6 +85,8 @@ public interface QHSEManageSysElementsDao {
     Integer updateDescriptionById(QHSEproblemDiscriptionDto qHSEproblemDiscriptionDto);
     //查询所有问题描述，导入Excel
     List<QHSEproblemDiscriptionDto> querryAllDescription();
+    //批量导入
+    int batchInsertRecord(List<QhseElementsOutDto> element);
 
 
 
