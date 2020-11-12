@@ -393,7 +393,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
     </select>
 
@@ -434,7 +435,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
@@ -476,7 +478,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where CheckDate between #{0} and #{1}
     </select>
@@ -517,7 +520,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where CheckedCompanyCode=#{0}
     </select>
@@ -567,7 +571,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
@@ -618,7 +623,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
@@ -687,7 +693,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where CheckedCompanyCode=#{0}
         and CheckDate between #{1} and #{2}
@@ -731,7 +738,8 @@
         ExternalNumber as externalNumber,
         ContractorNumber as contractorNumber,
         Progress as progress,
-        FinishDate as finishDate
+        FinishDate as finishDate,
+        WorkPlace as workPlace
         from quality_check
         where IsPush='通过'
     </select>
