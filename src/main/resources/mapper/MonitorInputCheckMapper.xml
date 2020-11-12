@@ -50,7 +50,7 @@
             <if test="checkPersonName!=null and checkPersonName!=''">
                 CheckDate=now(),
             </if>
-            <if test="result !=null and result !=''">
+            <if test="result!=null and result!=''">
                 Result=#{result}
             </if>
         </trim>
@@ -136,7 +136,7 @@
         t2.CompanyName as companyName,
         t2.ItemCategory as itemCategory,
         t1.CheckDate as checkDate,
-        t2.Result as result
+        t1.Result as result
         FROM monitorinputcheckrecord t1
         INNER JOIN monitorplandetail t2
         ON t1.MonitorPlanDetailID=t2.MonitorPlanDetailID
@@ -229,7 +229,7 @@
         t1.CheckPersonName as checkPersonName,
         t1.CheckDate as checkDate,
         t1.picLink as picLink,
-        t2.Result as result
+        t1.Result as result
         from monitorinputcheckrecord t1
         where t1.MonitorPlanDetailID=#{0}
     </select>
