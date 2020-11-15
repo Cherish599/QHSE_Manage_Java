@@ -245,8 +245,10 @@ public class FileUploadUtils {
         //上传图片
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
-                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+        }
+//        else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+//                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+        else if (CONTENT_TYPES.contains(file.getContentType())) {
             String originFileName = file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QHSEDanger\\photoes");
             drFileDao.insertNewFile(fileName, originFileName);
@@ -266,8 +268,10 @@ public class FileUploadUtils {
         //上传图片
         if (file.isEmpty()) {
             return NR.r(CodeDict.CODE_MESSAGE, -1, CodeDict.UPLOAD_EMPTY, null, null, 0, 0);
-        } else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
-                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+        }
+//        else if ("jpg".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) || "png".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase()) ||
+//                "bmp".equals(file.getOriginalFilename().split("\\.")[1].toLowerCase())) {
+        else if (CONTENT_TYPES.contains(file.getContentType())) {
             String originFileName = file.getOriginalFilename();
             String fileName = setFile(file, "resources\\QualityDanger\\photoes");
             drFileDao.insertNewFile(fileName, originFileName);
