@@ -297,12 +297,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         if (tag == 0) //查启用
         {
             R ok = R.ok();
-            String qhseElements = jedisClient.get("qhseElements");
-            if (qhseElements==null) {
-                qhseElements=treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()).toString();
-                jedisClient.set("qhseElements", qhseElements);
-            }
-            ok.put("data",qhseElements);
+            ok.put("data",treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()));
             return ok;
         } else if (tag == 1) //查所有
         {
