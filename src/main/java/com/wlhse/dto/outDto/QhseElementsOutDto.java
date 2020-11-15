@@ -116,4 +116,21 @@ public class QhseElementsOutDto {
         this.childNode = childNode;
     }
 
+
+    @Override
+    public String toString() {
+        return "QhseElementsOutDto{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", problemDescription='" + problemDescription + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                ", childNode=" + childNode +
+                '}';
+    }
 }

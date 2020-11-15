@@ -30,6 +30,7 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
     @Resource
     private SortCodeUtil sortCodeUtil;
 
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
@@ -296,7 +297,12 @@ public class QHSEManageSysElmentsServiceImpl implements QHSEManageSysElementsSer
         if (tag == 0) //查启用
         {
             R ok = R.ok();
-            ok.put("data", treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()));
+            String qhseElements = jedisClient.get("qhseElements");
+            if (qhseElements==null) {
+                qhseElements=treeUtil.getQhseElementTreeForExcel(qhseManageSysElementsDao.queryQhseElements()).toString();
+                jedisClient.set("qhseElements", qhseElements);
+            }
+            ok.put("data",qhseElements);
             return ok;
         } else if (tag == 1) //查所有
         {

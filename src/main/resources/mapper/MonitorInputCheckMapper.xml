@@ -233,4 +233,15 @@
         from monitorinputcheckrecord t1
         where t1.MonitorPlanDetailID=#{0}
     </select>
+
+    <delete id="deleteInputInfo">
+        delete from monitorinputcheckrecord
+        where MonitorInputCheckRecordID=#{0}
+    </delete>
+
+    <select id="getItemNum" resultType="int">
+        select count(*)
+        from monitorplandetail
+        where MonitorPlanID=#{0}
+    </select>
 </mapper>

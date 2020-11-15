@@ -98,4 +98,19 @@ public class QhseElementsPojo {
         this.status = status;
     }
 
+
+    @Override
+    public String toString() {
+        return "QhseElementsPojo{" +
+                "qhseManagerSysElementID=" + qhseManagerSysElementID +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", auditMode='" + auditMode + '\'' +
+                ", initialScore=" + initialScore +
+                ", formula='" + formula + '\'' +
+                ", totalCount=" + totalCount +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

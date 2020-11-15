@@ -43,10 +43,14 @@ public interface MonitorPlanService {
 
     R getDayReport(int planId,String date);
 
-    R endPlan(Integer planId);
 
     R getTotalInputTime(int planId);
 
     R getInputAndCheckDetail(Integer detailId);
 
+    R deleteInputInfo(int checkRecordId);
+
+    R getItemNum(int planId);
+
+    R endDetail(int detailId);
 }

@@ -194,11 +194,7 @@ public class MonitorController {
     }
 
 
-    //任务结束按钮
-    @RequestMapping(value = "/endMonitorPlan",method = RequestMethod.GET)
-    R endMonitorPlan(@RequestParam("planId")Integer planId){
-        return monitorPlanService.endPlan(planId);
-    }
+
 
 
     @RequestMapping(value = "/getTotalInputTime",method = RequestMethod.GET)
@@ -211,4 +207,21 @@ public class MonitorController {
     R getInputAndCheckDetail(@RequestParam("planDetailId")Integer detailId){
         return monitorPlanService.getInputAndCheckDetail(detailId);
     }
+
+    @RequestMapping(value = "/deleteInputInfo",method = RequestMethod.GET)
+    R deleteInputInfo(@RequestParam("checkRecordId")Integer checkRecordId){
+        return monitorPlanService.deleteInputInfo(checkRecordId);
+    }
+
+    @RequestMapping(value = "/getItemNum ",method = RequestMethod.GET)
+    R getItemNum(@RequestParam("planId")Integer planId){
+        return monitorPlanService.getItemNum(planId);
+    }
+
+
+    @RequestMapping(value = "/endPlanDetail",method = RequestMethod.GET)
+    R endPlanDetail(@RequestParam("detailId")Integer detailId){
+        return monitorPlanService.endDetail(detailId);
+    }
+
 }

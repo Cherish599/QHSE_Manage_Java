@@ -172,11 +172,6 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
 
     }
 
-    @Override
-    public R endPlan(Integer planId) {
-        monitorPlanDao.endPlan(planId);
-        return R.ok();
-    }
 
     @Override
     public R getTotalInputTime(int planId) {
@@ -190,5 +185,24 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         R r=new R();
         r.put("data",monitorInputCheckDao.getInputAndCheckDetail(detailId));
         return r;
+    }
+
+    @Override
+    public R deleteInputInfo(int checkRecordId) {
+        monitorInputCheckDao.deleteInputInfo(checkRecordId);
+        return R.ok();
+    }
+
+    @Override
+    public R getItemNum(int planId) {
+        R r=new R();
+        r.put("data",monitorInputCheckDao.getItemNum(planId));
+        return r;
+    }
+
+    @Override
+    public R endDetail(int detailId) {
+        monitorPlanDetailDao.endDetail(detailId);
+        return R.ok();
     }
 }

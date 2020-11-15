@@ -38,6 +38,7 @@
         select *
         from monitorplandetail
         where MonitorPlanID=#{0}
+        and `Status` is null
      </select>
 
     <insert id="createNewPlanDetail">
@@ -48,4 +49,11 @@
         #{monitorPlanID},#{no},#{deviceNo},#{myNo},#{projectName},#{charger},#{tel},#{companyName},#{projectProgress},#{itemCategory}
         )
     </insert>
+
+
+    <update id="endDetail">
+        update monitorplandetail
+        set `status`='结束'
+        where MonitorPlanDetailID=#{0}
+    </update>
 </mapper>

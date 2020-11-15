@@ -18,4 +18,5 @@ public interface MonitorPlanDetailDao {
 
     int  createNewPlanDetail(MonitorPlanDetail monitorPlanDetail);
 
+    int endDetail(int detailId);
 }
