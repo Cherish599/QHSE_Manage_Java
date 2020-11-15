@@ -86,52 +86,57 @@ public class Test {
         workbook = new XSSFWorkbook(fis);
         Sheet sheet = workbook.getSheetAt(0);
         int endloc = sheet.getPhysicalNumberOfRows() - 1;//从0开始
-        Map<String, Object> T1result = getTNNode(sheet, 2, endloc, "", 0);
+        Map<String, Object> T1result = getFTNNode(sheet, 2, endloc, "", "",0);
         Map<Integer, int[]> T1RangeMap = (Map<Integer, int[]>) T1result.get("RangeMap");
         Map<Integer, String> T1CodeMap = (Map<Integer, String>) T1result.get("CodeMap");
         List<QSHEMSElementInDto> beanList1 = (List<QSHEMSElementInDto>) T1result.get("elementList");
+        Map<Integer, String> NumberMap1 = (Map<Integer, String>) T1result.get("NumberMap");
         Map<String, String> problemDescriptionMap = new HashMap<>();
 
         for (Map.Entry<Integer, int[]> entry1 : T1RangeMap.entrySet())//第二层
         {
             //System.out.println(entry1.getKey()+"---"+entry1.getValue()[0]+"   "+entry1.getValue()[1]);
-            Map<String, Object> T2result = getTNNode(sheet, entry1.getValue()[0], entry1.getValue()[1], T1CodeMap.get(entry1.getKey()), 1);
+            Map<String, Object> T2result = getTNNode(sheet, entry1.getValue()[0], entry1.getValue()[1], T1CodeMap.get(entry1.getKey()),NumberMap1.get(entry1.getKey()), 1);
             Map<Integer, int[]> T2RangeMap = (Map<Integer, int[]>) T2result.get("RangeMap");
             Map<Integer, String> T2CodeMap = (Map<Integer, String>) T2result.get("CodeMap");
             List<QSHEMSElementInDto> beanList2 = (List<QSHEMSElementInDto>) T2result.get("elementList");
+            Map<Integer, String> NumberMap2 = (Map<Integer, String>) T2result.get("NumberMap");
             beanList1.addAll(beanList2);
 
             for(Map.Entry<Integer,int[]> entry2:T2RangeMap.entrySet())//第三层
             {
                 //System.out.println(entry2.getKey()+"---"+entry2.getValue()[0]+"   "+entry2.getValue()[1]);
-                Map<String, Object> T3result=getTNNode(sheet,entry2.getValue()[0],entry2.getValue()[1],T2CodeMap.get(entry2.getKey()),2);
+                Map<String, Object> T3result=getTNNode(sheet,entry2.getValue()[0],entry2.getValue()[1],T2CodeMap.get(entry2.getKey()),NumberMap2.get(entry2.getKey()),2);
                 Map<Integer, int[]> T3RangeMap=(Map<Integer, int[]>)T3result.get("RangeMap");
                 Map<Integer, String> T3CodeMap=(Map<Integer, String>)T3result.get("CodeMap");
                 List<QSHEMSElementInDto> beanList3=(List<QSHEMSElementInDto>)T3result.get("elementList");
+                Map<Integer, String> NumberMap3 = (Map<Integer, String>) T3result.get("NumberMap");
                 beanList1.addAll(beanList3);
 
                 for(Map.Entry<Integer,int[]> entry3:T3RangeMap.entrySet())//第四层
                 {
                     //System.out.println(entry3.getKey()+"---"+entry3.getValue()[0]+"   "+entry3.getValue()[1]);
-                    Map<String, Object> T4result=getTNNode(sheet,entry3.getValue()[0],entry3.getValue()[1],T3CodeMap.get(entry3.getKey()),3);
+                    Map<String, Object> T4result=getTNNode(sheet,entry3.getValue()[0],entry3.getValue()[1],T3CodeMap.get(entry3.getKey()),NumberMap3.get(entry3.getKey()),3);
                     Map<Integer, int[]> T4RangeMap=(Map<Integer, int[]>)T4result.get("RangeMap");
                     Map<Integer, String> T4CodeMap=(Map<Integer, String>)T4result.get("CodeMap");
                     List<QSHEMSElementInDto> beanList4=(List<QSHEMSElementInDto>)T4result.get("elementList");
+                    Map<Integer, String> NumberMap4 = (Map<Integer, String>) T4result.get("NumberMap");
                     beanList1.addAll(beanList4);
 
                     for(Map.Entry<Integer,int[]> entry4:T4RangeMap.entrySet())//第五层
                     {
                         //System.out.println(entry4.getKey()+"---"+entry4.getValue()[0]+"   "+entry4.getValue()[1]);
-                        Map<String, Object> T5result=getTNNode(sheet,entry4.getValue()[0],entry4.getValue()[1],T4CodeMap.get(entry4.getKey()),4);
+                        Map<String, Object> T5result=getTNNode(sheet,entry4.getValue()[0],entry4.getValue()[1],T4CodeMap.get(entry4.getKey()),NumberMap4.get(entry4.getKey()),4);
                         Map<Integer, int[]> T5RangeMap=(Map<Integer, int[]>)T5result.get("RangeMap");
                         Map<Integer, String> T5CodeMap=(Map<Integer, String>)T5result.get("CodeMap");
                         List<QSHEMSElementInDto> beanList5=(List<QSHEMSElementInDto>)T5result.get("elementList");
+                        Map<Integer, String> NumberMap5 = (Map<Integer, String>) T5result.get("NumberMap");
                         beanList1.addAll(beanList5);
 
                         for(Map.Entry<Integer,int[]> entry5:T5RangeMap.entrySet())//第六层
                         {
                             //System.out.println(entry5.getKey()+"---"+entry5.getValue()[0]+"   "+entry5.getValue()[1]);
-                            Map<String, Object> T6result=getLastNode(sheet,entry5.getValue()[0],entry5.getValue()[1],T5CodeMap.get(entry5.getKey()),5);
+                            Map<String, Object> T6result=getLastNode(sheet,entry5.getValue()[0],entry5.getValue()[1],T5CodeMap.get(entry5.getKey()),NumberMap5.get(entry5.getKey()),5);
                             List<QSHEMSElementInDto> beanList6=(List<QSHEMSElementInDto>)T6result.get("elementList");
                             Map<String, String> problemDescriptionMap1=(Map<String, String>)T6result.get("problemDescriptionMap");
                             beanList1.addAll(beanList6);
@@ -150,39 +155,53 @@ public class Test {
             getScore(qshele);
             getCount(qshele);
         }
+        List<QhseElementsOutDto> result=new ArrayList<>();
          for (QhseElementsOutDto ele1:TreeList)
             {
-                System.out.println(ele1.getName() + "--" + ele1.getCode());
-                qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele1);
+                //System.out.println(ele1.getName() + "--" + ele1.getCode());
+                result.add(ele1);
+                //qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele1);
                 for (QhseElementsOutDto ele2 : ele1.getChildNode()) {
-                    System.out.println(ele2.getName() + "--" + ele2.getCode());
-                    qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele2);
+                    //System.out.println(ele2.getName() + "--" + ele2.getCode());
+                    result.add(ele2);
+                    //qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele2);
                     for (QhseElementsOutDto ele3 : ele2.getChildNode()) {
-                        System.out.println(ele3.getName() + "--" + ele3.getCode());
-                        qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele3);
+                        //System.out.println(ele3.getName() + "--" + ele3.getCode());
+                        result.add(ele3);
+                        //qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele3);
                         for (QhseElementsOutDto ele4 : ele3.getChildNode()) {
-                            System.out.println(ele4.getName() + "--" + ele4.getCode());
-                             qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele4);
+                            //System.out.println(ele4.getName() + "--" + ele4.getCode());
+                            result.add(ele4);
+                             //qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele4);
                             for (QhseElementsOutDto ele5 : ele4.getChildNode()) {
-                                System.out.println(ele5.getName() + "--" + ele5.getCode());
-                                 qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele5);
+                               // System.out.println(ele5.getName() + "--" + ele5.getCode());
+                                result.add(ele5);
+                                 //qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele5);
                                 for (QhseElementsOutDto ele6 : ele5.getChildNode()) {
-                                    System.out.println(ele6.getName() + "--" + ele6.getCode());
-                                    qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele6);
+                                   // System.out.println(ele6.getName() + "--" + ele6.getCode());
+                                    result.add(ele6);
+                                    //qHSEManageSysElementsDao.addExcelQHSEElemenForInerPople(ele6);
                                 }//6
                             }//5
                         }//4
                     }//3
                 }//2
             }
-        insertProblemDescription(problemDescriptionMap);
+        for(QhseElementsOutDto e:result)
+        {
+            System.out.println(e.getName() + "--" + e.getCode());
+        }
+        System.out.println("等待：");
+        //qHSEManageSysElementsDao.batchInsertRecord(result);
+        //insertProblemDescription(problemDescriptionMap);
+
         workbook.close();
         System.out.println("----关闭close");
         fis.close();
         System.out.println("----关闭fis" + "成功了，666");
     }
 
-    public Map<String, Object> getTNNode(Sheet sheet, int start, int end, String parentCode, int rowNUmber) throws Exception {
+    public Map<String, Object> getFTNNode(Sheet sheet, int start, int end, String parentCode,String parentNumber,int rowNUmber) throws Exception {
         DataFormatter dataFormat = new DataFormatter();
         Row row;
         String value;
@@ -190,6 +209,8 @@ public class Test {
         Pattern pattern = Pattern.compile("[0-9]*");
         Map<Integer, String> T1CodeMap = new TreeMap<>();
         Map<Integer, int[]> T1RangeMap = new TreeMap<>();
+        Map<Integer, String> NumberMap = new TreeMap<>();
+
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
         Map<String, Object> result = new HashMap<>();
         HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
@@ -203,8 +224,10 @@ public class Test {
             start+=1;
         row = sheet.getRow(start);
         String f1Code = parentCode + "001";
+        int number=1;
+        String name=parentNumber+number;
         QSHEMSElementValueMap.put("code", f1Code);
-        QSHEMSElementValueMap.put("name", dataFormat.formatCellValue(row.getCell(rowNUmber)));
+        QSHEMSElementValueMap.put("name",name+" "+dataFormat.formatCellValue(row.getCell(rowNUmber)).split("\\.",2)[1]);
         QSHEMSElementValueMap.put("status", "启用");
         QSHEMSElementInDto qSHEMSElement = new QSHEMSElementInDto();
         BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
@@ -216,6 +239,7 @@ public class Test {
             a[1]=end;
             T1RangeMap.put(id, a);
         }
+        NumberMap.put(id,name);
         T1CodeMap.put(id, f1Code);
         for (int i = start + 1; i <= end; i++) {
             row = sheet.getRow(i);
@@ -229,10 +253,12 @@ public class Test {
             }
             if (pattern.matcher(value.charAt(0) + "").matches()) {
                 //生成code
+                number++;
+                name=parentNumber+number;
                 f1Code = sortCodeUtil.getMaxCodeString(f1Code);
                 //封装对象
                 QSHEMSElementValueMap.put("code", f1Code);
-                QSHEMSElementValueMap.put("name", value);
+                QSHEMSElementValueMap.put("name", name+" "+value.split("\\.",2)[1]);
                 QSHEMSElementValueMap.put("status", "启用");
                 qSHEMSElement = new QSHEMSElementInDto();
                 BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
@@ -245,6 +271,8 @@ public class Test {
                 //存储code
                 id++;
                 T1CodeMap.put(id, f1Code);
+                NumberMap.put(id,name);
+
             }
             if (i == end) {
                 a[1] = i;
@@ -254,10 +282,95 @@ public class Test {
         result.put("CodeMap",T1CodeMap);
         result.put("RangeMap",T1RangeMap);
         result.put("elementList",beanList);
+        result.put("NumberMap",NumberMap);
         return result;
     }
 
-    public Map<String, Object> getLastNode(Sheet sheet, int start, int end, String parentCode, int rowNUmber) throws Exception {
+    public Map<String, Object> getTNNode(Sheet sheet, int start, int end, String parentCode,String parentNumber,int rowNUmber) throws Exception {
+        DataFormatter dataFormat = new DataFormatter();
+        Row row;
+        String value;
+        int[] a = new int[2];
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Map<Integer, String> T1CodeMap = new TreeMap<>();
+        Map<Integer, int[]> T1RangeMap = new TreeMap<>();
+        Map<Integer, String> NumberMap = new TreeMap<>();
+
+        List<QSHEMSElementInDto> beanList = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+        HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
+        row = sheet.getRow(start);
+        value=dataFormat.formatCellValue(row.getCell(rowNUmber));
+        if (!(pattern.matcher(value.charAt(0) + "").matches()))
+            start+=1;
+        row = sheet.getRow(start);
+        value=dataFormat.formatCellValue(row.getCell(rowNUmber));
+        if (!(pattern.matcher(value.charAt(0) + "").matches()))
+            start+=1;
+        row = sheet.getRow(start);
+        String f1Code = parentCode + "001";
+        int number=1;
+        String name=parentNumber+"."+number;
+        QSHEMSElementValueMap.put("code", f1Code);
+        QSHEMSElementValueMap.put("name",name+" "+dataFormat.formatCellValue(row.getCell(rowNUmber)).split("\\.",2)[1]);
+        QSHEMSElementValueMap.put("status", "启用");
+        QSHEMSElementInDto qSHEMSElement = new QSHEMSElementInDto();
+        BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+        //对象放进进容器
+        beanList.add(qSHEMSElement);
+        int id = 1;
+        a[0] = start;
+        if(start>=end) {
+            a[1]=end;
+            T1RangeMap.put(id, a);
+        }
+        NumberMap.put(id,name);
+        T1CodeMap.put(id, f1Code);
+        for (int i = start + 1; i <= end; i++) {
+            row = sheet.getRow(i);
+            value = dataFormat.formatCellValue(row.getCell(rowNUmber));
+            if (value == null || "".equals(value) || " ".equals(value)) {
+                if (i == end) {
+                    a[1] = i;
+                    T1RangeMap.put(id, a);
+                }
+                continue;
+            }
+            if (pattern.matcher(value.charAt(0) + "").matches()) {
+                //生成code
+                number++;
+                name=parentNumber+"."+number;
+                f1Code = sortCodeUtil.getMaxCodeString(f1Code);
+                //封装对象
+                QSHEMSElementValueMap.put("code", f1Code);
+                QSHEMSElementValueMap.put("name", name+" "+value.split("\\.",2)[1]);
+                QSHEMSElementValueMap.put("status", "启用");
+                qSHEMSElement = new QSHEMSElementInDto();
+                BeanUtils.populate(qSHEMSElement, QSHEMSElementValueMap);
+                beanList.add(qSHEMSElement);
+                //子节点范围定位
+                a[1] = i - 1;
+                T1RangeMap.put(id, a);
+                a = new int[2];
+                a[0] = i;
+                //存储code
+                id++;
+                T1CodeMap.put(id, f1Code);
+                NumberMap.put(id,name);
+            }
+            if (i == end) {
+                a[1] = i;
+                T1RangeMap.put(id, a);
+            }
+        }
+        result.put("CodeMap",T1CodeMap);
+        result.put("RangeMap",T1RangeMap);
+        result.put("elementList",beanList);
+        result.put("NumberMap",NumberMap);
+        return result;
+    }
+
+    public Map<String, Object> getLastNode(Sheet sheet, int start, int end, String parentCode,String parentNumber,  int rowNUmber) throws Exception {
         DataFormatter dataFormat = new DataFormatter();
         Row row;
         String value;
@@ -266,11 +379,13 @@ public class Test {
         List<QSHEMSElementInDto> beanList = new ArrayList<>();
         Map<String, Object> result = new HashMap<>();
         String f1Code = parentCode + "001";
+        int number=1;
+        String name=parentNumber+"."+number;
         row = sheet.getRow(start);
         HashMap<String, String> QSHEMSElementValueMap = new HashMap<>();
         QSHEMSElementValueMap.put("code", f1Code);
-        String valueTemp=dataFormat.formatCellValue(row.getCell(rowNUmber)).replace("\n","");
-        QSHEMSElementValueMap.put("name", valueTemp);
+        String valueTemp=dataFormat.formatCellValue(row.getCell(rowNUmber)).replace("\n"," ").split("\\d\\-\\d",2)[1];
+        QSHEMSElementValueMap.put("name", name+" "+valueTemp);
         QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(rowNUmber+1)));
         QSHEMSElementValueMap.put("initialScore", dataFormat.formatCellValue(row.getCell(rowNUmber+2)));
         String temp=dataFormat.formatCellValue(row.getCell(rowNUmber+3)).replace("\n","");
@@ -299,9 +414,11 @@ public class Test {
             if (pattern.matcher(value.charAt(0) + "").matches()) {
                 //生成code
                 f1Code = sortCodeUtil.getMaxCodeString(f1Code);
+                number++;
+                name=parentNumber+"."+number;
                 //封装对象
                 QSHEMSElementValueMap.put("code", f1Code);
-                QSHEMSElementValueMap.put("name", value);
+                QSHEMSElementValueMap.put("name", name+" "+value.split("\\d\\-\\d",2)[1]);
                 QSHEMSElementValueMap.put("status", "启用");
                 QSHEMSElementValueMap.put("auditMode", dataFormat.formatCellValue(row.getCell(rowNUmber+1)));
                 QSHEMSElementValueMap.put("initialScore", dataFormat.formatCellValue(row.getCell(rowNUmber+2)));
@@ -414,7 +531,6 @@ public class Test {
         String code;
         String description;
         //为了提高效率，直接把数据表先清空，然后再插入。使用事务管理防止插入失败造成数据丢失。
-        qHSEManageSysElementsDao.deleteAllDescription();
         for (Map.Entry<String, String> entry : problemDescription.entrySet()) {
             code = entry.getKey();
             description = entry.getValue();

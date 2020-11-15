@@ -738,5 +738,17 @@
         select Status from qhse_task where Table_ID=(select QHSE_CompanyYearManagerSysElementTable_ID
         from qhse_companyyearmanagersyselementtable where companyCode=#{companyCode} and year=#{year})
     </select>
+    <insert id="batchInsertRecord">
+        insert into qhse_managersyselement
+        (Code,`Name`,Content,AuditMode,InitialScore,TotalCount,Formula,Status)
+        values
+        <foreach collection="list" item="detail" separator=",">
+            (
+            #{detail.code},#{detail.name},#{detail.content},
+            #{detail.auditMode},#{detail.initialScore},#{detail.totalCount},
+            #{detail.formula},#{detail.status}
+            )
+        </foreach>
+    </insert>
 </mapper>
 

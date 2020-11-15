@@ -381,7 +381,7 @@ public class TreeUtil {
             qhseElementsOutDto.setName(pojo.getName());
             qhseElementsOutDto.setStatus(pojo.getStatus());
             qhseElementsOutDto.setId(pojo.getQhseManagerSysElementID());
-            if(pojo.getCode().length()==18)//加入问题描述字段
+            if(pojo.getCode().length()==18&&!discriptionMap.isEmpty())//加入问题描述字段
             {
                 qhseElementsOutDto.setProblemDescription(discriptionMap.get(pojo.getCode()));
                 //System.out.println(pojo.getCode()+"-----"+discriptionMap.get(pojo.getCode()));
@@ -405,8 +405,13 @@ public class TreeUtil {
         思想：直接一次把所有问题描述查完，根据code排序,放进list;然后根据code拼接，把code,对应问题描述字符，放进map;
          */
         //获得list
-        List<QHSEproblemDiscriptionDto> discriptionList=qhseManageSysElementsDao.querryAllDescription();
         Map<String,String> disMap=new HashMap<>();
+        List<QHSEproblemDiscriptionDto> discriptionList;
+        //System.out.println(qhseManageSysElementsDao.querryAllDescription().isEmpty() );
+        if(qhseManageSysElementsDao.querryAllDescription().isEmpty() ){
+            return disMap;
+        }
+        else discriptionList=qhseManageSysElementsDao.querryAllDescription();
         //核心算法；k代表当前code对象,j代表下一个对象;i表示序号，temp代表拼接的字符串；类似字符串的Index算法；
         String temp=1+"."+discriptionList.get(0).getDescription();
         for(int j=1,k=0,i=2;j<discriptionList.size();j++) {
