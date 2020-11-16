@@ -195,8 +195,6 @@ public class MonitorController {
 
 
 
-
-
     @RequestMapping(value = "/getTotalInputTime",method = RequestMethod.GET)
     R getTotalInputTime(@RequestParam("planId")Integer planId){
         return monitorPlanService.getTotalInputTime(planId);
@@ -208,7 +206,7 @@ public class MonitorController {
         return monitorPlanService.getInputAndCheckDetail(detailId);
     }
 
-    @RequestMapping(value = "/deleteInputInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteInputInfo",method = RequestMethod.DELETE)
     R deleteInputInfo(@RequestParam("checkRecordId")Integer checkRecordId){
         return monitorPlanService.deleteInputInfo(checkRecordId);
     }

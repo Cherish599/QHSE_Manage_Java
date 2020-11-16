@@ -10,11 +10,13 @@ public class MonitorPlan {
     private String planPersonName;
     private String companyCode;
     private String status;
+    private String checkStatus;
+
 
     public MonitorPlan() {
     }
 
-    public MonitorPlan(int monitorPlanID, String startDate, String endDate, String planName, int planPersonID, String planPersonName, String companyCode, String status) {
+    public MonitorPlan(int monitorPlanID, String startDate, String endDate, String planName, int planPersonID, String planPersonName, String companyCode, String status, String checkStatus) {
         this.monitorPlanID = monitorPlanID;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -23,6 +25,7 @@ public class MonitorPlan {
         this.planPersonName = planPersonName;
         this.companyCode = companyCode;
         this.status = status;
+        this.checkStatus = checkStatus;
     }
 
     public int getMonitorPlanID() {
@@ -89,6 +92,14 @@ public class MonitorPlan {
         this.status = status;
     }
 
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
     @Override
     public String toString() {
         return "MonitorPlan{" +
@@ -100,6 +111,7 @@ public class MonitorPlan {
                 ", planPersonName='" + planPersonName + '\'' +
                 ", companyCode='" + companyCode + '\'' +
                 ", status='" + status + '\'' +
+                ", checkStatus='" + checkStatus + '\'' +
                 '}';
     }
 }

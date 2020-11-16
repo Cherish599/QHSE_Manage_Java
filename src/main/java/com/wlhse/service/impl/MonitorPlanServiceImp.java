@@ -45,6 +45,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         return R.ok();
     }
 
+
     @Override
     public R getMonitorPlanByPersonId(HttpServletRequest request) {
         R r=new R();
@@ -98,15 +99,37 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         monitorInputCheckRecord.setInputPersonName(employeeName);
         //该计划录入次数++
         //获取录入次数
-        String time = jedisClient.get("InputCnt" + monitorInputCheckRecord.getMonitorPlanID());
-        jedisClient.set("InputCnt"+monitorInputCheckRecord.getMonitorPlanID(),time==null?String.valueOf(1):String.valueOf(Integer.valueOf(time
+        int monitorPlanID = monitorInputCheckRecord.getMonitorPlanID();
+        String time = jedisClient.get("InputCnt" + monitorPlanID);
+        jedisClient.set("InputCnt"+ monitorPlanID,time==null?String.valueOf(1):String.valueOf(Integer.valueOf(time
         )+1));
+        //备用，提示用户有未核查内容
+        if (monitorInputCheckRecord.getCondition().equals("备用")){
+            //该计划在缓存中待核查数++
+            String s = jedisClient.get("PlanCheckNum" + monitorPlanID);
+            jedisClient.set("PlanCheckNum"+ monitorPlanID,s==null?String.valueOf(0):String.valueOf(Integer.valueOf(s)+1));
+            monitorPlanDao.setCheckStatus(monitorPlanID,"未核查");
+        }
         monitorInputCheckDao.insertNewInputRecord(monitorInputCheckRecord);
         return R.ok();
     }
 
     @Override
     public R updateInputtedRecord(MonitorInputCheckRecord monitorInputCheckRecord) {
+        //缓存中核查数目--，如果为0，核查完毕，修改状态
+        //判断核查状态uif
+        if(monitorInputCheckRecord.getCloseCheck().equals("在用"))
+        {
+            //更新此项记录的状态为在用
+            monitorInputCheckDao.updateRecordCondition(monitorInputCheckRecord.getMonitorInputCheckRecordID());
+        }
+        int monitorPlanID = monitorInputCheckRecord.getMonitorPlanID();
+        String s = jedisClient.get("PlanCheckNum" + monitorPlanID);
+        Integer integer = Integer.valueOf(s);
+        //核查完毕
+        if (integer==0){
+            monitorPlanDao.setCheckStatus(monitorPlanID,"已核查");
+        }
         monitorInputCheckDao.updateInputRecord(monitorInputCheckRecord);
         return R.ok();
     }
