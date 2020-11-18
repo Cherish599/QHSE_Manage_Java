@@ -60,4 +60,26 @@
         from meschecksumdata
         where SumDate between #{0} and #{1}
     </select>
+
+    <select id="getPlanDeviceNum" resultType="int">
+        select count(*) from
+        monitorplandetail
+        where CompanyName=#{0}
+    </select>
+
+    <select id="getRate" resultType="Double">
+        select
+        <if test="type=='覆盖率'">
+            CoverageRate
+        </if>
+        <if test="type=='使用率'">
+            UseRate
+        <if test="type=='利用率">
+            AvaiRate
+        </if>
+        from meschecksumdata
+        where CompanyName=#{companyName}
+        </if>
+    </select>
+
 </mapper>

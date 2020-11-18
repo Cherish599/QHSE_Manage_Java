@@ -1,13 +1,14 @@
 package com.wlhse.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.wlhse.cache.JedisClient;
-import com.wlhse.dao.EmployeeManagementDao;
-import com.wlhse.dao.MonitorInputCheckDao;
-import com.wlhse.dao.MonitorPlanDao;
-import com.wlhse.dao.MonitorPlanDetailDao;
+import com.wlhse.dao.*;
 import com.wlhse.dto.EmployeeManagementDto;
 import com.wlhse.dto.MonitorPlan;
 import com.wlhse.dto.MonitorPlanDetail;
+import com.wlhse.dto.inDto.MesSearchCondition;
+import com.wlhse.dto.outDto.MesDataOutDto;
+import com.wlhse.entity.MesSumData;
 import com.wlhse.entity.MonitorInputCheckRecord;
 import com.wlhse.service.MonitorPlanService;
 import com.wlhse.util.R;
@@ -33,6 +34,9 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     MonitorInputCheckDao monitorInputCheckDao;
     @Resource
     EmployeeManagementDao employeeManagementDao;
+
+    @Resource
+    MesSumDataDao mesSumDataDao;
     @Override
     public R createNewMonitorPlan(MonitorPlan monitorPlan, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
@@ -118,7 +122,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     public R updateInputtedRecord(MonitorInputCheckRecord monitorInputCheckRecord) {
         //缓存中核查数目--，如果为0，核查完毕，修改状态
         //判断核查状态uif
-        if(monitorInputCheckRecord.getCloseCheck().equals("在用"))
+        if(monitorInputCheckRecord.getResult().equals("在用"))
         {
             //更新此项记录的状态为在用
             monitorInputCheckDao.updateRecordCondition(monitorInputCheckRecord.getMonitorInputCheckRecordID());
@@ -128,7 +132,7 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         Integer integer = Integer.valueOf(s);
         //核查完毕
         if (integer==0){
-            monitorPlanDao.setCheckStatus(monitorPlanID,"已核查");
+            monitorPlanDao.setCheckStatus(monitorPlanID,"当日已核查完毕");
         }
         monitorInputCheckDao.updateInputRecord(monitorInputCheckRecord);
         return R.ok();
@@ -227,5 +231,65 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
     public R endDetail(int detailId) {
         monitorPlanDetailDao.endDetail(detailId);
         return R.ok();
+    }
+
+    @Override
+    public R refreshMesData(String date, String companyName) {
+        //先从录入和核查记录获取需要动态加载的数据
+        mesSumDataDao.getPlanDeviceNum(companyName);
+        return null;
+    }
+
+    @Override
+    public void downloadMonitorData(String date,int planId) {
+        //根据统计书记
+        String[] split = date.split(",");
+        //先根据日期判断有哪些详情
+        List<Integer> detailId;
+        String fileName;
+        List<MesSumData> data;
+        if (split.length==1){
+            fileName=split[0]+"日统计数据.xlsx";
+            detailId=monitorPlanDetailDao.getDetailIdByDate(split[0]);
+            //根据detailId去收集数据
+            data=monitorPlanDetailDao.getMesDataByDate(split[0],detailId);
+        }
+        else {
+            fileName=split[0]+"至"+split[1]+"日统计数据.xlsx";
+            data=monitorPlanDetailDao.getMesDataByDates(split[0],split[1]);
+        }
+        EasyExcel.write(fileName, MesSumData.class).sheet("统计数据").doWrite(data);
+    }
+
+    @Override
+    public R getDeviceTrend(String companyName) {
+        R r=new R();
+        List<Object> resultList=new ArrayList<>();
+        List<String> time;
+        List<MesDataOutDto> series=new ArrayList<>();
+        time=monitorPlanDao.getDeviceUseDate(companyName);
+        resultList.add(time);
+        MesSearchCondition mesSearchCondition=new MesSearchCondition();
+        mesSearchCondition.setCompanyName(companyName);
+        mesSearchCondition.setType("覆盖率");
+        MesDataOutDto mesDataOutDto=new MesDataOutDto();
+        mesDataOutDto.setName("覆盖率");
+        List<Double> rate=mesSumDataDao.getRate(mesSearchCondition);
+        mesDataOutDto.setData(rate);
+        series.add(mesDataOutDto);
+        MesDataOutDto mesDataOutDto1=new MesDataOutDto();
+        mesDataOutDto1.setName("使用率");
+        mesSearchCondition.setType("使用率");
+        List<Double> rate1=mesSumDataDao.getRate(mesSearchCondition);
+        mesDataOutDto1.setData(rate1);
+        series.add(mesDataOutDto1);
+        MesDataOutDto mesDataOutDto2=new MesDataOutDto();
+        mesDataOutDto2.setName("利用率");
+        mesSearchCondition.setType("利用率");
+        mesDataOutDto2.setData(mesSumDataDao.getRate(mesSearchCondition));
+        series.add(mesDataOutDto2);
+        resultList.add(series);
+        r.put("data",resultList);
+        return r;
     }
 }

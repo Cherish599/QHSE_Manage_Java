@@ -53,4 +53,10 @@ public interface MonitorPlanService {
     R getItemNum(int planId);
 
     R endDetail(int detailId);
+
+    R refreshMesData(String date, String companyName);
+
+    void downloadMonitorData(String date,int planId);
+
+    R getDeviceTrend(String companyName);
 }

@@ -40,4 +40,10 @@
         set checkStatus=#{1}
         where MonitorPlanID=#{0}
     </update>
+
+    <select id="getDeviceUseDate" resultType="String">
+        select SumDate
+        from meschecksumdata
+        where CompanyName=#{0}
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.wlhse.dao;
 
 import com.wlhse.dto.MonitorPlanDetail;
+import com.wlhse.entity.MesSumData;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface MonitorPlanDetailDao {
     int  createNewPlanDetail(MonitorPlanDetail monitorPlanDetail);
 
     int endDetail(int detailId);
+
+    List<MesSumData> getMesDataByDate(String date,List<Integer> detailId);
+
+    List<MesSumData> getMesDataByDates(String date,String date1);
+
+    List<Integer> getDetailIdByDate(String date);
 }

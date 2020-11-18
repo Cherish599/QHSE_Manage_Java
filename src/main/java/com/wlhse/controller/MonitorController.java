@@ -222,4 +222,20 @@ public class MonitorController {
         return monitorPlanService.endDetail(detailId);
     }
 
+
+
+    @RequestMapping(value = "/refreshMesData",method =RequestMethod.GET )
+    R refreshMesData(@RequestParam("date")String date,@RequestParam("companyName")String companyName){
+        return monitorPlanService.refreshMesData(date,companyName);
+    }
+
+    @RequestMapping(value = "/downloadMonitorData",method = RequestMethod.GET)
+    void downloadMonitorData(@RequestParam("date")String date,@RequestParam("planId")Integer planId){
+         monitorPlanService.downloadMonitorData(date,planId);
+    }
+
+    @RequestMapping(value = "/useDeviceTrend/{companyName}",method = RequestMethod.GET)
+    public R getDeviceTrend(@PathVariable("companyName")String companyName){
+        return monitorPlanService.getDeviceTrend(companyName);
+    }
 }

@@ -56,4 +56,15 @@
         set `status`='结束'
         where MonitorPlanDetailID=#{0}
     </update>
+
+    <select id="getMesDataByDate" resultType="com.wlhse.entity.MesSumData">
+        select CompanyName as companyName,
+
+    </select>
+
+    <select id="getDetailIdByDate" resultType="Integer">
+        select distinct (MonitorPlanDetailID)
+        from monitorinputcheckrecord
+        where LEFT(InputDate,10) like #{0}
+    </select>
 </mapper>

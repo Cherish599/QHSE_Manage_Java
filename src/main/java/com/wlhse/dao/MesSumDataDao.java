@@ -1,5 +1,6 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.inDto.MesSearchCondition;
 import com.wlhse.entity.MesSumData;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,8 @@ public interface MesSumDataDao {
     MesSumData getMesDataById(int id);
 
     List<MesSumData> getSumDataInTimePeriod(String startTime, String endTime);
+
+    int getPlanDeviceNum(String companyName);
+
+    List<Double> getRate(MesSearchCondition mesSearchCondition);
 }
