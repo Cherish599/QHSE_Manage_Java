@@ -41,6 +41,9 @@
             <if test="ok != null and ok  != ''">
                 Ok,
             </if>
+            <if test="consequence != null and consequence  != ''">
+                Consequence,
+            </if>
             <if test="consequenceID != null and consequenceID  != ''">
                 ConsequenceID,
             </if>
@@ -171,6 +174,9 @@
             </if>
             <if test="ok != null and ok  != ''">
                 #{ok},
+            </if>
+            <if test="consequence != null and consequence  != ''">
+                #{consequence},
             </if>
             <if test="consequenceID != null and consequenceID  != ''">
                 #{consequenceID},
@@ -318,6 +324,9 @@
             </if>
             <if test="ok != null and ok  != ''">
                 ok=#{ok},
+            </if>
+            <if test="consequence != null and consequence  != ''">
+                Consequence=#{consequence},
             </if>
             <if test="consequenceID != null and consequenceID  != ''">
                 consequenceID=#{consequenceID},
