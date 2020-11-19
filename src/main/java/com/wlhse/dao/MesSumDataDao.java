@@ -27,5 +27,10 @@ public interface MesSumDataDao {
 
     int getPlanDeviceNum(String companyName);
 
-    List<Double> getRate(MesSearchCondition mesSearchCondition);
+
+    List<Double> getUseRate(String companyName);
+
+    List<Double> getCoverageRate(String companyName);
+
+    List<Double> getAvaiRate(String companyName);
 }

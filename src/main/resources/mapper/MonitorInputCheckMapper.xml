@@ -51,7 +51,10 @@
                 CheckDate=now(),
             </if>
             <if test="result!=null and result!=''">
-                Result=#{result}
+                Result=#{result},
+            </if>
+            <if  test="checkStatus!=null and checkStatus!=''">
+                CheckStatus=#{checkStatus}
             </if>
         </trim>
         where MonitorInputCheckRecordID=#{monitorInputCheckRecordID}
@@ -235,7 +238,7 @@
         t1.CheckDate as checkDate,
         t1.picLink as picLink,
         t1.Result as result,
-        t2.CheckStatus as checkStatus
+        t1.CheckStatus as checkStatus
         from monitorinputcheckrecord t1
         where t1.MonitorPlanDetailID=#{0}
     </select>

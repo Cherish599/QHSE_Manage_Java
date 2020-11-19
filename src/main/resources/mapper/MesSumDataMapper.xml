@@ -67,19 +67,33 @@
         where CompanyName=#{0}
     </select>
 
-    <select id="getRate" resultType="Double">
-        select
-        <if test="type=='覆盖率'">
-            CoverageRate
-        </if>
-        <if test="type=='使用率'">
-            UseRate
-        <if test="type=='利用率">
-            AvaiRate
-        </if>
-        from meschecksumdata
-        where CompanyName=#{companyName}
-        </if>
+    <select id="getUseRate" resultType="Double">
+            SELECT
+                UseRate
+            FROM
+                meschecksumdata
+            WHERE
+                CompanyName = #{0}
+            ORDER  BY SumDate ASC
     </select>
 
+    <select id="getCoverageRate" resultType="Double">
+            SELECT
+                CoverageRate
+            FROM
+                meschecksumdata
+            WHERE
+                CompanyName = #{0}
+            ORDER  BY SumDate ASC
+    </select>
+
+    <select id="getAvaiRate" resultType="Double">
+            SELECT
+                AvaiRate
+            FROM
+                meschecksumdata
+            WHERE
+                CompanyName = #{0}
+            ORDER  BY SumDate ASC
+    </select>
 </mapper>

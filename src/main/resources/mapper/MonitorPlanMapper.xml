@@ -36,5 +36,6 @@
         select SumDate
         from meschecksumdata
         where CompanyName=#{0}
+        order by SumDate ASC
     </select>
 </mapper>
