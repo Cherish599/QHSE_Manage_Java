@@ -21,9 +21,13 @@ public class MonitorInputCheckRecord {
     private String checkDate;
     private String picLink;
     private String result;
+    private String checkStatus;
 
 
-    public MonitorInputCheckRecord(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, int inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String picLink, String result) {
+    public MonitorInputCheckRecord() {
+    }
+
+    public MonitorInputCheckRecord(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, int inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String picLink, String result, String checkStatus) {
         this.monitorInputCheckRecordID = monitorInputCheckRecordID;
         this.monitorPlanID = monitorPlanID;
         this.monitorPlanDetailID = monitorPlanDetailID;
@@ -43,9 +47,7 @@ public class MonitorInputCheckRecord {
         this.checkDate = checkDate;
         this.picLink = picLink;
         this.result = result;
-    }
-
-    public MonitorInputCheckRecord() {
+        this.checkStatus = checkStatus;
     }
 
     public int getMonitorInputCheckRecordID() {
@@ -198,5 +200,39 @@ public class MonitorInputCheckRecord {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "MonitorInputCheckRecord{" +
+                "monitorInputCheckRecordID=" + monitorInputCheckRecordID +
+                ", monitorPlanID=" + monitorPlanID +
+                ", monitorPlanDetailID=" + monitorPlanDetailID +
+                ", condition='" + condition + '\'' +
+                ", description='" + description + '\'' +
+                ", picNo='" + picNo + '\'' +
+                ", disposeIn='" + disposeIn + '\'' +
+                ", closeIn='" + closeIn + '\'' +
+                ", check='" + check + '\'' +
+                ", disposeCheck='" + disposeCheck + '\'' +
+                ", closeCheck='" + closeCheck + '\'' +
+                ", inputPersonID=" + inputPersonID +
+                ", inputPersonName='" + inputPersonName + '\'' +
+                ", inputDate='" + inputDate + '\'' +
+                ", checkPersonID='" + checkPersonID + '\'' +
+                ", checkPersonName='" + checkPersonName + '\'' +
+                ", checkDate='" + checkDate + '\'' +
+                ", picLink='" + picLink + '\'' +
+                ", result='" + result + '\'' +
+                ", checkStatus='" + checkStatus + '\'' +
+                '}';
     }
 }

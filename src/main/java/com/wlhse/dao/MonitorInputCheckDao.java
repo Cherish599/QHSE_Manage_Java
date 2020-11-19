@@ -36,5 +36,4 @@ public interface MonitorInputCheckDao {
 
     int getItemNum(int planId);
 
-    int updateRecordCondition(int monitorInputCheckRecordID);
 }

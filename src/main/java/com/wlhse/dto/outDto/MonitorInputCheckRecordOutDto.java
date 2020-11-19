@@ -29,11 +29,12 @@ public class MonitorInputCheckRecordOutDto {
     private String companyName;
     private String itemCategory;
     private String result;
+    private String checkStatus;
 
     public MonitorInputCheckRecordOutDto() {
     }
 
-    public MonitorInputCheckRecordOutDto(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, String inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String picLink, String companyName, String itemCategory, String result) {
+    public MonitorInputCheckRecordOutDto(int monitorInputCheckRecordID, int monitorPlanID, int monitorPlanDetailID, String condition, String description, String picNo, String disposeIn, String closeIn, String check, String disposeCheck, String closeCheck, String inputPersonID, String inputPersonName, String inputDate, String checkPersonID, String checkPersonName, String checkDate, String no, String deviceNo, String myNo, String projectName, String charger, String tel, String picLink, String companyName, String itemCategory, String result, String checkStatus) {
         this.monitorInputCheckRecordID = monitorInputCheckRecordID;
         this.monitorPlanID = monitorPlanID;
         this.monitorPlanDetailID = monitorPlanDetailID;
@@ -61,6 +62,7 @@ public class MonitorInputCheckRecordOutDto {
         this.companyName = companyName;
         this.itemCategory = itemCategory;
         this.result = result;
+        this.checkStatus = checkStatus;
     }
 
     public int getMonitorInputCheckRecordID() {
@@ -277,5 +279,47 @@ public class MonitorInputCheckRecordOutDto {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "MonitorInputCheckRecordOutDto{" +
+                "monitorInputCheckRecordID=" + monitorInputCheckRecordID +
+                ", monitorPlanID=" + monitorPlanID +
+                ", monitorPlanDetailID=" + monitorPlanDetailID +
+                ", condition='" + condition + '\'' +
+                ", description='" + description + '\'' +
+                ", picNo='" + picNo + '\'' +
+                ", disposeIn='" + disposeIn + '\'' +
+                ", closeIn='" + closeIn + '\'' +
+                ", check='" + check + '\'' +
+                ", disposeCheck='" + disposeCheck + '\'' +
+                ", closeCheck='" + closeCheck + '\'' +
+                ", inputPersonID='" + inputPersonID + '\'' +
+                ", inputPersonName='" + inputPersonName + '\'' +
+                ", inputDate='" + inputDate + '\'' +
+                ", checkPersonID='" + checkPersonID + '\'' +
+                ", checkPersonName='" + checkPersonName + '\'' +
+                ", checkDate='" + checkDate + '\'' +
+                ", no='" + no + '\'' +
+                ", deviceNo='" + deviceNo + '\'' +
+                ", myNo='" + myNo + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", charger='" + charger + '\'' +
+                ", tel='" + tel + '\'' +
+                ", picLink='" + picLink + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", itemCategory='" + itemCategory + '\'' +
+                ", result='" + result + '\'' +
+                ", checkStatus='" + checkStatus + '\'' +
+                '}';
     }
 }

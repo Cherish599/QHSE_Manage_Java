@@ -16,9 +16,8 @@ public interface MonitorPlanDao {
 
     MonitorPlan getBeginAndEndDate(int planId);
 
-    int endPlan(Integer planId);
 
-    int setCheckStatus(int monitorPlanID,String checkStatus);
+
 
     List<String> getDeviceUseDate(String companyName);
 }

@@ -329,7 +329,6 @@ public class FileUploadUtils {
         }
     }
 
-    // TODO 微信小程序文件名会有异常
     //上传远程监控截图,直接将截图下载链接放置于响应结果中
     @RequestMapping(value = "/uploadScreenShot", method = RequestMethod.POST)
     @ResponseBody
