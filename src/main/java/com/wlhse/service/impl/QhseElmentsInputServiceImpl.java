@@ -37,13 +37,15 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
         //首次录入数据
         //判断是不是不涉及
-        if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
-            elementEvidenceAttachInDto.setAttach("");
-            elementEvidenceAttachInDto.setAttachDescrption("录入判定该项要素不涉及流程，不予录入");
-            qhseElementsInputDao.add(elementEvidenceAttachInDto);
-            qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
-        }
-        else if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
+
+         if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
+             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
+                 elementEvidenceAttachInDto.setAttach("");
+                 qhseElementsInputDao.add(elementEvidenceAttachInDto);
+                 qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
+                 qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//状态变为审核\
+                 return R.ok();
+             }
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
@@ -57,6 +59,13 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             }
             qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
         } else {
+             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
+                 elementEvidenceAttachInDto.setAttach("");
+                 qhseElementsInputDao.add(elementEvidenceAttachInDto);
+                 qhseElementsInputDao.addAttach(elementEvidenceAttachInDto);
+                 qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//状态变为审核
+                 return R.ok();
+             }
             //再次录入数据
             //将附件attach对应id放入elementFileInfo
             if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
