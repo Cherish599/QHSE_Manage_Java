@@ -64,4 +64,46 @@ public interface DashboardDao {
      */
     int updateDRM(DashboardRecorderManagement dashboardRecorderManagement);
 
+    /**
+     * 统计【进度管理】
+     *
+     * @return
+     */
+    int countDSM();
+
+    /**
+     * 统计【质量管理】
+     *
+     * @return
+     */
+    int countDQM();
+
+    /**
+     * 统计【记录仪管理】
+     *
+     * @return
+     */
+    int countDRM();
+
+    /**
+     * 插入【进度管理】
+     *
+     * @param dashboardScheduleManagement dashboardScheduleManagement
+     */
+    void insertDSM(DashboardScheduleManagement dashboardScheduleManagement);
+
+    /**
+     * 插入【质量管理】
+     *
+     * @param dashboardQualityManagement dashboardQualityManagement
+     */
+    void insertDQM(DashboardQualityManagement dashboardQualityManagement);
+
+    /**
+     * 插入【记录仪管理】
+     *
+     * @param dashboardRecorderManagement dashboardRecorderManagement
+     */
+    void insertDRM(DashboardRecorderManagement dashboardRecorderManagement);
+
 }

@@ -29,11 +29,21 @@ public class DashboardDQMListener extends AnalysisEventListener<DashboardQuality
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        for (DashboardQualityManagement dashboardQualityManagement : list) {
-            // 数据完整性判断
-            if (dashboardQualityManagement.getMonthFinishNum() != null &&
-                    dashboardQualityManagement.getMonthPlanNum() != null) {
-                dashboardDao.updateDQM(dashboardQualityManagement);
+        // 判断数据库中是否存在数据
+        // 不存在：直接插入
+        // 存在：直接更新
+        int countDQM = dashboardDao.countDQM();
+        if (countDQM != 0) {
+            for (DashboardQualityManagement dashboardQualityManagement : list) {
+                // 数据完整性判断
+                if (dashboardQualityManagement.getMonthFinishNum() != null &&
+                        dashboardQualityManagement.getMonthPlanNum() != null) {
+                    dashboardDao.updateDQM(dashboardQualityManagement);
+                }
+            }
+        } else {
+            for (DashboardQualityManagement dashboardQualityManagement : list) {
+                dashboardDao.insertDQM(dashboardQualityManagement);
             }
         }
     }
