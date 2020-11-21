@@ -153,16 +153,16 @@
 
     <!--插入：进度管理-->
     <insert id="insertDSM" parameterType="com.wlhse.entity.DashboardScheduleManagement">
-        INSERT INTO dashboard_recorder_management
-        (companyName,companyCode,weeklyCollectNum,weeklyNormalNum,weeklyUsageRate,weeklySupervisionNum,updateTime)
-        VALUES (#{companyName},#{companyCode},#{weeklyCollectNum},#{weeklyNormalNum},#{weeklyUsageRate},#{weeklySupervisionNum},#{updateTime})
+        INSERT INTO dashboard_schedule_management
+        (companyName,companyCode,planNum,firstDraftFinishNum,firstDraftFinishRate,ReviewPassNum,ReviewPassRate,StandardReleaseNum,StandardReleaseRate,updateTime)
+        VALUES (#{companyName},#{companyCode},#{planNum},#{firstDraftFinishNum},#{firstDraftFinishRate},#{reviewPassNum},#{reviewPassRate}, #{standardReleaseNum},#{standardReleaseRate},#{updateTime})
     </insert>
 
     <!--插入：记录仪管理-->
     <insert id="insertDRM" parameterType="com.wlhse.entity.DashboardRecorderManagement">
-        INSERT INTO dashboard_schedule_management
-        (companyName,companyCode,planNum,firstDraftFinishNum,firstDraftFinishRate,ReviewPassNum,ReviewPassRate,StandardReleaseNum,StandardReleaseRate,updateTime)
-        VALUES (#{companyName},#{companyCode},#{planNum},#{firstDraftFinishNum},#{firstDraftFinishRate},#{ReviewPassNum},#{ReviewPassRate}, #{StandardReleaseNum},#{StandardReleaseRate},#{updateTime})
+        INSERT INTO dashboard_recorder_management
+        (companyName,companyCode,weeklyCollectNum,weeklyNormalNum,weeklyUsageRate,weeklySupervisionNum,updateTime)
+        VALUES (#{companyName},#{companyCode},#{weeklyCollectNum},#{weeklyNormalNum},#{weeklyUsageRate},#{weeklySupervisionNum},#{updateTime})
     </insert>
 
     <!--统计：DQM-->
