@@ -29,6 +29,12 @@
             <if test="refuseReason != null and refuseReason  != ''">
                 refuseReason=#{refuseReason},
             </if>
+            <if test="file1 != null and file1  != ''">
+                file1=#{file1},
+            </if>
+            <if test="file2 != null and file2  != ''">
+                file2=#{file2},
+            </if>
         </trim>
     </sql>
 
@@ -41,7 +47,7 @@
     <select id="queryProblemDescription" resultType="com.wlhse.dto.ProblemDescriptionDto">
         select t1.QHSE_AuditProblemRecord_ID, t1.QHSE_FileAudit_ID, t1.QHSE_FileAuditRecord_ID,
         t1.Code, t1.ProblemDescription, t1.CompanyCode, t1.Additor as auditor, t1.CompanyName,
-        t1.Status, t1.Situation,t1.itemName,t1.auditTime,t1.problemSource,t1.passReason, t1.refuseReason
+        t1.Status, t1.Situation,t1.itemName,t1.auditTime,t1.problemSource,t1.passReason, t1.refuseReason, t1.file1, t1.file2
         from qhse_auditproblemrecord as t1
         <where>
             <if test="startDate != null and startDate  != ''">
