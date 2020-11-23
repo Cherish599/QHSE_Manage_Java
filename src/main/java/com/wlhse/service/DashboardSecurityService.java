@@ -15,7 +15,19 @@ import java.io.UnsupportedEncodingException;
 public interface DashboardSecurityService {
     R uploadDashboardSecurity(MultipartFile file);
 
+    R uploadDashboardSecurityProject(MultipartFile file);
+
+    R uploadDashboardSecurityMillion(MultipartFile file);
+
     ResponseEntity<byte[]> downloadDashboardSecurityTemplate() throws IOException;
 
+    ResponseEntity<byte[]> downloadDashboardSecurityProjectTemplate() throws IOException;
+
+    ResponseEntity<byte[]> downloadDashboardSecurityMillionTemplate() throws IOException;
+
     R queryDashboardSecurity(String companyCode);
+
+    R queryDashboardSecurityMillion(String companyCode);
+
+    R queryDashboardSecurityProject(String companyCode);
 }

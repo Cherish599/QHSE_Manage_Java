@@ -24,6 +24,7 @@ public class DashboardSecurityController {
     @Autowired
     private DashboardSecurityService dashboardSecurityService;
 
+    /***************************安全管理*********************************/
 
     /**
      * 查询【安全管理】大屏
@@ -31,7 +32,7 @@ public class DashboardSecurityController {
      * @return R
      */
     @RequestMapping(value = "/queryDashboardSecurity", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public R queryDashboardSecurity(@RequestParam(value = "companyCode" ,defaultValue = "") String companyCode) {
+    public R queryDashboardSecurity(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
         return dashboardSecurityService.queryDashboardSecurity(companyCode);
     }
 
@@ -63,5 +64,85 @@ public class DashboardSecurityController {
         return dashboardSecurityService.uploadDashboardSecurity(file);
     }
 
+    /***************************百万工时*********************************/
 
+    /**
+     * 查询安全管理-百万工时
+     * TODO
+     *
+     * @param companyCode companyCode
+     * @return R
+     */
+    public R queryDashboardSecurityMillion(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
+        return dashboardSecurityService.queryDashboardSecurityMillion(companyCode);
+    }
+
+    /**
+     * 下载安全管理-百万工时模板
+     *
+     * @return file
+     * @throws IOException io
+     */
+    @RequestMapping(value = "/downloadDashboardSecurityMillionTemplate", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadDashboardSecurityMillionTemplate() throws IOException {
+        ResponseEntity<byte[]> res = null;
+        try {
+            res = dashboardSecurityService.downloadDashboardSecurityMillionTemplate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    /**
+     * 上传【安全管理】-百万工时
+     *
+     * @param file file
+     * @return R
+     */
+    @RequestMapping(value = "/uploadDashboardSecurityMillion", method = RequestMethod.POST)
+    public R uploadDashboardSecurityMillion(@RequestParam(value = "file", required = false) MultipartFile file) {
+        return dashboardSecurityService.uploadDashboardSecurityMillion(file);
+    }
+
+    /***************************安技项目管理*********************************/
+
+    /**
+     * 查询安全管理-安技项目管理
+     * TODO
+     *
+     * @param companyCode companyCode
+     * @return R
+     */
+    public R queryDashboardSecurityProject(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
+        return dashboardSecurityService.queryDashboardSecurityProject(companyCode);
+    }
+
+    /**
+     * 下载安全管理-安技项目管理
+     *
+     * @return file
+     * @throws IOException io
+     */
+    @RequestMapping(value = "/downloadDashboardSecurityProjectTemplate", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadDashboardSecurityProjectTemplate() throws IOException {
+        ResponseEntity<byte[]> res = null;
+        try {
+            res = dashboardSecurityService.downloadDashboardSecurityProjectTemplate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    /**
+     * 上传【安全管理】-安技项目管理
+     *
+     * @param file file
+     * @return R
+     */
+    @RequestMapping(value = "/uploadDashboardSecurityProject", method = RequestMethod.POST)
+    public R uploadDashboardSecurityProject(@RequestParam(value = "file", required = false) MultipartFile file) {
+        return dashboardSecurityService.uploadDashboardSecurityProject(file);
+    }
 }
