@@ -268,12 +268,14 @@ public class MonitorPlanServiceImp implements MonitorPlanService {
         mesDataOutDto.setData(userRates);
         series.add(mesDataOutDto);
         MesDataOutDto mesDataOutDto1=new MesDataOutDto();
-        mesDataOutDto.setName("覆盖率");
+        mesDataOutDto1.setName("覆盖率");
         List<Double> coverageRate=mesSumDataDao.getCoverageRate(companyName);
         mesDataOutDto1.setData(coverageRate);
         series.add(mesDataOutDto1);
         MesDataOutDto mesDataOutDto2=new MesDataOutDto();
+        mesDataOutDto2.setName("利用率");
         mesDataOutDto2.setData(mesSumDataDao.getAvaiRate(companyName));
+        series.add(mesDataOutDto2);
         resultList.add(series);
         r.put("data",resultList);
         return r;

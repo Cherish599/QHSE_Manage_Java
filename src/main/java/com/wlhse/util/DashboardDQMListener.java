@@ -23,7 +23,6 @@ public class DashboardDQMListener extends AnalysisEventListener<DashboardQuality
 
     @Override
     public void invoke(DashboardQualityManagement qualityManagement, AnalysisContext analysisContext) {
-        System.out.println(qualityManagement.toString());
         list.add(qualityManagement);
     }
 

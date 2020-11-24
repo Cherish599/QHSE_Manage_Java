@@ -37,14 +37,18 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
         //首次录入数据
         //判断是不是不涉及
-         if (qhseElementsInputDao.query(elementEvidenceAttachInDto) == null) {
+        ElementEvidenceAttachInDto query = qhseElementsInputDao.query(elementEvidenceAttachInDto);
+        if (query== null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
-            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
+             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")&&elementEvidenceAttachInDto.getAttach().equals("")&&elementEvidenceAttachInDto==null){
+                 elementEvidenceAttachInDto.setAttach("无");
+             }
+            if((elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach()))||"无".equals(query.getAttach())) {
             String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
             elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
-                for (String str : strs) {
+            for (String str : strs) {
                     elementInputFileInfo.setNewElementFileName(str);
                     qhseElementsInputDao.updateNewOriginFileName(elementInputFileInfo);
                 }
@@ -53,7 +57,10 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
         } else {
             //再次录入数据
             //将附件attach对应id放入elementFileInfo
-            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
+             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")&&elementEvidenceAttachInDto.getAttach().equals("")&&elementEvidenceAttachInDto==null){
+                 elementEvidenceAttachInDto.setAttach("无");
+             }
+            if((elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach()))||"无".equals(query.getAttach())) {
                 String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
                 ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
                 elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
