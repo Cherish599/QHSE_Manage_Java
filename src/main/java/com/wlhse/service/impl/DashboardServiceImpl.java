@@ -117,6 +117,7 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     @Transactional
     public R uploadDashboardScheduleManagement(MultipartFile file) {
+        // 校验文件是否为空
         if (file == null) {
             return R.error("文件不能为空");
         }

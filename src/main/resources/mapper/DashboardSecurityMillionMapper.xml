@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--tobing-->
+<!--大屏Mapper-->
+<mapper namespace="com.wlhse.dao.DashboardSecurityMillionDao">
+    <resultMap id="dashboardSecurityMillionDaoMap" type="com.wlhse.entity.DashboardSecurityMillionPojo">
+
+    </resultMap>
+    <!--查：安全管理-百万工时-->
+    <select id="queryDashboardSecurityMillion" resultMap="dashboardSecurityMillionDaoMap">
+        <if test="companyCode == null or companyCode == ''">
+            SELECT
+            SUM(companyCode) AS companyCode,
+            SUM(companyName) AS companyName,
+            SUM(subtotal) AS subtotal,
+            MAX(updateTime) AS updateTime
+            FROM dashboard_security_million;
+        </if>
+        <if test="companyCode != null and companyCode != ''">
+            SELECT
+            id AS id,
+            companyCode AS companyCode,
+            companyName AS companyName,
+            subtotal AS subtotal,
+            updateTime AS updateTime
+            FROM dashboard_security_million;
+        </if>
+    </select>
+
+    <!--统计：companyCode-->
+    <select id="countDashboardSecurityMillion" resultType="java.lang.Integer">
+        SELECT COUNT(CompanyCode) FROM dashboard_security_million
+    </select>
+
+    <!--插入：【安全管理数据】-->
+    <insert id="insertDashboardSecurityMillion" parameterType="com.wlhse.entity.DashboardSecurityMillionPojo">
+        INSERT INTO dashboard_security_million(
+        companyCode,
+        companyName,
+        subtotal,
+        updateTime
+        )
+        VALUES (
+        #{companyCode},
+        #{companyName},
+        #{subtotal},
+        #{updateTime}
+        )
+    </insert>
+
+    <!--更新：【安全管理数据】-->
+    <update id="updateDashboardSecurity" parameterType="com.wlhse.entity.DashboardSecurityMillionPojo">
+        UPDATE dashboard_security_million SET
+        subtotal=#{subtotal},
+        updateTime=#{updateTime}
+    </update>
+</mapper>

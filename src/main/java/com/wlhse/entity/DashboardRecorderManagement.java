@@ -13,7 +13,7 @@ public class DashboardRecorderManagement {
     private Integer id;
     @ExcelProperty("单位代码")
     private String companyCode;
-    @ExcelProperty("单位名称")
+    @ExcelProperty("单位/部门名称")
     private String companyName;
     @ExcelProperty("工作记录仪台数（台）")
     private Integer totalNum;

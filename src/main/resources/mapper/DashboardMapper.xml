@@ -45,7 +45,6 @@
         </if>
     </select>
 
-    <!--TODO 计算公式-->
     <!--查：记录仪管理-->
     <select id="queryDashboardRecorderManagement" parameterType="com.wlhse.entity.DashboardRecorderManagement"
             resultMap="resultMapDashboardRecorderManagement">
@@ -144,4 +143,40 @@
         </set>
         WHERE companyCode = #{companyCode}
     </update>
+
+    <!--插入：质量管理-->
+    <insert id="insertDQM" parameterType="com.wlhse.entity.DashboardQualityManagement">
+        INSERT INTO dashboard_quality_management
+        (companyName,companyCode,monthPlanNum,monthFinishNum,monthFinishRate,updateTime)
+        VALUES (#{companyName},#{companyCode},#{monthPlanNum},#{monthFinishNum},#{monthFinishRate},#{updateTime})
+    </insert>
+
+    <!--插入：进度管理-->
+    <insert id="insertDSM" parameterType="com.wlhse.entity.DashboardScheduleManagement">
+        INSERT INTO dashboard_schedule_management
+        (companyName,companyCode,planNum,firstDraftFinishNum,firstDraftFinishRate,ReviewPassNum,ReviewPassRate,StandardReleaseNum,StandardReleaseRate,updateTime)
+        VALUES (#{companyName},#{companyCode},#{planNum},#{firstDraftFinishNum},#{firstDraftFinishRate},#{reviewPassNum},#{reviewPassRate}, #{standardReleaseNum},#{standardReleaseRate},#{updateTime})
+    </insert>
+
+    <!--插入：记录仪管理-->
+    <insert id="insertDRM" parameterType="com.wlhse.entity.DashboardRecorderManagement">
+        INSERT INTO dashboard_recorder_management
+        (companyName,companyCode,weeklyCollectNum,weeklyNormalNum,weeklyUsageRate,weeklySupervisionNum,updateTime)
+        VALUES (#{companyName},#{companyCode},#{weeklyCollectNum},#{weeklyNormalNum},#{weeklyUsageRate},#{weeklySupervisionNum},#{updateTime})
+    </insert>
+
+    <!--统计：DQM-->
+    <select id="countDQM" resultType="java.lang.Integer">
+        SELECT COUNT(companyCode) FROM dashboard_quality_management;
+    </select>
+
+    <!--统计：DSM-->
+    <select id="countDSM" resultType="java.lang.Integer">
+        SELECT COUNT(companyCode) FROM dashboard_schedule_management;
+    </select>
+
+    <!--统计：DRM-->
+    <select id="countDRM" resultType="java.lang.Integer">
+        SELECT COUNT(companyCode) FROM dashboard_recorder_management;
+    </select>
 </mapper>

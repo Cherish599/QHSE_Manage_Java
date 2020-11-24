@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @Author tobing
  * @Date 2020/10/28 21:24
- * @Description 大屏Controller
+ * @Description 【质量管理】大屏Controller
  */
 @RestController
 @RequestMapping("/api/v3")

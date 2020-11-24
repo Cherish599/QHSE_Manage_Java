@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--tobing-->
+<!--大屏Mapper-->
+<mapper namespace="com.wlhse.dao.DashboardSecurityProjectDao">
+    <resultMap id="dashboardSecurityProjectDaoMap" type="com.wlhse.entity.DashboardSecurityProjectPojo">
+
+    </resultMap>
+
+    <!--统计：companyCode-->
+    <select id="countDashboardSecurityProject" resultType="java.lang.Integer">
+        SELECT COUNT(CompanyCode) FROM dashboard_security_project
+    </select>
+
+
+    <!--插入：【安全管理数据】-->
+    <insert id="insertDashboardSecurityProject" parameterType="com.wlhse.entity.DashboardSecurityProjectPojo">
+        INSERT INTO dashboard_security_project(
+        companyCode,
+        companyName,
+        projectLevel,
+        projectName,
+        projectFunds,
+        recordedFunds,
+        recordedFundsRate,
+        updateTime
+        )
+        VALUES (
+        #{companyCode},
+        #{companyName},
+        #{projectLevel},
+        #{projectName},
+        #{projectFunds},
+        #{recordedFunds},
+        #{recordedFundsRate},
+        #{updateTime}
+        )
+    </insert>
+
+    <!--更新：【安全管理数据】-->
+    <update id="updateDashboardSecurityProject" parameterType="com.wlhse.entity.DashboardSecurityProjectPojo">
+        UPDATE dashboard_security_project SET
+        projectLevel=#{projectLevel},
+        projectName=#{projectName},
+        projectFunds=#{projectFunds},
+        recordedFunds=#{recordedFunds},
+        recordedFundsRate=#{recordedFundsRate},
+        updateTime=#{updateTime}
+    </update>
+</mapper>

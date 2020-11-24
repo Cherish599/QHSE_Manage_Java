@@ -14,7 +14,7 @@ public class DashboardQualityManagement {
     private Integer id;
     @ExcelProperty("单位代码")
     private String companyCode;
-    @ExcelProperty("单位名称")
+    @ExcelProperty("单位/部门名称")
     private String companyName;
     @ExcelProperty("月度报告编号发放数（计划数）")
     private Integer monthPlanNum;

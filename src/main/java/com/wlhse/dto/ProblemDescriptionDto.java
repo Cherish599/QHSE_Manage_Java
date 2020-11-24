@@ -33,6 +33,14 @@ public class ProblemDescriptionDto {
      * 打回原因
      */
     private String refuseReason;
+    /**
+     * 证据文件1
+     */
+    private String file1;
+    /**
+     * 证据文件2
+     */
+    private String file2;
 
     public String getStatus() {
         return status;
@@ -168,5 +176,21 @@ public class ProblemDescriptionDto {
 
     public void setRefuseReason(String refuseReason) {
         this.refuseReason = refuseReason;
+    }
+
+    public String getFile1() {
+        return file1;
+    }
+
+    public void setFile1(String file1) {
+        this.file1 = file1;
+    }
+
+    public String getFile2() {
+        return file2;
+    }
+
+    public void setFile2(String file2) {
+        this.file2 = file2;
     }
 }

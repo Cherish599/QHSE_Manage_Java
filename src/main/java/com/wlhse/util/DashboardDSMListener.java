@@ -26,15 +26,25 @@ public class DashboardDSMListener extends AnalysisEventListener<DashboardSchedul
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-
-        for (DashboardScheduleManagement dashboardScheduleManagement : list) {
-            // 数据完整性判断
-            if (dashboardScheduleManagement.getPlanNum() != null &&
-                    dashboardScheduleManagement.getFirstDraftFinishNum() != null &&
-                    dashboardScheduleManagement.getReviewPassNum() != null &&
-                    dashboardScheduleManagement.getStandardReleaseNum() != null) {
-                dashboardDao.updateDSM(dashboardScheduleManagement);
+        // 判断数据库中是否存在数据
+        // 不存在：直接插入
+        // 存在：直接更新
+        int countDSM = dashboardDao.countDSM();
+        if (countDSM != 0) {
+            for (DashboardScheduleManagement dashboardScheduleManagement : list) {
+                // 数据完整性判断
+                if (dashboardScheduleManagement.getPlanNum() != null &&
+                        dashboardScheduleManagement.getFirstDraftFinishNum() != null &&
+                        dashboardScheduleManagement.getReviewPassNum() != null &&
+                        dashboardScheduleManagement.getStandardReleaseNum() != null) {
+                    dashboardDao.updateDSM(dashboardScheduleManagement);
+                }
+            }
+        } else {
+            for (DashboardScheduleManagement dashboardScheduleManagement : list) {
+                dashboardDao.insertDSM(dashboardScheduleManagement);
             }
         }
+
     }
 }
