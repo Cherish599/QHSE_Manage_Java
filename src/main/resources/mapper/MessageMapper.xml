@@ -46,7 +46,7 @@
         where id=#{0}
     </select>
 
-    <select id="getReceiver" resultMap="com.wlhse.dto.outDto.UserIdOutDto">
+    <select id="getReceiver" resultType="com.wlhse.dto.outDto.UserIdOutDto">
         select distinct  t1.SYS_USER_ID as id,
         t2.Name as name
         from sys_user t1,
