@@ -20,7 +20,8 @@
             <if test="deleted !=null and deleted !=''">
                 deleted=#{deleted}
             </if>
-        </set>
+        </set>+
+
         where id=#{id}
     </update>
 
