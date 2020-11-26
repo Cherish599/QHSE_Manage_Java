@@ -10,8 +10,6 @@
     <select id="queryDashboardSecurityMillion" resultMap="dashboardSecurityMillionDaoMap">
         <if test="companyCode == null or companyCode == ''">
             SELECT
-            SUM(companyCode) AS companyCode,
-            SUM(companyName) AS companyName,
             SUM(subtotal) AS subtotal,
             MAX(updateTime) AS updateTime
             FROM dashboard_security_million;
