@@ -68,11 +68,11 @@ public class DashboardSecurityController {
 
     /**
      * 查询安全管理-百万工时
-     * TODO
      *
      * @param companyCode companyCode
      * @return R
      */
+    @RequestMapping(value = "/queryDashboardSecurityMillion", method = RequestMethod.GET)
     public R queryDashboardSecurityMillion(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
         return dashboardSecurityService.queryDashboardSecurityMillion(companyCode);
     }
@@ -108,15 +108,34 @@ public class DashboardSecurityController {
     /***************************安技项目管理*********************************/
 
     /**
-     * 查询安全管理-安技项目管理
-     * TODO
+     * 根据公司、项目级别查询数据
+     *
+     * @param companyCode  companyCode
+     * @param projectLevel 项目级别
+     * @return R
+     */
+    @RequestMapping(value = "/queryDashboardSecurityProjectByLevel", method = RequestMethod.GET)
+    public R queryDashboardSecurityProjectByLevel(@RequestParam(value = "companyCode", defaultValue = "") String companyCode,
+                                                  @RequestParam(value = "projectLevel", defaultValue = "") String projectLevel) {
+        return dashboardSecurityService.queryDashboardSecurityProjectByLevel(companyCode, projectLevel);
+    }
+
+    /**
+     * 根据companyCode查询项目汇总
      *
      * @param companyCode companyCode
      * @return R
      */
-    public R queryDashboardSecurityProject(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
-        return dashboardSecurityService.queryDashboardSecurityProject(companyCode);
+    @RequestMapping(value = "/queryDashboardSecurityProjectCount", method = RequestMethod.GET)
+    public R queryDashboardSecurityProjectCount(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
+        try {
+            return dashboardSecurityService.queryDashboardSecurityProjectCount(companyCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return R.ok();
     }
+
 
     /**
      * 下载安全管理-安技项目管理

@@ -29,5 +29,7 @@ public interface DashboardSecurityService {
 
     R queryDashboardSecurityMillion(String companyCode);
 
-    R queryDashboardSecurityProject(String companyCode);
+    R queryDashboardSecurityProjectByLevel(String companyCode, String projectLevel);
+
+    R queryDashboardSecurityProjectCount(String companyCode);
 }

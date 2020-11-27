@@ -4,24 +4,29 @@
 <!--大屏Mapper-->
 <mapper namespace="com.wlhse.dao.DashboardSecurityMillionDao">
     <resultMap id="dashboardSecurityMillionDaoMap" type="com.wlhse.entity.DashboardSecurityMillionPojo">
-
     </resultMap>
-    <!--查：安全管理-百万工时-->
-    <select id="queryDashboardSecurityMillion" resultMap="dashboardSecurityMillionDaoMap">
-        <if test="companyCode == null or companyCode == ''">
-            SELECT
-            SUM(subtotal) AS subtotal,
-            MAX(updateTime) AS updateTime
-            FROM dashboard_security_million;
+
+    <resultMap id="DSM" type="com.wlhse.entity.DashboardSecurityMillionDto">
+    </resultMap>
+    <!--查：安全管理-月度百万工时-->
+    <select id="queryMonthDSM" resultMap="DSM">
+        SELECT
+        SUM(subtotal) AS monthSubtotal
+        FROM dashboard_security_million
+        WHERE updateTime BETWEEN #{minDate} AND #{maxDate}
+        <if test="companyCode!=null and companyCode!=''">
+            AND companyCode=#{companyCode}
         </if>
-        <if test="companyCode != null and companyCode != ''">
-            SELECT
-            id AS id,
-            companyCode AS companyCode,
-            companyName AS companyName,
-            subtotal AS subtotal,
-            updateTime AS updateTime
-            FROM dashboard_security_million;
+    </select>
+
+    <!--查：安全管理-年度百万工时-->
+    <select id="queryYearDSM" resultMap="DSM">
+        SELECT
+        SUM(subtotal) AS yearSubtotal
+        FROM dashboard_security_million
+        WHERE updateTime BETWEEN #{minDate} AND #{maxDate}
+        <if test="companyCode!=null and companyCode!=''">
+            AND companyCode=#{companyCode}
         </if>
     </select>
 
