@@ -3,6 +3,7 @@ package com.wlhse.controller;
 import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.UserDao;
 import com.wlhse.dto.inDto.UserDto;
+import com.wlhse.dto.inDto.WeChatBindInfo;
 import com.wlhse.entity.UserPojo;
 import com.wlhse.service.UserService;
 import com.wlhse.util.R;
@@ -86,7 +87,6 @@ public class UserController {
                     resultList.add(code);
                 }
             }
-            log.info("结果菜单集"+resultList.toString());
             resultMap.put("data",resultList);
             return R.ok(resultMap);
         }
@@ -99,5 +99,10 @@ public class UserController {
             resultMap.put("data",resultList);
             return R.ok(resultMap);
         }
+    }
+
+    @RequestMapping(value = "/bindWeChat",method = RequestMethod.POST)
+    public R bindWeChat(@RequestBody(required = false) WeChatBindInfo weChatBindInfo) throws Exception {
+        return service.bindWeChat(weChatBindInfo);
     }
 }

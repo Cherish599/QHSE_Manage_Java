@@ -13,6 +13,9 @@ public class UserOutDto {
     private String companyCode;
     private String employeeName;
     private String group;
+    private String openId;
+
+
 
     public String getGroup() {
         return group;
@@ -86,6 +89,15 @@ public class UserOutDto {
         this.status = status;
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+
     @Override
     public String toString() {
         return "UserOutDto{" +
@@ -93,6 +105,12 @@ public class UserOutDto {
                 ", userName='" + userName + '\'' +
                 ", token='" + token + '\'' +
                 ", status='" + status + '\'' +
+                ", employeeId=" + employeeId +
+                ", companyName='" + companyName + '\'' +
+                ", companyCode='" + companyCode + '\'' +
+                ", employeeName='" + employeeName + '\'' +
+                ", group='" + group + '\'' +
+                ", openId='" + openId + '\'' +
                 '}';
     }
 }

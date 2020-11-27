@@ -28,4 +28,6 @@ public interface UserDao {
     int countUserName(@Param("userName") String userName);
 
     List<String> getUserAuthMinCode(String userId);
+
+    int bindWechat(int userId,String openId);
 }

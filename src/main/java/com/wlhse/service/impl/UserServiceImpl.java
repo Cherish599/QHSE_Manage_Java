@@ -1,21 +1,20 @@
 package com.wlhse.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.EmployeeManagementDao;
 import com.wlhse.dao.UserDao;
 import com.wlhse.dto.EmployeeManagementDto;
 import com.wlhse.dto.inDto.UserDto;
 import com.wlhse.dao.UserRoleDao;
+import com.wlhse.dto.inDto.WeChatBindInfo;
 import com.wlhse.dto.outDto.UserOutDto;
 import com.wlhse.entity.UserPojo;
 import com.wlhse.entity.UserRolePojo;
 import com.wlhse.exception.WLHSException;
 
 import com.wlhse.service.UserService;
-import com.wlhse.util.DeleteCacheUtil;
-import com.wlhse.util.GetIPUtil;
-import com.wlhse.util.HashUtil;
-import com.wlhse.util.MD5Util;
+import com.wlhse.util.*;
 import com.wlhse.util.state_code.NR;
 import com.wlhse.util.token.TokenUtil;
 import org.apache.commons.lang.StringUtils;
@@ -125,4 +124,17 @@ public class UserServiceImpl implements UserService {
         return NR.r();
     }
 
+    @Override
+    public R bindWeChat(WeChatBindInfo weChatBindInfo) throws Exception {
+        JSONObject sessionInfo = JSONObject.parseObject(jcode2Session(weChatBindInfo.getPermissionCode()));
+        String openId=sessionInfo.getString("openid");
+        userDao.bindWechat(weChatBindInfo.getUserId(),openId);
+        return R.ok();
+    }
+
+
+    private String jcode2Session(String code)throws Exception{
+        String sessionInfo = Jcode2SessionUtil.jscode2session("wxe93ae9db327a2e41","bea5b57909fe98bf0cbbe18321f01263",code,"authorization_code");//登录grantType固定
+        return sessionInfo;
+    }
 }

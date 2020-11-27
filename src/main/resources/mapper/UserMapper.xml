@@ -80,7 +80,8 @@
         select UName as username,
         SYS_USER_ID as userId,
         Status as status,
-        EmployeeID as employeeId
+        EmployeeID as employeeId,
+        OpenId as openId
         from sys_user
         <where>
             UName = #{0}
@@ -145,4 +146,9 @@
         )
         )
     </select>
+
+    <update id="bindWechat">
+        update sys_user set OpenId=#{1}
+        where SYS_USER_ID=#{0}
+    </update>
 </mapper>
