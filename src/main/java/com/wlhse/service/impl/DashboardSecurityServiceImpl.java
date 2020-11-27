@@ -107,8 +107,9 @@ public class DashboardSecurityServiceImpl implements DashboardSecurityService {
     }
 
     private ResponseEntity<byte[]> templateUtils(String name) throws IOException {
-//        String path = System.getProperty("catalina.home") + "\\webapps\\" + "DashboardTemplate";
-        String path = "D:\\fileTest";
+        // TODO 文件路径
+        String path = System.getProperty("catalina.home") + "\\webapps\\" + "DashboardTemplate";
+        // String path = "D:\\fileTest";
         File file = new File(path + File.separator + name + ".xlsx");
         // 文件不存在：创建模板文件
         if (!file.exists()) {
