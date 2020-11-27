@@ -1,6 +1,8 @@
 package com.wlhse.dao;
 
 import com.wlhse.entity.DashboardSecurityPojo;
+import com.wlhse.entity.DashboardSecurityProjectCount;
+import com.wlhse.entity.DashboardSecurityProjectPojo;
 import com.wlhse.util.R;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +22,6 @@ public interface DashboardSecurityDao {
     void updateDashboardSecurity(DashboardSecurityPojo dashboardSecurityPojo);
 
     void insertDashboardSecurity(DashboardSecurityPojo dashboardSecurityPojo);
+
+
 }

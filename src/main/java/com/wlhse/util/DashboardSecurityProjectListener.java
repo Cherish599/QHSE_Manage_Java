@@ -38,7 +38,9 @@ public class DashboardSecurityProjectListener extends AnalysisEventListener<Dash
                         dashboardSecurityProjectPojo.getProjectName() != null &&
                         dashboardSecurityProjectPojo.getProjectFunds() != null &&
                         dashboardSecurityProjectPojo.getRecordedFundsRate() != null) {
-                    dashboardSecurityProjectDao.updateDashboardSecurityProject(dashboardSecurityProjectPojo);
+                    // TODO 更新 --> 插入
+                    //dashboardSecurityProjectDao.updateDashboardSecurityProject(dashboardSecurityProjectPojo);
+                    dashboardSecurityProjectDao.insertDashboardSecurityProject(dashboardSecurityProjectPojo);
                 }
             }
         } else {

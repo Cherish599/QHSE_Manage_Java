@@ -7,6 +7,10 @@
 
     </resultMap>
 
+    <resultMap id="dashboardSecurityProjectCountMap" type="com.wlhse.entity.DashboardSecurityProjectCount">
+
+    </resultMap>
+
     <!--统计：companyCode-->
     <select id="countDashboardSecurityProject" resultType="java.lang.Integer">
         SELECT COUNT(CompanyCode) FROM dashboard_security_project
@@ -47,4 +51,42 @@
         recordedFundsRate=#{recordedFundsRate},
         updateTime=#{updateTime}
     </update>
+
+    <!--查：根据companyCode、projectLevel查询-项目-->
+    <select id="queryDashboardSecurityProjectByLevel" resultMap="dashboardSecurityProjectDaoMap">
+        SELECT
+        companyCode,
+        companyName,
+        projectLevel,
+        projectName,
+        projectFunds,
+        recordedFunds,
+        recordedFunds/projectFunds AS recordedFundsRate,
+        updateTime
+        FROM dashboard_security_project
+        <where>
+            <if test="projectLevel!=null and projectLevel!=''">
+                projectLevel=#{projectLevel}
+            </if>
+            <if test="companyCode!=null and companyCode!=''">
+                AND companyCode=#{companyCode}
+            </if>
+        </where>
+    </select>
+
+    <!--    -->
+    <select id="queryDashboardSecurityProjectCount" resultMap="dashboardSecurityProjectCountMap">
+        SELECT
+        MAX(companyName) AS companyName,
+        MAX(companyCode) AS companyCode,
+        projectLevel,
+        COUNT(projectLevel) AS projectLevelCount
+        FROM dashboard_security_project
+        <where>
+            <if test="companyCode!=null and companyCode!=''">
+                companyCode=#{companyCode}
+            </if>
+        </where>
+        GROUP BY projectLevel
+    </select>
 </mapper>

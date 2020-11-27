@@ -179,15 +179,26 @@ public class DashboardSecurityServiceImpl implements DashboardSecurityService {
     }
 
     @Override
-    public R queryDashboardSecurityProject(String companyCode) {
+    public R queryDashboardSecurityProjectByLevel(String companyCode, String projectLevel) {
         DashboardSecurityProjectPojo projectPojo = new DashboardSecurityProjectPojo();
         projectPojo.setCompanyCode(companyCode);
+        projectPojo.setProjectLevel(projectLevel);
         List<DashboardSecurityProjectPojo> projectPojoList =
-                dashboardSecurityProjectDao.queryDashboardSecurityProject(projectPojo);
+                dashboardSecurityProjectDao.queryDashboardSecurityProjectByLevel(projectPojo);
         if (projectPojoList == null || projectPojoList.size() == 0) {
             return R.ok();
         }
-        return R.ok().put("data", projectPojoList.get(0));
+        return R.ok().put("data", projectPojoList);
+    }
+
+    @Override
+    public R queryDashboardSecurityProjectCount(String companyCode) {
+        DashboardSecurityProjectPojo projectPojo = new DashboardSecurityProjectPojo();
+        projectPojo.setCompanyCode(companyCode);
+        List<DashboardSecurityProjectCount> countList = dashboardSecurityProjectDao.queryDashboardSecurityProjectCount(projectPojo);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", countList);
+        return R.ok(map);
     }
 
 
