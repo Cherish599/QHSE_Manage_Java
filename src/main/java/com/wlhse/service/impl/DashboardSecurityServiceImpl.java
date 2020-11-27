@@ -7,15 +7,9 @@ import com.wlhse.dao.CompanyDao;
 import com.wlhse.dao.DashboardSecurityDao;
 import com.wlhse.dao.DashboardSecurityMillionDao;
 import com.wlhse.dao.DashboardSecurityProjectDao;
-import com.wlhse.entity.CompanyPojo;
-import com.wlhse.entity.DashboardSecurityMillionPojo;
-import com.wlhse.entity.DashboardSecurityPojo;
-import com.wlhse.entity.DashboardSecurityProjectPojo;
+import com.wlhse.entity.*;
 import com.wlhse.service.DashboardSecurityService;
-import com.wlhse.util.DashboardSecurityListener;
-import com.wlhse.util.DashboardSecurityMillionListener;
-import com.wlhse.util.DashboardSecurityProjectListener;
-import com.wlhse.util.R;
+import com.wlhse.util.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,8 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author tobing
@@ -155,14 +148,34 @@ public class DashboardSecurityServiceImpl implements DashboardSecurityService {
 
     @Override
     public R queryDashboardSecurityMillion(String companyCode) {
-        DashboardSecurityMillionPojo millionPojo = new DashboardSecurityMillionPojo();
-        millionPojo.setCompanyCode(companyCode);
-        List<DashboardSecurityMillionPojo> millionPojoList =
-                dashboardSecurityMillionDao.queryDashboardSecurityMillion(millionPojo);
-        if (millionPojoList == null || millionPojoList.size() == 0) {
-            return R.ok();
+        Calendar calendar = Calendar.getInstance();
+        // 获取月度时间区间
+        Date minMonthDay = DashboardDateUtils.getMinMonthDay(calendar);
+        Date maxMonthDay = DashboardDateUtils.getMaxMonthDay(calendar);
+
+        // 获取年度时间区间
+        Date minYearDay = DashboardDateUtils.getMinYearDay(calendar);
+        Date maxYearDay = DashboardDateUtils.getMaxYearDay(calendar);
+
+        // 分别查询年度、月度数据
+        List<DashboardSecurityMillionDto> millionMonthDtoList =
+                dashboardSecurityMillionDao.queryMonthDSM(new DashboardQueryParam(companyCode, minMonthDay, maxMonthDay));
+        List<DashboardSecurityMillionDto> millionYearDtoList =
+                dashboardSecurityMillionDao.queryYearDSM(new DashboardQueryParam(companyCode, minYearDay, maxYearDay));
+
+        // 封装结果
+        DashboardSecurityMillionDto res = new DashboardSecurityMillionDto();
+        if (millionMonthDtoList != null && millionMonthDtoList.size() > 0 && millionMonthDtoList.get(0) != null) {
+            res.setMonthSubtotal(millionMonthDtoList.get(0).getMonthSubtotal());
         }
-        return R.ok().put("data", millionPojoList.get(0));
+        if (millionYearDtoList != null && millionYearDtoList.size() > 0 && millionYearDtoList.get(0) != null) {
+            res.setYearSubtotal(millionYearDtoList.get(0).getYearSubtotal());
+        }
+        res.setYear(String.valueOf(calendar.get(Calendar.YEAR)));
+        res.setMonth(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", res);
+        return R.ok(map);
     }
 
     @Override

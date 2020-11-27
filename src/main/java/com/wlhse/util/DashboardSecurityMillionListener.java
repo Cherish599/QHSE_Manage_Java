@@ -38,7 +38,9 @@ public class DashboardSecurityMillionListener extends AnalysisEventListener<Dash
                 if (dashboardSecurityMillionPojo.getSubtotal() != null &&
                         dashboardSecurityMillionPojo.getCompanyCode() != null &&
                         dashboardSecurityMillionPojo.getCompanyName() != null) {
-                    dashboardSecurityMillionDao.updateDashboardSecurityMillion(dashboardSecurityMillionPojo);
+                    // TODO 更新 --> 插入
+                    // dashboardSecurityMillionDao.updateDashboardSecurityMillion(dashboardSecurityMillionPojo);
+                    dashboardSecurityMillionDao.insertDashboardSecurityMillion(dashboardSecurityMillionPojo);
                 }
             }
         } else {

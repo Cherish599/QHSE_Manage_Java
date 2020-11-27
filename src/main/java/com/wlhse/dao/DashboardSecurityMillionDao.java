@@ -1,5 +1,7 @@
 package com.wlhse.dao;
 
+import com.wlhse.entity.DashboardQueryParam;
+import com.wlhse.entity.DashboardSecurityMillionDto;
 import com.wlhse.entity.DashboardSecurityMillionPojo;
 import org.springframework.stereotype.Repository;
 
@@ -12,12 +14,16 @@ import java.util.List;
  */
 @Repository
 public interface DashboardSecurityMillionDao {
-
-    List<DashboardSecurityMillionPojo> queryDashboardSecurityMillion(DashboardSecurityMillionPojo millionPojo);
+    // 废弃
+    // List<DashboardSecurityMillionPojo> queryDashboardSecurityMillion(DashboardSecurityMillionPojo millionPojo);
 
     int countDashboardSecurityMillion();
 
     void updateDashboardSecurityMillion(DashboardSecurityMillionPojo dashboardSecurityMillionPojo);
 
     void insertDashboardSecurityMillion(DashboardSecurityMillionPojo dashboardSecurityMillionPojo);
+
+    List<DashboardSecurityMillionDto> queryMonthDSM(DashboardQueryParam monthParam);
+
+    List<DashboardSecurityMillionDto> queryYearDSM(DashboardQueryParam monthParam);
 }

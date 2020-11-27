@@ -68,11 +68,11 @@ public class DashboardSecurityController {
 
     /**
      * 查询安全管理-百万工时
-     * TODO
      *
      * @param companyCode companyCode
      * @return R
      */
+    @RequestMapping(value = "/queryDashboardSecurityMillion", method = RequestMethod.GET)
     public R queryDashboardSecurityMillion(@RequestParam(value = "companyCode", defaultValue = "") String companyCode) {
         return dashboardSecurityService.queryDashboardSecurityMillion(companyCode);
     }
@@ -109,7 +109,6 @@ public class DashboardSecurityController {
 
     /**
      * 查询安全管理-安技项目管理
-     * TODO
      *
      * @param companyCode companyCode
      * @return R
