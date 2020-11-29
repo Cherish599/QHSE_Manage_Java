@@ -3,6 +3,7 @@ package com.wlhse.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wlhse.cache.JedisClient;
+import com.wlhse.dao.CompanyYearManagerDao;
 import com.wlhse.dao.MessageDao;
 import com.wlhse.dto.outDto.UserIdOutDto;
 import com.wlhse.entity.Message;
@@ -23,10 +24,29 @@ public class MessageServiceImp implements MessageService {
     MessageDao messageDao;
     @Resource
     JedisClient jedisClient;
+    @Resource
+    CompanyYearManagerDao companyYearManagerDao;
 
-    //TODO 安全体系发送消息
+
     @Override
-    public R senMessageInInputCheckApprove(int sourceId, int tableId, String elementId) {
+    public R senMessageInInputCheckApprove(int sourceId, int receiverId,HttpServletRequest request) {
+        int senderId = getUserId(request);
+        Message message=new Message();
+        message.setStatus("未读");
+        message.setReceiverId(receiverId);
+        message.setSenderId(senderId);
+        //录入流程结束，向审核一级领导发送通知
+        if (sourceId==0){
+            message.setSource("要素证据录入");
+            message.setTittle("待审核任务通知");
+            message.setBody("你有年度要素证据审核任务，请及时处理。");
+        }else {
+            //审核流程结束，向批准一级领导发送通知
+            message.setSource("要素证据审核");
+            message.setTittle("待批准任务通知");
+            message.setBody("你有年度要素证据批准任务，请及时处理。");
+        }
+        messageDao.insertMessage(message);
         return null;
     }
 
@@ -75,14 +95,38 @@ public class MessageServiceImp implements MessageService {
         return r;
     }
 
-
+    @Override
+    @Transactional
+    public R callBack(int tableId, int sourceId,HttpServletRequest request) {
+        int senderId = getUserId(request);
+        Message message=new Message();
+        message.setSenderId(senderId);
+        message.setStatus("未读");
+        message.setTittle("要素证据录入打回通知");
+        message.setBody("你录入的年度要素证据内容不合规范，已被打回。详细驳回信息请进入要素证据录入查看。请及时处理。");
+        //审核阶段打回
+        if (sourceId==0){
+            message.setSource("要素证据审核");
+        }
+        else {
+            //批准阶段打回
+            message.setSource("要素证据批准");
+        }
+        //获取此审核表被打回者的id
+        List<Integer> inputPersonId=companyYearManagerDao.getInputPersonId(tableId);
+        //开始逐一通知
+        for (Integer receiverId:inputPersonId){
+            message.setReceiverId(receiverId);
+            messageDao.insertMessage(message);
+        }
+        return R.ok();
+    }
 
 
     private int getUserId(HttpServletRequest request){
         try {
             String token = request.getHeader("Authorization");
             if (StringUtils.isNotBlank(token))
-                // System.out.println(jedisClient.get(token));
                 return Integer.parseInt(jedisClient.hGetAll(token).get("userId"));
         } catch (Exception e) {
             e.printStackTrace();

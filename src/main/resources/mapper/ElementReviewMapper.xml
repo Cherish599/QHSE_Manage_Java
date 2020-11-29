@@ -209,4 +209,18 @@
         and ConfigStatus="启用"
     </where>
     </select>
+
+    <update id="passAll">
+        update qhse_companyyearmanagersyselement
+        set Status='未批准',FileCheckStatus='未审核'
+        where AuditMode is not null
+        and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </update>
+
+    <update id="approveAll">
+        update qhse_companyyearmanagersyselement
+        set Status='备案待查',FileCheckStatus='未审核'
+        where AuditMode is not null
+        and QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+    </update>
 </mapper>

@@ -6,6 +6,7 @@ public class Message {
     private int id;
     private int senderId;
     private int receiverId;
+
     private String tittle;
     private String body;
     private String source;

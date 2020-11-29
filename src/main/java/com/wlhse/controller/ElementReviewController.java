@@ -111,4 +111,11 @@ public class ElementReviewController {
         elementReviewDao.updateQuality(qualityCheckTableRecordDto);
         return  R.ok();
     }
+
+    //一键审核通过/批准
+    @RequestMapping("/passAll")
+    public R passAll(@RequestParam("tableId")Integer tableId,@RequestParam("sourceId")Integer sourceId){
+        return elementReviewService.passAll(tableId,sourceId);
+    }
+
 }

@@ -20,4 +20,6 @@ public interface CompanyYearManagerDao {
     int deleteAll(int id);
     //新增检查表
     int addCompanyYearManager(CompanyYearManagerDto companyYearManagerDto);
+
+    List<Integer> getInputPersonId(int tableId);
 }

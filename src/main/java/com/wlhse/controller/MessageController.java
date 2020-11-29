@@ -31,14 +31,20 @@ public class MessageController {
         return messageService.getReceiveMessageCnt(request);
     }
 
-    //TODO 发送消息 明天做~~
     @RequestMapping(value = "/sendMessage/{tag}",method = RequestMethod.POST)
-    public R sendMessage(@RequestParam("elementId") String elementId, @PathVariable("tag")Integer sourceId,@RequestParam("tableId")Integer tableId){
-        return messageService.senMessageInInputCheckApprove(sourceId,tableId,elementId);
+    public R sendMessage(@RequestParam("receiverId") Integer receiverId, @PathVariable("tag")Integer sourceId,HttpServletRequest request){
+        return messageService.senMessageInInputCheckApprove(sourceId,receiverId,request);
     }
 
     @RequestMapping(value = "/getReceiver",method = RequestMethod.GET)
-    public R getReceiver(@RequestParam("companyCode")String companyCode,@RequestParam("moduleCode")String moduleCode,@RequestParam("type")Integer type){
+    public R getReceiver(@RequestParam("companyCode")String companyCode,@RequestParam("moduleCode")String moduleCode){
         return messageService.getReceiver(companyCode,moduleCode);
+    }
+
+
+    //打回通知
+    @RequestMapping("/callBack")
+    public R callBack(@RequestParam("tableId")Integer tableId,@RequestParam("sourceId")Integer sourceId,HttpServletRequest request){
+        return messageService.callBack(tableId,sourceId,request);
     }
 }

@@ -21,8 +21,8 @@ public class QhseElementsInputController {
 
     //melon-增加附件所有信息(前端传值code、id、uploadtime不能为空）
     @RequestMapping(value = "/addAll_evidence_attach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-    public R addElementEvidenceAttachs(@RequestBody(required = false) ElementEvidenceAttachInDto elementEvidenceAttachInDto){
-        return qhseElementsInputService.addElementEvidenceAttach(elementEvidenceAttachInDto) ;
+    public R addElementEvidenceAttachs(@RequestBody(required = false) ElementEvidenceAttachInDto elementEvidenceAttachInDto,HttpServletRequest request){
+        return qhseElementsInputService.addElementEvidenceAttach(elementEvidenceAttachInDto,request) ;
     }
     //melon-查询信息
     @RequestMapping(value = "/query_evidence_attach", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
@@ -48,4 +48,7 @@ public class QhseElementsInputController {
     public R submitInputResult(@RequestParam(value = "tableId",required = false)Integer tableId,@RequestParam("tag")Integer tag){
         return qhseElementsInputService.submitInputResult(tableId,tag);
     }
+
+
+
 }

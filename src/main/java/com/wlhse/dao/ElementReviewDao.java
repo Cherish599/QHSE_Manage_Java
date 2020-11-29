@@ -63,4 +63,9 @@ public interface ElementReviewDao {
     int qualityInput(QualityCheckTableRecordDto qualityCheckTableRecordDto);
 
     List<QHSECompanyYearManagerSysElementDto> queryNoPasElement(ElementReviewDto elementReviewDto);
+
+    //一键审核
+    int passAll(int tableId);
+    //一键批准
+    int approveAll(int tableId);
 }

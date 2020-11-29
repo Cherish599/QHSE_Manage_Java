@@ -5,10 +5,12 @@ import com.wlhse.dto.inDto.ElementEvidenceAttachInDto;
 import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.util.R;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 public interface QhseElementsInputService {
 
-    R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
+    R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto, HttpServletRequest request);
     R queryAll(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
     String queryOriginFileName (String newElementFileName);
     //质量原文件名

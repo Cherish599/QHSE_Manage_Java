@@ -116,8 +116,9 @@
     </update>
 
     <update id="updateStatus" parameterType="java.lang.Integer">
-        update QHSE_CompanyYearManagerSysElement set Status="未审核"
-        where QHSE_CompanyYearManagerSysElement_ID=#{id}
+        update QHSE_CompanyYearManagerSysElement set Status="未审核",
+        CheckPersonId=#{1}
+        where QHSE_CompanyYearManagerSysElement_ID=#{0}
     </update>
 
     <select id="queryOriginFileName" parameterType="java.lang.String" resultType="java.lang.String">

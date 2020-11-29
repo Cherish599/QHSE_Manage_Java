@@ -6,7 +6,7 @@
         insert into message
         (senderId,receiverId,tittle,body,`source`,`time`,status,readTime,deleted)
         values
-        (#{senderId},#{receiverId},#{tittle},#{body},#{source},#{time},#{status},#{readTime},0)
+        (#{senderId},#{receiverId},#{tittle},#{body},#{source},now(),#{status},#{readTime},0)
     </insert>
 
 

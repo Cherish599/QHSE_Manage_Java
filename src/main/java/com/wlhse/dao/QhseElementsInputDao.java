@@ -26,7 +26,7 @@ public interface QhseElementsInputDao {
     int updateAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto);
 
     //更改状态
-    int updateStatus(Integer id);
+    int updateStatus(Integer id,int checkPersonId);
 
     //查询要素附件原始名
     String queryOriginFileName(@Param("newElementFileName") String newElementFileName);

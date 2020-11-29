@@ -72,4 +72,10 @@
         )
   </insert>
 
+    <select id="getInputPersonId" resultType="Integer">
+        select distinct CheckPersonId
+        from qhse_companyyearmanagersyselement
+        where QHSE_CompanyYearManagerSysElementTable_ID=#{0}
+        and status='不通过'
+    </select>
 </mapper>

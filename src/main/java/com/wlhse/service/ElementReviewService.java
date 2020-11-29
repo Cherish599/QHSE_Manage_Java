@@ -44,4 +44,7 @@ public interface ElementReviewService {
 
     R showNoPass(ElementReviewDto elementReviewDto);
 
+    R passAll(int tableId, int sourceId);
+
+
 }

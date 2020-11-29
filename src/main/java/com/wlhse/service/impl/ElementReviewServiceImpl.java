@@ -9,7 +9,6 @@ import com.wlhse.dto.TaskStatusDto;
 import com.wlhse.dto.inDto.ElementReviewDto;
 import com.wlhse.dto.outDto.QHSECompanyYearManagerSysElementDto;
 import com.wlhse.dto.outDto.QhseEvidenceAttatchDto;
-import com.wlhse.entity.QualityInputAttachPojo;
 import com.wlhse.entity.QualityManergerSysElementPojo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.ElementReviewService;
@@ -18,6 +17,7 @@ import com.wlhse.util.TreeUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -303,5 +303,20 @@ public class ElementReviewServiceImpl implements ElementReviewService {
         ok.put("data", treeUtil.getCurrentQhseElementTree1(lists));
         return ok;
     }
+
+    @Override
+    public R passAll(int tableId, int sourceId) {
+        //一键审核
+        if (sourceId==1){
+            elementReviewDao.passAll(tableId);
+        }
+        //一键批准
+        else
+        {
+            elementReviewDao.approveAll(tableId);
+        }
+        return R.ok();
+    }
+
 
 }

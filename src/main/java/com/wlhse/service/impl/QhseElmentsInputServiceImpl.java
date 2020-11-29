@@ -11,11 +11,13 @@ import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
@@ -32,16 +34,18 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Resource
     QHSETaskDao taskDao;
 
+    //TODO 这里还有不涉及的Bug要改
     @Override
     @Transactional
-    public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto) {
+    public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto, HttpServletRequest request) {
         //首次录入数据
         //判断是不是不涉及
+        int checkPersonId = getUserId(request);
         ElementEvidenceAttachInDto query = qhseElementsInputDao.query(elementEvidenceAttachInDto);
         if (query== null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
-             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")&&elementEvidenceAttachInDto.getAttach().equals("")&&elementEvidenceAttachInDto==null){
+             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
                  elementEvidenceAttachInDto.setAttach("无");
              }
             if((elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach()))||"无".equals(query.getAttach())) {
@@ -57,7 +61,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
         } else {
             //再次录入数据
             //将附件attach对应id放入elementFileInfo
-             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")&&elementEvidenceAttachInDto.getAttach().equals("")&&elementEvidenceAttachInDto==null){
+             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
                  elementEvidenceAttachInDto.setAttach("无");
              }
             if((elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach()))||"无".equals(query.getAttach())) {
@@ -73,7 +77,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             int j = qhseElementsInputDao.updateAttach(elementEvidenceAttachInDto);
             if (i * j < 0) throw new WLHSException("更新失败");
         }
-        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId());//状态变为审核
+        qhseElementsInputDao.updateStatus(elementEvidenceAttachInDto.getId(),checkPersonId);//状态变为审核
         return R.ok();
     }
 
@@ -158,6 +162,17 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             return true;
         }
         return false;
+    }
+
+    private int getUserId(HttpServletRequest request){
+        try {
+            String token = request.getHeader("Authorization");
+            if (StringUtils.isNotBlank(token))
+                return Integer.parseInt(jedisClient.hGetAll(token).get("userId"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }
