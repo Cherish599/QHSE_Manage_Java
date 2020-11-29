@@ -37,7 +37,7 @@ public class DashboardSecurityPojo {
     @ExcelProperty("事件完成率")
     private Integer eventFinishRate;
     @ExcelProperty("填报日期")
-    private Date updateTime;
+    private String updateTime;
 
     public Integer getId() {
         return id;
@@ -135,11 +135,11 @@ public class DashboardSecurityPojo {
         this.eventFinishRate = eventFinishRate;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }

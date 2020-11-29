@@ -29,7 +29,7 @@ public class DashboardSecurityProjectPojo {
     @ExcelProperty("入账率")
     private Double recordedFundsRate;
     @ExcelProperty("填报日期")
-    private Date updateTime;
+    private String updateTime;
 
     public Integer getId() {
         return id;
@@ -95,11 +95,11 @@ public class DashboardSecurityProjectPojo {
         this.recordedFundsRate = recordedFundsRate;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }

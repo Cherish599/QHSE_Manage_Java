@@ -32,7 +32,7 @@ public class DashboardEnvironmentManagement {
     @ExcelProperty("柴油（L）")
     private Double diesel;
     @ExcelProperty("填报时间")
-    private Date updateTime;
+    private String updateTime;
 
 
     public Integer getId() {
@@ -115,11 +115,11 @@ public class DashboardEnvironmentManagement {
         this.diesel = diesel;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }

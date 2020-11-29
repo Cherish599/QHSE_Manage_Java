@@ -21,7 +21,7 @@ public class DashboardSecurityMillionPojo {
     @ExcelProperty("小计")
     private Double subtotal;
     @ExcelProperty("填报日期")
-    private Date updateTime;
+    private String updateTime;
 
     public Integer getId() {
         return id;
@@ -55,11 +55,11 @@ public class DashboardSecurityMillionPojo {
         this.subtotal = subtotal;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }
