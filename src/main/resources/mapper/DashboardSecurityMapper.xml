@@ -82,12 +82,18 @@
         quarterDangerIndex=#{quarterDangerIndex},
         quarterRegulationIndex=#{quarterRegulationIndex},
         actualFinishEvent=#{actualFinishEvent},
-        actualFinishDanger#{actualFinishDanger},
+        actualFinishDanger=#{actualFinishDanger},
         actualFinishRegulation=#{actualFinishRegulation},
-        finishDangerRate=#{finishDangerRate},
-        finishRegulationRate=#{finishRegulationRate},
-        eventFinishRate=#{eventFinishRate},
+        <if test="finishDangerRate!=null">
+            finishDangerRate=#{finishDangerRate},
+        </if>
+        <if test="finishRegulationRate">
+            finishRegulationRate=#{finishRegulationRate},
+        </if>
+        <if test="eventFinishRate">
+            eventFinishRate=#{eventFinishRate},
+        </if>
         updateTime=#{updateTime}
+        where companyCode = #{companyCode}
     </update>
-
 </mapper>

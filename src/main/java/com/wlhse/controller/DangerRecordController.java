@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @RestController("DangerRecordController")
 @RequestMapping("/api/v3")
@@ -45,7 +46,6 @@ public class DangerRecordController {
         R r = null;
         try {
             r = dangerRecordService.queryDangerRecord(dangerRecordDto);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,5 +56,11 @@ public class DangerRecordController {
     public R problemVerification(@PathVariable int id, @RequestBody(required = false) DangerRecordDto dangerRecordDto) {
         dangerRecordDto.setId(id);
         return dangerRecordService.problemVerification(dangerRecordDto);
+    }
+
+    @RequestMapping(value = "/queryMostDangerRecord", method = RequestMethod.GET)
+    public R queryMostDangerRecord(@RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                   @RequestParam(value = "endDate", defaultValue = "") String endDate) {
+        return dangerRecordService.queryMostDangerRecord(startDate, endDate);
     }
 }
