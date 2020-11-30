@@ -57,9 +57,9 @@
         where t1.EmployeeID=t2.EmployeeID
         and t2.CompanyCode=#{0}
         and t1.UName=t4.UName
-        and t4.RoleCode in {
+        and t4.RoleCode in (
             select RoleCode from sys_rolemodule
             where sys_rolemodule.ModuleCode=#{1}
-        }
+        )
     </select>
 </mapper>
