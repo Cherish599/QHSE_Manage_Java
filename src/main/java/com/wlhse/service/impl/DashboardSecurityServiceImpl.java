@@ -11,6 +11,8 @@ import com.wlhse.entity.*;
 import com.wlhse.service.DashboardSecurityService;
 import com.wlhse.util.*;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,8 @@ import java.util.*;
 @Transactional
 public class DashboardSecurityServiceImpl implements DashboardSecurityService {
 
+
+    private static final Logger logger = LoggerFactory.getLogger(DashboardSecurityServiceImpl.class);
     @Autowired
     private DashboardSecurityDao dashboardSecurityDao;
     @Autowired
@@ -68,6 +72,7 @@ public class DashboardSecurityServiceImpl implements DashboardSecurityService {
             EasyExcel.read(file.getInputStream(), DashboardSecurityProjectPojo.class,
                     new DashboardSecurityProjectListener(dashboardSecurityProjectDao)).sheet().doRead();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
             return R.error("文件异常");
         }

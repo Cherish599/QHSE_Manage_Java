@@ -4,9 +4,11 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.wlhse.dao.DashboardSecurityDao;
 import com.wlhse.entity.DashboardSecurityPojo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
+@Transactional
 public class DashboardSecurityListener extends AnalysisEventListener<DashboardSecurityPojo> {
 
     private DashboardSecurityDao dashboardSecurityDao;
