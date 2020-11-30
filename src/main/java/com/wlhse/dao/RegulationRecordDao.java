@@ -1,10 +1,11 @@
 package com.wlhse.dao;
 
 
+import com.wlhse.dto.RecordCountDto;
 import com.wlhse.dto.RegulationRecordDto;
+import com.wlhse.entity.RecordDateQueryParam;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -22,4 +23,11 @@ public interface RegulationRecordDao {
     //条件查询违章记录
     int queryTotal(RegulationRecordDto regulationRecordDto);
     List<RegulationRecordDto> queryRegulationRecord(RegulationRecordDto regulationRecordDto);
+    /**
+     * 查询违章项最多的公司
+     *
+     * @param param 日期区间
+     * @return R
+     */
+    List<RecordCountDto> queryMostRegulationRecord(RecordDateQueryParam param);
 }

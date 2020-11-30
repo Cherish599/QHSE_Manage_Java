@@ -3,12 +3,13 @@ package com.wlhse.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.wlhse.cache.JedisClient;
 import com.wlhse.dao.DangerRecordDao;
+import com.wlhse.dto.RecordCountDto;
 import com.wlhse.dto.DangerRecordDto;
+import com.wlhse.entity.RecordDateQueryParam;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.DangerRecordService;
 import com.wlhse.service.EmployeeManagementService;
 import com.wlhse.util.R;
-import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -126,6 +127,20 @@ public class DangerRecordServiceImpl implements DangerRecordService {
         if (dangerRecordDao.problemVerification(dangerRecordDto) <= 0)
             throw new WLHSException("修改失败");
         return R.ok();
+    }
+
+    @Override
+    public R queryMostDangerRecord(String startDate, String endDate) {
+        RecordDateQueryParam param = new RecordDateQueryParam(startDate, endDate);
+        List<RecordCountDto> recordCountDtoList = null;
+        try {
+            recordCountDtoList = dangerRecordDao.queryMostDangerRecord(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", recordCountDtoList);
+        return R.ok(map);
     }
 
 

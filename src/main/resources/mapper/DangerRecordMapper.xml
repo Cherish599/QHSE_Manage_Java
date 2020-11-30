@@ -533,4 +533,23 @@
         where ID = #{id}
     </update>
 
+    <resultMap id="dangerRecordCountMap" type="com.wlhse.dto.RecordCountDto">
+
+    </resultMap>
+
+    <!--查：最多隐患项的前5家公司-->
+    <select id="queryMostDangerRecord" resultMap="dangerRecordCountMap">
+        SELECT companyName,COUNT(companyName) AS nums
+        FROM dangerrecord
+        <where>
+            <if test="startDate!=null and startDate!=''">
+                recordDate >= #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                AND #{endDate} >= recordDate
+            </if>
+        </where>
+        GROUP BY CompanyName ORDER BY nums DESC LIMIT 5
+    </select>
+
 </mapper>

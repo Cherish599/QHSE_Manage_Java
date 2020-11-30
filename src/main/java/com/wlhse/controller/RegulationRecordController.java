@@ -45,4 +45,10 @@ public class RegulationRecordController {
         return regulationRecordService.queryRegulationRecord(regulationRecordDto);
     }
 
+    @RequestMapping(value = "/queryMostRegulationRecord", method = RequestMethod.GET)
+    public R queryMostRegulationRecord(@RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                       @RequestParam(value = "endDate", defaultValue = "") String endDate) {
+        return regulationRecordService.queryMostRegulationRecord(startDate, endDate);
+    }
+
 }

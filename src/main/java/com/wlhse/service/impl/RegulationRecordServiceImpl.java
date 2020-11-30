@@ -2,11 +2,12 @@ package com.wlhse.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.wlhse.dao.RegulationRecordDao;
+import com.wlhse.dto.RecordCountDto;
 import com.wlhse.dto.RegulationRecordDto;
+import com.wlhse.entity.RecordDateQueryParam;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.RegulationRecordService;
 import com.wlhse.util.R;
-import com.wlhse.util.state_code.NR;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -61,5 +62,19 @@ public class RegulationRecordServiceImpl implements RegulationRecordService {
         res.put("list", list);
         return R.ok(res);
 //        return NR.r(list, total, pageIdx);
+    }
+
+    @Override
+    public R queryMostRegulationRecord(String startDate, String endDate) {
+        RecordDateQueryParam param = new RecordDateQueryParam(startDate, endDate);
+        List<RecordCountDto> recordCountDtoList = null;
+        try {
+            recordCountDtoList = regulationRecordDao.queryMostRegulationRecord(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", recordCountDtoList);
+        return R.ok(map);
     }
 }
