@@ -89,4 +89,15 @@
         </where>
         GROUP BY projectLevel
     </select>
+
+    <select id="queryDashboardSecurityProjectTotalUsageRate" resultType="java.lang.Double">
+        SELECT
+        SUM(recordedFunds)/SUM(projectFunds) AS totalUsageRate
+        FROM dashboard_security_project
+        <where>
+            <if test="companyCode!=null and companyCode!=''">
+                companyCode=#{companyCode}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -24,4 +24,6 @@ public interface DashboardSecurityProjectDao {
     void updateDashboardSecurityProject(DashboardSecurityProjectPojo projectPojo);
 
     List<DashboardSecurityProjectCount> queryDashboardSecurityProjectCount(DashboardSecurityProjectPojo projectPojo);
+
+    Double queryDashboardSecurityProjectTotalUsageRate(DashboardSecurityProjectPojo projectPojo);
 }
