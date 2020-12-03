@@ -202,8 +202,10 @@ public class DashboardSecurityServiceImpl implements DashboardSecurityService {
         DashboardSecurityProjectPojo projectPojo = new DashboardSecurityProjectPojo();
         projectPojo.setCompanyCode(companyCode);
         List<DashboardSecurityProjectCount> countList = dashboardSecurityProjectDao.queryDashboardSecurityProjectCount(projectPojo);
+        Double totalUsage = dashboardSecurityProjectDao.queryDashboardSecurityProjectTotalUsageRate(projectPojo);
         Map<String, Object> map = new HashMap<>();
         map.put("data", countList);
+        map.put("totalUsage", totalUsage);
         return R.ok(map);
     }
 
