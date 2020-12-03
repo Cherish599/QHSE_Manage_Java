@@ -21,8 +21,8 @@ public class MessageController {
     }
 
 
-    @RequestMapping(value = "/readMessage",method = RequestMethod.PUT)
-    public R readMessage(HttpServletRequest request,Integer messageId){
+    @RequestMapping(value = "/readMessage")
+    public R readMessage(HttpServletRequest request,@RequestParam Integer messageId){
         return messageService.readMessage(request,messageId);
     }
 
@@ -31,7 +31,7 @@ public class MessageController {
         return messageService.getReceiveMessageCnt(request);
     }
 
-    @RequestMapping(value = "/sendMessage/{tag}",method = RequestMethod.POST)
+    @RequestMapping(value = "/sendMessage/{tag}")
     public R sendMessage(@RequestParam("receiverId") Integer receiverId, @PathVariable("tag")Integer sourceId,HttpServletRequest request){
         return messageService.senMessageInInputCheckApprove(sourceId,receiverId,request);
     }

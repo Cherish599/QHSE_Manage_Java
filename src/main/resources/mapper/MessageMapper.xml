@@ -20,8 +20,7 @@
             <if test="deleted !=null and deleted !=''">
                 deleted=#{deleted}
             </if>
-        </set>+
-
+        </set>
         where id=#{id}
     </update>
 
@@ -39,6 +38,7 @@
         select count(*)
         from message
         where receiverId=#{0}
+        and status="未读"
     </select>
 
     <select id="getMessageDetail" resultType="com.wlhse.entity.Message">

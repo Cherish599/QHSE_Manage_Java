@@ -9,6 +9,7 @@ import com.wlhse.dto.outDto.UserIdOutDto;
 import com.wlhse.entity.Message;
 import com.wlhse.service.MessageService;
 import com.wlhse.util.R;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MessageServiceImp implements MessageService {
 
     @Resource
@@ -30,11 +32,12 @@ public class MessageServiceImp implements MessageService {
 
     @Override
     public R senMessageInInputCheckApprove(int sourceId, int receiverId,HttpServletRequest request) {
-        int senderId = getUserId(request);
+        log.info("发消息");
+        //int senderId = getUserId(request);
         Message message=new Message();
         message.setStatus("未读");
         message.setReceiverId(receiverId);
-        message.setSenderId(senderId);
+        message.setSenderId(123);
         //录入流程结束，向审核一级领导发送通知
         if (sourceId==0){
             message.setSource("要素证据录入");
@@ -47,14 +50,14 @@ public class MessageServiceImp implements MessageService {
             message.setBody("你有年度要素证据批准任务，请及时处理。");
         }
         messageDao.insertMessage(message);
-        return null;
+        return R.ok();
     }
 
     @Override
     public R getReceiveMessageList(HttpServletRequest request, int pageNum) {
         R r=new R();
         int userId = getUserId(request);
-        PageHelper.startPage(10,pageNum);
+        PageHelper.startPage(pageNum,10);
         List<Message> messageReceiveList = messageDao.getMessageReceiveList(userId);
         r.put("data",new PageInfo<>(messageReceiveList));
         return r;
@@ -73,6 +76,7 @@ public class MessageServiceImp implements MessageService {
             r.put("data",messageDetail);
             Message message=new Message();
             message.setStatus("已读");
+            message.setId(messageId);
             messageDao.updateMessage(message);
         }
         return r;
