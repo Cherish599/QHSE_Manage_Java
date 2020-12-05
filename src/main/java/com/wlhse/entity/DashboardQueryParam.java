@@ -12,6 +12,11 @@ public class DashboardQueryParam {
     private Date minDate;
     private Date maxDate;
 
+    public DashboardQueryParam(Date minDate, Date maxDate) {
+        this.minDate = minDate;
+        this.maxDate = maxDate;
+    }
+
     public DashboardQueryParam(String companyCode, Date minDate, Date maxDate) {
         this.companyCode = companyCode;
         this.minDate = minDate;
