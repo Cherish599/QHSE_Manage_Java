@@ -41,17 +41,13 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Transactional
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto, HttpServletRequest request) {
         //首次录入数据
-        //判断是不是不涉及
-        log.info("传入的数据"+elementEvidenceAttachInDto.toString());
+        elementsDao.updateInvolveStatus(elementEvidenceAttachInDto.getId(),1);
         int checkPersonId = getUserId(request);
         ElementEvidenceAttachInDto query = qhseElementsInputDao.query(elementEvidenceAttachInDto);
         if (query== null) {
             qhseElementsInputDao.add(elementEvidenceAttachInDto);
             //将附件attach对应id放入elementFileInfo
-             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
-                 elementEvidenceAttachInDto.setAttach("无");
-             }
-            if((elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach()))||"无".equals(query.getAttach())) {
+            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
             String[] strs=elementEvidenceAttachInDto.getAttach().split(";");
             ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
             elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
@@ -64,10 +60,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
         } else {
             //再次录入数据
             //将附件attach对应id放入elementFileInfo
-             if(elementEvidenceAttachInDto.getEvidenceDescription().equals("录入判定该项要素不涉及流程，不予录入")){
-                 elementEvidenceAttachInDto.setAttach("无");
-             }
-            if((elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach()))||"无".equals(query.getAttach())) {
+            if(elementEvidenceAttachInDto.getAttach()!=null&&!"".equals(elementEvidenceAttachInDto.getAttach())) {
                 String[] strs = elementEvidenceAttachInDto.getAttach().split(";");
                 ElementInputFileInfo elementInputFileInfo = new ElementInputFileInfo();
                 elementInputFileInfo.setQHSE_CompanyYearManagerSysElementEvidence_ID(elementEvidenceAttachInDto.getEvidenceID());
@@ -154,6 +147,12 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
             }
         }
 
+        return R.ok();
+    }
+
+    @Override
+    public R notInvolve(int elementId) {
+        elementsDao.updateInvolveStatus(elementId,0);
         return R.ok();
     }
 

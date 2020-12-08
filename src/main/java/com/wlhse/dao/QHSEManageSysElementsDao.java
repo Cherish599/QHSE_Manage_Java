@@ -123,4 +123,6 @@ public interface QHSEManageSysElementsDao {
     int getApprovedNum(int tableId);
 
     int getReInputNum(int tableId);
+
+    int updateInvolveStatus(int elementId,int status);
 }

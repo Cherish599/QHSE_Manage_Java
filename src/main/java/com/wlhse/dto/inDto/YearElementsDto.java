@@ -19,6 +19,7 @@ public class YearElementsDto {
     private String configStatus;
     private String  schedule;
     private Integer checkStatus;
+    private int isInvolve;
 
     public void setCheckStatus(Integer checkStatus) {
         this.checkStatus = checkStatus;
@@ -26,6 +27,29 @@ public class YearElementsDto {
 
     public YearElementsDto() {
     }
+
+    public YearElementsDto(Integer qhseCompanyYearManagerSysElementID, String codes, Integer qhseCompanyYearManagerSysElementTableID, String code, String name, String content, String auditMode, Integer initialScore, String formula, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String configStatus, String schedule, Integer checkStatus, int isInvolve) {
+        this.qhseCompanyYearManagerSysElementID = qhseCompanyYearManagerSysElementID;
+        this.codes = codes;
+        this.qhseCompanyYearManagerSysElementTableID = qhseCompanyYearManagerSysElementTableID;
+        this.code = code;
+        this.name = name;
+        this.content = content;
+        this.auditMode = auditMode;
+        this.initialScore = initialScore;
+        this.formula = formula;
+        this.totalCount = totalCount;
+        this.status = status;
+        this.companyCode = companyCode;
+        this.companyName = companyName;
+        this.year = year;
+        this.fileCheckStatus = fileCheckStatus;
+        this.configStatus = configStatus;
+        this.schedule = schedule;
+        this.checkStatus = checkStatus;
+        this.isInvolve = isInvolve;
+    }
+
 
     public Integer getQhseCompanyYearManagerSysElementID() {
         return qhseCompanyYearManagerSysElementID;
@@ -163,35 +187,17 @@ public class YearElementsDto {
         this.schedule = schedule;
     }
 
-    public int getCheckStatus() {
+    public Integer getCheckStatus() {
         return checkStatus;
     }
 
-    public void setCheckStatus(int checkStatus) {
-        this.checkStatus = checkStatus;
+    public int getIsInvolve() {
+        return isInvolve;
     }
 
-    public YearElementsDto(Integer qhseCompanyYearManagerSysElementID, String codes, Integer qhseCompanyYearManagerSysElementTableID, String code, String name, String content, String auditMode, Integer initialScore, String formula, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String configStatus, String schedule, int checkStatus) {
-        this.qhseCompanyYearManagerSysElementID = qhseCompanyYearManagerSysElementID;
-        this.codes = codes;
-        this.qhseCompanyYearManagerSysElementTableID = qhseCompanyYearManagerSysElementTableID;
-        this.code = code;
-        this.name = name;
-        this.content = content;
-        this.auditMode = auditMode;
-        this.initialScore = initialScore;
-        this.formula = formula;
-        this.totalCount = totalCount;
-        this.status = status;
-        this.companyCode = companyCode;
-        this.companyName = companyName;
-        this.year = year;
-        this.fileCheckStatus = fileCheckStatus;
-        this.configStatus = configStatus;
-        this.schedule = schedule;
-        this.checkStatus = checkStatus;
+    public void setIsInvolve(int isInvolve) {
+        this.isInvolve = isInvolve;
     }
-
 
     @Override
     public String toString() {
@@ -214,6 +220,7 @@ public class YearElementsDto {
                 ", configStatus='" + configStatus + '\'' +
                 ", schedule='" + schedule + '\'' +
                 ", checkStatus=" + checkStatus +
+                ", isInvolve=" + isInvolve +
                 '}';
     }
 }

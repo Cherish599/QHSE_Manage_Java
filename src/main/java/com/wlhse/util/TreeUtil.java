@@ -479,6 +479,7 @@ public class TreeUtil {
             qhseElementsOutDto.setFileCheckStatus(pojo.getFileCheckStatus());
             qhseElementsOutDto.setSchedule(pojo.getSchedule());
             qhseElementsOutDto.setCheckStatus(pojo.getCheckStatus());
+            qhseElementsOutDto.setIsInvolve(pojo.getIsInvolve());
             map1.put(qhseElementsOutDto.getCode(), qhseElementsOutDto);
 
             //同一层节点长度一样

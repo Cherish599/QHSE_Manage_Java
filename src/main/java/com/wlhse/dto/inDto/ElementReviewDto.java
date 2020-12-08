@@ -13,23 +13,21 @@ public class ElementReviewDto {
     private Integer checkStaffID;
     private Integer approverStaffID;
     private String negativeOpinion;//不通过意见
+    private int isInvolve;
 
-    public String getNegativeOpinion() {
-        return negativeOpinion;
-    }
-
-    public void setNegativeOpinion(String negativeOpinion) {
-        this.negativeOpinion = negativeOpinion;
-    }
-
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
+    public ElementReviewDto(Integer qHSE_CompanyYearManagerSysElement_ID, String code, String companyName, String companyCode, String year, String status, Integer checkStaffID, Integer approverStaffID, String negativeOpinion, int isInvolve) {
+        this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
+        this.code = code;
+        this.companyName = companyName;
         this.companyCode = companyCode;
+        this.year = year;
+        this.status = status;
+        this.checkStaffID = checkStaffID;
+        this.approverStaffID = approverStaffID;
+        this.negativeOpinion = negativeOpinion;
+        this.isInvolve = isInvolve;
     }
+
 
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
         return qHSE_CompanyYearManagerSysElement_ID;
@@ -53,6 +51,14 @@ public class ElementReviewDto {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getYear() {
@@ -87,6 +93,22 @@ public class ElementReviewDto {
         this.approverStaffID = approverStaffID;
     }
 
+    public String getNegativeOpinion() {
+        return negativeOpinion;
+    }
+
+    public void setNegativeOpinion(String negativeOpinion) {
+        this.negativeOpinion = negativeOpinion;
+    }
+
+    public int getIsInvolve() {
+        return isInvolve;
+    }
+
+    public void setIsInvolve(int isInvolve) {
+        this.isInvolve = isInvolve;
+    }
+
     @Override
     public String toString() {
         return "ElementReviewDto{" +
@@ -98,7 +120,8 @@ public class ElementReviewDto {
                 ", status='" + status + '\'' +
                 ", checkStaffID=" + checkStaffID +
                 ", approverStaffID=" + approverStaffID +
-                ", negativeOpinion=" + negativeOpinion +
+                ", negativeOpinion='" + negativeOpinion + '\'' +
+                ", isInvolve=" + isInvolve +
                 '}';
     }
 }

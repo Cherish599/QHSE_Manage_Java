@@ -164,7 +164,8 @@
         t1.CompanyName as companyName,
         t1.Year as `year`,
         t1.fileCheckStatus as fileCheckStatus,
-        t1.CheckStatus as checkStatus
+        t1.CheckStatus as checkStatus,
+        t1.isInvolve as isInvolve
         from QHSE_CompanyYearManagerSysElement as t1
         <where>
             <if test="companyCode !=null and companyCode!=''">
@@ -750,5 +751,12 @@
             )
         </foreach>
     </insert>
+
+
+    <update id="updateInvolveStatus">
+        update qhse_companyyearmanagersyselement
+        set isInvolve=#{1}
+        where QHSE_CompanyYearManagerSysElement_ID=#{0}
+    </update>
 </mapper>
 

@@ -20,6 +20,7 @@ public class QHSECompanyYearManagerSysElementDto {
     private String  companyName;
     private String  year;
     private Integer checkStatus;
+    private int isInvolve;
 
     public void setCheckStatus(Integer checkStatus) {
         this.checkStatus = checkStatus;
@@ -27,7 +28,7 @@ public class QHSECompanyYearManagerSysElementDto {
 
     private List<QHSECompanyYearManagerSysElementDto> childNode = new LinkedList<>();
 
-    public QHSECompanyYearManagerSysElementDto(Integer qHSE_CompanyYearManagerSysElement_ID, Integer qHSE_CompanyYearManagerSysElementTable_ID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, int checkStatus, List<QHSECompanyYearManagerSysElementDto> childNode) {
+    public QHSECompanyYearManagerSysElementDto(Integer qHSE_CompanyYearManagerSysElement_ID, Integer qHSE_CompanyYearManagerSysElementTable_ID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, Integer checkStatus, int isInvolve, List<QHSECompanyYearManagerSysElementDto> childNode) {
         this.qHSE_CompanyYearManagerSysElement_ID = qHSE_CompanyYearManagerSysElement_ID;
         this.qHSE_CompanyYearManagerSysElementTable_ID = qHSE_CompanyYearManagerSysElementTable_ID;
         this.code = code;
@@ -44,10 +45,8 @@ public class QHSECompanyYearManagerSysElementDto {
         this.companyName = companyName;
         this.year = year;
         this.checkStatus = checkStatus;
+        this.isInvolve = isInvolve;
         this.childNode = childNode;
-    }
-
-    public QHSECompanyYearManagerSysElementDto() {
     }
 
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
@@ -170,12 +169,16 @@ public class QHSECompanyYearManagerSysElementDto {
         this.year = year;
     }
 
-    public int getCheckStatus() {
+    public Integer getCheckStatus() {
         return checkStatus;
     }
 
-    public void setCheckStatus(int checkStatus) {
-        this.checkStatus = checkStatus;
+    public int getIsInvolve() {
+        return isInvolve;
+    }
+
+    public void setIsInvolve(int isInvolve) {
+        this.isInvolve = isInvolve;
     }
 
     public List<QHSECompanyYearManagerSysElementDto> getChildNode() {
@@ -205,6 +208,7 @@ public class QHSECompanyYearManagerSysElementDto {
                 ", companyName='" + companyName + '\'' +
                 ", year='" + year + '\'' +
                 ", checkStatus=" + checkStatus +
+                ", isInvolve=" + isInvolve +
                 ", childNode=" + childNode +
                 '}';
     }

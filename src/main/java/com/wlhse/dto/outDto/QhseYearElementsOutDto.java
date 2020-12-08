@@ -39,11 +39,12 @@ public class QhseYearElementsOutDto {
     private String  schedule;
     private List<QhseYearElementsOutDto> childNode = new LinkedList<>();
     private int checkStatus;
+    private  int isInvolve;
 
     public QhseYearElementsOutDto() {
     }
 
-    public QhseYearElementsOutDto(Integer id, Integer tableID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String schedule, List<QhseYearElementsOutDto> childNode, int checkStatus) {
+    public QhseYearElementsOutDto(Integer id, Integer tableID, String code, String name, String content, String basis, String auditMode, Integer initialScore, String formula, String problemDescription, Integer totalCount, String status, String companyCode, String companyName, String year, String fileCheckStatus, String schedule, List<QhseYearElementsOutDto> childNode, int checkStatus, int isInvolve) {
         this.id = id;
         this.tableID = tableID;
         this.code = code;
@@ -63,6 +64,7 @@ public class QhseYearElementsOutDto {
         this.schedule = schedule;
         this.childNode = childNode;
         this.checkStatus = checkStatus;
+        this.isInvolve = isInvolve;
     }
 
     public Integer getId() {
@@ -217,6 +219,15 @@ public class QhseYearElementsOutDto {
         this.checkStatus = checkStatus;
     }
 
+    public int getIsInvolve() {
+        return isInvolve;
+    }
+
+    public void setIsInvolve(int isInvolve) {
+        this.isInvolve = isInvolve;
+    }
+
+
     @Override
     public String toString() {
         return "QhseYearElementsOutDto{" +
@@ -239,6 +250,7 @@ public class QhseYearElementsOutDto {
                 ", schedule='" + schedule + '\'' +
                 ", childNode=" + childNode +
                 ", checkStatus=" + checkStatus +
+                ", isInvolve=" + isInvolve +
                 '}';
     }
 }
