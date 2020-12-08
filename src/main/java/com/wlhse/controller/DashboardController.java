@@ -102,4 +102,16 @@ public class DashboardController {
         return dashboardService.uploadDashboardScheduleManagement(file);
     }
 
+
+    /**
+     * 查询出现问题最多的配置要素
+     *
+     * @return R
+     */
+    @RequestMapping(value = "/queryMostProblemElement", method = RequestMethod.GET)
+    public R queryMostProblemElement(@RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                     @RequestParam(value = "endDate", defaultValue = "") String endDate) {
+        return dashboardService.queryMostProblemElement(startDate, endDate);
+    }
+
 }

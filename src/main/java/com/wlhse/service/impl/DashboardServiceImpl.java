@@ -5,10 +5,8 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.wlhse.dao.CompanyDao;
 import com.wlhse.dao.DashboardDao;
-import com.wlhse.entity.CompanyPojo;
-import com.wlhse.entity.DashboardQualityManagement;
-import com.wlhse.entity.DashboardRecorderManagement;
-import com.wlhse.entity.DashboardScheduleManagement;
+import com.wlhse.dto.RecordCountDto;
+import com.wlhse.entity.*;
 import com.wlhse.service.DashboardService;
 import com.wlhse.util.*;
 import org.apache.commons.io.FileUtils;
@@ -24,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author tobing
@@ -131,6 +131,20 @@ public class DashboardServiceImpl implements DashboardService {
         return R.ok("更新成功");
     }
 
+    @Override
+    public R queryMostProblemElement(String startDate, String endDate) {
+        RecordDateQueryParam param = new RecordDateQueryParam(startDate, endDate);
+        List<RecordCountDto> recordCountDtoList = null;
+        try {
+            recordCountDtoList = dashboardDao.queryMostProblemElement(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", recordCountDtoList);
+        return R.ok(map);
+    }
+
 
     /**
      * 返回指定文件名的文件
@@ -141,7 +155,7 @@ public class DashboardServiceImpl implements DashboardService {
      */
     private ResponseEntity<byte[]> generateResponseEntity(String name) throws IOException {
         // TODO 文件修改
-         String path = System.getProperty("catalina.home") + "\\webapps\\" + "DashboardTemplate";
+        String path = System.getProperty("catalina.home") + "\\webapps\\" + "DashboardTemplate";
 //        String path = "D:\\fileTest";
         File file = new File(path + File.separator + name + ".xlsx");
         // 文件不存在：创建模板文件

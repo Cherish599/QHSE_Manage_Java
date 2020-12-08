@@ -1,8 +1,11 @@
 package com.wlhse.dao;
 
+import com.wlhse.dto.MonitorPlanDetail;
+import com.wlhse.dto.RecordCountDto;
 import com.wlhse.entity.DashboardQualityManagement;
 import com.wlhse.entity.DashboardRecorderManagement;
 import com.wlhse.entity.DashboardScheduleManagement;
+import com.wlhse.entity.RecordDateQueryParam;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -105,4 +108,11 @@ public interface DashboardDao {
      */
     void insertDRM(DashboardRecorderManagement dashboardRecorderManagement);
 
+    /**
+     * 查询【出现最多问题的配置要素】
+     *
+     * @param param param
+     * @return R
+     */
+    List<RecordCountDto> queryMostProblemElement(RecordDateQueryParam param);
 }

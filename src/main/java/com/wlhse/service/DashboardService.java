@@ -84,4 +84,13 @@ public interface DashboardService {
      * @return R
      */
     R uploadDashboardScheduleManagement(MultipartFile file);
+
+    /**
+     * 查询最多问题的配置要素
+     *
+     * @param startDate 开始时间
+     * @param endDate   结束时间
+     * @return R
+     */
+    R queryMostProblemElement(String startDate, String endDate);
 }
