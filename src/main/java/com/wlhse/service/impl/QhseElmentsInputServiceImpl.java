@@ -11,6 +11,7 @@ import com.wlhse.entity.ElementInputFileInfo;
 import com.wlhse.exception.WLHSException;
 import com.wlhse.service.QhseElementsInputService;
 import com.wlhse.util.R;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
+@Slf4j
 public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     @Resource
     QhseElementsInputDao qhseElementsInputDao;
@@ -40,6 +42,7 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     public R addElementEvidenceAttach(ElementEvidenceAttachInDto elementEvidenceAttachInDto, HttpServletRequest request) {
         //首次录入数据
         //判断是不是不涉及
+        log.info("传入的数据"+elementEvidenceAttachInDto.toString());
         int checkPersonId = getUserId(request);
         ElementEvidenceAttachInDto query = qhseElementsInputDao.query(elementEvidenceAttachInDto);
         if (query== null) {
