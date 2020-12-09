@@ -20,5 +20,5 @@ public interface QhseElementsInputService {
   //  void updateNewOriginFileName(ElementInputFileInfo elementInputFileInfo);
     R submitInputResult(int tableId,int tag);
 
-    R notInvolve(int elementId);
+    R notInvolve(int elementId,HttpServletRequest request);
 }

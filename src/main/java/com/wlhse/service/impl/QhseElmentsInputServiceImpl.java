@@ -151,8 +151,11 @@ public class QhseElmentsInputServiceImpl implements QhseElementsInputService {
     }
 
     @Override
-    public R notInvolve(int elementId) {
+    public R notInvolve(int elementId,HttpServletRequest request) {
         elementsDao.updateInvolveStatus(elementId,0);
+        //TODO 更改状态
+        int checkPersonId = getUserId(request);
+        qhseElementsInputDao.updateStatus(elementId,checkPersonId);//状态变为审核
         return R.ok();
     }
 

@@ -51,8 +51,8 @@ public class QhseElementsInputController {
 
 
     @RequestMapping(value = "/notInvolve",method = RequestMethod.GET)
-    public R notInvolve(@RequestParam("elementId")Integer elementId){
-        return qhseElementsInputService.notInvolve(elementId);
+    public R notInvolve(@RequestParam("elementId")Integer elementId,HttpServletRequest request){
+        return qhseElementsInputService.notInvolve(elementId,request);
     }
 
 }

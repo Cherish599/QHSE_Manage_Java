@@ -28,6 +28,8 @@ public class ElementReviewDto {
         this.isInvolve = isInvolve;
     }
 
+    public ElementReviewDto() {
+    }
 
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
         return qHSE_CompanyYearManagerSysElement_ID;
