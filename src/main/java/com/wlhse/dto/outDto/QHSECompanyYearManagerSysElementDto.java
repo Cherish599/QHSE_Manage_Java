@@ -49,6 +49,9 @@ public class QHSECompanyYearManagerSysElementDto {
         this.childNode = childNode;
     }
 
+    public QHSECompanyYearManagerSysElementDto() {
+    }
+
     public Integer getqHSE_CompanyYearManagerSysElement_ID() {
         return qHSE_CompanyYearManagerSysElement_ID;
     }

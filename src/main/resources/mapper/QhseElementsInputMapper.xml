@@ -6,6 +6,7 @@
         select
         t1.QHSE_CompanyYearManagerSysElementEvidence_ID as evidenceID,
         QHSE_CompanyYearManagerSysElement_ID as id,
+        t1.isInvolve as isInvolve,
         Code as code,
         EvidenceDescription as evidenceDescription,
         QHSE_CompanyYearManagerSysElementEvidenceAttach_ID as attachId,

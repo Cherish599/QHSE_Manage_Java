@@ -29,12 +29,35 @@ public class ElementEvidenceAttachInDto {
     private String url;//附件地址前缀
     private String negativeOpinion;
 
+    private int isInvolve;
+
     public String getNegativeOpinion() {
         return negativeOpinion;
     }
 
     public void setNegativeOpinion(String negativeOpinion) {
         this.negativeOpinion = negativeOpinion;
+    }
+
+    public ElementEvidenceAttachInDto() {
+    }
+
+    public ElementEvidenceAttachInDto(Integer id, Integer evidenceID, String code, String evidenceDescription, String attachID, String attachDescrption, String attach, String uploadTime, Integer checkStaffID, String checkStaffName, Integer approverStaffID, String approverStaffName, String url, String negativeOpinion, int isInvolve) {
+        this.id = id;
+        this.evidenceID = evidenceID;
+        this.code = code;
+        this.evidenceDescription = evidenceDescription;
+        this.attachID = attachID;
+        this.attachDescrption = attachDescrption;
+        this.attach = attach;
+        this.uploadTime = uploadTime;
+        this.checkStaffID = checkStaffID;
+        this.checkStaffName = checkStaffName;
+        this.approverStaffID = approverStaffID;
+        this.approverStaffName = approverStaffName;
+        this.url = url;
+        this.negativeOpinion = negativeOpinion;
+        this.isInvolve = isInvolve;
     }
 
     @Override
@@ -53,6 +76,8 @@ public class ElementEvidenceAttachInDto {
                 ", approverStaffID=" + approverStaffID +
                 ", approverStaffName='" + approverStaffName + '\'' +
                 ", url='" + url + '\'' +
+                ", negativeOpinion='" + negativeOpinion + '\'' +
+                ", isInvolve=" + isInvolve +
                 '}';
     }
 

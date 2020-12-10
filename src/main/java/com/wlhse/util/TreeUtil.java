@@ -440,7 +440,7 @@ public class TreeUtil {
         List<QhseYearElementsOutDto> result = new ArrayList<>();
         Collections.sort(code);
         for (Map.Entry<String, QhseYearElementsOutDto> entry : map.entrySet()) {
-            String key = entry.getKey();
+            String key = entry.getKey();                        
             if (key.length() == code.get(0))
                 result.add(entry.getValue());
             else {
