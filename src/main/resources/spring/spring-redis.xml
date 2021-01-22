@@ -16,6 +16,7 @@
         <property name="maxIdle" value="${redis.maxIdle}" />   <!-- 控制一个pool最多有多少个状态为idle(空闲)的jedis实例 -->
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />  <!-- 表示当borrow一个jedis实例时，最大的等待时间，如果超过等待时间，则直接抛出JedisConnectionException -->
         <property name="testOnBorrow" value="${redis.testOnBorrow}" /> <!-- 在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的 -->
+
     </bean>
 
     <!-- jedis客户端单机版配置 -->
@@ -24,7 +25,5 @@
         <constructor-arg name="host" value="${redis.host}"></constructor-arg>
         <constructor-arg name="port" value="${redis.port}"></constructor-arg>
     </bean>
-
-
 
 </beans>
